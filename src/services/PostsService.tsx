@@ -1,0 +1,97 @@
+import { API_URL } from '@/app/api/request';
+import { HttpMethod, useAuth } from '@/app/providers/authProvider';
+import { postsStore, PostsStore } from '@/store/posts';
+import { PostsSearchType } from '@/store/posts/posts.dto';
+import { Paginable } from '@/store/types/list';
+import { Searchable } from '@/store/types/searchable';
+import axios from 'axios';
+import { makeAutoObservable, toJS } from 'mobx';
+import { observer } from 'mobx-react-lite';
+import {
+    createContext,
+    ReactNode,
+    useContext,
+    useEffect,
+    useState,
+} from 'react';
+import { IReactService, ReactServiceStore } from './types/ReactServiceStore';
+
+export type IPostsService = IReactService<PostsSearchType> & {
+    getBreadcrumb: (categoryName: string) => Promise<any>;
+};
+
+export const PostsServiceContext = createContext<IPostsService | undefined>(
+    undefined,
+);
+
+/**
+ * 포스트 조회 서비스 (API)
+ */
+export class PostsServiceImpl implements IPostsService {
+    constructor(
+        private readonly requestData: (
+            method: HttpMethod,
+            fetchUrl: string,
+            payload?: Record<string, any> | null | undefined,
+        ) => Promise<any>,
+    ) {
+        makeAutoObservable(this);
+    }
+
+    async search(
+        pageNumber: number,
+        searchProperty: string,
+        searchQuery: string,
+    ) {
+        const res = await axios.get(
+            `${API_URL}/posts/search?pageNumber=${pageNumber}&searchProperty=${searchProperty}&searchQuery=${encodeURIComponent(
+                searchQuery,
+            )}`,
+        );
+
+        return res.data;
+    }
+
+    async view(pageNumber: number) {
+        const res = await axios.get(`${API_URL}/posts?page=${pageNumber}`);
+
+        return res.data;
+    }
+
+    fetch(store: ReactServiceStore<PostsSearchType>): Promise<any> {
+        const res = store.isSearchMode()
+            ? this.search(
+                  store.getPageNumber(),
+                  store.getSearchType()!,
+                  store.getSearchQuery()!,
+              )
+            : this.view(store.getPageNumber());
+
+        return res;
+    }
+
+    async getBreadcrumb(categoryName: string): Promise<any> {
+        const res = await axios.get(
+            `${API_URL}/posts/breadcrumbs?categoryName=${categoryName}`,
+        );
+
+        return res.data;
+    }
+}
+
+export const PostsServiceProvider = observer(
+    ({ children }: { children: ReactNode }) => {
+        const auth = useAuth();
+        const [postsService, setPostsService] = useState<IPostsService>(
+            new PostsServiceImpl(auth.requestData),
+        );
+
+        return (
+            <>
+                <PostsServiceContext.Provider value={postsService}>
+                    {children}
+                </PostsServiceContext.Provider>
+            </>
+        );
+    },
+);
