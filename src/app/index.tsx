@@ -18,6 +18,7 @@ import { Container } from '@mui/material';
 import { PostEditorContainer } from './pages/editor';
 import { PostsPresent } from './components/PostsPresent';
 import { PostsPage } from './pages/posts';
+import { CategoryServiceProvider } from '@/services/CategoryService';
 
 const queryClient = new QueryClient();
 
@@ -28,38 +29,45 @@ export function App() {
         <QueryClientProvider client={queryClient}>
             <RecoilRoot>
                 <React.Suspense fallback={<div>Loading...</div>}>
-                    <AuthProvider>
-                        <BrowserRouter
-                            basename={
-                                process.env.NODE_ENV === 'production' ? '/' : ''
-                            }
-                        >
-                            <Helmet
-                                titleTemplate="%s - 어진석의 블로그"
-                                defaultTitle="어진석의 블로그"
-                                htmlAttributes={{ lang: i18n.language }}
+                    <CategoryServiceProvider>
+                        <AuthProvider>
+                            <BrowserRouter
+                                basename={
+                                    process.env.NODE_ENV === 'production'
+                                        ? '/'
+                                        : ''
+                                }
                             >
-                                <meta name="description" content="" />
-                            </Helmet>
-                            <GlobalStyle />
-                            <Routes>
-                                <Route
-                                    path={URL_MAP.LOGIN}
-                                    element={<LoginPage />}
-                                />
-                                <Route
-                                    path={URL_MAP.MAIN}
-                                    element={<PostsPage />}
-                                />
-                                <Route
-                                    path={URL_MAP.POST_EDIT}
-                                    element={<PostEditorContainer />}
-                                />
-                                <Route path="*" element={<NotFoundPage />} />
-                            </Routes>
-                            <ToastContainer />
-                        </BrowserRouter>
-                    </AuthProvider>
+                                <Helmet
+                                    titleTemplate="%s - 어진석의 블로그"
+                                    defaultTitle="어진석의 블로그"
+                                    htmlAttributes={{ lang: i18n.language }}
+                                >
+                                    <meta name="description" content="" />
+                                </Helmet>
+                                <GlobalStyle />
+                                <Routes>
+                                    <Route
+                                        path={URL_MAP.LOGIN}
+                                        element={<LoginPage />}
+                                    />
+                                    <Route
+                                        path={URL_MAP.MAIN}
+                                        element={<PostsPage />}
+                                    />
+                                    <Route
+                                        path={URL_MAP.POST_EDIT}
+                                        element={<PostEditorContainer />}
+                                    />
+                                    <Route
+                                        path="*"
+                                        element={<NotFoundPage />}
+                                    />
+                                </Routes>
+                                <ToastContainer />
+                            </BrowserRouter>
+                        </AuthProvider>
+                    </CategoryServiceProvider>
                 </React.Suspense>
             </RecoilRoot>
         </QueryClientProvider>

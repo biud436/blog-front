@@ -27,9 +27,22 @@ export const CategoryServiceContext = createContext<
 
 export class CategoryService {
     categories: CategoryDepthVO[] = [];
+    isReady: boolean = false;
 
     constructor() {
         makeAutoObservable(this);
+    }
+
+    setCategories(categories: CategoryDepthVO[]) {
+        this.categories = categories;
+
+        if (!this.isReady) {
+            this.isReady = true;
+        }
+    }
+
+    getCategories() {
+        return this.categories;
     }
 }
 

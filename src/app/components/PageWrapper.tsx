@@ -35,6 +35,7 @@ import {
     CategoryServiceProvider,
 } from '@/services/CategoryService';
 import { useCategoryService } from '@/hooks/useCategoryService';
+import { observer } from 'mobx-react-lite';
 
 const drawerWidth = 240;
 
@@ -78,142 +79,140 @@ const AppBar = styled(MuiAppBar, {
     }),
 }));
 
-export function PageWrapper({
-    name,
-    children,
-}: {
-    name: string;
-    children: React.ReactNode;
-}) {
-    const navigate = useNavigate();
-    const matches = useMediaQuery('(max-width:1024px)');
-    const auth = useAuth();
-    const theme = useTheme();
-    const [open, setOpen] = React.useState(true);
-    const [categoryList, setCategoryList] = React.useState<CategoryDepthVO[]>(
-        [],
-    );
-    const [isAdminOK, setIsAdminOK] = React.useState(false);
+export const PageWrapper = observer(
+    ({ name, children }: { name: string; children: React.ReactNode }) => {
+        const navigate = useNavigate();
+        const matches = useMediaQuery('(max-width:1024px)');
+        const auth = useAuth();
+        const theme = useTheme();
+        const [open, setOpen] = React.useState(true);
+        const [categoryList, setCategoryList] = React.useState<
+            CategoryDepthVO[]
+        >([]);
+        const [isAdminOK, setIsAdminOK] = React.useState(false);
+        const categoryService = useCategoryService();
 
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
+        const handleDrawerOpen = () => {
+            setOpen(true);
+        };
 
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
-
-    const clickItem = (url: string) => {
-        navigate(url);
-        if (matches) {
-            handleDrawerClose();
-        }
-    };
-
-    /**
-     * 카테고리 목록 초기화
-     * @returns
-     */
-    const initCategories = async () => {
-        const res: AxiosResponse<any> = await axios.get(
-            `${API_URL}/admin/category?isBeautify=true`,
-            {},
-        );
-
-        const categories: CategoryDepthVO[] = res.data.data;
-
-        setCategoryList(categories);
-
-        return categories;
-    };
-
-    /**
-     * 카테고리 목록을 재귀적으로 읽고, open을 false로 설정합니다.
-     * @param categories
-     */
-    const checkCategoriesOpen = (categories: CategoryDepthVO[]) => {
-        categories.forEach(category => {
-            if (category.children.length > 0) {
-                checkCategoriesOpen(category.children);
-            } else {
-                category.open = false;
-            }
-        });
-    };
-
-    /**
-     * 권한이 있는지 체크합니다.
-     * ? 보안 허점
-     */
-    const initWithCheckAdmin = async () => {
-        const res = await auth.requestData('get', '/api/check/admin');
-
-        if (res.isAdmin) {
-            setIsAdminOK(res);
-        }
-    };
-
-    /**
-     * 카테고리 리스트를 동적으로 생성합니다.
-     *
-     * @param categories
-     * @returns {JSX.Element} JSX.Element
-     */
-    const makeCategoryList = (categories: CategoryDepthVO[]) => {
-        return categories.map((category, index) => {
-            return (
-                <React.Fragment key={index}>
-                    <ListItemButton
-                        onClick={() => {
-                            if (category.children.length > 0) {
-                                category.open = !category.open;
-                                setCategoryList([...categoryList]);
-                            }
-                        }}
-                        sx={{
-                            pl: category.depth * 2,
-                        }}
-                    >
-                        <ListItemIcon>
-                            {category.children.length > 0 ? (
-                                <ExpandMore />
-                            ) : (
-                                <ChevronRightIcon />
-                            )}
-                        </ListItemIcon>
-                        <ListItemText primary={category.name} />
-                    </ListItemButton>
-                    {category.children.length > 0 && (
-                        <Collapse
-                            in={category.open}
-                            timeout="auto"
-                            unmountOnExit
-                        >
-                            <List component="div" disablePadding>
-                                {makeCategoryList(category.children)}
-                            </List>
-                        </Collapse>
-                    )}
-                </React.Fragment>
-            );
-        });
-    };
-
-    React.useEffect(() => {
-        if (matches) {
+        const handleDrawerClose = () => {
             setOpen(false);
-        }
-        initCategories().then(categories => {
-            checkCategoriesOpen(categories);
-            if (categories[0]) {
-                categories[0].open = true;
-            }
-            initWithCheckAdmin();
-        });
-    }, [matches]);
+        };
 
-    return (
-        <CategoryServiceProvider>
+        const clickItem = (url: string) => {
+            navigate(url);
+            if (matches) {
+                handleDrawerClose();
+            }
+        };
+
+        /**
+         * 카테고리 목록 초기화
+         * @returns
+         */
+        const initCategories = async () => {
+            const res: AxiosResponse<any> = await axios.get(
+                `${API_URL}/admin/category?isBeautify=true`,
+                {},
+            );
+
+            const categories: CategoryDepthVO[] = res.data.data;
+
+            setCategoryList(categories);
+
+            // 몹엑스와 연동
+            categoryService.setCategories(categories);
+
+            return categories;
+        };
+
+        /**
+         * 카테고리 목록을 재귀적으로 읽고, open을 false로 설정합니다.
+         * @param categories
+         */
+        const checkCategoriesOpen = (categories: CategoryDepthVO[]) => {
+            categories.forEach(category => {
+                if (category.children.length > 0) {
+                    checkCategoriesOpen(category.children);
+                } else {
+                    category.open = false;
+                }
+            });
+        };
+
+        /**
+         * 권한이 있는지 체크합니다.
+         * ? 보안 허점
+         */
+        const initWithCheckAdmin = async () => {
+            const res = await auth.requestData('get', '/api/check/admin');
+
+            if (res.isAdmin) {
+                setIsAdminOK(res);
+            }
+        };
+
+        /**
+         * 카테고리 리스트를 동적으로 생성합니다.
+         *
+         * @param categories
+         * @returns {JSX.Element} JSX.Element
+         */
+        const makeCategoryList = (categories: CategoryDepthVO[]) => {
+            return categories.map((category, index) => {
+                return (
+                    <React.Fragment key={index}>
+                        <ListItemButton
+                            onClick={() => {
+                                if (category.children.length > 0) {
+                                    category.open = !category.open;
+                                    setCategoryList([...categoryList]);
+                                }
+                            }}
+                            sx={{
+                                pl: category.depth * 2,
+                            }}
+                        >
+                            <ListItemIcon>
+                                {category.children.length > 0 ? (
+                                    <ExpandMore />
+                                ) : (
+                                    <ChevronRightIcon />
+                                )}
+                            </ListItemIcon>
+                            <ListItemText primary={category.name} />
+                        </ListItemButton>
+                        {category.children.length > 0 && (
+                            <Collapse
+                                in={category.open}
+                                timeout="auto"
+                                unmountOnExit
+                            >
+                                <List component="div" disablePadding>
+                                    {makeCategoryList(category.children)}
+                                </List>
+                            </Collapse>
+                        )}
+                    </React.Fragment>
+                );
+            });
+        };
+
+        React.useEffect(() => {
+            if (matches) {
+                setOpen(false);
+            }
+            initCategories().then(categories => {
+                checkCategoriesOpen(categories);
+                if (categories[0]) {
+                    categories[0].open = true;
+                }
+                initWithCheckAdmin();
+            });
+        }, [matches]);
+
+        return (
             <RequireAuth>
                 <Container maxWidth="xl">
                     <Box sx={{ display: 'flex' }}>
@@ -323,6 +322,6 @@ export function PageWrapper({
                     </Box>
                 </Container>
             </RequireAuth>
-        </CategoryServiceProvider>
-    );
-}
+        );
+    },
+);
