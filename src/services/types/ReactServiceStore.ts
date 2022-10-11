@@ -7,7 +7,7 @@ export type ReactServiceStore<T> = Searchable<T> & Paginable;
 export interface IReactService<T> {
     search(pageNumber: number, searchProperty: string, searchQuery: string);
     view(pageNumber: number);
-    fetch(store: ReactServiceStore<T>): Promise<any>;
+    fetch(store: ReactServiceStore<T>, categoryId?: number): Promise<any>;
 }
 
 export type IReactServiceProviderProps = { children: ReactNode };

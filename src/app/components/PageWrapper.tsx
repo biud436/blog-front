@@ -36,6 +36,9 @@ import {
 } from '@/services/CategoryService';
 import { useCategoryService } from '@/hooks/useCategoryService';
 import { observer } from 'mobx-react-lite';
+import { usePostsService } from '@/hooks/usePostsService';
+import { postsStore } from '@/store/posts';
+import { toast } from 'react-toastify';
 
 const drawerWidth = 240;
 
@@ -136,7 +139,7 @@ export const PageWrapper = observer(
                 if (category.children.length > 0) {
                     checkCategoriesOpen(category.children);
                 } else {
-                    category.open = false;
+                    category.open = true;
                 }
             });
         };
@@ -170,9 +173,11 @@ export const PageWrapper = observer(
                                     setCategoryList([...categoryList]);
                                 }
 
-                                if (category.open && index === 0) {
-                                    navigate(URL_MAP.MAIN);
-                                }
+                                categoryService.setCurrentMenuCategoryId(
+                                    category.id,
+                                );
+
+                                navigate(URL_MAP.MAIN);
                             }}
                             sx={{
                                 pl: category.depth * 2,

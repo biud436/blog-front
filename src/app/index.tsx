@@ -19,6 +19,7 @@ import { PostEditorContainer } from './pages/editor';
 import { PostsPresent } from './components/PostsPresent';
 import { PostsPage } from './pages/posts';
 import { CategoryServiceProvider } from '@/services/CategoryService';
+import { PostsServiceProvider } from '@/services/PostsService';
 
 const queryClient = new QueryClient();
 

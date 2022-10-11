@@ -24,6 +24,7 @@ import Markdown from 'marked-react';
 import { DateUtil, Formatter } from '../api/date';
 import { useNavigate } from 'react-router';
 import { URL_MAP } from '@/common/URL';
+import { useCategoryService } from '@/hooks/useCategoryService';
 
 function PageHeader() {
     return <></>;
@@ -38,6 +39,7 @@ const SearchBox = SearchBuilder<PostsSearchType>(postsStore);
 const PostsContainer = observer(() => {
     const auth = useAuth();
     const service = usePostsService();
+    const categoryService = useCategoryService();
     const navigate = useNavigate();
 
     const fetchData = async (page?: number) => {
@@ -46,7 +48,16 @@ const PostsContainer = observer(() => {
                 postsStore.setPageNumber(page);
             }
 
-            const res = await service.fetch(postsStore);
+            // 카테고리 설정
+            postsStore.setCurrentCategoryId(
+                categoryService.getCurrentMenuCategoryId(),
+            );
+
+            // 카테고리 별 포스트 조회
+            const res = await service.fetch(
+                postsStore,
+                categoryService.getCurrentMenuCategoryId(),
+            );
 
             const { entities, pagination } = res.data;
 
@@ -74,7 +85,7 @@ const PostsContainer = observer(() => {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [categoryService.getCurrentMenuCategoryId()]);
 
     return (
         <>

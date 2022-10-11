@@ -30,6 +30,11 @@ export class PostsStore implements Searchable<PostsSearchType>, Paginable {
     isOpenModal: boolean = false;
     defaultCategory: string = 'content';
 
+    /**
+     * 현재 카테고리 ID
+     */
+    currentCategoryId: number = 1;
+
     private _isSearchMode: boolean = false;
 
     constructor() {
@@ -111,6 +116,14 @@ export class PostsStore implements Searchable<PostsSearchType>, Paginable {
 
     getDefaultCategory(): string {
         return this.defaultCategory;
+    }
+
+    setCurrentCategoryId(categoryId: number) {
+        this.currentCategoryId = categoryId;
+    }
+
+    getCurrentCategoryId() {
+        return this.currentCategoryId;
     }
 }
 

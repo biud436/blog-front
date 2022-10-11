@@ -52,20 +52,25 @@ export class PostsServiceImpl implements IPostsService {
         return res.data;
     }
 
-    async view(pageNumber: number) {
-        const res = await axios.get(`${API_URL}/posts?page=${pageNumber}`);
+    async view(pageNumber: number, categoryId?: number): Promise<any> {
+        const res = await axios.get(
+            `${API_URL}/posts?page=${pageNumber}&categoryId=${categoryId}`,
+        );
 
         return res.data;
     }
 
-    fetch(store: ReactServiceStore<PostsSearchType>): Promise<any> {
+    fetch(
+        store: ReactServiceStore<PostsSearchType>,
+        categoryId?: number,
+    ): Promise<any> {
         const res = store.isSearchMode()
             ? this.search(
                   store.getPageNumber(),
                   store.getSearchType()!,
                   store.getSearchQuery()!,
               )
-            : this.view(store.getPageNumber());
+            : this.view(store.getPageNumber(), categoryId);
 
         return res;
     }

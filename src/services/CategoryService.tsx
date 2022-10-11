@@ -28,6 +28,7 @@ export const CategoryServiceContext = createContext<
 export class CategoryService {
     categories: CategoryDepthVO[] = [];
     isReady: boolean = false;
+    currentMenuCategoryId: number = 1;
 
     constructor() {
         makeAutoObservable(this);
@@ -43,6 +44,14 @@ export class CategoryService {
 
     getCategories() {
         return this.categories;
+    }
+
+    setCurrentMenuCategoryId(id: number) {
+        this.currentMenuCategoryId = id;
+    }
+
+    getCurrentMenuCategoryId() {
+        return this.currentMenuCategoryId;
     }
 }
 
