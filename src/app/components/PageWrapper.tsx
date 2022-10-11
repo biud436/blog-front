@@ -169,6 +169,10 @@ export const PageWrapper = observer(
                                     category.open = !category.open;
                                     setCategoryList([...categoryList]);
                                 }
+
+                                if (category.open && index === 0) {
+                                    navigate(URL_MAP.MAIN);
+                                }
                             }}
                             sx={{
                                 pl: category.depth * 2,
@@ -264,23 +268,6 @@ export const PageWrapper = observer(
                                 <Divider />
                                 {isAdminOK ? (
                                     <>
-                                        <ListItem
-                                            key={'post_editor'}
-                                            disablePadding
-                                        >
-                                            <ListItemButton
-                                                onClick={() =>
-                                                    clickItem('/post/edit')
-                                                }
-                                            >
-                                                <ListItemIcon>
-                                                    <NfcOutlinedIcon />
-                                                </ListItemIcon>
-                                                <ListItemText
-                                                    primary={'글 작성'}
-                                                />
-                                            </ListItemButton>
-                                        </ListItem>
                                         <ListItem
                                             key={'logout'}
                                             disablePadding

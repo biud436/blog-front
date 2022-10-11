@@ -1,4 +1,4 @@
-export const URL_MAP: Record<string, string> = {
+export const URL_MAP = {
     MAIN: '/',
     LOGIN: '/login',
 

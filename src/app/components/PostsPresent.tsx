@@ -8,6 +8,7 @@ import ChevronRight from '@mui/icons-material/ChevronRight';
 import {
     Alert,
     Breadcrumbs,
+    Button,
     Card,
     Divider,
     Grid,
@@ -21,6 +22,8 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import Markdown from 'marked-react';
 import { DateUtil, Formatter } from '../api/date';
+import { useNavigate } from 'react-router';
+import { URL_MAP } from '@/common/URL';
 
 function PageHeader() {
     return <></>;
@@ -35,6 +38,7 @@ const SearchBox = SearchBuilder<PostsSearchType>(postsStore);
 const PostsContainer = observer(() => {
     const auth = useAuth();
     const service = usePostsService();
+    const navigate = useNavigate();
 
     const fetchData = async (page?: number) => {
         try {
@@ -85,7 +89,7 @@ const PostsContainer = observer(() => {
                         postsStore.getEntities()?.map(post => {
                             return (
                                 <Card
-                                    sx={{ padding: 2 }}
+                                    sx={{ padding: 2, marginBottom: 3 }}
                                     key={post.id}
                                     elevation={3}
                                 >
@@ -128,7 +132,7 @@ const PostsContainer = observer(() => {
                 <Grid
                     container
                     spacing={0}
-                    direction="column"
+                    direction="row"
                     alignItems="center"
                     justifyContent="center"
                 >
@@ -145,6 +149,21 @@ const PostsContainer = observer(() => {
                             handlePage(e, p);
                         }}
                     />
+                </Grid>
+                <Grid
+                    container
+                    spacing={0}
+                    sx={{ paddingRight: 4 }}
+                    direction="row"
+                    alignContent="center"
+                    justifyContent={'end'}
+                >
+                    <Button
+                        variant="contained"
+                        onClick={() => navigate(URL_MAP.POST_EDIT)}
+                    >
+                        글 작성
+                    </Button>
                 </Grid>
                 <SearchBox
                     store={postsStore}
