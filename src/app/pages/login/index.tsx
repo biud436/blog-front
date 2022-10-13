@@ -10,6 +10,7 @@ import { useMethods, useRendersCount } from 'react-use';
 import { User } from 'store/types';
 import { LoginTab } from './components/LoginTab';
 import { Container, Grid, Stack } from '@mui/material';
+import { URL_MAP } from '@/common/URL';
 
 const initialState = {
     username: '',
@@ -65,18 +66,13 @@ function createMethods(state: LoginTabState) {
  * 로그인 페이지 메인
  */
 export function LoginPage() {
-    /**
-     * STATES
-     */
-    const [state, methods] = useMethods(createMethods, initialState);
     const [values, setValues] = React.useState<State>({
         username: '',
         password: '',
         showPassword: false,
     });
-    const [user, setUser] = useRecoilState(userState);
-    const [tabId, setValue] = React.useState(1);
-    const [loggedin, setLoggedin] = React.useState(true);
+    const [user] = useRecoilState(userState);
+    const [, setValue] = React.useState(1);
 
     /**
      * USE CONTEXTS
@@ -112,18 +108,8 @@ export function LoginPage() {
         const pathname = location.pathname;
 
         return await auth.login(username, password, () => {
-            navigate('/blog/edit');
+            navigate(URL_MAP.MAIN);
         });
-    };
-
-    /**
-     * 탭 변경 처리
-     *
-     * @param tabId
-     * @returns
-     */
-    const changeTab = (tabId: number) => () => {
-        setValue(tabId);
     };
 
     /**
@@ -167,39 +153,6 @@ export function LoginPage() {
         }
 
         return login(idValue, pwValue);
-    };
-
-    /**
-     * 로그인 상태 유지 체크 박스 토글 함수
-     */
-    const changeLoggedIn = () => {
-        setLoggedin(!loggedin);
-        localStorage.setItem('isLoggedIn', !loggedin + '');
-    };
-
-    const getTabLinkClassName = (id: number) => {
-        const name = ['tab-link'];
-
-        if (tabId === id) {
-            name.push('current');
-        }
-
-        return name.join(' ');
-    };
-
-    /**
-     * 탭 클래스명 변경 처리
-     * @param id
-     * @returns
-     */
-    const getTabContentClassName = (id: number) => {
-        const name = ['tab-content'];
-
-        if (tabId === id) {
-            name.push('current');
-        }
-
-        return name.join(' ');
     };
 
     /**

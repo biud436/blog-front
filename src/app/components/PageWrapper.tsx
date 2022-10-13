@@ -17,28 +17,19 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { useNavigate } from 'react-router';
-import { RequireAuth, useAuth } from '@/app/providers/authProvider';
+import { useAuth } from '@/app/providers/authProvider';
 import { DrawerHeader } from '@/app/components/DrawerHeader';
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-import PeopleOutlineOutlinedIcon from '@mui/icons-material/PeopleOutlineOutlined';
 import LogoutIcon from '@mui/icons-material/Logout';
-import NfcOutlinedIcon from '@mui/icons-material/NfcOutlined';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import PrintIcon from '@mui/icons-material/Print';
-import ThermostatIcon from '@mui/icons-material/Thermostat';
+import AddIcon from '@mui/icons-material/Add';
 import { URL_MAP } from '@/common/URL';
 import { Collapse, Container, useMediaQuery } from '@mui/material';
-import { API_URL, request, RequestHandler } from '../api/request';
+import { API_URL } from '../api/request';
 import axios, { AxiosResponse } from 'axios';
-import {
-    CategoryDepthVO,
-    CategoryServiceProvider,
-} from '@/services/CategoryService';
+import { CategoryDepthVO } from '@/services/CategoryService';
 import { useCategoryService } from '@/hooks/useCategoryService';
 import { observer } from 'mobx-react-lite';
-import { usePostsService } from '@/hooks/usePostsService';
-import { postsStore } from '@/store/posts';
-import { toast } from 'react-toastify';
+import { useCookies } from 'react-cookie';
 
 const drawerWidth = 240;
 
@@ -86,13 +77,11 @@ export const PageWrapper = observer(
     ({ name, children }: { name: string; children: React.ReactNode }) => {
         const navigate = useNavigate();
         const matches = useMediaQuery('(max-width:1024px)');
-        const auth = useAuth();
         const theme = useTheme();
         const [open, setOpen] = React.useState(true);
         const [categoryList, setCategoryList] = React.useState<
             CategoryDepthVO[]
         >([]);
-        const [isAdminOK, setIsAdminOK] = React.useState(false);
         const categoryService = useCategoryService();
 
         const handleDrawerOpen = () => {
@@ -101,13 +90,6 @@ export const PageWrapper = observer(
 
         const handleDrawerClose = () => {
             setOpen(false);
-        };
-
-        const clickItem = (url: string) => {
-            navigate(url);
-            if (matches) {
-                handleDrawerClose();
-            }
         };
 
         /**
@@ -122,6 +104,7 @@ export const PageWrapper = observer(
 
             const categories: CategoryDepthVO[] = res.data.data;
 
+            checkCategoriesOpen(categories);
             setCategoryList(categories);
 
             // 몹엑스와 연동
@@ -136,24 +119,11 @@ export const PageWrapper = observer(
          */
         const checkCategoriesOpen = (categories: CategoryDepthVO[]) => {
             categories.forEach(category => {
+                category.open = true;
                 if (category.children.length > 0) {
                     checkCategoriesOpen(category.children);
-                } else {
-                    category.open = true;
                 }
             });
-        };
-
-        /**
-         * 권한이 있는지 체크합니다.
-         * ? 보안 허점
-         */
-        const initWithCheckAdmin = async () => {
-            const res = await auth.requestData('get', '/api/check/admin');
-
-            if (res.isAdmin) {
-                setIsAdminOK(res);
-            }
         };
 
         /**
@@ -208,21 +178,20 @@ export const PageWrapper = observer(
             });
         };
 
+        const initWithSettings = async () => {
+            await initCategories();
+        };
+
         React.useEffect(() => {
             if (matches) {
                 setOpen(false);
             }
-            initCategories().then(categories => {
-                checkCategoriesOpen(categories);
-                if (categories[0]) {
-                    categories[0].open = true;
-                }
-                initWithCheckAdmin();
-            });
-        }, [matches]);
+
+            initWithSettings();
+        }, []);
 
         return (
-            <RequireAuth>
+            <>
                 <Container maxWidth="xl">
                     <Box sx={{ display: 'flex' }}>
                         <CssBaseline />
@@ -271,39 +240,7 @@ export const PageWrapper = observer(
                             <List component="nav">
                                 {makeCategoryList(categoryList)}
                                 <Divider />
-                                {isAdminOK ? (
-                                    <>
-                                        <ListItem
-                                            key={'logout'}
-                                            disablePadding
-                                            onClick={() =>
-                                                auth.logout(() => {})
-                                            }
-                                        >
-                                            <ListItemButton>
-                                                <ListItemIcon>
-                                                    <LogoutOutlinedIcon />
-                                                </ListItemIcon>
-                                                <ListItemText
-                                                    primary={'로그아웃'}
-                                                />
-                                            </ListItemButton>
-                                        </ListItem>
-                                    </>
-                                ) : (
-                                    <ListItem
-                                        key={'login'}
-                                        disablePadding
-                                        onClick={() => {}}
-                                    >
-                                        <ListItemButton>
-                                            <ListItemIcon>
-                                                <LogoutIcon />
-                                            </ListItemIcon>
-                                            <ListItemText primary={'로그인'} />
-                                        </ListItemButton>
-                                    </ListItem>
-                                )}
+                                <LoginWrapper />
                             </List>
                             <Divider />
                         </Drawer>
@@ -313,7 +250,76 @@ export const PageWrapper = observer(
                         </Main>
                     </Box>
                 </Container>
-            </RequireAuth>
+            </>
         );
     },
 );
+
+export function LoginWrapper() {
+    const auth = useAuth();
+    const navigate = useNavigate();
+    const [isLoggenIn, setIsLoggedIn] = React.useState(false);
+    const [cookies, setCookie, removeCookie] = useCookies([
+        'access_token',
+        'username',
+    ]);
+
+    React.useEffect(() => {
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        if (isLoggedIn) {
+            setIsLoggedIn(true);
+        }
+    }, [cookies.access_token]);
+
+    return (
+        <>
+            <ListItem
+                key={'post_write_editor'}
+                disablePadding
+                onClick={() => navigate(URL_MAP.POST_EDIT)}
+            >
+                <ListItemButton>
+                    <ListItemIcon>
+                        <AddIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={'글쓰기'} />
+                </ListItemButton>
+            </ListItem>
+            {isLoggenIn ? (
+                <>
+                    <ListItem
+                        key={'logout'}
+                        disablePadding
+                        onClick={() =>
+                            auth.logout(() => {
+                                location.reload();
+                            })
+                        }
+                    >
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <LogoutIcon />
+                            </ListItemIcon>
+                            <ListItemText primary={'로그아웃'} />
+                        </ListItemButton>
+                    </ListItem>
+                </>
+            ) : (
+                <>
+                    <ListItem
+                        key={'login'}
+                        disablePadding
+                        onClick={() => navigate(URL_MAP.LOGIN)}
+                    >
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <LogoutIcon />
+                            </ListItemIcon>
+                            <ListItemText primary={'로그인'} />
+                        </ListItemButton>
+                    </ListItem>
+                </>
+            )}
+        </>
+    );
+}

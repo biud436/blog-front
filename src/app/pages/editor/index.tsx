@@ -3,6 +3,7 @@ import { Grid, Paper, Typography, Divider, Alert } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import ChevronRight from '@mui/icons-material/ChevronRight';
 import { PageWrapper } from '@/app/components/PageWrapper';
+import { RequireAuth } from '@/app/providers/authProvider';
 
 function PageHeader() {
     return (
@@ -36,14 +37,16 @@ export const PostEditor = observer(() => {
 
 export const PostEditorContainer = observer(() => {
     return (
-        <PageWrapper name="포스트 에디터">
-            <Paper sx={{ padding: 2 }} key="editor">
-                <Grid container gap={3}>
-                    <PageHeader />
-                    <PageDescription />
-                    <PostEditor />
-                </Grid>
-            </Paper>
-        </PageWrapper>
+        <RequireAuth>
+            <PageWrapper name="포스트 에디터">
+                <Paper sx={{ padding: 2 }} key="editor">
+                    <Grid container gap={3}>
+                        <PageHeader />
+                        <PageDescription />
+                        <PostEditor />
+                    </Grid>
+                </Paper>
+            </PageWrapper>
+        </RequireAuth>
     );
 });

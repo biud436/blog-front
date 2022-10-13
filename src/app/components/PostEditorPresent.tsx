@@ -4,14 +4,11 @@ import { CategoryDepthVO } from '@/services/CategoryService';
 import {
     Button,
     FormControl,
-    FormGroup,
-    FormLabel,
     Grid,
     Input,
     InputLabel,
     MenuItem,
     Select,
-    Stack,
 } from '@mui/material';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor } from '@toast-ui/react-editor';
@@ -35,15 +32,19 @@ export const PostEditorPresent = observer(() => {
 
     const handleWrite = async () => {
         try {
-            await auth.requestData('post', '/posts', {
+            const res = await auth.requestData('post', '/posts', {
                 title,
                 content: editorRef.current?.getInstance().getMarkdown(),
                 categoryId: currentCategoryId,
             });
+
+            if (!res || res.statusCode >= 400) {
+                throw new Error(res.message);
+            }
+
             navigate(URL_MAP.MAIN);
-        } catch (e) {
-            console.warn(e);
-            toast.error('글 작성에 실패했습니다');
+        } catch (e: any) {
+            toast.error(e.message);
         }
     };
 

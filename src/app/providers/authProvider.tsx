@@ -1,5 +1,4 @@
-import { get, request, auth, getUser, post } from 'app/api/request';
-import { setUncaughtExceptionCaptureCallback } from 'process';
+import { auth } from 'app/api/request';
 import * as React from 'react';
 import { useCookies, CookiesProvider } from 'react-cookie';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
@@ -9,7 +8,6 @@ import { toast } from 'react-toastify';
 import { AxiosManager, RequestHandler } from 'app/api/axios';
 import { User } from 'store/types';
 import Loading from '../components/Loading';
-import { AxiosResponse } from 'axios';
 
 export type HttpMethod = 'get' | 'post' | 'put' | 'delete';
 
@@ -18,10 +16,13 @@ export interface AuthContextType {
     login: (
         username: string,
         password: string,
-        callback: VoidFunction,
+        successCallback: VoidFunction,
     ) => Promise<any>;
-    logout: (callback: VoidFunction) => void;
-    refreshAuth: (callback: VoidFunction) => Promise<boolean>;
+    logout: (
+        successCallback: VoidFunction,
+        absolutlyExecutor?: () => void,
+    ) => void;
+    refreshAuth: (successCallback: VoidFunction) => Promise<boolean>;
     requestData: (
         method: HttpMethod,
         fetchUrl: string,
@@ -58,13 +59,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
      *
      * @param username
      * @param password
-     * @param callback
+     * @param successCallback
      * @returns
      */
-    const login = async (
+    const login: AuthContextType['login'] = async (
         username: string,
         password: string,
-        callback: VoidFunction,
+        successCallback: VoidFunction,
     ) => {
         let res: LoginResponse;
 
@@ -87,15 +88,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 StatusCode.SUCCESS,
                 StatusCode.NO_CONTENT,
             ];
-            console.log(res!);
             if (acceptedStatusCode.includes(res!.statusCode)) {
                 const { access_token } = res!.data as any;
 
                 setCookie('access_token', access_token);
-
                 setCookie('username', username);
 
-                // const profile = await get('/users/' + username, access_token);
                 const profile = await RequestHandler.get(
                     '/auth/profile',
                     access_token,
@@ -107,7 +105,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 });
             }
 
-            callback();
+            successCallback();
         } catch (e: any) {
             toast.error(e.message);
         }
@@ -120,20 +118,37 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
      *
      * @param callback
      */
-    const logout = async (callback: VoidFunction) => {
-        const token = cookies.access_token;
-        const res = (await auth.logout(`/auth/logout`, token)) as LoginResponse;
-        removeCookie('access_token');
+    const logout: AuthContextType['logout'] = async (
+        successCallback: VoidFunction,
+        absolutlyExecutor?: () => void,
+    ) => {
+        try {
+            const token = cookies.access_token;
+            const res = (await auth.logout(
+                `/auth/logout`,
+                token,
+            )) as LoginResponse;
+            removeCookie('access_token');
 
-        removeCookie('username');
-        setUser({
-            username: '',
-            scope: [],
-        });
-        await RequestHandler.auth.logout(`/auth/logout`, token);
-        AxiosManager.removeAxiossInstance();
+            // 로그인 상태 제거
+            localStorage.removeItem('isLoggedIn');
 
-        callback();
+            removeCookie('username');
+            setUser({
+                username: '',
+                scope: [],
+            });
+            await RequestHandler.auth.logout(`/auth/logout`, token);
+            AxiosManager.removeAxiossInstance();
+
+            successCallback();
+        } catch (e: any) {
+            if (!absolutlyExecutor) {
+                successCallback();
+            } else {
+                absolutlyExecutor();
+            }
+        }
     };
 
     /**
@@ -142,26 +157,38 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
      * @param callback
      * @returns
      */
-    const refreshAuth = async (callback: VoidFunction) => {
-        const token = cookies.access_token;
-        const username = cookies.username;
+    const refreshAuth: AuthContextType['refreshAuth'] = async (
+        successCallback: VoidFunction,
+        errorCallback?: VoidFunction,
+    ) => {
+        try {
+            const token = cookies.access_token;
 
-        if (token === '') {
+            if (token === '') {
+                return false;
+            }
+
+            if (!AxiosManager.getAxiosInstance(token)) {
+                AxiosManager.createAxiosInstance({
+                    AUTH_TOKEN: token,
+                });
+            }
+
+            const profile = await RequestHandler.getUser(
+                '/auth/profile',
+                token,
+            );
+            setUser(profile.user);
+
+            successCallback();
+
+            return true;
+        } catch (e: any) {
+            if (errorCallback) {
+                errorCallback();
+            }
             return false;
         }
-
-        if (!AxiosManager.getAxiosInstance(token)) {
-            AxiosManager.createAxiosInstance({
-                AUTH_TOKEN: token,
-            });
-        }
-
-        const profile = await RequestHandler.getUser('/auth/profile', token);
-        setUser(profile.user);
-
-        callback();
-
-        return true;
     };
 
     /**
@@ -172,7 +199,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
      * @param payload
      * @returns
      */
-    const requestData = async (
+    const requestData: AuthContextType['requestData'] = async (
         method: HttpMethod,
         fetchUrl: string,
         payload?: Record<string, any> | null,
