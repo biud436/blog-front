@@ -1,5 +1,6 @@
 import { auth } from 'app/api/request';
 import * as React from 'react';
+import { useEffect } from 'react';
 import { useCookies, CookiesProvider } from 'react-cookie';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -249,7 +250,7 @@ export function RequireAuth({ children }: { children: JSX.Element }) {
     const [isReady, setIsReady] = React.useState(false);
     const [cookies] = useCookies(['access_token', 'username']);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const storedUserName = cookies.username;
         if (storedUserName) {
             auth.refreshAuth(() => {
