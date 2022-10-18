@@ -44,9 +44,9 @@ export const PostEditorContainer = observer(() => {
         return !isAuthorized ? (
             <Grid container>
                 <Grid item xs={12}>
-                    <Typography variant="h3" align="center">
+                    <Alert variant="filled" severity="error">
                         로그인이 필요한 서비스입니다.
-                    </Typography>
+                    </Alert>
                 </Grid>
             </Grid>
         ) : (
