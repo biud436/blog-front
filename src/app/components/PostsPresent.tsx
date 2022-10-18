@@ -87,6 +87,10 @@ const PostsContainer = observer(() => {
         fetchData();
     }, [categoryService.getCurrentMenuCategoryId()]);
 
+    const goToPage = (postId: number) => {
+        navigate(`/posts/${postId}`);
+    };
+
     return (
         <>
             <Grid
@@ -106,7 +110,16 @@ const PostsContainer = observer(() => {
                                 >
                                     <Grid container gap={1}>
                                         <Grid item xs={12}>
-                                            <Typography variant="h6">
+                                            <Typography
+                                                variant="h6"
+                                                sx={{
+                                                    cursor: 'pointer',
+                                                    color: 'primary.main',
+                                                }}
+                                                onClick={() =>
+                                                    goToPage(post.id!)
+                                                }
+                                            >
                                                 {post.title}
                                             </Typography>
                                             <Stack
@@ -122,18 +135,16 @@ const PostsContainer = observer(() => {
                                                     {post.category?.name}
                                                 </Typography>
                                                 <Typography variant="subtitle2">
-                                                    {post.viewCount?.count}
-                                                </Typography>
-                                                <Typography variant="subtitle2">
                                                     {DateUtil.ToDateStringBySeoul(
                                                         post?.uploadDate!,
                                                         Formatter.DATETIME,
                                                     )}
                                                 </Typography>
                                             </Stack>
-
                                             <Divider />
-                                            <Markdown>{post.content}</Markdown>
+                                            <Markdown breaks={true}>
+                                                {post.content}
+                                            </Markdown>
                                         </Grid>
                                     </Grid>
                                 </Card>

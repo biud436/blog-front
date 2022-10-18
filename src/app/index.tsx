@@ -20,6 +20,8 @@ import { PostsPresent } from './components/PostsPresent';
 import { PostsPage } from './pages/posts';
 import { CategoryServiceProvider } from '@/services/CategoryService';
 import { PostsServiceProvider } from '@/services/PostsService';
+import { PostPage } from './pages/post';
+import { PostServiceProvider } from '@/services/PostService';
 
 const queryClient = new QueryClient();
 
@@ -31,43 +33,49 @@ export function App() {
             <RecoilRoot>
                 <React.Suspense fallback={<div>Loading...</div>}>
                     <CategoryServiceProvider>
-                        <AuthProvider>
-                            <BrowserRouter
-                                basename={
-                                    process.env.NODE_ENV === 'production'
-                                        ? '/'
-                                        : ''
-                                }
-                            >
-                                <Helmet
-                                    titleTemplate="%s - 어진석의 블로그"
-                                    defaultTitle="어진석의 블로그"
-                                    htmlAttributes={{ lang: i18n.language }}
+                        <PostServiceProvider>
+                            <AuthProvider>
+                                <BrowserRouter
+                                    basename={
+                                        process.env.NODE_ENV === 'production'
+                                            ? '/'
+                                            : ''
+                                    }
                                 >
-                                    <meta name="description" content="" />
-                                </Helmet>
-                                <GlobalStyle />
-                                <Routes>
-                                    <Route
-                                        path={URL_MAP.LOGIN}
-                                        element={<LoginPage />}
-                                    />
-                                    <Route
-                                        path={URL_MAP.MAIN}
-                                        element={<PostsPage />}
-                                    />
-                                    <Route
-                                        path={URL_MAP.POST_EDIT}
-                                        element={<PostEditorContainer />}
-                                    />
-                                    <Route
-                                        path="*"
-                                        element={<NotFoundPage />}
-                                    />
-                                </Routes>
-                                <ToastContainer />
-                            </BrowserRouter>
-                        </AuthProvider>
+                                    <Helmet
+                                        titleTemplate="%s - 어진석의 블로그"
+                                        defaultTitle="어진석의 블로그"
+                                        htmlAttributes={{ lang: i18n.language }}
+                                    >
+                                        <meta name="description" content="" />
+                                    </Helmet>
+                                    <GlobalStyle />
+                                    <Routes>
+                                        <Route
+                                            path={URL_MAP.LOGIN}
+                                            element={<LoginPage />}
+                                        />
+                                        <Route
+                                            path={URL_MAP.MAIN}
+                                            element={<PostsPage />}
+                                        />
+                                        <Route
+                                            path="/posts/:postId"
+                                            element={<PostPage />}
+                                        />
+                                        <Route
+                                            path={URL_MAP.POST_EDIT}
+                                            element={<PostEditorContainer />}
+                                        />
+                                        <Route
+                                            path="*"
+                                            element={<NotFoundPage />}
+                                        />
+                                    </Routes>
+                                    <ToastContainer />
+                                </BrowserRouter>
+                            </AuthProvider>
+                        </PostServiceProvider>
                     </CategoryServiceProvider>
                 </React.Suspense>
             </RecoilRoot>
