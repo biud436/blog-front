@@ -18,11 +18,11 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { useNavigate } from 'react-router';
 import { useAuth } from '@/app/providers/authProvider';
-import { DrawerHeader } from '@/app/components/DrawerHeader';
+import { DrawerHeader } from '@/app/components/atomic/DrawerHeader';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { URL_MAP } from '@/common/URL';
 import { Collapse, Container, useMediaQuery } from '@mui/material';
-import { API_URL } from '../api/request';
+import { API_URL } from '../../api/request';
 import axios, { AxiosResponse } from 'axios';
 import { CategoryDepthVO } from '@/services/CategoryService';
 import { useCategoryService } from '@/hooks/useCategoryService';
@@ -31,7 +31,7 @@ import { useCookies } from 'react-cookie';
 import { LoginButton } from './LoginButton';
 import { LogoutButton } from './LogoutButton';
 import { MenuPostWriteButton } from './MenuPostWriteButton';
-import { RequestHandler } from '../api/axios';
+import { RequestHandler } from '../../api/axios';
 
 const drawerWidth = 240;
 

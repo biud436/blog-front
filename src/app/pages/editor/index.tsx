@@ -1,9 +1,11 @@
-import { PostEditorPresent } from '@/app/components/PostEditorPresent';
+import { PostEditorPresent } from '@/app/components/editor/PostEditorPresent';
 import { Grid, Paper, Typography, Divider, Alert } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import ChevronRight from '@mui/icons-material/ChevronRight';
-import { PageWrapper } from '@/app/components/PageWrapper';
+import { PageWrapper } from '@/app/components/category/PageWrapper';
 import { RequireAuth } from '@/app/providers/authProvider';
+import { useEffect } from 'react';
+import { useAuthorized } from '@/hooks/useAuthorized';
 
 function PageHeader() {
     return (
@@ -36,17 +38,37 @@ export const PostEditor = observer(() => {
 });
 
 export const PostEditorContainer = observer(() => {
+    const [isAuthorized, isDone] = useAuthorized();
+
+    const LoginGuard = ({ children }: { children: JSX.Element }) => {
+        return !isAuthorized ? (
+            <Grid container>
+                <Grid item xs={12}>
+                    <Typography variant="h3" align="center">
+                        로그인이 필요한 서비스입니다.
+                    </Typography>
+                </Grid>
+            </Grid>
+        ) : (
+            children
+        );
+    };
+
+    useEffect(() => {}, [isDone]);
+
     return (
-        <RequireAuth>
-            <PageWrapper name="포스트 에디터">
-                <Paper sx={{ padding: 2 }} key="editor">
-                    <Grid container gap={3}>
-                        <PageHeader />
-                        <PageDescription />
-                        <PostEditor />
-                    </Grid>
-                </Paper>
-            </PageWrapper>
-        </RequireAuth>
+        <PageWrapper name="포스트 에디터">
+            <Paper sx={{ padding: 2 }} key="editor">
+                <LoginGuard>
+                    <RequireAuth>
+                        <Grid container gap={3}>
+                            <PageHeader />
+                            <PageDescription />
+                            <PostEditor />
+                        </Grid>
+                    </RequireAuth>
+                </LoginGuard>
+            </Paper>
+        </PageWrapper>
     );
 });

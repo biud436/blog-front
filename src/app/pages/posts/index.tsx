@@ -1,6 +1,6 @@
-import { PageWrapper } from '@/app/components/PageWrapper';
+import { PageWrapper } from '@/app/components/category/PageWrapper';
 import { observer } from 'mobx-react-lite';
-import { PostsPresent } from '../../components/PostsPresent';
+import { PostsPresent } from '../../components/posts/PostsPresent';
 
 export const PostsPage = observer(() => {
     return (

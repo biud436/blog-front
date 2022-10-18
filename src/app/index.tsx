@@ -16,7 +16,7 @@ import { LoginPage } from './pages/login';
 import { NotFoundPage } from './pages/error';
 import { Container } from '@mui/material';
 import { PostEditorContainer } from './pages/editor';
-import { PostsPresent } from './components/PostsPresent';
+import { PostsPresent } from './components/posts/PostsPresent';
 import { PostsPage } from './pages/posts';
 import { CategoryServiceProvider } from '@/services/CategoryService';
 import { PostsServiceProvider } from '@/services/PostsService';

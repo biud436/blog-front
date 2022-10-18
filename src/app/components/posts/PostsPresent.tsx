@@ -1,4 +1,4 @@
-import { SearchBuilder } from '@/app/components/atomic/Search';
+import { SearchBuilder } from '@/app/components/builder/SearchBuilder';
 import { useAuth } from '@/app/providers/authProvider';
 import { usePostsService } from '@/hooks/usePostsService';
 import { PostsServiceProvider } from '@/services/PostsService';
@@ -21,7 +21,7 @@ import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import Markdown from 'marked-react';
-import { DateUtil, Formatter } from '../api/date';
+import { DateUtil, Formatter } from '../../api/date';
 import { useNavigate } from 'react-router';
 import { URL_MAP } from '@/common/URL';
 import { useCategoryService } from '@/hooks/useCategoryService';
@@ -171,21 +171,6 @@ const PostsContainer = observer(() => {
                             handlePage(e, p);
                         }}
                     />
-                </Grid>
-                <Grid
-                    container
-                    spacing={0}
-                    sx={{ paddingRight: 4 }}
-                    direction="row"
-                    alignContent="center"
-                    justifyContent={'end'}
-                >
-                    <Button
-                        variant="contained"
-                        onClick={() => navigate(URL_MAP.POST_EDIT)}
-                    >
-                        글 작성
-                    </Button>
                 </Grid>
                 <SearchBox
                     store={postsStore}

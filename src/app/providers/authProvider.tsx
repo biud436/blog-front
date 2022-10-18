@@ -8,7 +8,7 @@ import { userState } from 'store/user';
 import { toast } from 'react-toastify';
 import { AxiosManager, RequestHandler } from 'app/api/axios';
 import { User } from 'store/types';
-import Loading from '../components/Loading';
+import Loading from '../components/atomic/Loading';
 
 export type HttpMethod = 'get' | 'post' | 'put' | 'delete';
 
