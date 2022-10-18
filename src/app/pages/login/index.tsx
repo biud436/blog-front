@@ -108,7 +108,7 @@ export function LoginPage() {
         const pathname = location.pathname;
 
         return await auth.login(username, password, () => {
-            navigate(URL_MAP.MAIN);
+            navigate(URL_MAP.MAIN, { replace: true });
         });
     };
 
