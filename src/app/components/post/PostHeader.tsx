@@ -1,7 +1,16 @@
 import { Post } from '@/store/post';
-import { Divider, Grid, Typography } from '@mui/material';
+import { Button, Divider, Grid, Typography } from '@mui/material';
+import { toast } from 'react-toastify';
 
 export function PostHeader({ post }: { post: Post }) {
+    const copyLinkToClipboard = () => {
+        navigator.clipboard.writeText(window.location.href);
+
+        toast.info('포스트 링크가 복사되었습니다.', {
+            position: 'top-center',
+        });
+    };
+
     return (
         <>
             <Grid item xs={12}>
@@ -28,6 +37,15 @@ export function PostHeader({ post }: { post: Post }) {
                         {post.user?.profile?.nickname}
                     </Typography>
                 </Typography>
+            </Grid>
+            <Grid
+                item
+                xs={12}
+                sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}
+            >
+                <Button variant="outlined" onClick={copyLinkToClipboard}>
+                    링크 복사
+                </Button>
             </Grid>
             <Grid item xs={12}>
                 <Divider />
