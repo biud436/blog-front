@@ -201,3 +201,5 @@ Procfile          text
 *.*ignore         text
 
 build/* linguist-documentation
+build/static/js/* linguist-documentation
+build/static/media/* linguist-documentation
