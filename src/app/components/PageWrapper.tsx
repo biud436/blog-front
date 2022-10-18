@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -12,16 +13,13 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { useNavigate } from 'react-router';
 import { useAuth } from '@/app/providers/authProvider';
 import { DrawerHeader } from '@/app/components/DrawerHeader';
-import LogoutIcon from '@mui/icons-material/Logout';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import AddIcon from '@mui/icons-material/Add';
 import { URL_MAP } from '@/common/URL';
 import { Collapse, Container, useMediaQuery } from '@mui/material';
 import { API_URL } from '../api/request';
@@ -30,6 +28,10 @@ import { CategoryDepthVO } from '@/services/CategoryService';
 import { useCategoryService } from '@/hooks/useCategoryService';
 import { observer } from 'mobx-react-lite';
 import { useCookies } from 'react-cookie';
+import { LoginButton } from './LoginButton';
+import { LogoutButton } from './LogoutButton';
+import { MenuPostWriteButton } from './MenuPostWriteButton';
+import { RequestHandler } from '../api/axios';
 
 const drawerWidth = 240;
 
@@ -182,7 +184,7 @@ export const PageWrapper = observer(
             await initCategories();
         };
 
-        React.useEffect(() => {
+        useEffect(() => {
             if (matches) {
                 setOpen(false);
             }
@@ -263,61 +265,41 @@ export function LoginWrapper() {
         'access_token',
         'username',
     ]);
+    const [isAuthorized, setIsAuthorized] = React.useState(false);
 
-    React.useEffect(() => {
+    // 토큰 만료 여부를 확인합니다.
+    const checkUserProfile = async () => {
+        try {
+            const accessToken = cookies.access_token;
+
+            const profile = await RequestHandler.get(
+                '/auth/profile',
+                accessToken,
+            );
+
+            if (profile) {
+                setIsAuthorized(true);
+            }
+        } catch (e) {}
+    };
+
+    useEffect(() => {
+        // 로그인 여부를 확인합니다.
         const isLoggedIn = localStorage.getItem('isLoggedIn');
         if (isLoggedIn) {
             setIsLoggedIn(true);
         }
-    }, [cookies.access_token]);
+        checkUserProfile();
+    }, [cookies.access_token, isAuthorized]);
 
     return (
         <>
-            <ListItem
-                key={'post_write_editor'}
-                disablePadding
-                onClick={() => navigate(URL_MAP.POST_EDIT)}
-            >
-                <ListItemButton>
-                    <ListItemIcon>
-                        <AddIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={'글쓰기'} />
-                </ListItemButton>
-            </ListItem>
-            {isLoggenIn ? (
-                <>
-                    <ListItem
-                        key={'logout'}
-                        disablePadding
-                        onClick={() =>
-                            auth.logout(() => {
-                                location.reload();
-                            })
-                        }
-                    >
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <LogoutIcon />
-                            </ListItemIcon>
-                            <ListItemText primary={'로그아웃'} />
-                        </ListItemButton>
-                    </ListItem>
-                </>
+            <MenuPostWriteButton navigate={navigate} />
+            {isAuthorized ? (
+                <LogoutButton auth={auth} />
             ) : (
                 <>
-                    <ListItem
-                        key={'login'}
-                        disablePadding
-                        onClick={() => navigate(URL_MAP.LOGIN)}
-                    >
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <LogoutIcon />
-                            </ListItemIcon>
-                            <ListItemText primary={'로그인'} />
-                        </ListItemButton>
-                    </ListItem>
+                    <LoginButton navigate={navigate} />
                 </>
             )}
         </>

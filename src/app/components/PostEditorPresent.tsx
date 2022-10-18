@@ -1,15 +1,7 @@
 import { URL_MAP } from '@/common/URL';
 import { useCategoryService } from '@/hooks/useCategoryService';
 import { CategoryDepthVO } from '@/services/CategoryService';
-import {
-    Button,
-    FormControl,
-    Grid,
-    Input,
-    InputLabel,
-    MenuItem,
-    Select,
-} from '@mui/material';
+import { Grid } from '@mui/material';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor } from '@toast-ui/react-editor';
 import { observer } from 'mobx-react-lite';
@@ -19,6 +11,9 @@ import { toJS } from 'mobx';
 import { useAuth } from '../providers/authProvider';
 import React from 'react';
 import { toast } from 'react-toastify';
+import { PostButtonGroup } from './PostButtonGroup';
+import { PostSelectCategory } from './PostSelectCategory';
+import { PostTitleInput } from './PostTitleInput';
 
 export const PostEditorPresent = observer(() => {
     const auth = useAuth();
@@ -77,37 +72,12 @@ export const PostEditorPresent = observer(() => {
     return (
         <Grid container>
             <Grid item xs={12} lg={12} md={12}>
-                <FormControl fullWidth sx={{ marginBottom: 2 }}>
-                    <InputLabel>제목</InputLabel>
-                    <Input
-                        type="text"
-                        placeholder="제목을 입력하세요"
-                        value={title}
-                        onChange={e => {
-                            setTitle(e.target.value);
-                        }}
-                    />
-                </FormControl>
-                <FormControl fullWidth sx={{ marginBottom: 2 }}>
-                    <InputLabel>카테고리 선택</InputLabel>
-                    <Select
-                        value={currentCategoryId}
-                        onChange={e => setCurrentCategoryId(+e.target.value)}
-                    >
-                        {categories.map(category => {
-                            return (
-                                <MenuItem value={category.id} key={category.id}>
-                                    {[...Array(category.depth)].map(
-                                        (e, index) => {
-                                            return <>&nbsp;&nbsp;</>;
-                                        },
-                                    )}
-                                    {category.name}
-                                </MenuItem>
-                            );
-                        })}
-                    </Select>
-                </FormControl>
+                <PostTitleInput title={title} setTitle={setTitle} />
+                <PostSelectCategory
+                    currentCategoryId={currentCategoryId}
+                    setCurrentCategoryId={setCurrentCategoryId}
+                    categories={categories}
+                />
             </Grid>
             <Grid item xs={12} lg={12} sm={12}>
                 <Editor
@@ -125,24 +95,10 @@ export const PostEditorPresent = observer(() => {
                 />
             </Grid>
             <Grid container justifyContent="center" sx={{ padding: 2 }}>
-                <Grid item sx={{ display: 'flex', gap: 2 }}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => {
-                            handleWrite();
-                        }}
-                    >
-                        작성
-                    </Button>
-                    <Button
-                        variant="contained"
-                        color="warning"
-                        onClick={() => handleCancel()}
-                    >
-                        취소
-                    </Button>
-                </Grid>
+                <PostButtonGroup
+                    handleWrite={handleWrite}
+                    handleCancel={handleCancel}
+                />
             </Grid>
         </Grid>
     );
