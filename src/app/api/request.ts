@@ -1,6 +1,6 @@
 import { IRequestHandler } from '@/types/IRequest';
 
-export const API_URL = 'http://localhost:3000';
+export const API_URL = 'https://blog-api.biud436.com';
 
 // 토큰 캐시
 const requestCache: { token?: string | null } = { token: null };
