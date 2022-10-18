@@ -6,6 +6,26 @@ This project is the blog that is made with the javascript library called React, 
 
 노드 블로그 서버 [blog-api-server](https://github.com/biud436/blog-api-server)와 연동되는 블로그 프론트 페이지로 토이 프로젝트로 진행하고 있으며 아직 작업 중입니다.
 
+# Todo List
+
+-   [x] 블로그 메인 페이지 만들기
+-   [x] 관리자 로그인 기능 만들기
+-   [x] 중첩 모델을 사용하여 계층적 카테고리 만들기
+-   [x] 포스트 목록 (페이징, 포스트 검색)
+-   [x] 포스트 상세 페이지
+-   [x] 포스트 작성 페이지
+-   [ ] AWS S3로 이미지 업로드 기능 만들기
+-   [ ] 파일 업로드 기능 만들기
+-   [ ] 포스트 내용을 Helmet을 이용한 SEO 처리하기
+-   [ ] Helmet에서 meta 태그를 이용하여 이미지 미리보기 처리하기
+-   [ ] 포스트 수정 기능
+-   [ ] 포스트 삭제 기능
+-   [ ] 댓글 작성 기능
+-   [ ] 댓글 수정 기능
+-   [ ] 댓글 삭제 기능
+-   [ ] 외부 댓글 플러그인 연동
+-   [ ] RSS 피드 기능
+
 ## 설치 방법
 
 이 프로젝트를 시작하려면 `Visual Studio Code` 와 `Node.js LTS v14` 이상이 설치되어있어야 합니다. 노드 패키지 관리자는 `yarn`을 사용합니다. yarn berry가 더 빠르지만, 순수한 yarn을 사용하고 있습니다. 프로젝트를 시작하기 전에 의존성 노드 패키지를 내려 받아야 합니다.
