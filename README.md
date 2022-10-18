@@ -9,6 +9,7 @@ This project is the blog that is made with the javascript library called React, 
 # Todo List
 
 -   [x] 블로그 메인 페이지 만들기
+-   [x] 상태 관리 라이브러리 적용하기 (mobx)
 -   [x] 관리자 로그인 기능 만들기
 -   [x] 중첩 모델을 사용하여 계층적 카테고리 만들기
 -   [x] 포스트 목록 (페이징, 포스트 검색)
