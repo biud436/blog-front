@@ -35,13 +35,11 @@ export const PostPage = observer(() => {
     return (
         <PageWrapper name={post.title}>
             <Helmet>
-                <Helmet>
-                    <title>{post.title}</title>
-                    <meta property="og:title" content={post.title} />
-                    <meta property="og:type" content="article" />
-                    <meta property="og:url" content={window.location.href} />
-                    <meta property="og:description" content={post.content} />
-                </Helmet>
+                <title>{post.title}</title>
+                <meta property="og:title" content={post.title} />
+                <meta property="og:type" content="article" />
+                <meta property="og:url" content={window.location.href} />
+                <meta property="og:description" content={post.content} />
             </Helmet>
             <PostPresent post={post} goBack={goBack} />
         </PageWrapper>
