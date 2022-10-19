@@ -1,4 +1,5 @@
 import { PageWrapper } from '@/app/components/category/PageWrapper';
+import { URL_MAP } from '@/common/URL';
 import { usePost } from '@/hooks/usePost';
 import { PostContext, PostServiceProvider } from '@/services/PostService';
 import { observer } from 'mobx-react-lite';
@@ -23,7 +24,11 @@ export const PostPage = observer(() => {
     }, [post, error]);
 
     const goBack = () => {
-        navigate(-1);
+        if (window.history.length > 1) {
+            navigate(-1);
+        } else {
+            navigate(URL_MAP.MAIN);
+        }
     };
 
     return (

@@ -21,7 +21,7 @@ import { useAuth } from '@/app/providers/authProvider';
 import { DrawerHeader } from '@/app/components/atomic/DrawerHeader';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { URL_MAP } from '@/common/URL';
-import { Collapse, Container, useMediaQuery } from '@mui/material';
+import { Collapse, Container } from '@mui/material';
 import { API_URL } from '../../api/request';
 import axios, { AxiosResponse } from 'axios';
 import { CategoryDepthVO } from '@/services/CategoryService';
@@ -32,6 +32,7 @@ import { LoginButton } from './LoginButton';
 import { LogoutButton } from './LogoutButton';
 import { MenuPostWriteButton } from './MenuPostWriteButton';
 import { RequestHandler } from '../../api/axios';
+import { useMediaQuery } from 'react-responsive';
 
 const drawerWidth = 240;
 
@@ -78,7 +79,9 @@ const AppBar = styled(MuiAppBar, {
 export const PageWrapper = observer(
     ({ name, children }: { name: string; children: React.ReactNode }) => {
         const navigate = useNavigate();
-        const matches = useMediaQuery('(max-width:1024px)');
+        const matches = useMediaQuery({
+            query: '(max-width: 768px)',
+        });
         const theme = useTheme();
         const [open, setOpen] = React.useState(true);
         const [categoryList, setCategoryList] = React.useState<
@@ -149,7 +152,7 @@ export const PageWrapper = observer(
                                     category.id,
                                 );
 
-                                navigate(URL_MAP.MAIN);
+                                // navigate(URL_MAP.MAIN);
                             }}
                             sx={{
                                 pl: category.depth * 2,
@@ -185,12 +188,10 @@ export const PageWrapper = observer(
         };
 
         useEffect(() => {
-            if (matches) {
-                setOpen(false);
-            }
-
             initWithSettings();
-        }, []);
+
+            setOpen(!matches);
+        }, [matches]);
 
         return (
             <>
