@@ -23,10 +23,10 @@ This project is the blog that is made with the javascript library called React, 
 -   [ ] 최근 작성한 댓글 목록 보여주기
 -   [ ] 포스트 수정 기능
 -   [ ] 포스트 삭제 기능
--   [ ] 댓글 작성 기능
--   [ ] 댓글 수정 기능
--   [ ] 댓글 삭제 기능
--   [ ] 외부 댓글 플러그인 연동
+-   [x] 댓글 작성 기능
+-   [x] 댓글 수정 기능
+-   [x] 댓글 삭제 기능
+-   [x] 외부 댓글 플러그인 연동
 -   [ ] RSS 피드 기능
 
 ## 설치 방법
