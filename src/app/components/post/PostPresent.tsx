@@ -1,5 +1,5 @@
 import { Post } from '@/store/post';
-import { Card, Grid } from '@mui/material';
+import { Card, Divider, Grid, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { BackButton } from './BackButton';
 import { GithubComment } from './Comment';
@@ -25,8 +25,17 @@ export function PostPresent({
                     <PostContent post={post} />
                     <Grid item xs={12}></Grid>
                 </Grid>
-            </Card>
-            <Card sx={{ padding: 2, marginBottom: 3 }} elevation={3}>
+                <Divider />
+                <Typography
+                    variant="subtitle1"
+                    sx={{
+                        marginTop: 1,
+                        color: 'primary.main',
+                        cursor: 'pointer',
+                    }}
+                >
+                    ⭐️ Comments
+                </Typography>
                 <GithubComment />
             </Card>
             <BackButton goBack={goBack} />
