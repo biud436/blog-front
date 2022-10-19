@@ -152,7 +152,7 @@ export const PageWrapper = observer(
                                     category.id,
                                 );
 
-                                // navigate(URL_MAP.MAIN);
+                                navigate(URL_MAP.MAIN);
                             }}
                             sx={{
                                 pl: category.depth * 2,
