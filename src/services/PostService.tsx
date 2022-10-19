@@ -1,5 +1,4 @@
-import { RequestHandler } from '@/app/api/axios';
-import { API_URL, post } from '@/app/api/request';
+import { API_URL } from '@/app/api/request';
 import { Post, PostStore } from '@/store/post';
 import axios, { AxiosResponse } from 'axios';
 import { makeAutoObservable } from 'mobx';
@@ -8,7 +7,6 @@ import { createContext, ReactNode } from 'react';
 
 export interface IPostService {
     isSamePost(postId: number): boolean;
-    fetch(postId: number): Promise<void>;
     isLoadingState(): boolean;
     isErrorState(): boolean;
     getErrorMessage(): string;
@@ -37,40 +35,6 @@ export class PostServiceImpl implements IPostService {
 
     constructor() {
         makeAutoObservable(this);
-    }
-
-    /**
-     * Get the post content from the server.
-     *
-     * @param postId
-     */
-    async fetch(postId: number) {
-        this.isLoading = true;
-
-        try {
-            const raw = (await axios.get(
-                `${API_URL}/posts/${postId}`,
-            )) as AxiosResponse<IServerResponse>;
-            const res = raw.data;
-
-            console.log(res);
-
-            const message = res.message;
-            const statusCode = res.statusCode;
-            const result = res.result;
-
-            const data = res.data as Post;
-
-            this.setData(data);
-
-            this.isError = false;
-        } catch (e: any) {
-            console.error(e);
-            this.errorMessage = e.message ?? 'Unknown error';
-            this.isError = true;
-        } finally {
-            this.isLoading = false;
-        }
     }
 
     isSamePost(postId: number): boolean {

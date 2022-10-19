@@ -68,6 +68,10 @@ export function App() {
                                             element={<PostEditorContainer />}
                                         />
                                         <Route
+                                            path="/404"
+                                            element={<NotFoundPage />}
+                                        />
+                                        <Route
                                             path="*"
                                             element={<NotFoundPage />}
                                         />
