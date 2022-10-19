@@ -8,6 +8,7 @@ import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from 'react-router';
 import { toast } from 'react-toastify';
 import { PostPresent } from '../../components/post/PostPresent';
+import EmptyImage from '@/assets/logo192.png';
 
 export const PostPage = observer(() => {
     const params = useParams();
@@ -37,7 +38,10 @@ export const PostPage = observer(() => {
             <Helmet>
                 <title>{post.title}</title>
                 <meta property="og:title" content={post.title} />
-                <meta property="og:type" content="article" />
+                <meta property="og:type" content="website" />
+                <meta property="og:site_name" content={post.title} />
+
+                <meta property="og:image" content={EmptyImage} />
                 <meta property="og:url" content={window.location.href} />
                 <meta property="og:description" content={post.content} />
             </Helmet>
