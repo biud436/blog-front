@@ -14,12 +14,6 @@ export function PostPresent({
 }) {
     return (
         <>
-            <Helmet>
-                <title>{post.title}</title>
-                <meta name="og:title" content={post.title} />
-                <meta name="og:description" content={post.content} />
-                <meta name="description" content={post.content} />
-            </Helmet>
             <Card
                 sx={{ padding: 2, marginBottom: 3 }}
                 key={post.id}

@@ -4,6 +4,7 @@ import { usePost } from '@/hooks/usePost';
 import { PostContext, PostServiceProvider } from '@/services/PostService';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from 'react-router';
 import { toast } from 'react-toastify';
 import { PostPresent } from '../../components/post/PostPresent';
@@ -33,6 +34,15 @@ export const PostPage = observer(() => {
 
     return (
         <PageWrapper name={post.title}>
+            <Helmet>
+                <Helmet>
+                    <title>{post.title}</title>
+                    <meta property="og:title" content={post.title} />
+                    <meta property="og:type" content="article" />
+                    <meta property="og:url" content={window.location.href} />
+                    <meta property="og:description" content={post.content} />
+                </Helmet>
+            </Helmet>
             <PostPresent post={post} goBack={goBack} />
         </PageWrapper>
     );
