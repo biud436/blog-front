@@ -205,7 +205,7 @@ export const PageWrapper = observer(
         useEffect(() => {
             initWithSettings();
 
-            setOpen(!matches);
+            setOpen(matches);
         }, [matches]);
 
         return (

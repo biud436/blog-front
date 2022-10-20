@@ -1,5 +1,15 @@
+import { API_URL } from '@/app/api/request';
 import { Post } from '@/store/post';
-import { Button, Divider, Grid, Typography } from '@mui/material';
+import {
+    Breadcrumbs,
+    Button,
+    Divider,
+    Grid,
+    Link,
+    Typography,
+} from '@mui/material';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 export function PostHeader({ post }: { post: Post }) {
@@ -18,6 +28,7 @@ export function PostHeader({ post }: { post: Post }) {
                     {post.title}
                 </Typography>
             </Grid>
+
             <Grid
                 item
                 xs={12}
