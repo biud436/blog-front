@@ -83,7 +83,7 @@ export const PageWrapper = observer(
             query: '(max-width: 768px)',
         });
         const theme = useTheme();
-        const [open, setOpen] = React.useState(true);
+        const [open, setOpen] = React.useState(false);
         const [categoryList, setCategoryList] = React.useState<
             CategoryDepthVO[]
         >([]);
