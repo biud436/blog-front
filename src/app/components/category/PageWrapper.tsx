@@ -210,7 +210,13 @@ export const PageWrapper = observer(
 
         return (
             <>
-                <Container maxWidth="xl">
+                <Container
+                    maxWidth="xl"
+                    onClick={(e: React.MouseEvent) => {
+                        toggleDrawer(false);
+                        e.preventDefault();
+                    }}
+                >
                     <Box sx={{ display: 'flex' }}>
                         <CssBaseline />
                         <AppBar position="fixed" open={open}>
