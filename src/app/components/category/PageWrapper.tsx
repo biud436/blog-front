@@ -21,7 +21,7 @@ import { useAuth } from '@/app/providers/authProvider';
 import { DrawerHeader } from '@/app/components/atomic/DrawerHeader';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { URL_MAP } from '@/common/URL';
-import { Collapse, Container } from '@mui/material';
+import { Collapse, Container, SwipeableDrawer } from '@mui/material';
 import { API_URL } from '../../api/request';
 import axios, { AxiosResponse } from 'axios';
 import { CategoryDepthVO } from '@/services/CategoryService';
@@ -97,6 +97,20 @@ export const PageWrapper = observer(
             setOpen(false);
         };
 
+        const toggleDrawer =
+            (open: boolean) =>
+            (event: React.KeyboardEvent | React.MouseEvent) => {
+                if (
+                    event.type === 'keydown' &&
+                    ((event as React.KeyboardEvent).key === 'Tab' ||
+                        (event as React.KeyboardEvent).key === 'Shift')
+                ) {
+                    return;
+                }
+
+                setOpen(open);
+            };
+
         /**
          * 카테고리 목록 초기화
          * @returns
@@ -151,9 +165,10 @@ export const PageWrapper = observer(
                                 categoryService.setCurrentMenuCategoryId(
                                     category.id,
                                 );
-
+                                toggleDrawer(false);
                                 navigate(URL_MAP.MAIN);
                             }}
+                            onKeyDown={toggleDrawer(false)}
                             sx={{
                                 pl: category.depth * 2,
                             }}
@@ -226,26 +241,30 @@ export const PageWrapper = observer(
                                     boxSizing: 'border-box',
                                 },
                             }}
-                            variant="persistent"
                             anchor="left"
                             open={open}
                         >
-                            <DrawerHeader>
-                                <IconButton onClick={handleDrawerClose}>
-                                    {theme.direction === 'ltr' ? (
-                                        <ChevronLeftIcon />
-                                    ) : (
-                                        <ChevronRightIcon />
-                                    )}
-                                </IconButton>
-                            </DrawerHeader>
-                            <Divider />
-                            <List component="nav">
-                                {makeCategoryList(categoryList)}
+                            <Box
+                                onKeyDown={toggleDrawer(false)}
+                                onClick={toggleDrawer(false)}
+                            >
+                                <DrawerHeader>
+                                    <IconButton onClick={handleDrawerClose}>
+                                        {theme.direction === 'ltr' ? (
+                                            <ChevronLeftIcon />
+                                        ) : (
+                                            <ChevronRightIcon />
+                                        )}
+                                    </IconButton>
+                                </DrawerHeader>
                                 <Divider />
-                                <LoginWrapper />
-                            </List>
-                            <Divider />
+                                <List component="nav">
+                                    {makeCategoryList(categoryList)}
+                                    <Divider />
+                                    <LoginWrapper />
+                                </List>
+                                <Divider />
+                            </Box>
                         </Drawer>
                         <Main open={open}>
                             <DrawerHeader />
