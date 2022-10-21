@@ -87,6 +87,8 @@ export const PageWrapper = observer(
         const [categoryList, setCategoryList] = React.useState<
             CategoryDepthVO[]
         >([]);
+        const [rootCategory, setRootCategory] =
+            React.useState<CategoryDepthVO>();
         const categoryService = useCategoryService();
 
         const handleDrawerOpen = () => {
@@ -129,6 +131,8 @@ export const PageWrapper = observer(
             // 몹엑스와 연동
             categoryService.setCategories(categories);
 
+            setRootCategory(categories[0]);
+
             return categories;
         };
 
@@ -163,7 +167,9 @@ export const PageWrapper = observer(
                                 }
 
                                 categoryService.setCurrentMenuCategoryId(
-                                    index === 0 ? null : category.id,
+                                    rootCategory === category
+                                        ? null
+                                        : category.id,
                                 );
                                 toggleDrawer(false);
                                 navigate(URL_MAP.MAIN);
