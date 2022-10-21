@@ -163,7 +163,7 @@ export const PageWrapper = observer(
                                 }
 
                                 categoryService.setCurrentMenuCategoryId(
-                                    category.id,
+                                    index === 0 ? null : category.id,
                                 );
                                 toggleDrawer(false);
                                 navigate(URL_MAP.MAIN);

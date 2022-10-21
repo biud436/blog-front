@@ -33,7 +33,7 @@ export class PostsStore implements Searchable<PostsSearchType>, Paginable {
     /**
      * 현재 카테고리 ID
      */
-    currentCategoryId: number = 1;
+    currentCategoryId: number | null = 1;
 
     private _isSearchMode: boolean = false;
 
@@ -118,7 +118,7 @@ export class PostsStore implements Searchable<PostsSearchType>, Paginable {
         return this.defaultCategory;
     }
 
-    setCurrentCategoryId(categoryId: number) {
+    setCurrentCategoryId(categoryId: number | null) {
         this.currentCategoryId = categoryId;
     }
 

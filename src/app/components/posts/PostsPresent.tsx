@@ -60,7 +60,7 @@ const PostsContainer = observer(() => {
             // 카테고리 별 포스트 조회
             const res = await service.fetch(
                 postsStore,
-                categoryService.getCurrentMenuCategoryId(),
+                categoryService.getCurrentMenuCategoryId()!,
             );
 
             const { entities, pagination } = res.data;
