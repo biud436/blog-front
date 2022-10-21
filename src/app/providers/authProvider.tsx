@@ -84,6 +84,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             return res!;
         }
 
+        toast.dismiss();
+        toast.info('프로필 정보를 가져오는 중입니다...', {
+            isLoading: true,
+            position: 'top-center',
+        });
+
         try {
             const acceptedStatusCode = [
                 StatusCode.SUCCESS,
@@ -92,9 +98,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             if (acceptedStatusCode.includes(res!.statusCode)) {
                 const { access_token } = res!.data as any;
 
+                toast.dismiss();
                 setCookie('access_token', access_token);
                 setCookie('username', username);
 
+                toast.info('정보를 확인하고 있습니다...', {
+                    isLoading: true,
+                    position: 'top-center',
+                });
                 const profile = await RequestHandler.get(
                     '/auth/profile',
                     access_token,

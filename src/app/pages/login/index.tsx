@@ -105,11 +105,23 @@ export function LoginPage() {
      * @returns
      */
     const login = async (username: string, password: string) => {
-        const pathname = location.pathname;
-
-        return await auth.login(username, password, () => {
-            navigate(URL_MAP.MAIN, { replace: true });
+        // 로그인 요청 중...
+        toast.info('로그인 요청 중...', {
+            position: 'top-center',
+            isLoading: true,
         });
+
+        try {
+            return await auth.login(username, password, () => {
+                toast.dismiss();
+                navigate(URL_MAP.MAIN, { replace: true });
+            });
+        } catch (e: any) {
+            toast.dismiss();
+            toast.error(e.message, {
+                position: 'top-center',
+            });
+        }
     };
 
     /**

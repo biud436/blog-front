@@ -1,3 +1,4 @@
+import { DateUtil, Formatter } from '@/app/api/date';
 import { API_URL } from '@/app/api/request';
 import { Post } from '@/store/post';
 import {
@@ -47,6 +48,12 @@ export function PostHeader({ post }: { post: Post }) {
                     <Typography sx={{ color: 'GrayText' }}>
                         {post.user?.profile?.nickname}
                     </Typography>
+                </Typography>
+                <Typography variant="subtitle2">
+                    {DateUtil.ToDateStringBySeoul(
+                        post?.uploadDate!,
+                        Formatter.DATETIME,
+                    )}
                 </Typography>
             </Grid>
             <Grid

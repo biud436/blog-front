@@ -10,6 +10,10 @@ import {
     Breadcrumbs,
     Button,
     Card,
+    CardActions,
+    CardContent,
+    CardHeader,
+    css,
     Divider,
     Grid,
     Pagination,
@@ -99,54 +103,40 @@ const PostsContainer = observer(() => {
                 alignItems="center"
                 justifyContent="center"
             >
-                <Grid item xs={12} md={10} lg={11}>
+                <Grid item>
                     {postsStore.getEntities() &&
                         postsStore.getEntities()?.map(post => {
                             return (
                                 <Card
-                                    sx={{ padding: 2, marginBottom: 3 }}
+                                    sx={{
+                                        padding: 2,
+                                        marginBottom: 3,
+                                        '&:hover': {
+                                            backgroundColor: '#f5f5f5',
+                                        },
+                                    }}
                                     key={post.id}
                                     elevation={3}
                                 >
-                                    <Grid container gap={1}>
-                                        <Grid item xs={12}>
-                                            <Typography
-                                                variant="h6"
-                                                sx={{
-                                                    cursor: 'pointer',
-                                                    color: 'primary.main',
-                                                }}
-                                                onClick={() =>
-                                                    goToPage(post.id!)
-                                                }
-                                            >
-                                                {post.title}
-                                            </Typography>
-                                            <Stack
-                                                sx={{
-                                                    display: 'flex',
-                                                    flexDirection: 'row',
-                                                    alignItems: 'center',
-                                                    justifyContent:
-                                                        'space-between',
-                                                }}
-                                            >
-                                                <Typography variant="subtitle2">
-                                                    {post.category?.name}
-                                                </Typography>
-                                                <Typography variant="subtitle2">
-                                                    {DateUtil.ToDateStringBySeoul(
-                                                        post?.uploadDate!,
-                                                        Formatter.DATETIME,
-                                                    )}
-                                                </Typography>
-                                            </Stack>
-                                            <Divider />
-                                            <Markdown breaks={true}>
-                                                {post.content}
-                                            </Markdown>
-                                        </Grid>
-                                    </Grid>
+                                    <CardHeader
+                                        title={post.title}
+                                        sx={{
+                                            cursor: 'pointer',
+                                            color: 'primary.main',
+                                        }}
+                                        onClick={() => goToPage(post.id!)}
+                                    ></CardHeader>
+                                    <CardActions sx={{ justifyContent: 'end' }}>
+                                        <Typography variant="subtitle2">
+                                            {post.category?.name}
+                                        </Typography>
+                                        <Typography variant="subtitle2">
+                                            {DateUtil.ToDateStringBySeoul(
+                                                post?.uploadDate!,
+                                                Formatter.DATETIME,
+                                            )}
+                                        </Typography>
+                                    </CardActions>
                                 </Card>
                             );
                         })}

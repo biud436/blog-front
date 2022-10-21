@@ -76,10 +76,6 @@ export function LoginTab({
             <Card
                 variant="outlined"
                 sx={{
-                    width: 480,
-                    height: 530,
-                    maxWidth: 480,
-                    maxHeight: 640,
                     backgroundColor: 'transparent',
                     borderColor: 'transparent',
                     border: 0,
@@ -97,9 +93,7 @@ export function LoginTab({
                                     alignItems: 'center',
                                 }}
                             >
-                                <Typography variant="h3">
-                                    블로그 관리자 로그인
-                                </Typography>
+                                <Typography variant="h3">로그인</Typography>
                             </Stack>
                             <Box
                                 component="form"
@@ -183,37 +177,7 @@ export function LoginTab({
                                         marginBottom: 1,
                                         justifyContent: 'space-between',
                                     }}
-                                >
-                                    {/** localStorage에서 획득 */}
-                                    {/* <FormControlLabel
-                  label="로그인 상태 유지"
-                  sx={{ color: '#aaaaaa' }}
-                  control={
-                    <Checkbox
-                      name="saveId"
-                      color="default"
-                      checked={loggedin}
-                      onChange={changeLoggedIn}
-                    />
-                  }
-                ></FormControlLabel> */}
-                                    {/* <Stack spacing={2} direction="column">
-                  <Stack>
-                    <Link
-                      sx={{ color: '#aaaaaa', textDecoration: 'none' }}
-                      href="/login/find/id"
-                    >
-                      아이디 찾기
-                    </Link>
-                    <Link
-                      sx={{ color: '#aaaaaa', textDecoration: 'none' }}
-                      href="/login/find/password"
-                    >
-                      비밀번호 찾기
-                    </Link>
-                  </Stack>
-                </Stack> */}
-                                </Stack>
+                                ></Stack>
 
                                 <Stack>
                                     <Button

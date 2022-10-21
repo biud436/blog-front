@@ -40,7 +40,7 @@ export namespace DateUtil {
         iso8601: string,
         formatter: DateFormatter[DateFormatterKeyMap],
     ): string {
-        return moment(iso8601).tz('Asia/Seoul').format(formatter);
+        return moment(iso8601).tz('UTC').add(9, 'hour').format(formatter);
     }
 
     /**
