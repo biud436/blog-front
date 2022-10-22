@@ -21,7 +21,13 @@ import { useAuth } from '@/app/providers/authProvider';
 import { DrawerHeader } from '@/app/components/atomic/DrawerHeader';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { URL_MAP } from '@/common/URL';
-import { Collapse, Container, Paper, SwipeableDrawer } from '@mui/material';
+import {
+    Button,
+    Collapse,
+    Container,
+    Paper,
+    SwipeableDrawer,
+} from '@mui/material';
 import { API_URL } from '../../api/request';
 import axios, { AxiosResponse } from 'axios';
 import { CategoryDepthVO } from '@/services/CategoryService';
@@ -210,8 +216,6 @@ export const PageWrapper = observer(
 
         useEffect(() => {
             initWithSettings();
-
-            setOpen(matches);
         }, [matches]);
 
         return (
@@ -238,9 +242,20 @@ export const PageWrapper = observer(
                                 >
                                     <MenuIcon />
                                 </IconButton>
-                                <Typography variant="h6" noWrap component="div">
+                                <Typography
+                                    variant="h6"
+                                    noWrap
+                                    component="div"
+                                    sx={{ flexGrow: 1 }}
+                                >
                                     {name}
                                 </Typography>
+                                <Button
+                                    color="inherit"
+                                    onClick={() => navigate(URL_MAP.POST_EDIT)}
+                                >
+                                    <Typography variant="h6">글쓰기</Typography>
+                                </Button>
                             </Toolbar>
                         </AppBar>
                         <Drawer
