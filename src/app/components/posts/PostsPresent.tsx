@@ -7,12 +7,14 @@ import { PostsSearchType } from '@/store/posts/posts.dto';
 import ChevronRight from '@mui/icons-material/ChevronRight';
 import {
     Alert,
+    Box,
     Breadcrumbs,
     Button,
     Card,
     CardActions,
     CardContent,
     CardHeader,
+    Container,
     css,
     Divider,
     Grid,
@@ -96,27 +98,41 @@ const PostsContainer = observer(() => {
     };
 
     return (
-        <>
+        <Grid
+            sx={{ flexGrow: 1 }}
+            container
+            justifyContent="center"
+            alignItems="center"
+            spacing={2}
+        >
             <Grid
-                container
-                spacing={0}
-                alignItems="center"
-                justifyContent="center"
+                item
+                xs={12}
+                sm={12}
+                md={12}
+                lg={12}
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                }}
             >
-                <Grid item>
+                <>
                     {postsStore.getEntities() &&
                         postsStore.getEntities()?.map(post => {
                             return (
                                 <Card
                                     sx={{
-                                        padding: 2,
                                         marginBottom: 3,
                                         '&:hover': {
                                             backgroundColor: '#f5f5f5',
                                         },
+                                        justifyContent: 'center',
+                                        minWidth: 'auto',
                                     }}
                                     key={post.id}
-                                    elevation={3}
+                                    elevation={2}
                                 >
                                     <CardHeader
                                         title={post.title}
@@ -140,34 +156,28 @@ const PostsContainer = observer(() => {
                                 </Card>
                             );
                         })}
-                </Grid>
-                <Grid
-                    container
-                    spacing={0}
-                    direction="row"
-                    alignItems="center"
-                    justifyContent="center"
-                >
-                    <Pagination
-                        count={postsStore.getPagination().maxPage}
-                        page={postsStore.getPageNumber()}
-                        boundaryCount={2}
-                        color="primary"
-                        size="large"
-                        sx={{ margin: 2 }}
-                        showFirstButton
-                        showLastButton
-                        onChange={(e, p) => {
-                            handlePage(e, p);
-                        }}
-                    />
-                </Grid>
-                <SearchBox
-                    store={postsStore}
-                    fetchDataBySearch={fetchDataBySearch}
+                </>
+            </Grid>
+            <Grid item spacing={0} direction="row">
+                <Pagination
+                    count={postsStore.getPagination().maxPage}
+                    page={postsStore.getPageNumber()}
+                    boundaryCount={2}
+                    color="primary"
+                    size="large"
+                    sx={{ margin: 2 }}
+                    showFirstButton
+                    showLastButton
+                    onChange={(e, p) => {
+                        handlePage(e, p);
+                    }}
                 />
             </Grid>
-        </>
+            <SearchBox
+                store={postsStore}
+                fetchDataBySearch={fetchDataBySearch}
+            />
+        </Grid>
     );
 });
 
@@ -175,11 +185,9 @@ export const PostsPresent = observer(() => {
     return (
         <>
             <PostsServiceProvider>
-                <Grid container gap={3}>
-                    <PageHeader />
-                    <PageDescription />
-                    <PostsContainer />
-                </Grid>
+                <PageHeader />
+                <PageDescription />
+                <PostsContainer />
             </PostsServiceProvider>
         </>
     );

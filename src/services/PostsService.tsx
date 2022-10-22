@@ -4,6 +4,7 @@ import { postsStore, PostsStore } from '@/store/posts';
 import { PostsSearchType } from '@/store/posts/posts.dto';
 import { Paginable } from '@/store/types/list';
 import { Searchable } from '@/store/types/searchable';
+import { Container } from '@mui/material';
 import axios from 'axios';
 import { makeAutoObservable, toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -92,11 +93,9 @@ export const PostsServiceProvider = observer(
         );
 
         return (
-            <>
-                <PostsServiceContext.Provider value={postsService}>
-                    {children}
-                </PostsServiceContext.Provider>
-            </>
+            <PostsServiceContext.Provider value={postsService}>
+                {children}
+            </PostsServiceContext.Provider>
         );
     },
 );

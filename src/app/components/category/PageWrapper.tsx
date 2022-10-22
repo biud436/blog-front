@@ -21,7 +21,7 @@ import { useAuth } from '@/app/providers/authProvider';
 import { DrawerHeader } from '@/app/components/atomic/DrawerHeader';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { URL_MAP } from '@/common/URL';
-import { Collapse, Container, SwipeableDrawer } from '@mui/material';
+import { Collapse, Container, Paper, SwipeableDrawer } from '@mui/material';
 import { API_URL } from '../../api/request';
 import axios, { AxiosResponse } from 'axios';
 import { CategoryDepthVO } from '@/services/CategoryService';
@@ -40,12 +40,12 @@ const Main = styled('main', { shouldForwardProp: prop => prop !== 'open' })<{
     open?: boolean;
 }>(({ theme, open }) => ({
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(2),
     transition: theme.transitions.create('margin', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: `-${drawerWidth}px`,
+    // marginLeft: `-${drawerWidth}px`,
     ...(open && {
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.easeOut,
@@ -217,13 +217,12 @@ export const PageWrapper = observer(
         return (
             <>
                 <Container
-                    maxWidth="xl"
                     onClick={(e: React.MouseEvent) => {
                         toggleDrawer(false);
                         e.preventDefault();
                     }}
                 >
-                    <Box sx={{ display: 'flex' }}>
+                    <Container>
                         <CssBaseline />
                         <AppBar position="fixed" open={open}>
                             <Toolbar>
@@ -282,7 +281,7 @@ export const PageWrapper = observer(
                             <DrawerHeader />
                             {children}
                         </Main>
-                    </Box>
+                    </Container>
                 </Container>
             </>
         );
