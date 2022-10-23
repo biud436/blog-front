@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { createRef, useEffect, useRef } from 'react';
+import { createRef, useEffect, useRef, useState } from 'react';
 
 const src = 'https://utteranc.es/client.js';
 const repo = 'biud436/blog-front';
@@ -14,6 +14,9 @@ type UtterancesAttributesType = {
     async: string;
 };
 
+/**
+ * Utterances 댓글 컴포넌트
+ */
 export const GithubComment = observer(() => {
     const elementRef = createRef<HTMLDivElement>();
 
@@ -36,7 +39,18 @@ export const GithubComment = observer(() => {
         });
 
         elementRef.current.appendChild(utterances);
+
+        return () => {
+            elementRef.current?.removeChild(utterances);
+        };
     }, []);
 
-    return <div ref={elementRef} />;
+    return (
+        <div
+            style={{
+                width: '100%',
+            }}
+            ref={elementRef}
+        />
+    );
 });

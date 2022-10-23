@@ -39,6 +39,7 @@ import { LogoutButton } from './LogoutButton';
 import { MenuPostWriteButton } from './MenuPostWriteButton';
 import { RequestHandler } from '../../api/axios';
 import { useMediaQuery } from 'react-responsive';
+import { GithubOAuthButton } from '../GithubOAuthButton';
 
 const drawerWidth = 240;
 
@@ -228,7 +229,20 @@ export const PageWrapper = observer(
                 >
                     <Container>
                         <CssBaseline />
-                        <AppBar position="fixed" open={open}>
+                        <AppBar
+                            position="fixed"
+                            open={open}
+                            sx={
+                                {
+                                    // display: {
+                                    //     xs: 'none',
+                                    //     sm: 'block',
+                                    //     md: 'none',
+                                    //     lg: 'none',
+                                    // },
+                                }
+                            }
+                        >
                             <Toolbar>
                                 <IconButton
                                     color="inherit"
@@ -256,6 +270,7 @@ export const PageWrapper = observer(
                                 >
                                     <Typography variant="h6">글쓰기</Typography>
                                 </Button>
+                                <GithubOAuthButton />
                             </Toolbar>
                         </AppBar>
                         <Drawer

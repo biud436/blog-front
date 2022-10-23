@@ -22,6 +22,7 @@ import { CategoryServiceProvider } from '@/services/CategoryService';
 import { PostsServiceProvider } from '@/services/PostsService';
 import { PostPage } from './pages/post';
 import { PostServiceProvider } from '@/services/PostService';
+import { GithubCallbackPage } from './pages/github';
 
 const queryClient = new QueryClient();
 
@@ -66,6 +67,10 @@ export function App() {
                                         <Route
                                             path={URL_MAP.POST_EDIT}
                                             element={<PostEditorContainer />}
+                                        />
+                                        <Route
+                                            path="/github/callback"
+                                            element={<GithubCallbackPage />}
                                         />
                                         <Route
                                             path="/404"

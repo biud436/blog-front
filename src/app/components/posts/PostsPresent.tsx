@@ -81,6 +81,9 @@ const PostsContainer = observer(() => {
             postsStore.setPageNumber(1);
             await fetchData(page);
         } catch (e: any) {
+            postsStore.setSearchType(postsStore.getDefaultCategory() as any);
+            postsStore.setSearchQuery('');
+
             toast.error(e.message);
         }
     };
@@ -106,11 +109,7 @@ const PostsContainer = observer(() => {
             spacing={2}
         >
             <Grid
-                item
-                xs={12}
-                sm={12}
-                md={12}
-                lg={12}
+                container
                 sx={{
                     display: 'flex',
                     justifyContent: 'center',
@@ -118,7 +117,22 @@ const PostsContainer = observer(() => {
                     flexDirection: 'column',
                 }}
             >
-                <>
+                <Grid
+                    item
+                    xs={12}
+                    sm={12}
+                    md={6}
+                    lg={6}
+                    spacing={2}
+                    rowSpacing={2}
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        flexDirection: 'column',
+                        marginTop: 4,
+                    }}
+                >
                     {postsStore.getEntities() &&
                         postsStore.getEntities()?.map(post => {
                             return (
@@ -129,16 +143,31 @@ const PostsContainer = observer(() => {
                                             backgroundColor: '#f5f5f5',
                                         },
                                         justifyContent: 'center',
-                                        minWidth: 'auto',
+                                        alignItems: 'center',
+                                        minWidth: 400,
+                                        maxWidth: 400,
                                     }}
                                     key={post.id}
                                     elevation={2}
                                 >
                                     <CardHeader
                                         title={post.title}
+                                        subheader={DateUtil.ToDateStringBySeoul(
+                                            post?.uploadDate!,
+                                            Formatter.DATETIME,
+                                        )}
                                         sx={{
                                             cursor: 'pointer',
                                             color: 'primary.main',
+                                            width: '100%',
+                                            padding: 3,
+                                            '& .MuiCardHeader-title': {
+                                                overflow: 'hidden',
+                                                textOverflow: 'ellipsis',
+                                                whiteSpace: 'nowrap',
+                                                width: '80%',
+                                                padding: 3,
+                                            },
                                         }}
                                         onClick={() => goToPage(post.id!)}
                                     ></CardHeader>
@@ -146,17 +175,11 @@ const PostsContainer = observer(() => {
                                         <Typography variant="subtitle2">
                                             {post.category?.name}
                                         </Typography>
-                                        <Typography variant="subtitle2">
-                                            {DateUtil.ToDateStringBySeoul(
-                                                post?.uploadDate!,
-                                                Formatter.DATETIME,
-                                            )}
-                                        </Typography>
                                     </CardActions>
                                 </Card>
                             );
                         })}
-                </>
+                </Grid>
             </Grid>
             <Grid item spacing={0} direction="row">
                 <Pagination
@@ -173,10 +196,7 @@ const PostsContainer = observer(() => {
                     }}
                 />
             </Grid>
-            <SearchBox
-                store={postsStore}
-                fetchDataBySearch={fetchDataBySearch}
-            />
+            <SearchComponent fetchDataBySearch={fetchDataBySearch} />
         </Grid>
     );
 });
@@ -192,3 +212,18 @@ export const PostsPresent = observer(() => {
         </>
     );
 });
+
+export const SearchComponent = observer(
+    ({
+        fetchDataBySearch,
+    }: {
+        fetchDataBySearch: (page?: number) => Promise<void>;
+    }) => {
+        return (
+            <SearchBox
+                store={postsStore}
+                fetchDataBySearch={fetchDataBySearch}
+            />
+        );
+    },
+);
