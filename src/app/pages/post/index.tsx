@@ -37,12 +37,18 @@ export const PostPage = observer(() => {
         <PageWrapper name={post.title}>
             <Helmet>
                 <title>{post.title}</title>
-                <meta property="og:title" content={post.title} />
-                <meta property="og:type" content="website" />
+                <meta name="referrer" content="unsafe-url"></meta>
                 <meta property="og:site_name" content={post.title} />
-
-                <meta property="og:image" content={EmptyImage} />
+                <meta property="og:title" content={post.title} />"
+                <meta property="og:type" content="article" />
+                <meta
+                    property="og:article:author"
+                    content={post.user?.profile?.nickname}
+                />
                 <meta property="og:url" content={window.location.href} />
+                <meta property="og:image" content={EmptyImage} />
+                <meta property="og:image:witdh" content="1200" />
+                <meta property="og:image:height" content="630" />
                 <meta property="og:description" content={post.content} />
             </Helmet>
             <PostPresent post={post} goBack={goBack} />
