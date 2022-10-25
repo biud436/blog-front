@@ -1,4 +1,4 @@
 export type User = {
-  username: string;
-  scope: string[];
+    username: string;
+    scope: string[];
 };
