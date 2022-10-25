@@ -23,6 +23,13 @@ export const fetcher = url =>
         return res.data;
     });
 
+/**
+ * 인증 처리를 위한 SWR
+ * @param method
+ * @param url
+ * @param data
+ * @returns
+ */
 export const fetcherWithAuth = (
     method: HttpMethod,
     url: string,
