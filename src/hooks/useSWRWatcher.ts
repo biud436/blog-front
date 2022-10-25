@@ -33,13 +33,16 @@ export const fetcherWithAuth = (
 
     const accessToken = cookies.access_token;
 
+    if (method === 'GET' && data) {
+        throw new Error('GET method cannot have a body content');
+    }
+
     return axios.request({
         url,
         method,
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
-        // payload
         data,
     });
 };
