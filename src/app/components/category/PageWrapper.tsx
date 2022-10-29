@@ -17,7 +17,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { useNavigate } from 'react-router';
-import { useAuth } from '@/app/providers/authProvider';
+import { useAuth } from '@/app/providers/auth/authProvider';
 import { DrawerHeader } from '@/app/components/atomic/DrawerHeader';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { URL_MAP } from '@/common/URL';

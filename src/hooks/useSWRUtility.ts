@@ -1,7 +1,6 @@
-import { useAuth } from '@/app/providers/authProvider';
+import { useAuth } from '@/app/providers/auth/authProvider';
 import axios from 'axios';
-import { useState } from 'react';
-import { useCookies } from 'react-cookie';
+import { useEffect, useState } from 'react';
 
 export type AuthSwrType = {
     METHODS: 'GET' | 'POST' | 'PATCH' | 'DELETE';
@@ -31,14 +30,12 @@ export const fetcher = url =>
  * @returns
  */
 export const fetcherWithAuth = (
-    method: HttpMethod,
     url: string,
-    data: Record<string, any> | undefined,
+    method: HttpMethod,
+    accessToken: string,
+    data?: Record<string, any> | undefined,
 ) => {
     const { user } = useAuth();
-    const [cookies] = useCookies(['access_token']);
-
-    const accessToken = cookies.access_token;
 
     if (method === 'GET' && data) {
         throw new Error('GET method cannot have a body content');
@@ -52,27 +49,4 @@ export const fetcherWithAuth = (
         },
         data,
     });
-};
-
-export const useFetcher = (method: HttpMethod) => {
-    const { user } = useAuth();
-    const [cookies, setCookie, removeCookie] = useCookies([
-        'access_token',
-        'username',
-    ]);
-    const [headers, setHeaders] = useState({
-        headers: {
-            Authorization: `Bearer ${cookies.access_token}`,
-        },
-    });
-
-    return async (
-        method: 'get' | 'post' | 'patch' | 'delete',
-        url: string,
-        params: Record<string, any>,
-    ) => {
-        const res = await axios.get(url, {
-            params: {},
-        });
-    };
 };

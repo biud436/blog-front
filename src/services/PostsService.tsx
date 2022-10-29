@@ -1,5 +1,5 @@
 import { API_URL } from '@/app/api/request';
-import { HttpMethod, useAuth } from '@/app/providers/authProvider';
+import { HttpMethod, useAuth } from '@/app/providers/auth/authProvider';
 import { postsStore, PostsStore } from '@/store/posts';
 import { PostsSearchType } from '@/store/posts/posts.dto';
 import { Paginable } from '@/store/types/list';

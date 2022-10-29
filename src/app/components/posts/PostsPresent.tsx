@@ -1,5 +1,5 @@
 import { SearchBuilder } from '@/app/components/builder/SearchBuilder';
-import { useAuth } from '@/app/providers/authProvider';
+import { useAuth } from '@/app/providers/auth/authProvider';
 import { usePostsService } from '@/hooks/usePostsService';
 import { PostsServiceProvider } from '@/services/PostsService';
 import { postsStore } from '@/store/posts';

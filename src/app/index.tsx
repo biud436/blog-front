@@ -6,7 +6,7 @@ import { GlobalStyle } from '../styles/global-styles';
 import { useTranslation } from 'react-i18next';
 import { RecoilRoot } from 'recoil';
 import { Routes } from 'react-router';
-import { AuthProvider } from './providers/authProvider';
+import { AuthProvider } from './providers/auth/authProvider';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { URL_MAP } from 'common/URL';

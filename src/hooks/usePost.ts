@@ -4,12 +4,13 @@ import { Post } from '@/store/post';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import useSWR, { Key, Fetcher } from 'swr';
-import { fetcher } from './useSWRWatcher';
+import usePosts from './api/usePosts';
+import { fetcher } from './useSWRUtility';
 
 export function usePost(postId: number) {
     const [post, setPost] = useState<Post>(Object.create(null));
     const service = useContext(PostContext);
-    const { data: raw, error } = useSWR(`${API_URL}/posts/` + postId, fetcher);
+    const { raw, error } = usePosts(postId);
 
     if (service === undefined) {
         throw new Error('usePost must be used within a PostProvider');

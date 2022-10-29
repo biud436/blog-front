@@ -8,7 +8,7 @@ import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toJS } from 'mobx';
-import { useAuth } from '../../providers/authProvider';
+import { useAuth } from '../../providers/auth/authProvider';
 import React from 'react';
 import { toast } from 'react-toastify';
 import { PostButtonGroup } from './PostButtonGroup';
