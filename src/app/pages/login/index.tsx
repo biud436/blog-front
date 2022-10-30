@@ -13,55 +13,7 @@ import { LoginTab } from './components/LoginTab';
 import { Container, Grid, Stack } from '@mui/material';
 import { URL_MAP } from '@/common/URL';
 
-const initialState = {
-    username: '',
-    password: '',
-    showPassword: false,
-};
-
-type LoginTabState = typeof initialState;
-
-type TabControlProps = {
-    getTabLinkClassName: (id: number) => string;
-    changeTab: (tabId: number) => () => void;
-};
-
-type LoginTabProps = {
-    getTabContentClassName: (id: number) => string;
-    handleChange: (
-        prop: keyof State,
-    ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
-    changeLoggedIn: () => void;
-    handleLogin: (event: any) => Promise<LoginResponse | undefined>;
-    values: LoginTabState;
-    loggedin: boolean;
-};
-
-function createMethods(state: LoginTabState) {
-    return {
-        reset() {
-            return initialState;
-        },
-        handleUsernameChange(event: React.ChangeEvent<HTMLInputElement>) {
-            return {
-                ...state,
-                username: event.target.value,
-            };
-        },
-        handlePasswordChange(event: React.ChangeEvent<HTMLInputElement>) {
-            return {
-                ...state,
-                password: event.target.value,
-            };
-        },
-        toggleShowPassword() {
-            return {
-                ...state,
-                showPassword: !state.showPassword,
-            };
-        },
-    };
-}
+type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
 /**
  * 로그인 페이지 메인
@@ -89,10 +41,9 @@ export function LoginPage() {
      * @param prop
      * @returns
      */
-    const handleChange =
-        (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-            setValues({ ...values, [prop]: event.target.value });
-        };
+    const handleChange = (prop: keyof State) => (event: InputChangeEvent) => {
+        setValues({ ...values, [prop]: event.target.value });
+    };
 
     const toggleShowPassword = () => {
         setValues({ ...values, showPassword: !values.showPassword });
