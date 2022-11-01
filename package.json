@@ -38,6 +38,7 @@
         "chart.js": "^3.9.1",
         "cross-env": "7.0.3",
         "dart-sass": "^1.25.0",
+        "env-cmd": "^10.1.0",
         "eslint-config-prettier": "8.3.0",
         "eslint-plugin-prettier": "4.0.0",
         "eslint-plugin-react-hooks": "4.3.0",
@@ -95,10 +96,10 @@
         "web-vitals": "2.1.2"
     },
     "scripts": {
-        "start": "GENERATE_SOURCEMAP=false craco start",
-        "start:win32": "set \"GENERATE_SOURCEMAP=false\" && craco start",
-        "build": "craco build",
-        "build:win32": "set \"GENERATE_SOURCEMAP=false\" && craco build",
+        "start": "env-cmd -f .env.development craco start",
+        "start:win32": "env-cmd -f .env.development craco start",
+        "build": "env-cmd -f .env.production craco build",
+        "build:win32": "env-cmd -f .env.production craco start",
         "test": "craco test",
         "eject": "react-scripts eject",
         "start:prod": "yarn run build && serve -s build",
