@@ -270,7 +270,6 @@ export const PageWrapper = observer(
                                 >
                                     <Typography variant="h6">글쓰기</Typography>
                                 </Button>
-                                <GithubOAuthButton />
                             </Toolbar>
                         </AppBar>
                         <Drawer
