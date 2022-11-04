@@ -15,6 +15,7 @@ import { PostButtonGroup } from './PostButtonGroup';
 import { PostSelectCategory } from './PostSelectCategory';
 import { PostTitleInput } from './PostTitleInput';
 import { useAuthorized } from '@/hooks/useAuthorized';
+import * as DOMPurify from 'dompurify';
 
 export const PostEditorPresent = observer(() => {
     const auth = useAuth();
@@ -30,7 +31,9 @@ export const PostEditorPresent = observer(() => {
         try {
             const res = await auth.requestData('post', '/posts', {
                 title,
-                content: editorRef.current?.getInstance().getMarkdown(),
+                content: DOMPurify.sanitize(
+                    editorRef.current?.getInstance().getMarkdown(),
+                ),
                 categoryId: currentCategoryId,
             });
 
