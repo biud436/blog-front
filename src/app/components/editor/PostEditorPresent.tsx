@@ -5,7 +5,7 @@ import { Grid, Typography } from '@mui/material';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor } from '@toast-ui/react-editor';
 import { observer } from 'mobx-react-lite';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useId, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toJS } from 'mobx';
 import { useAuth } from '../../providers/auth/authProvider';
@@ -27,7 +27,7 @@ export const PostEditorPresent = observer(() => {
 
     const categoryService = useCategoryService();
 
-    const handleWrite = async () => {
+    const handleWrite = useCallback(async () => {
         try {
             const res = await auth.requestData('post', '/posts', {
                 title,
@@ -45,11 +45,11 @@ export const PostEditorPresent = observer(() => {
         } catch (e: any) {
             toast.error(e.message);
         }
-    };
+    }, [editorRef, title, currentCategoryId]);
 
-    const handleCancel = () => {
+    const handleCancel = useCallback(() => {
         navigate(URL_MAP.MAIN);
-    };
+    }, []);
 
     const getFlatCategories = () => {
         const raw = toJS(categoryService.getCategories());

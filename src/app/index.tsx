@@ -60,10 +60,12 @@ export function App() {
                                             path={URL_MAP.MAIN}
                                             element={<PostsPage />}
                                         />
-                                        <Route
-                                            path="/posts/:postId"
-                                            element={<PostPage />}
-                                        />
+                                        <Route path="/posts">
+                                            <Route
+                                                path=":postId"
+                                                element={<PostPage />}
+                                            />
+                                        </Route>
                                         <Route
                                             path={URL_MAP.POST_EDIT}
                                             element={<PostEditorContainer />}

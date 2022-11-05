@@ -43,7 +43,6 @@ const PageDescription = observer(() => {
 const SearchBox = SearchBuilder<PostsSearchType>(postsStore);
 
 const PostsContainer = observer(() => {
-    const auth = useAuth();
     const service = usePostsService();
     const categoryService = useCategoryService();
     const navigate = useNavigate();
@@ -62,7 +61,7 @@ const PostsContainer = observer(() => {
             // 카테고리 별 포스트 조회
             const res = await service.fetch(
                 postsStore,
-                categoryService.getCurrentMenuCategoryId()!,
+                categoryService.getCurrentMenuCategoryId(),
             );
 
             const { entities, pagination } = res.data;

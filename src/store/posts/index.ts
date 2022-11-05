@@ -1,3 +1,4 @@
+import { CategoryItemId } from '@/services/CategoryService';
 import { makeAutoObservable } from 'mobx';
 import { BaseDataListDto, Paginable } from '../types/list';
 import { Searchable } from '../types/searchable';
@@ -33,7 +34,7 @@ export class PostsStore implements Searchable<PostsSearchType>, Paginable {
     /**
      * 현재 카테고리 ID
      */
-    currentCategoryId: number | null = 1;
+    currentCategoryId: CategoryItemId = 1;
 
     private _isSearchMode: boolean = false;
 
@@ -118,7 +119,7 @@ export class PostsStore implements Searchable<PostsSearchType>, Paginable {
         return this.defaultCategory;
     }
 
-    setCurrentCategoryId(categoryId: number | null) {
+    setCurrentCategoryId(categoryId: CategoryItemId) {
         this.currentCategoryId = categoryId;
     }
 
