@@ -2,7 +2,7 @@ import { PostEditorPresent } from '@/app/components/editor/PostEditorPresent';
 import { Grid, Paper, Typography, Divider, Alert } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import ChevronRight from '@mui/icons-material/ChevronRight';
-import { PageWrapper } from '@/app/components/category/PageWrapper';
+import { PageWrapper } from '@/layouts/PageWrapper';
 import { RequireAuth } from '@/app/providers/auth/authProvider';
 import { useEffect } from 'react';
 import { useAuthorized } from '@/hooks/useAuthorized';

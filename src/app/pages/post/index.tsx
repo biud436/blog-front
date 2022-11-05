@@ -1,4 +1,4 @@
-import { PageWrapper } from '@/app/components/category/PageWrapper';
+import { PageWrapper } from '@/layouts/PageWrapper';
 import { URL_MAP } from '@/common/URL';
 import { usePost } from '@/hooks/usePost';
 import { PostContext, PostServiceProvider } from '@/services/PostService';

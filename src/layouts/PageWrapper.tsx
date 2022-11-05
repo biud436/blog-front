@@ -28,18 +28,18 @@ import {
     Paper,
     SwipeableDrawer,
 } from '@mui/material';
-import { API_URL } from '../../api/request';
+import { API_URL } from '../app/api/request';
 import axios, { AxiosResponse } from 'axios';
 import { CategoryDepthVO } from '@/services/CategoryService';
 import { useCategoryService } from '@/hooks/useCategoryService';
 import { observer } from 'mobx-react-lite';
 import { useCookies } from 'react-cookie';
-import { LoginButton } from './LoginButton';
-import { LogoutButton } from './LogoutButton';
-import { MenuPostWriteButton } from './MenuPostWriteButton';
-import { RequestHandler } from '../../api/axios';
+import { LoginButton } from '../app/components/category/LoginButton';
+import { LogoutButton } from '../app/components/category/LogoutButton';
+import { MenuPostWriteButton } from '../app/components/category/MenuPostWriteButton';
+import { RequestHandler } from '../app/api/axios';
 import { useMediaQuery } from 'react-responsive';
-import { GithubOAuthButton } from '../GithubOAuthButton';
+import { GithubOAuthButton } from '../app/components/GithubOAuthButton';
 
 const drawerWidth = 240;
 
@@ -260,7 +260,10 @@ export const PageWrapper = observer(
                                     variant="h6"
                                     noWrap
                                     component="div"
-                                    sx={{ flexGrow: 1 }}
+                                    sx={{ flexGrow: 1, cursor: 'pointer' }}
+                                    onClick={() => {
+                                        navigate(URL_MAP.MAIN);
+                                    }}
                                 >
                                     {name}
                                 </Typography>

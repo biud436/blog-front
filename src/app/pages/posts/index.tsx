@@ -1,10 +1,10 @@
-import { PageWrapper } from '@/app/components/category/PageWrapper';
+import { PageWrapper } from '@/layouts/PageWrapper';
 import { observer } from 'mobx-react-lite';
 import { PostsPresent } from '../../components/posts/PostsPresent';
 
 export const PostsPage = observer(() => {
     return (
-        <PageWrapper name="포스트 목록">
+        <PageWrapper name="어진석의 블로그">
             <PostsPresent />
         </PageWrapper>
     );
