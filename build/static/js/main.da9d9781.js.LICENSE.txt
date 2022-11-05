@@ -18,6 +18,13 @@ object-assign
  */
 
 /*!
+ * TOAST UI Editor : Code Syntax Highlight Plugin
+ * @version 3.1.0 | Fri Aug 05 2022
+ * @author NHN Cloud FE Development Lab <dl_javascript@nhn.com>
+ * @license MIT
+ */
+
+/*!
  * cookie
  * Copyright(c) 2012-2014 Roman Shtylman
  * Copyright(c) 2015 Douglas Christopher Wilson
@@ -187,6 +194,15 @@ PERFORMANCE OF THIS SOFTWARE.
  * @version 3.2.1 | Thu Sep 29 2022
  * @author NHN Cloud FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
+ */
+
+/**
+ * Prism: Lightweight, robust, elegant syntax highlighting
+ *
+ * @license MIT <https://opensource.org/licenses/MIT>
+ * @author Lea Verou <https://lea.verou.me>
+ * @namespace
+ * @public
  */
 
 /**

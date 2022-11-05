@@ -17,6 +17,15 @@ import { PostTitleInput } from './PostTitleInput';
 import { useAuthorized } from '@/hooks/useAuthorized';
 import * as DOMPurify from 'dompurify';
 
+import 'prismjs/themes/prism.css';
+import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
+
+import Prism from 'prismjs';
+import 'prismjs/components/prism-clojure.js';
+import 'prismjs/components/prism-typescript.js';
+
+import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
+
 export const PostEditorPresent = observer(() => {
     const auth = useAuth();
     const navigate = useNavigate();
@@ -94,8 +103,10 @@ export const PostEditorPresent = observer(() => {
                         width: '100%',
                     }}
                     height="600px"
+                    plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
                     hideModeSwitch={true}
                     ref={editorRef}
+                    viewer={true}
                 />
             </Grid>
             <Grid container justifyContent="center" sx={{ padding: 2 }}>
