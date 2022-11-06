@@ -40,6 +40,7 @@ import { MenuPostWriteButton } from '../app/components/category/MenuPostWriteBut
 import { RequestHandler } from '../app/api/axios';
 import { useMediaQuery } from 'react-responsive';
 import { GithubOAuthButton } from '../app/components/GithubOAuthButton';
+import { GrAddCircle } from 'react-icons/gr';
 
 const drawerWidth = 240;
 
@@ -271,7 +272,18 @@ export const PageWrapper = observer(
                                     color="inherit"
                                     onClick={() => navigate(URL_MAP.POST_EDIT)}
                                 >
-                                    <Typography variant="h6">글쓰기</Typography>
+                                    <Typography
+                                        variant="h6"
+                                        sx={{
+                                            color: 'white',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '0.5rem',
+                                        }}
+                                    >
+                                        <GrAddCircle />
+                                        글쓰기
+                                    </Typography>
                                 </Button>
                             </Toolbar>
                         </AppBar>
