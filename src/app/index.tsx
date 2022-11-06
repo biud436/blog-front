@@ -62,6 +62,10 @@ export function App() {
                                         />
                                         <Route path="/posts">
                                             <Route
+                                                index
+                                                element={<PostsPage />}
+                                            />
+                                            <Route
                                                 path=":postId"
                                                 element={<PostPage />}
                                             />
