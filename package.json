@@ -157,6 +157,5 @@
         "kakao.maps.d.ts": "^0.1.32",
         "prettier": "^2.6.2",
         "ts-node": "^10.8.0"
-    },
-    "proxy": "http://localhost:3000"
+    }
 }

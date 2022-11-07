@@ -111,7 +111,9 @@ export const RequestHandler: IRequestHandler<unknown, Record<string, any>> = {
         return res.data;
     },
     getUser: async (url, token) => {
-        const res = await AxiosManager.getAxiosInstance(token)!.get(url);
+        const res = await AxiosManager.getAxiosInstance(token)!.get(url, {
+            withCredentials: true,
+        });
 
         return res.data;
     },

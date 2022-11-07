@@ -153,18 +153,16 @@ export const AuthProvider = observer(
                     '/auth/profile',
                     token,
                 );
-                if ('user' in profile) {
+                if (profile) {
                     setUser(profile.user);
-                    successCallback();
-                } else {
-                    errorCallback();
+                    // successCallback();
+                    return true;
                 }
-
-                return true;
+                return false;
             } catch (e: any) {
-                if (errorCallback) {
-                    errorCallback();
-                }
+                // if (errorCallback) {
+                //     errorCallback();
+                // }
                 return false;
             }
         };
@@ -232,30 +230,25 @@ export function RequireAuth({ children }: { children: JSX.Element }) {
         const storedUserName = cookies.username;
         if (storedUserName) {
             auth.refreshAuth(
-                () => {
+                () => {},
+                () => {},
+            )
+                .then(isSuccess => {
+                    setIsReady(isSuccess);
+                })
+                .finally(() => {
                     setIsReady(true);
-                    navigate(location.pathname);
-                },
-                () => {
-                    toast.error('인증에 실패했습니다. 다시 시도해주세요.');
-                    setIsReady(false);
-                    navigate(URL_MAP.MAIN);
-                },
-            );
+                });
         }
-    }, [isReady, user, cookies.username]);
+    }, []);
 
-    if (!user || !isReady) {
-        return cookies.username ? (
-            <Loading />
-        ) : (
-            <Navigate to="/login" state={{ from: location }} replace />
-        );
-    }
+    // if (!isReady) {
+    //     return <Navigate to="/login" state={{ from: location }} replace />;
+    // }
 
-    if (user.username === '') {
-        return <Navigate to="/login" state={{ from: location }} replace />;
-    }
+    // if (user.username === '') {
+    //     return <Navigate to="/login" state={{ from: location }} replace />;
+    // }
 
     return children;
 }

@@ -60,13 +60,11 @@ export const PostEditorContainer = observer(() => {
         <PageWrapper name="포스트 에디터">
             <Paper sx={{ padding: 2 }} key="editor">
                 <LoginGuard>
-                    <RequireAuth>
-                        <Grid container gap={3}>
-                            <PageHeader />
-                            <PageDescription />
-                            <PostEditor />
-                        </Grid>
-                    </RequireAuth>
+                    <Grid container gap={3}>
+                        <PageHeader />
+                        <PageDescription />
+                        <PostEditor />
+                    </Grid>
                 </LoginGuard>
             </Paper>
         </PageWrapper>
