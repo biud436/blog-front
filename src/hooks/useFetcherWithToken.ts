@@ -7,8 +7,7 @@ export const useFetcherWithToken = (
     key: Key,
     body?: Record<string, any> | undefined,
 ) => {
-    const [cookies] = useCookies(['access_token']);
-    const accessToken = cookies.access_token;
+    const accessToken = '';
     const { data, error, mutate } = useSWR(
         [key, method, accessToken, body],
         fetcherWithAuth,

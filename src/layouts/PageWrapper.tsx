@@ -336,16 +336,13 @@ export function LoginWrapper() {
     const auth = useAuth();
     const navigate = useNavigate();
     const [isLoggenIn, setIsLoggedIn] = React.useState(false);
-    const [cookies, setCookie, removeCookie] = useCookies([
-        'access_token',
-        'username',
-    ]);
+    const [cookies, setCookie, removeCookie] = useCookies(['username']);
     const [isAuthorized, setIsAuthorized] = React.useState(false);
 
     // 토큰 만료 여부를 확인합니다.
     const checkUserProfile = async () => {
         try {
-            const accessToken = cookies.access_token;
+            const accessToken = '';
 
             const profile = await RequestHandler.get(
                 '/auth/profile',
@@ -365,7 +362,7 @@ export function LoginWrapper() {
             setIsLoggedIn(true);
         }
         checkUserProfile();
-    }, [cookies.access_token, isAuthorized]);
+    }, [isAuthorized]);
 
     return (
         <>

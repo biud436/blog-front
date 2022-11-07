@@ -20,10 +20,7 @@ export const AuthContext = React.createContext<AuthContextType>(null!);
 export const AuthProvider = observer(
     ({ children }: { children: React.ReactNode }) => {
         let [user, setUser] = useRecoilState(userState);
-        const [cookies, setCookie, removeCookie] = useCookies([
-            'access_token',
-            'username',
-        ]);
+        const [cookies, setCookie, removeCookie] = useCookies(['username']);
 
         /**
          * 로그인 요청
@@ -66,10 +63,7 @@ export const AuthProvider = observer(
                     StatusCode.NO_CONTENT,
                 ];
                 if (acceptedStatusCode.includes(res!.statusCode)) {
-                    const { access_token } = res!.data as any;
-
                     toast.dismiss();
-                    setCookie('access_token', access_token);
                     setCookie('username', username);
 
                     toast.info('정보를 확인하고 있습니다...', {
@@ -78,7 +72,7 @@ export const AuthProvider = observer(
                     });
                     const profile = await RequestHandler.get(
                         '/auth/profile',
-                        access_token,
+                        '',
                     );
                     setUser(profile.user);
                 } else {
@@ -105,12 +99,10 @@ export const AuthProvider = observer(
             absolutlyExecutor?: () => void,
         ) => {
             try {
-                const token = cookies.access_token;
                 const res = (await auth.logout(
                     `/auth/logout`,
-                    token,
+                    '',
                 )) as LoginResponse;
-                removeCookie('access_token');
 
                 // 로그인 상태 제거
                 localStorage.removeItem('isLoggedIn');
@@ -120,7 +112,7 @@ export const AuthProvider = observer(
                     username: '',
                     scope: [],
                 });
-                await RequestHandler.auth.logout(`/auth/logout`, token);
+                await RequestHandler.auth.logout(`/auth/logout`, '');
                 AxiosManager.removeAxiossInstance();
 
                 successCallback();
@@ -144,7 +136,7 @@ export const AuthProvider = observer(
             errorCallback?: VoidFunction,
         ) => {
             try {
-                const token = cookies.access_token;
+                const token = '';
 
                 if (token === '') {
                     return false;
@@ -186,7 +178,7 @@ export const AuthProvider = observer(
             fetchUrl: string,
             payload?: Record<string, any> | null,
         ) => {
-            const token = cookies.access_token;
+            const token = '';
 
             switch (method.toLowerCase()) {
                 case 'get':
@@ -230,7 +222,7 @@ export function RequireAuth({ children }: { children: JSX.Element }) {
     const navigate = useNavigate();
     const [user] = useRecoilState(userState);
     const [isReady, setIsReady] = React.useState(false);
-    const [cookies] = useCookies(['access_token', 'username']);
+    const [cookies] = useCookies(['username']);
 
     useEffect(() => {
         const storedUserName = cookies.username;

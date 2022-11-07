@@ -6,7 +6,7 @@ import useSWR from 'swr';
 
 export function useAuthorized() {
     const [, setIsLoggedIn] = useState(false);
-    const [cookies] = useCookies(['access_token', 'username']);
+    const [cookies] = useCookies(['username']);
     const [isAuthorized, setIsAuthorized] = useState(false);
     const [isDone, setIsDone] = useState(false);
 
@@ -29,12 +29,12 @@ export function useAuthorized() {
 
         // 프로필 체크합니다.
         checkUserProfile();
-    }, [cookies.access_token, isAuthorized]);
+    }, [isAuthorized]);
 
     // 토큰 만료 여부를 확인합니다.
     const checkUserProfile = async () => {
         try {
-            const accessToken = cookies.access_token;
+            const accessToken = '';
 
             const profile = await RequestHandler.get(
                 '/auth/profile',

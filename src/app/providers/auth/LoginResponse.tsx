@@ -3,7 +3,7 @@ export interface LoginResponse {
     statusCode: number;
     result: 'success' | 'failure';
     data: {
-        access_token: string;
-        refresh_token: string;
+        // access_token: string;
+        // refresh_token: string;
     };
 }
