@@ -243,7 +243,7 @@ export function RequireAuth({ children }: { children: JSX.Element }) {
                 },
             );
         }
-    }, [cookies.username]);
+    }, [isReady, user, cookies.username]);
 
     if (!user || !isReady) {
         return cookies.username ? (
