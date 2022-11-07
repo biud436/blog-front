@@ -12,7 +12,10 @@ export interface AuthContextType {
         successCallback: VoidFunction,
         absolutlyExecutor?: () => void,
     ) => void;
-    refreshAuth: (successCallback: VoidFunction) => Promise<boolean>;
+    refreshAuth: (
+        successCallback: VoidFunction,
+        errorCallback: VoidFunction,
+    ) => Promise<boolean>;
     requestData: (
         method: HttpMethod,
         fetchUrl: string,

@@ -12,6 +12,7 @@ import { LoginResponse } from './LoginResponse';
 import { StatusCode } from './StatusCode';
 import { AuthContextType } from './AuthContextType';
 import { observer } from 'mobx-react-lite';
+import { URL_MAP } from '@/common/URL';
 
 export type HttpMethod = 'get' | 'post' | 'put' | 'delete';
 
@@ -133,7 +134,7 @@ export const AuthProvider = observer(
          */
         const refreshAuth: AuthContextType['refreshAuth'] = async (
             successCallback: VoidFunction,
-            errorCallback?: VoidFunction,
+            errorCallback: VoidFunction,
         ) => {
             try {
                 const token = '';
@@ -152,9 +153,12 @@ export const AuthProvider = observer(
                     '/auth/profile',
                     token,
                 );
-                setUser(profile.user);
-
-                successCallback();
+                if ('user' in profile) {
+                    setUser(profile.user);
+                    successCallback();
+                } else {
+                    errorCallback();
+                }
 
                 return true;
             } catch (e: any) {
@@ -227,10 +231,17 @@ export function RequireAuth({ children }: { children: JSX.Element }) {
     useEffect(() => {
         const storedUserName = cookies.username;
         if (storedUserName) {
-            auth.refreshAuth(() => {
-                setIsReady(true);
-                navigate(location.pathname);
-            });
+            auth.refreshAuth(
+                () => {
+                    setIsReady(true);
+                    navigate(location.pathname);
+                },
+                () => {
+                    toast.error('인증에 실패했습니다. 다시 시도해주세요.');
+                    setIsReady(false);
+                    navigate(URL_MAP.MAIN);
+                },
+            );
         }
     }, [cookies.username]);
 
