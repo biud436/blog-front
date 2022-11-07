@@ -24,11 +24,12 @@ export namespace AxiosManager {
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                withCredentials: true,
             });
 
-            axiosInstance.defaults.headers.common[
-                'Authorization'
-            ] = `Bearer ${AUTH_TOKEN}`;
+            // axiosInstance.defaults.headers.common[
+            //     'Authorization'
+            // ] = `Bearer ${AUTH_TOKEN}`;
             isReady = true;
         }
 
@@ -37,9 +38,9 @@ export namespace AxiosManager {
 
     export function setAccessToken({ token }: { token: string }) {
         if (axiosInstance) {
-            axiosInstance.defaults.headers.common[
-                'Authorization'
-            ] = `Bearer ${token}`;
+            // axiosInstance.defaults.headers.common[
+            //     'Authorization'
+            // ] = `Bearer ${token}`;
         }
     }
 
@@ -80,6 +81,7 @@ export const RequestHandler: IRequestHandler<unknown, Record<string, any>> = {
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                withCredentials: true,
             });
 
             return res.data;
@@ -91,6 +93,9 @@ export const RequestHandler: IRequestHandler<unknown, Record<string, any>> = {
         const res = await AxiosManager.getAxiosInstance(token)!.post(
             url,
             payload,
+            {
+                withCredentials: true,
+            },
         );
 
         return res.data;

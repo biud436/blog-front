@@ -15,6 +15,7 @@ export function request<T = unknown>(
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'include',
             body: JSON.stringify(payload),
         })
             .then(res => res.json())
@@ -30,8 +31,9 @@ export const auth = {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
+                    // Authorization: `Bearer ${token}`,
                 },
+                credentials: 'include',
             })
                 .then(res => res.json())
                 .then(json => resolve(json))
@@ -54,8 +56,9 @@ export function get<T = Record<string, any>>(
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
+                // Authorization: `Bearer ${token}`,
             },
+            credentials: 'include',
         })
             .then(res => res.json())
             .then(json => resolve(json))
@@ -78,8 +81,9 @@ export function post<T = Record<string, any>>(
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
+                // Authorization: `Bearer ${token}`,
             },
+            credentials: 'include',
             body: JSON.stringify(payload),
         })
             .then(res => res.json())
@@ -105,8 +109,9 @@ export function getUser<T = Record<string, any>>(
         fetch(`${API_URL}${url}`, {
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${token}`,
+                // Authorization: `Bearer ${token}`,
             },
+            credentials: 'include',
         })
             .then(res => res.json())
             .then(json => resolve(json))

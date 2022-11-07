@@ -46,6 +46,7 @@
         "eslint-plugin-react-hooks": "4.3.0",
         "faker": "6.6.6",
         "fontfaceobserver": "2.1.0",
+        "http-proxy-middleware": "^2.0.6",
         "husky": "7.0.4",
         "i18next": "21.6.6",
         "i18next-browser-languagedetector": "6.1.2",
@@ -156,5 +157,6 @@
         "kakao.maps.d.ts": "^0.1.32",
         "prettier": "^2.6.2",
         "ts-node": "^10.8.0"
-    }
+    },
+    "proxy": "http://localhost:3000"
 }
