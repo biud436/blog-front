@@ -66,11 +66,21 @@ export namespace AxiosManager {
  */
 export const RequestHandler: IRequestHandler<unknown, Record<string, any>> = {
     request: async (url, payload) => {
-        return (await axios.post(url, payload)).data;
+        return (
+            await axios.post(url, payload, {
+                withCredentials: true,
+            })
+        ).data;
     },
     auth: {
         logout: async (url, token) => {
-            const res = await AxiosManager.getAxiosInstance(token)!.post(url);
+            const res = await AxiosManager.getAxiosInstance(token)!.post(
+                url,
+                null,
+                {
+                    withCredentials: true,
+                },
+            );
 
             return res.data;
         },
