@@ -3,6 +3,7 @@ import axios, { AxiosInstance } from 'axios';
 import { API_URL } from './request';
 
 axios.defaults.baseURL = API_URL;
+axios.defaults.withCredentials = true;
 
 type Optional<T> = T | null;
 
