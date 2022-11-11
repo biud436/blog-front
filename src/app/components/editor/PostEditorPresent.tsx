@@ -5,7 +5,14 @@ import { Grid, Typography } from '@mui/material';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor } from '@toast-ui/react-editor';
 import { observer } from 'mobx-react-lite';
-import { useCallback, useEffect, useId, useState } from 'react';
+import {
+    createRef,
+    useCallback,
+    useEffect,
+    useId,
+    useRef,
+    useState,
+} from 'react';
 import { useNavigate } from 'react-router';
 import { toJS } from 'mobx';
 import { useAuth } from '../../providers/auth/authProvider';
@@ -20,11 +27,12 @@ import * as DOMPurify from 'dompurify';
 import 'prismjs/themes/prism.css';
 import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
 
-import Prism from 'prismjs';
+import * as Prism from 'prismjs';
 import 'prismjs/components/prism-clojure.js';
 import 'prismjs/components/prism-typescript.js';
 
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
+import axios from 'axios';
 
 export const PostEditorPresent = observer(() => {
     const auth = useAuth();
@@ -32,9 +40,24 @@ export const PostEditorPresent = observer(() => {
     const [categories, setCategories] = useState<CategoryDepthVO[]>([]);
     const [title, setTitle] = useState('');
     const [currentCategoryId, setCurrentCategoryId] = useState(1);
-    const editorRef = React.createRef<Editor>();
+    const editorRef = createRef<Editor>();
 
     const categoryService = useCategoryService();
+
+    const addImageBlobHook = async (blob, callback) => {
+        const formData = new FormData();
+        formData.append('files', blob);
+
+        const res = await axios.post('/image/s3/upload', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
+        const { data } = res.data;
+
+        callback(data.location, data.originalName);
+    };
 
     const handleWrite = useCallback(async () => {
         try {
@@ -85,8 +108,13 @@ export const PostEditorPresent = observer(() => {
     return (
         <Grid container>
             <Grid item xs={12} lg={12} md={12}>
-                <PostTitleInput title={title} setTitle={setTitle} />
+                <PostTitleInput
+                    key="PostTitleInput-grid"
+                    title={title}
+                    setTitle={setTitle}
+                />
                 <PostSelectCategory
+                    key="PostSelectCategory-grid"
                     currentCategoryId={currentCategoryId}
                     setCurrentCategoryId={setCurrentCategoryId}
                     categories={categories}
@@ -104,9 +132,11 @@ export const PostEditorPresent = observer(() => {
                     }}
                     height="600px"
                     plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
-                    hideModeSwitch={true}
                     ref={editorRef}
                     viewer={true}
+                    hooks={{
+                        addImageBlobHook,
+                    }}
                 />
             </Grid>
             <Grid container justifyContent="center" sx={{ padding: 2 }}>

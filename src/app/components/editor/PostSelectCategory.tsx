@@ -22,7 +22,11 @@ export function PostSelectCategory({
                     return (
                         <MenuItem value={category.id} key={category.id}>
                             {[...Array(category.depth)].map((e, index) => {
-                                return <>&nbsp;&nbsp;</>;
+                                return (
+                                    <React.Fragment key={`${e}.${index}`}>
+                                        &nbsp;&nbsp;
+                                    </React.Fragment>
+                                );
                             })}
                             {category.name}
                         </MenuItem>

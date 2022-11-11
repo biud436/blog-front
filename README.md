@@ -15,7 +15,7 @@ This project is the blog that is made with the javascript library called React, 
 -   [x] 포스트 목록 (페이징, 포스트 검색)
 -   [x] 포스트 상세 페이지
 -   [x] 포스트 작성 페이지
--   [ ] AWS S3로 이미지 업로드 기능 만들기
+-   [x] AWS S3로 이미지 업로드 기능 만들기
 -   [ ] 파일 업로드 기능 만들기
 -   [x] 포스트 내용을 Helmet을 이용한 SEO 처리하기
 -   [ ] Helmet에서 meta 태그를 이용하여 이미지 미리보기 처리하기
@@ -33,7 +33,7 @@ This project is the blog that is made with the javascript library called React, 
 -   [ ] RSS 피드 기능
 -   [ ] 포스트 글 주기적 페칭 기능 간격 수정하기
 -   [ ] Github Action을 통한 빌드 프로세스 개선하기
--   [ ] TUI Editor에 Image Middleware (이미지 미들웨어 -> 링크 대체) 추가하기
+-   [x] TUI Editor에 Image Middleware (이미지 미들웨어 -> 링크 대체) 추가하기
 
 ## 설치 방법
 
