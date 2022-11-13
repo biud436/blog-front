@@ -33,6 +33,7 @@ import 'prismjs/components/prism-typescript.js';
 
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 import axios from 'axios';
+import { usePost } from '@/hooks/usePost';
 
 export const PostEditorPresent = observer(() => {
     const auth = useAuth();

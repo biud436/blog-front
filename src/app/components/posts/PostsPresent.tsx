@@ -14,6 +14,7 @@ import {
     CardActions,
     CardContent,
     CardHeader,
+    CardMedia,
     Container,
     css,
     Divider,
@@ -149,6 +150,20 @@ const PostsContainer = observer(() => {
                                     key={post.id}
                                     elevation={2}
                                 >
+                                    {post.images && post.images.length > 0 && (
+                                        <CardMedia
+                                            component="img"
+                                            image={post.images[0]!.path}
+                                            alt={post.title}
+                                            height="180"
+                                            sx={{
+                                                cursor: 'pointer',
+                                                width: '100%',
+                                                height: '100%',
+                                            }}
+                                            onClick={() => goToPage(post.id!)}
+                                        />
+                                    )}
                                     <CardHeader
                                         title={post.title}
                                         subheader={DateUtil.ToDateStringBySeoul(
