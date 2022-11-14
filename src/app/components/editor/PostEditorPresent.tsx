@@ -39,6 +39,8 @@ import { usePostService } from '@/hooks/usePostService';
 import { usePostsService } from '@/hooks/usePostsService';
 import { PostsServiceProvider } from '@/services/PostsService';
 import { PostContent } from '@/services/PostService';
+import { useSWRConfig } from 'swr';
+import { API_URL } from '@/app/api/request';
 
 export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
     const auth = useAuth();
@@ -48,6 +50,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
     const [currentCategoryId, setCurrentCategoryId] = useState(1);
     const editorRef = createRef<Editor>();
     const postService = usePostService();
+    const { mutate } = useSWRConfig();
 
     const categoryService = useCategoryService();
 
@@ -89,6 +92,8 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
                 if (!res || res.statusCode >= 400) {
                     throw new Error(res.message);
                 }
+
+                mutate(`${API_URL}/posts/` + postService.getId());
             } else {
                 const res = await postService.writePost(payload);
 
