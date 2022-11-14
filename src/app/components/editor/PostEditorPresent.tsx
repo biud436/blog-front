@@ -48,6 +48,7 @@ export const PostEditorPresent = observer(() => {
     const addImageBlobHook = async (blob, callback) => {
         const formData = new FormData();
         formData.append('files', blob);
+        formData.append('postId', '0');
 
         const res = await axios.post('/image/s3/upload', formData, {
             headers: {

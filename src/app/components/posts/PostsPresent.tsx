@@ -155,11 +155,10 @@ const PostsContainer = observer(() => {
                                             component="img"
                                             image={post.images[0]!.path}
                                             alt={post.title}
-                                            height="180"
                                             sx={{
                                                 cursor: 'pointer',
                                                 width: '100%',
-                                                height: '100%',
+                                                height: 200,
                                             }}
                                             onClick={() => goToPage(post.id!)}
                                         />

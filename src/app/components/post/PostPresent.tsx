@@ -1,7 +1,7 @@
 import { Post } from '@/store/post';
 import { Card, Divider, Grid, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
-import { BackButton } from './BackButton';
+import { PostFooter } from './PostFooter';
 import { GithubComment } from './Comment';
 import { PostContent } from './PostContent';
 import { PostHeader } from './PostHeader';
@@ -38,7 +38,7 @@ export function PostPresent({
                 </Typography>
                 <GithubComment />
             </Card>
-            <BackButton goBack={goBack} />
+            <PostFooter goBack={goBack} />
         </>
     );
 }
