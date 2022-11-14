@@ -34,21 +34,30 @@ import 'prismjs/components/prism-typescript.js';
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 import axios from 'axios';
 import { usePost } from '@/hooks/usePost';
+import { EditPageProps } from '@/app/pages/editor';
+import { usePostService } from '@/hooks/usePostService';
+import { usePostsService } from '@/hooks/usePostsService';
+import { PostsServiceProvider } from '@/services/PostsService';
+import { PostContent } from '@/services/PostService';
 
-export const PostEditorPresent = observer(() => {
+export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
     const auth = useAuth();
     const navigate = useNavigate();
     const [categories, setCategories] = useState<CategoryDepthVO[]>([]);
     const [title, setTitle] = useState('');
     const [currentCategoryId, setCurrentCategoryId] = useState(1);
     const editorRef = createRef<Editor>();
+    const postService = usePostService();
 
     const categoryService = useCategoryService();
 
     const addImageBlobHook = async (blob, callback) => {
         const formData = new FormData();
         formData.append('files', blob);
-        formData.append('postId', '0');
+        formData.append(
+            'postId',
+            mode === 'edit' ? postService.getId() + '' : '0',
+        );
 
         const res = await axios.post('/image/s3/upload', formData, {
             headers: {
@@ -62,24 +71,37 @@ export const PostEditorPresent = observer(() => {
     };
 
     const handleWrite = useCallback(async () => {
-        try {
-            const res = await auth.requestData('post', '/posts', {
-                title,
-                content: DOMPurify.sanitize(
-                    editorRef.current?.getInstance().getMarkdown(),
-                ),
-                categoryId: currentCategoryId,
-            });
+        const payload = {
+            title,
+            content: DOMPurify.sanitize(
+                editorRef.current?.getInstance().getMarkdown(),
+            ),
+            categoryId: currentCategoryId,
+        } as PostContent;
 
-            if (!res || res.statusCode >= 400) {
-                throw new Error(res.message);
+        try {
+            if (mode === 'edit') {
+                const res = await postService.updatePost(
+                    postService.getId(),
+                    payload,
+                );
+
+                if (!res || res.statusCode >= 400) {
+                    throw new Error(res.message);
+                }
+            } else {
+                const res = await postService.writePost(payload);
+
+                if (!res || res.statusCode >= 400) {
+                    throw new Error(res.message);
+                }
             }
 
             navigate(URL_MAP.MAIN);
         } catch (e: any) {
             toast.error(e.message);
         }
-    }, [editorRef, title, currentCategoryId]);
+    }, [editorRef, title, currentCategoryId, mode]);
 
     const handleCancel = useCallback(() => {
         navigate(URL_MAP.MAIN);
@@ -104,49 +126,60 @@ export const PostEditorPresent = observer(() => {
     };
 
     useEffect(() => {
+        if (mode === 'edit') {
+            setTitle(postService.getTitle());
+            editorRef.current
+                ?.getInstance()
+                .setMarkdown(postService.getContent());
+        }
+
         setCategories(getFlatCategories());
     }, []);
 
     return (
-        <Grid container>
-            <Grid item xs={12} lg={12} md={12}>
-                <PostTitleInput
-                    key="PostTitleInput-grid"
-                    title={title}
-                    setTitle={setTitle}
-                />
-                <PostSelectCategory
-                    key="PostSelectCategory-grid"
-                    currentCategoryId={currentCategoryId}
-                    setCurrentCategoryId={setCurrentCategoryId}
-                    categories={categories}
-                />
+        <>
+            <Grid container>
+                <Grid item xs={12} lg={12} md={12}>
+                    <PostTitleInput
+                        key="PostTitleInput-grid"
+                        title={title}
+                        setTitle={setTitle}
+                    />
+                    <PostSelectCategory
+                        key="PostSelectCategory-grid"
+                        currentCategoryId={currentCategoryId}
+                        setCurrentCategoryId={setCurrentCategoryId}
+                        categories={categories}
+                    />
+                </Grid>
+                <Grid item xs={12} lg={12} sm={12}>
+                    <Editor
+                        usageStatistics={false}
+                        initialValue={''}
+                        previewHighlight={false}
+                        initialEditType="markdown"
+                        useCommandShortcut={true}
+                        css={{
+                            width: '100%',
+                        }}
+                        height="600px"
+                        plugins={[
+                            [codeSyntaxHighlight, { highlighter: Prism }],
+                        ]}
+                        ref={editorRef}
+                        viewer={true}
+                        hooks={{
+                            addImageBlobHook,
+                        }}
+                    />
+                </Grid>
+                <Grid container justifyContent="center" sx={{ padding: 2 }}>
+                    <PostButtonGroup
+                        handleWrite={handleWrite}
+                        handleCancel={handleCancel}
+                    />
+                </Grid>
             </Grid>
-            <Grid item xs={12} lg={12} sm={12}>
-                <Editor
-                    usageStatistics={false}
-                    initialValue={''}
-                    previewHighlight={false}
-                    initialEditType="markdown"
-                    useCommandShortcut={true}
-                    css={{
-                        width: '100%',
-                    }}
-                    height="600px"
-                    plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
-                    ref={editorRef}
-                    viewer={true}
-                    hooks={{
-                        addImageBlobHook,
-                    }}
-                />
-            </Grid>
-            <Grid container justifyContent="center" sx={{ padding: 2 }}>
-                <PostButtonGroup
-                    handleWrite={handleWrite}
-                    handleCancel={handleCancel}
-                />
-            </Grid>
-        </Grid>
+        </>
     );
 });

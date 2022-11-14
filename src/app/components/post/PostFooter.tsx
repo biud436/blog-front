@@ -1,7 +1,9 @@
 import { Button, Grid } from '@mui/material';
 import { useAuthorized } from '@/hooks/useAuthorized';
+import { useNavigate } from 'react-router';
 
 export function PostFooter({ goBack }: { goBack: () => void }) {
+    const navigate = useNavigate();
     const [isAuthorized] = useAuthorized();
 
     return (
@@ -32,7 +34,11 @@ export function PostFooter({ goBack }: { goBack: () => void }) {
                             justifyContent: 'end',
                         }}
                     >
-                        <Button variant="outlined" color="warning">
+                        <Button
+                            variant="outlined"
+                            color="warning"
+                            onClick={() => navigate('/post/edit?mode=edit')}
+                        >
                             수정
                         </Button>
                         <Button variant="outlined" color="error">

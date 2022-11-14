@@ -14,7 +14,7 @@ import { AuthContextType } from './AuthContextType';
 import { observer } from 'mobx-react-lite';
 import { URL_MAP } from '@/common/URL';
 
-export type HttpMethod = 'get' | 'post' | 'put' | 'delete';
+export type HttpMethod = 'get' | 'post' | 'put' | 'delete' | 'patch';
 
 export const AuthContext = React.createContext<AuthContextType>(null!);
 

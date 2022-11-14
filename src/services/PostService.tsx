@@ -16,6 +16,15 @@ export interface IPostService {
     getTitle(): string;
     getContent(): string;
     getCount(): number;
+    getId(): number;
+    writePost: (payload: PostContent) => Promise<any>;
+    updatePost: (postId: number, payload: PostContent) => Promise<any>;
+}
+
+export interface PostContent {
+    title: string;
+    content: string;
+    categoryId: number;
 }
 
 export interface IServerResponse {
@@ -75,6 +84,22 @@ export class PostServiceImpl implements IPostService {
 
     getCount(): number {
         return this.getData().viewCount.count ?? 0;
+    }
+
+    getId(): number {
+        return this.getData().id;
+    }
+
+    async writePost(payload: PostContent): Promise<any> {
+        const res = await axios.post(`${API_URL}/posts`, payload);
+
+        return res.data;
+    }
+
+    async updatePost(postId: number, payload: PostContent): Promise<any> {
+        const res = await axios.patch(`${API_URL}/posts/${postId}`, payload);
+
+        return res.data;
     }
 }
 

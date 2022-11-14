@@ -5,11 +5,12 @@ import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import useSWR, { Key, Fetcher } from 'swr';
 import usePosts from './api/usePosts';
+import { usePostService } from './usePostService';
 import { fetcher } from './useSWRUtility';
 
 export function usePost(postId: number) {
     const [post, setPost] = useState<Post>(Object.create(null));
-    const service = useContext(PostContext);
+    const service = usePostService();
     const { raw, error } = usePosts(postId);
 
     if (service === undefined) {
