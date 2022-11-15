@@ -16,12 +16,12 @@ This project is the blog that is made with the javascript library called React, 
 -   [x] 포스트 상세 페이지
 -   [x] 포스트 작성 페이지
 -   [x] AWS S3로 이미지 업로드 기능 만들기
--   [ ] 파일 업로드 기능 만들기
+-   [x] 파일 업로드 기능 만들기
 -   [x] 포스트 내용을 Helmet을 이용한 SEO 처리하기
--   [ ] Helmet에서 meta 태그를 이용하여 이미지 미리보기 처리하기
+-   [x] Helmet에서 meta 태그를 이용하여 이미지 미리보기 처리하기
 -   [x] 블로그 링크 기능 복사 기능 만들기
--   [ ] 포스트 수정 기능
--   [ ] 포스트 삭제 기능
+-   [x] 포스트 수정 기능
+-   [x] 포스트 삭제 기능
 -   [x] 댓글 작성 기능
 -   [x] 댓글 수정 기능
 -   [x] 댓글 삭제 기능
