@@ -33,7 +33,16 @@ export function SearchBuilder<T>(Store: InstanceType<new () => Searchable<T>>) {
                     justifyContent="center"
                     gap={3}
                 >
-                    <Grid item xs={2} sx={{ width: '100%' }}>
+                    <Grid
+                        item
+                        xs={2}
+                        sx={{
+                            width: '100%',
+                            '@media (max-width: 600px)': {
+                                display: 'none',
+                            },
+                        }}
+                    >
                         <FormControl sx={{ m: 1, width: '100%' }}>
                             <InputLabel id="demo-simple-select-label">
                                 검색 옵션

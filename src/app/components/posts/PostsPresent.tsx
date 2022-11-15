@@ -142,10 +142,29 @@ const PostsContainer = observer(() => {
                                         '&:hover': {
                                             backgroundColor: '#f5f5f5',
                                         },
+                                        display: 'block',
                                         justifyContent: 'center',
                                         alignItems: 'center',
-                                        minWidth: 400,
-                                        maxWidth: 400,
+                                        '@media (min-width: 320px)': {
+                                            minWidth: 240,
+                                            maxWidth: 240,
+                                        },
+                                        '@media (min-width: 600px)': {
+                                            minWidth: 540,
+                                            maxWidth: 540,
+                                        },
+                                        '@media (min-width: 900px)': {
+                                            minWidth: 640,
+                                            maxWidth: 640,
+                                        },
+                                        '@media (min-width: 1200px)': {
+                                            minWidth: 640,
+                                            maxWidth: 640,
+                                        },
+                                        '@media (min-width: 1536px)': {
+                                            minWidth: 640,
+                                            maxWidth: 640,
+                                        },
                                     }}
                                     key={post.id}
                                     elevation={2}
@@ -158,7 +177,8 @@ const PostsContainer = observer(() => {
                                             sx={{
                                                 cursor: 'pointer',
                                                 width: '100%',
-                                                height: 200,
+                                                minHeight: 200,
+                                                maxHeight: 200,
                                             }}
                                             onClick={() => goToPage(post.id!)}
                                         />
@@ -173,13 +193,11 @@ const PostsContainer = observer(() => {
                                             cursor: 'pointer',
                                             color: 'primary.main',
                                             width: '100%',
-                                            padding: 3,
                                             '& .MuiCardHeader-title': {
                                                 overflow: 'hidden',
                                                 textOverflow: 'ellipsis',
                                                 whiteSpace: 'nowrap',
                                                 width: '80%',
-                                                padding: 3,
                                             },
                                         }}
                                         onClick={() => goToPage(post.id!)}

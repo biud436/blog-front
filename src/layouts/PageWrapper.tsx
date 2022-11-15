@@ -278,7 +278,6 @@ export const PageWrapper = observer(
                                     gap: '0.5rem',
                                 }}
                             >
-                                <GrAddCircle />
                                 글쓰기
                             </Typography>
                         </Button>
@@ -360,7 +359,6 @@ export function LoginWrapper() {
 
     return (
         <>
-            <MenuPostWriteButton navigate={navigate} />
             {isAuthorized ? (
                 <LogoutButton auth={auth} />
             ) : (
