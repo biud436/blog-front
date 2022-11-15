@@ -158,57 +158,64 @@ export const PageWrapper = observer(
          * @param categories
          * @returns {JSX.Element} JSX.Element
          */
-        const makeCategoryList = (categories: CategoryDepthVO[]) => {
-            return categories.map((category, index) => {
-                const isNotEmpty = category.children.length > 0;
-                const key = `category-${index}`;
+        const makeCategoryList = useCallback(
+            (categories: CategoryDepthVO[]) => {
+                return categories.map((category, index) => {
+                    const isNotEmpty = category.children.length > 0;
+                    const key = `category-${index}`;
 
-                return (
-                    <React.Fragment key={key}>
-                        <ListItemButton
-                            onClick={(e: React.MouseEvent) => {
-                                if (isNotEmpty) {
-                                    category.open = !category.open;
-                                    setCategoryList([...categoryList]);
-                                }
+                    return (
+                        <React.Fragment key={key}>
+                            <ListItemButton
+                                onClick={(e: React.MouseEvent) => {
+                                    if (isNotEmpty) {
+                                        setCategoryList([...categoryList]);
+                                    }
 
-                                categoryService.setCurrentMenuCategoryId(
-                                    rootCategory === category
-                                        ? null
-                                        : category.id,
-                                );
-                                toggleDrawer(false);
-                                navigate(URL_MAP.MAIN);
-                            }}
-                            onKeyDown={toggleDrawer(false)}
-                            sx={{
-                                pl: category.depth * 2,
-                            }}
-                        >
-                            <ListItemIcon>
-                                {isNotEmpty ? (
-                                    <ExpandMore />
-                                ) : (
-                                    <ChevronRightIcon />
-                                )}
-                            </ListItemIcon>
-                            <ListItemText primary={category.name} />
-                        </ListItemButton>
-                        {isNotEmpty && (
-                            <Collapse
-                                in={category.open}
-                                timeout="auto"
-                                unmountOnExit
+                                    categoryService.setCurrentMenuCategoryId(
+                                        rootCategory === category
+                                            ? null
+                                            : category.id,
+                                    );
+                                    toggleDrawer(false);
+                                    navigate(URL_MAP.MAIN);
+                                }}
+                                onKeyDown={toggleDrawer(false)}
+                                sx={{
+                                    pl: category.depth * 2,
+                                    backgroundColor:
+                                        categoryService.currentMenuCategoryId ===
+                                        category.id
+                                            ? 'rgba(0, 0, 0, 0.04)'
+                                            : 'transparent',
+                                }}
                             >
-                                <List component="div" disablePadding>
-                                    {makeCategoryList(category.children)}
-                                </List>
-                            </Collapse>
-                        )}
-                    </React.Fragment>
-                );
-            });
-        };
+                                <ListItemIcon>
+                                    {isNotEmpty ? (
+                                        <ExpandMore />
+                                    ) : (
+                                        <ChevronRightIcon />
+                                    )}
+                                </ListItemIcon>
+                                <ListItemText primary={category.name} />
+                            </ListItemButton>
+                            {isNotEmpty && (
+                                <Collapse
+                                    in={category.open}
+                                    timeout="auto"
+                                    unmountOnExit
+                                >
+                                    <List component="div" disablePadding>
+                                        {makeCategoryList(category.children)}
+                                    </List>
+                                </Collapse>
+                            )}
+                        </React.Fragment>
+                    );
+                });
+            },
+            [categoryList],
+        );
 
         const initWithSettings = async () => {
             await initCategories();
@@ -219,28 +226,9 @@ export const PageWrapper = observer(
         }, [matches]);
 
         return (
-            <Container
-            // onClick={(e: React.MouseEvent) => {
-            //     toggleDrawer(false);
-
-            //     e.preventDefault();
-            // }}
-            >
+            <Container>
                 <CssBaseline />
-                <AppBar
-                    position="fixed"
-                    open={open}
-                    sx={
-                        {
-                            // display: {
-                            //     xs: 'none',
-                            //     sm: 'block',
-                            //     md: 'none',
-                            //     lg: 'none',
-                            // },
-                        }
-                    }
-                >
+                <AppBar position="fixed" open={open}>
                     <Toolbar>
                         <IconButton
                             color="inherit"
