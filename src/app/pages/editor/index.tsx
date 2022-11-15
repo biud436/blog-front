@@ -9,8 +9,9 @@ import { useAuthorized } from '@/hooks/useAuthorized';
 import { useParams } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 
+export type EditMode = 'create' | 'edit';
 export interface EditPageProps {
-    mode: string;
+    mode: EditMode;
 }
 
 function PageHeader({ mode }: EditPageProps) {
@@ -44,9 +45,9 @@ export const PostEditor = observer(({ mode }: EditPageProps) => {
 });
 
 export const PostEditorContainer = observer(() => {
-    const [search, setSearch] = useSearchParams();
+    const [search] = useSearchParams();
     const [isAuthorized, isDone] = useAuthorized();
-    const [mode, setMode] = useState('create');
+    const [mode, setMode] = useState<EditPageProps['mode']>('create');
 
     const LoginGuard = ({ children }: { children: JSX.Element }) => {
         return !isAuthorized ? (

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -21,13 +21,7 @@ import { useAuth } from '@/app/providers/auth/authProvider';
 import { DrawerHeader } from '@/app/components/atomic/DrawerHeader';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { URL_MAP } from '@/common/URL';
-import {
-    Button,
-    Collapse,
-    Container,
-    Paper,
-    SwipeableDrawer,
-} from '@mui/material';
+import { Button, Collapse, Container } from '@mui/material';
 import { API_URL } from '../app/api/request';
 import axios, { AxiosResponse } from 'axios';
 import { CategoryDepthVO } from '@/services/CategoryService';
@@ -39,7 +33,6 @@ import { LogoutButton } from '../app/components/category/LogoutButton';
 import { MenuPostWriteButton } from '../app/components/category/MenuPostWriteButton';
 import { RequestHandler } from '../app/api/axios';
 import { useMediaQuery } from 'react-responsive';
-import { GithubOAuthButton } from '../app/components/GithubOAuthButton';
 import { GrAddCircle } from 'react-icons/gr';
 
 const drawerWidth = 240;
@@ -53,7 +46,6 @@ const Main = styled('main', { shouldForwardProp: prop => prop !== 'open' })<{
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
     }),
-    // marginLeft: `-${drawerWidth}px`,
     ...(open && {
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.easeOut,
@@ -91,41 +83,44 @@ export const PageWrapper = observer(
             query: '(max-width: 768px)',
         });
         const theme = useTheme();
-        const [open, setOpen] = React.useState(false);
-        const [categoryList, setCategoryList] = React.useState<
-            CategoryDepthVO[]
-        >([]);
-        const [rootCategory, setRootCategory] =
-            React.useState<CategoryDepthVO>();
+        const [open, setOpen] = useState(false);
+        const [categoryList, setCategoryList] = useState<CategoryDepthVO[]>([]);
+        const [rootCategory, setRootCategory] = useState<CategoryDepthVO>();
         const categoryService = useCategoryService();
 
-        const handleDrawerOpen = () => {
-            setOpen(true);
-        };
+        const handleDrawerOpen = useCallback(
+            (e: React.MouseEvent) => {
+                setOpen(true);
+            },
+            [open],
+        );
 
-        const handleDrawerClose = () => {
+        const handleDrawerClose = useCallback(() => {
             setOpen(false);
-        };
+        }, [open]);
 
-        const toggleDrawer =
+        const toggleDrawer = useCallback(
             (open: boolean) =>
-            (event: React.KeyboardEvent | React.MouseEvent) => {
-                if (
-                    event.type === 'keydown' &&
-                    ((event as React.KeyboardEvent).key === 'Tab' ||
-                        (event as React.KeyboardEvent).key === 'Shift')
-                ) {
-                    return;
-                }
+                (event: React.KeyboardEvent | React.MouseEvent) => {
+                    if (
+                        event.type === 'keydown' &&
+                        ((event as React.KeyboardEvent).key === 'Tab' ||
+                            (event as React.KeyboardEvent).key === 'Shift')
+                    ) {
+                        console.log('tab');
+                        event.preventDefault();
+                    }
 
-                setOpen(open);
-            };
+                    setOpen(open);
+                },
+            [open],
+        );
 
         /**
          * 카테고리 목록 초기화
          * @returns
          */
-        const initCategories = async () => {
+        const initCategories = useCallback(async () => {
             const res: AxiosResponse<any> = await axios.get(
                 `${API_URL}/admin/category?isBeautify=true`,
                 {},
@@ -142,7 +137,7 @@ export const PageWrapper = observer(
             setRootCategory(categories[0]);
 
             return categories;
-        };
+        }, [categoryList]);
 
         /**
          * 카테고리 목록을 재귀적으로 읽고, open을 false로 설정합니다.
@@ -165,11 +160,14 @@ export const PageWrapper = observer(
          */
         const makeCategoryList = (categories: CategoryDepthVO[]) => {
             return categories.map((category, index) => {
+                const isNotEmpty = category.children.length > 0;
+                const key = `category-${index}`;
+
                 return (
-                    <React.Fragment key={index}>
+                    <React.Fragment key={key}>
                         <ListItemButton
-                            onClick={() => {
-                                if (category.children.length > 0) {
+                            onClick={(e: React.MouseEvent) => {
+                                if (isNotEmpty) {
                                     category.open = !category.open;
                                     setCategoryList([...categoryList]);
                                 }
@@ -188,7 +186,7 @@ export const PageWrapper = observer(
                             }}
                         >
                             <ListItemIcon>
-                                {category.children.length > 0 ? (
+                                {isNotEmpty ? (
                                     <ExpandMore />
                                 ) : (
                                     <ChevronRightIcon />
@@ -196,7 +194,7 @@ export const PageWrapper = observer(
                             </ListItemIcon>
                             <ListItemText primary={category.name} />
                         </ListItemButton>
-                        {category.children.length > 0 && (
+                        {isNotEmpty && (
                             <Collapse
                                 in={category.open}
                                 timeout="auto"
@@ -221,113 +219,110 @@ export const PageWrapper = observer(
         }, [matches]);
 
         return (
-            <>
-                <Container
-                    onClick={(e: React.MouseEvent) => {
-                        toggleDrawer(false);
-                        e.preventDefault();
-                    }}
+            <Container
+            // onClick={(e: React.MouseEvent) => {
+            //     toggleDrawer(false);
+
+            //     e.preventDefault();
+            // }}
+            >
+                <CssBaseline />
+                <AppBar
+                    position="fixed"
+                    open={open}
+                    sx={
+                        {
+                            // display: {
+                            //     xs: 'none',
+                            //     sm: 'block',
+                            //     md: 'none',
+                            //     lg: 'none',
+                            // },
+                        }
+                    }
                 >
-                    <Container>
-                        <CssBaseline />
-                        <AppBar
-                            position="fixed"
-                            open={open}
-                            sx={
-                                {
-                                    // display: {
-                                    //     xs: 'none',
-                                    //     sm: 'block',
-                                    //     md: 'none',
-                                    //     lg: 'none',
-                                    // },
-                                }
-                            }
-                        >
-                            <Toolbar>
-                                <IconButton
-                                    color="inherit"
-                                    aria-label="open drawer"
-                                    onClick={handleDrawerOpen}
-                                    edge="start"
-                                    sx={{
-                                        mr: 2,
-                                        ...(open && { display: 'none' }),
-                                    }}
-                                >
-                                    <MenuIcon />
-                                </IconButton>
-                                <Typography
-                                    variant="h6"
-                                    noWrap
-                                    component="div"
-                                    sx={{ flexGrow: 1, cursor: 'pointer' }}
-                                    onClick={() => {
-                                        navigate(URL_MAP.MAIN);
-                                    }}
-                                >
-                                    {name}
-                                </Typography>
-                                <Button
-                                    color="inherit"
-                                    onClick={() => navigate(URL_MAP.POST_EDIT)}
-                                >
-                                    <Typography
-                                        variant="h6"
-                                        sx={{
-                                            color: 'white',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            gap: '0.5rem',
-                                        }}
-                                    >
-                                        <GrAddCircle />
-                                        글쓰기
-                                    </Typography>
-                                </Button>
-                            </Toolbar>
-                        </AppBar>
-                        <Drawer
+                    <Toolbar>
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={handleDrawerOpen}
+                            edge="start"
                             sx={{
-                                width: drawerWidth,
-                                flexShrink: 0,
-                                '& .MuiDrawer-paper': {
-                                    width: drawerWidth,
-                                    boxSizing: 'border-box',
-                                },
+                                mr: 2,
+                                ...(open && { display: 'none' }),
                             }}
-                            anchor="left"
-                            open={open}
                         >
-                            <Box
-                                onKeyDown={toggleDrawer(false)}
-                                onClick={toggleDrawer(false)}
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="div"
+                            sx={{ flexGrow: 1, cursor: 'pointer' }}
+                            onClick={() => {
+                                navigate(URL_MAP.MAIN);
+                            }}
+                        >
+                            {name}
+                        </Typography>
+                        <Button
+                            color="inherit"
+                            onClick={() => navigate(URL_MAP.POST_EDIT)}
+                        >
+                            <Typography
+                                variant="h6"
+                                sx={{
+                                    color: 'white',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '0.5rem',
+                                }}
                             >
-                                <DrawerHeader>
-                                    <IconButton onClick={handleDrawerClose}>
-                                        {theme.direction === 'ltr' ? (
-                                            <ChevronLeftIcon />
-                                        ) : (
-                                            <ChevronRightIcon />
-                                        )}
-                                    </IconButton>
-                                </DrawerHeader>
-                                <Divider />
-                                <List component="nav">
-                                    {makeCategoryList(categoryList)}
-                                    <Divider />
-                                    <LoginWrapper />
-                                </List>
-                                <Divider />
-                            </Box>
-                        </Drawer>
-                        <Main open={open}>
-                            <DrawerHeader />
-                            {children}
-                        </Main>
-                    </Container>
-                </Container>
-            </>
+                                <GrAddCircle />
+                                글쓰기
+                            </Typography>
+                        </Button>
+                    </Toolbar>
+                </AppBar>
+                <Drawer
+                    sx={{
+                        width: drawerWidth,
+                        flexShrink: 0,
+                        '& .MuiDrawer-paper': {
+                            width: drawerWidth,
+                            boxSizing: 'border-box',
+                        },
+                    }}
+                    anchor="left"
+                    open={open}
+                >
+                    <Box
+                        onKeyDown={toggleDrawer(false)}
+                        onClick={toggleDrawer(false)}
+                    >
+                        <DrawerHeader>
+                            <IconButton onClick={handleDrawerClose}>
+                                {theme.direction === 'ltr' ? (
+                                    <ChevronLeftIcon />
+                                ) : (
+                                    <ChevronRightIcon />
+                                )}
+                            </IconButton>
+                        </DrawerHeader>
+                        <Divider />
+                        <List component="nav">
+                            {makeCategoryList(categoryList)}
+                            <Divider />
+                            <LoginWrapper />
+                        </List>
+                        <Divider />
+                    </Box>
+                </Drawer>
+                <Main open={open}>
+                    <DrawerHeader />
+                    {children}
+                </Main>
+            </Container>
         );
     },
 );
@@ -335,8 +330,7 @@ export const PageWrapper = observer(
 export function LoginWrapper() {
     const auth = useAuth();
     const navigate = useNavigate();
-    const [isLoggenIn, setIsLoggedIn] = React.useState(false);
-    const [cookies, setCookie, removeCookie] = useCookies(['username']);
+    const [, setIsLoggedIn] = React.useState(false);
     const [isAuthorized, setIsAuthorized] = React.useState(false);
 
     // 토큰 만료 여부를 확인합니다.

@@ -19,6 +19,7 @@ export interface IPostService {
     getId(): number;
     writePost: (payload: PostContent) => Promise<any>;
     updatePost: (postId: number, payload: PostContent) => Promise<any>;
+    deletePost(postId: number): Promise<any>;
 }
 
 export interface PostContent {
@@ -98,6 +99,12 @@ export class PostServiceImpl implements IPostService {
 
     async updatePost(postId: number, payload: PostContent): Promise<any> {
         const res = await axios.patch(`${API_URL}/posts/${postId}`, payload);
+
+        return res.data;
+    }
+
+    async deletePost(postId: number): Promise<any> {
+        const res = await axios.delete(`${API_URL}/posts/${postId}`);
 
         return res.data;
     }

@@ -43,18 +43,24 @@ import { useSWRConfig } from 'swr';
 import { API_URL } from '@/app/api/request';
 
 export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
-    const auth = useAuth();
     const navigate = useNavigate();
     const [categories, setCategories] = useState<CategoryDepthVO[]>([]);
     const [title, setTitle] = useState('');
     const [currentCategoryId, setCurrentCategoryId] = useState(1);
-    const editorRef = createRef<Editor>();
+    const editorRef = useRef<Editor>(null);
     const postService = usePostService();
     const { mutate } = useSWRConfig();
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const categoryService = useCategoryService();
 
-    const addImageBlobHook = async (blob, callback) => {
+    /**
+     * 이미지 업로드 시, 훅을 통해 서버에 업로드 요청을 보낸다.
+     *
+     * @param blob
+     * @param callback
+     */
+    const addImageBlobHook = (blob, callback) => {
         const formData = new FormData();
         formData.append('files', blob);
         formData.append(
@@ -62,20 +68,29 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
             mode === 'edit' ? postService.getId() + '' : '0',
         );
 
-        const res = await axios.post('/image/s3/upload', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        });
+        axios
+            .post('/image/s3/upload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+            .then(res => {
+                const { data } = res.data;
 
-        const { data } = res.data;
+                callback(data.location, data.originalName);
+            });
 
-        callback(data.location, data.originalName);
+        return false;
     };
 
+    /**
+     * 글 작성 및 수정 이벤트
+     */
     const handleWrite = useCallback(async () => {
         const payload = {
             title,
+            // TUI Editor에서 내부에서 DOMPurify를 사용하고 있어서,
+            // XSS 공격을 기본적으로 방어하지만 다른 에디터 변경 가능성을 열어두기 위해 추가
             content: DOMPurify.sanitize(
                 editorRef.current?.getInstance().getMarkdown(),
             ),
@@ -112,7 +127,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
         navigate(URL_MAP.MAIN);
     }, []);
 
-    const getFlatCategories = () => {
+    const getFlatCategories = useCallback(() => {
         const raw = toJS(categoryService.getCategories());
         const flatCategories: CategoryDepthVO[] = [];
 
@@ -128,7 +143,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
         makeFlatCategories(raw);
 
         return flatCategories;
-    };
+    }, [categories]);
 
     useEffect(() => {
         if (mode === 'edit') {
@@ -138,53 +153,53 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
                 .setMarkdown(postService.getContent());
         }
 
+        // 2022.11.15, Chrome File Input Window Issue.
+        // editorRef.current?.getInstance().removeToolbarItem('image');
+
         setCategories(getFlatCategories());
     }, []);
 
     return (
-        <>
-            <Grid container>
-                <Grid item xs={12} lg={12} md={12}>
-                    <PostTitleInput
-                        key="PostTitleInput-grid"
-                        title={title}
-                        setTitle={setTitle}
-                    />
-                    <PostSelectCategory
-                        key="PostSelectCategory-grid"
-                        currentCategoryId={currentCategoryId}
-                        setCurrentCategoryId={setCurrentCategoryId}
-                        categories={categories}
-                    />
-                </Grid>
-                <Grid item xs={12} lg={12} sm={12}>
-                    <Editor
-                        usageStatistics={false}
-                        initialValue={''}
-                        previewHighlight={false}
-                        initialEditType="markdown"
-                        useCommandShortcut={true}
-                        css={{
-                            width: '100%',
-                        }}
-                        height="600px"
-                        plugins={[
-                            [codeSyntaxHighlight, { highlighter: Prism }],
-                        ]}
-                        ref={editorRef}
-                        viewer={true}
-                        hooks={{
-                            addImageBlobHook,
-                        }}
-                    />
-                </Grid>
-                <Grid container justifyContent="center" sx={{ padding: 2 }}>
-                    <PostButtonGroup
-                        handleWrite={handleWrite}
-                        handleCancel={handleCancel}
-                    />
-                </Grid>
+        <Grid container>
+            <Grid item xs={12} lg={12} md={12}>
+                <PostTitleInput
+                    key="PostTitleInput-grid"
+                    title={title}
+                    setTitle={setTitle}
+                />
+                <PostSelectCategory
+                    key="PostSelectCategory-grid"
+                    currentCategoryId={currentCategoryId}
+                    setCurrentCategoryId={setCurrentCategoryId}
+                    categories={categories}
+                />
             </Grid>
-        </>
+            <Grid item xs={12} lg={12} sm={12}>
+                <Editor
+                    usageStatistics={false}
+                    initialValue={''}
+                    previewHighlight={false}
+                    initialEditType="markdown"
+                    useCommandShortcut={true}
+                    css={{
+                        width: '100%',
+                    }}
+                    height="600px"
+                    plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
+                    ref={editorRef}
+                    viewer={true}
+                    hooks={{
+                        addImageBlobHook,
+                    }}
+                />
+            </Grid>
+            <Grid container justifyContent="center" sx={{ padding: 2 }}>
+                <PostButtonGroup
+                    mode={mode}
+                    handleWrite={handleWrite}
+                    handleCancel={handleCancel}
+                />
+            </Grid>
+        </Grid>
     );
 });

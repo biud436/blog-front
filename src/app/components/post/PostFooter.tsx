@@ -1,10 +1,27 @@
 import { Button, Grid } from '@mui/material';
 import { useAuthorized } from '@/hooks/useAuthorized';
 import { useNavigate } from 'react-router';
+import { usePostService } from '@/hooks/usePostService';
+import { toast } from 'react-toastify';
 
 export function PostFooter({ goBack }: { goBack: () => void }) {
     const navigate = useNavigate();
     const [isAuthorized] = useAuthorized();
+    const postService = usePostService();
+
+    const handleDeletePost = async () => {
+        const currentPostId = postService.getId();
+
+        if (confirm('정말 삭제하시겠습니까?')) {
+            const res = await postService.deletePost(currentPostId);
+
+            if (res.result === 'success') {
+                navigate('/');
+            } else {
+                toast.error('삭제에 실패했습니다.');
+            }
+        }
+    };
 
     return (
         <Grid
@@ -41,7 +58,11 @@ export function PostFooter({ goBack }: { goBack: () => void }) {
                         >
                             수정
                         </Button>
-                        <Button variant="outlined" color="error">
+                        <Button
+                            variant="outlined"
+                            color="error"
+                            onClick={handleDeletePost}
+                        >
                             삭제
                         </Button>
                     </Grid>

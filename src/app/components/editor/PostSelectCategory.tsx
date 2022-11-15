@@ -18,6 +18,9 @@ export function PostSelectCategory({
                 value={currentCategoryId}
                 onChange={e => setCurrentCategoryId(+e.target.value)}
             >
+                <MenuItem value={0} key="0">
+                    ---
+                </MenuItem>
                 {categories.map(category => {
                     return (
                         <MenuItem value={category.id} key={category.id}>
