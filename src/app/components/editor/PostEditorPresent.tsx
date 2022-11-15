@@ -52,6 +52,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
         query: '(max-width: 768px)',
     });
     const { mutate } = useSWRConfig();
+    const random = useRef(Date.now());
     const toolbarItems = useMemo(() => {
         if (!matches) {
             return [
@@ -123,7 +124,10 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
                     throw new Error(res.message);
                 }
 
-                mutate(`${API_URL}/posts/` + postService.getId());
+                mutate([
+                    `${API_URL}/posts/` + postService.getId(),
+                    random.current,
+                ]);
             } else {
                 const res = await postService.writePost(payload);
 
