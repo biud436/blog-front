@@ -10,6 +10,7 @@ import {
     useCallback,
     useEffect,
     useId,
+    useMemo,
     useRef,
     useState,
 } from 'react';
@@ -33,14 +34,12 @@ import 'prismjs/components/prism-typescript.js';
 
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 import axios from 'axios';
-import { usePost } from '@/hooks/usePost';
 import { EditPageProps } from '@/app/pages/editor';
 import { usePostService } from '@/hooks/usePostService';
-import { usePostsService } from '@/hooks/usePostsService';
-import { PostsServiceProvider } from '@/services/PostsService';
 import { PostContent } from '@/services/PostService';
 import { useSWRConfig } from 'swr';
 import { API_URL } from '@/app/api/request';
+import { useMediaQuery } from 'react-responsive';
 
 export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
     const navigate = useNavigate();
@@ -49,8 +48,24 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
     const [currentCategoryId, setCurrentCategoryId] = useState(1);
     const editorRef = useRef<Editor>(null);
     const postService = usePostService();
+    const matches = useMediaQuery({
+        query: '(max-width: 768px)',
+    });
     const { mutate } = useSWRConfig();
-    const fileInputRef = useRef<HTMLInputElement>(null);
+    const toolbarItems = useMemo(() => {
+        if (!matches) {
+            return [
+                ['heading', 'bold', 'italic', 'strike'],
+                ['hr', 'quote'],
+                ['ul', 'ol', 'task', 'indent', 'outdent'],
+                ['table', 'image', 'link'],
+                ['code', 'codeblock'],
+                ['scrollSync'],
+            ];
+        } else {
+            return [['image'], ['heading', 'bold'], ['codeblock']];
+        }
+    }, [matches]);
 
     const categoryService = useCategoryService();
 
@@ -153,9 +168,6 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
                 .setMarkdown(postService.getContent());
         }
 
-        // 2022.11.15, Chrome File Input Window Issue.
-        // editorRef.current?.getInstance().removeToolbarItem('image');
-
         setCategories(getFlatCategories());
     }, []);
 
@@ -185,6 +197,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
                         width: '100%',
                     }}
                     height="600px"
+                    toolbarItems={toolbarItems}
                     plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
                     ref={editorRef}
                     viewer={true}
