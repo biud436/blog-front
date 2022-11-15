@@ -4,9 +4,13 @@ This project is the blog that is made with the javascript library called React, 
 
 ---
 
-노드 블로그 서버 [blog-api-server](https://github.com/biud436/blog-api-server)와 연동되는 블로그 프론트 페이지로 토이 프로젝트로 진행하고 있으며 아직 작업 중입니다.
+노드 블로그 서버 [blog-api-server](https://github.com/biud436/blog-api-server)와 연동되는 블로그 프론트 페이지입니다.
 
-# Todo List
+## 개발기간
+
+2022.10.10 ~ 2022.11.15 (약 1개월)
+
+## Todo List
 
 -   [x] 블로그 메인 페이지 만들기
 -   [x] 상태 관리 라이브러리 적용하기 (mobx)
@@ -27,12 +31,7 @@ This project is the blog that is made with the javascript library called React, 
 -   [x] 댓글 삭제 기능
 -   [x] 외부 댓글 플러그인 연동
 -   [x] 마크다운에 코드 하이라이트 기능 추가
--   [ ] PC에서 카테고리 목록을 포스트 옆에 출력하기
--   [ ] 모바일에서 카테고리 목록을 상단 앱바에 출력하기
--   [ ] 깃허브 로그인 기능 만들기
--   [ ] RSS 피드 기능
 -   [x] 포스트 글 주기적 페칭 기능 간격 수정하기
--   [ ] Github Action을 통한 빌드 프로세스 개선하기
 -   [x] TUI Editor에 Image Middleware (이미지 미들웨어 -> 링크 대체) 추가하기
 
 ## 설치 방법
