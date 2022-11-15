@@ -6,7 +6,7 @@ This project is the blog that is made with the javascript library called React, 
 
 노드 블로그 서버 [blog-api-server](https://github.com/biud436/blog-api-server)와 연동되는 블로그 프론트 페이지입니다.
 
-## 개발기간
+## 개발 기간
 
 2022.10.10 ~ 2022.11.15 (약 1개월)
 
