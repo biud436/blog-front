@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useCallback, useState, useMemo } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -13,15 +13,11 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import { useNavigate } from 'react-router';
 import { useAuth } from '@/app/providers/auth/authProvider';
 import { DrawerHeader } from '@/app/components/atomic/DrawerHeader';
-import ExpandMore from '@mui/icons-material/ExpandMore';
 import { URL_MAP } from '@/common/URL';
-import { Button, Collapse, Container } from '@mui/material';
+import { Button, Container } from '@mui/material';
 import { API_URL } from '../app/api/request';
 import axios, { AxiosResponse } from 'axios';
 import { CategoryDepthVO } from '@/services/CategoryService';
@@ -34,6 +30,8 @@ import { MenuPostWriteButton } from '../app/components/category/MenuPostWriteBut
 import { RequestHandler } from '../app/api/axios';
 import { useMediaQuery } from 'react-responsive';
 import { GrAddCircle } from 'react-icons/gr';
+import { menuStore } from '@/store/menu';
+import { CategoryWrapper } from '../app/components/category/CategoryWrapper';
 
 const drawerWidth = 240;
 
@@ -83,20 +81,19 @@ export const PageWrapper = observer(
             query: '(max-width: 768px)',
         });
         const theme = useTheme();
-        const [open, setOpen] = useState(false);
         const [categoryList, setCategoryList] = useState<CategoryDepthVO[]>([]);
         const [rootCategory, setRootCategory] = useState<CategoryDepthVO>();
         const categoryService = useCategoryService();
 
         const handleDrawerOpen = useCallback(
             (e: React.MouseEvent) => {
-                setOpen(true);
+                menuStore.open();
             },
             [open],
         );
 
         const handleDrawerClose = useCallback(() => {
-            setOpen(false);
+            menuStore.close();
         }, [open]);
 
         const toggleDrawer = useCallback(
@@ -107,13 +104,12 @@ export const PageWrapper = observer(
                         ((event as React.KeyboardEvent).key === 'Tab' ||
                             (event as React.KeyboardEvent).key === 'Shift')
                     ) {
-                        console.log('tab');
                         event.preventDefault();
                     }
 
-                    setOpen(open);
+                    menuStore.setOpen(open);
                 },
-            [open],
+            [menuStore.isOpen],
         );
 
         /**
@@ -152,71 +148,6 @@ export const PageWrapper = observer(
             });
         };
 
-        /**
-         * 카테고리 리스트를 동적으로 생성합니다.
-         *
-         * @param categories
-         * @returns {JSX.Element} JSX.Element
-         */
-        const makeCategoryList = useCallback(
-            (categories: CategoryDepthVO[]) => {
-                return categories.map((category, index) => {
-                    const isNotEmpty = category.children.length > 0;
-                    const key = `category-${index}`;
-
-                    return (
-                        <React.Fragment key={key}>
-                            <ListItemButton
-                                onClick={(e: React.MouseEvent) => {
-                                    if (isNotEmpty) {
-                                        setCategoryList([...categoryList]);
-                                    }
-
-                                    categoryService.setCurrentMenuCategoryId(
-                                        rootCategory === category
-                                            ? null
-                                            : category.id,
-                                    );
-                                    toggleDrawer(false);
-                                    navigate(URL_MAP.MAIN);
-                                }}
-                                onKeyDown={toggleDrawer(false)}
-                                sx={{
-                                    pl: category.depth * 2,
-                                    backgroundColor:
-                                        categoryService.currentMenuCategoryId ===
-                                        category.id
-                                            ? 'rgba(0, 0, 0, 0.04)'
-                                            : 'transparent',
-                                }}
-                            >
-                                <ListItemIcon>
-                                    {isNotEmpty ? (
-                                        <ExpandMore />
-                                    ) : (
-                                        <ChevronRightIcon />
-                                    )}
-                                </ListItemIcon>
-                                <ListItemText primary={category.name} />
-                            </ListItemButton>
-                            {isNotEmpty && (
-                                <Collapse
-                                    in={category.open}
-                                    timeout="auto"
-                                    unmountOnExit
-                                >
-                                    <List component="div" disablePadding>
-                                        {makeCategoryList(category.children)}
-                                    </List>
-                                </Collapse>
-                            )}
-                        </React.Fragment>
-                    );
-                });
-            },
-            [categoryList],
-        );
-
         const initWithSettings = async () => {
             await initCategories();
         };
@@ -228,7 +159,7 @@ export const PageWrapper = observer(
         return (
             <Container>
                 <CssBaseline />
-                <AppBar position="fixed" open={open}>
+                <AppBar position="fixed" open={menuStore.isOpen}>
                     <Toolbar>
                         <IconButton
                             color="inherit"
@@ -237,7 +168,7 @@ export const PageWrapper = observer(
                             edge="start"
                             sx={{
                                 mr: 2,
-                                ...(open && { display: 'none' }),
+                                ...(menuStore.isOpen && { display: 'none' }),
                             }}
                         >
                             <MenuIcon />
@@ -281,7 +212,7 @@ export const PageWrapper = observer(
                         },
                     }}
                     anchor="left"
-                    open={open}
+                    open={menuStore.isOpen}
                 >
                     <Box
                         onKeyDown={toggleDrawer(false)}
@@ -298,14 +229,22 @@ export const PageWrapper = observer(
                         </DrawerHeader>
                         <Divider />
                         <List component="nav">
-                            {makeCategoryList(categoryList)}
+                            <CategoryWrapper
+                                {...{
+                                    categoryList,
+                                    setCategoryList,
+                                    toggleDrawer,
+                                    navigate,
+                                    rootCategory,
+                                }}
+                            />
                             <Divider />
                             <LoginWrapper />
                         </List>
                         <Divider />
                     </Box>
                 </Drawer>
-                <Main open={open}>
+                <Main open={menuStore.isOpen}>
                     <DrawerHeader />
                     {children}
                 </Main>
