@@ -31,7 +31,7 @@ This project is the blog that is made with the javascript library called React, 
 -   [ ] 모바일에서 카테고리 목록을 상단 앱바에 출력하기
 -   [ ] 깃허브 로그인 기능 만들기
 -   [ ] RSS 피드 기능
--   [ ] 포스트 글 주기적 페칭 기능 간격 수정하기
+-   [x] 포스트 글 주기적 페칭 기능 간격 수정하기
 -   [ ] Github Action을 통한 빌드 프로세스 개선하기
 -   [x] TUI Editor에 Image Middleware (이미지 미들웨어 -> 링크 대체) 추가하기
 
