@@ -1,13 +1,15 @@
-import { PostEditorPresent } from '@/app/components/editor/PostEditorPresent';
 import { Grid, Paper, Typography, Divider, Alert } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import ChevronRight from '@mui/icons-material/ChevronRight';
 import { PageWrapper } from '@/layouts/PageWrapper';
 import { RequireAuth } from '@/app/providers/auth/authProvider';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useAuthorized } from '@/hooks/useAuthorized';
 import { useParams } from 'react-router';
-import { useSearchParams } from 'react-router-dom';
+// import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'next/navigation';
+import dynamic from 'next/dynamic';
+import { PostEditorPresent } from '@/app/components/editor/PostEditorPresent';
 
 export type EditMode = 'create' | 'edit';
 export interface EditPageProps {
@@ -45,7 +47,7 @@ export const PostEditor = observer(({ mode }: EditPageProps) => {
 });
 
 export const PostEditorContainer = observer(() => {
-    const [search] = useSearchParams();
+    const search = useSearchParams();
     const [isAuthorized, isDone] = useAuthorized();
     const [mode, setMode] = useState<EditPageProps['mode']>('create');
 

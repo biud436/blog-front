@@ -49,8 +49,6 @@ export function LoginTab({
     handleMouseDownPassword,
     setValue,
 }: LoginTagProps) {
-    const nativate = useNavigate();
-
     // 로그인 상태 유지 여부
     const [loggedin, setLoggedin] = useState(true);
 

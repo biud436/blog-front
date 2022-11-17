@@ -4,6 +4,7 @@ import { CategoryDepthVO } from '@/services/CategoryService';
 import { Grid, Typography } from '@mui/material';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor } from '@toast-ui/react-editor';
+
 import { observer } from 'mobx-react-lite';
 import {
     createRef,
@@ -25,14 +26,6 @@ import { PostTitleInput } from './PostTitleInput';
 import { useAuthorized } from '@/hooks/useAuthorized';
 import * as DOMPurify from 'dompurify';
 
-import 'prismjs/themes/prism.css';
-import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
-
-import * as Prism from 'prismjs';
-import 'prismjs/components/prism-clojure.js';
-import 'prismjs/components/prism-typescript.js';
-
-import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 import axios from 'axios';
 import { EditPageProps } from '@/app/pages/editor';
 import { usePostService } from '@/hooks/usePostService';
@@ -41,9 +34,20 @@ import { useSWRConfig } from 'swr';
 import { API_URL } from '@/app/api/request';
 import { useMediaQuery } from 'react-responsive';
 import imageCompression from 'browser-image-compression';
+import { useRouter } from 'next/router';
+import { PostTuiEditor } from './PostTuiEditor';
+import dynamic from 'next/dynamic';
+
+const CSREditor = dynamic(
+    () => import('./PostTuiEditor') as any as Promise<typeof PostTuiEditor>,
+    {
+        ssr: false,
+    },
+);
 
 export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
-    const navigate = useNavigate();
+    const router = useRouter();
+    // const navigate = useNavigate();
     const [categories, setCategories] = useState<CategoryDepthVO[]>([]);
     const [title, setTitle] = useState('');
     const [currentCategoryId, setCurrentCategoryId] = useState(1);
@@ -152,14 +156,14 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
                 }
             }
 
-            navigate(URL_MAP.MAIN);
+            router.push(URL_MAP.MAIN);
         } catch (e: any) {
             toast.error(e.message);
         }
     }, [editorRef, title, currentCategoryId, mode]);
 
     const handleCancel = useCallback(() => {
-        navigate(URL_MAP.MAIN);
+        router.push(URL_MAP.MAIN);
     }, []);
 
     const getFlatCategories = useCallback(() => {
@@ -207,23 +211,10 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
                 />
             </Grid>
             <Grid item xs={12} lg={12} sm={12}>
-                <Editor
-                    usageStatistics={false}
-                    initialValue={''}
-                    previewHighlight={false}
-                    initialEditType="markdown"
-                    useCommandShortcut={true}
-                    css={{
-                        width: '100%',
-                    }}
-                    height="600px"
+                <PostTuiEditor
                     toolbarItems={toolbarItems}
-                    plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
-                    ref={editorRef}
-                    viewer={true}
-                    hooks={{
-                        addImageBlobHook,
-                    }}
+                    editorRef={editorRef}
+                    addImageBlobHook={addImageBlobHook}
                 />
             </Grid>
             <Grid container justifyContent="center" sx={{ padding: 2 }}>

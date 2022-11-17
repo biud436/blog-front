@@ -4,7 +4,6 @@ import { useRecoilState } from 'recoil';
 import { userState } from '../../../store/user';
 import { useAuth } from '@/app/providers/auth/authProvider';
 import { LoginResponse } from 'app/providers/auth/LoginResponse';
-import { useLocation, useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import { State } from './common';
 import { useMethods, useRendersCount } from 'react-use';
@@ -12,6 +11,7 @@ import { User } from 'store/types';
 import { LoginTab } from './components/LoginTab';
 import { Container, Grid, Stack } from '@mui/material';
 import { URL_MAP } from '@/common/URL';
+import { useRouter } from 'next/router';
 
 type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
@@ -30,8 +30,7 @@ export function LoginPage() {
     /**
      * USE CONTEXTS
      */
-    const location = useLocation();
-    const navigate = useNavigate();
+    const router = useRouter();
     const auth = useAuth();
     const rendersCount = useRendersCount();
 
@@ -66,7 +65,7 @@ export function LoginPage() {
         try {
             return await auth.login(username, password, () => {
                 toast.dismiss();
-                navigate(URL_MAP.MAIN, { replace: true });
+                router.push(URL_MAP.MAIN);
             });
         } catch (e: any) {
             toast.dismiss();
