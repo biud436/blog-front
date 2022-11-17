@@ -2,11 +2,12 @@ import { Post } from '@/store/post';
 import { Card, Divider, Grid, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { PostFooter } from './PostFooter';
-import { GithubComment } from './Comment';
+import GithubComment from './Comment';
 import { PostContent } from './PostContent';
 import { PostHeader } from './PostHeader';
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
+import { ErrorBoundary } from '@/app/components/error/boundary';
 
 const GithubCommentDynamic = dynamic(
     () => import('./Comment').then(mod => mod.GithubComment),
@@ -45,9 +46,9 @@ export function PostPresent({
                 >
                     ⭐️ Comments
                 </Typography>
-                <Suspense fallback={`Loading...`}>
+                <ErrorBoundary>
                     <GithubCommentDynamic />
-                </Suspense>
+                </ErrorBoundary>
             </Card>
             <PostFooter goBack={goBack} />
         </>

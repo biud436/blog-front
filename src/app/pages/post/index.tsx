@@ -8,12 +8,12 @@ import { toast } from 'react-toastify';
 import { PostPresent } from '../../components/post/PostPresent';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import { Post } from '@/store/post';
+import { PostsProps } from '@/pages/posts/[id]';
 
-export const PostPage = observer(() => {
+export const PostPage = observer(({ post, error, id: postId }: PostsProps) => {
     const router = useRouter();
-    const params = router.query;
-    const { id: postId } = params;
-    const { post, error } = usePost(+postId!);
+
     const [thumbnail, setThumbnail] = useState<string>('');
 
     useEffect(() => {
@@ -40,7 +40,9 @@ export const PostPage = observer(() => {
     return (
         <PageWrapper name={post.title}>
             <Head>
-                <title>{post.title}</title>
+                <title>
+                    {postId} - {post.title}
+                </title>
                 <meta name="referrer" content="unsafe-url"></meta>
                 <meta property="og:site_name" content={post.title} />
                 <meta property="og:title" content={post.title} />"

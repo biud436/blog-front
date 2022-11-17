@@ -31,69 +31,32 @@ export function App() {
 
     return (
         <QueryClientProvider client={queryClient}>
-            <RecoilRoot>
-                <React.Suspense fallback={<div>Loading...</div>}>
-                    <CategoryServiceProvider>
-                        <PostServiceProvider>
-                            <AuthProvider>
-                                <BrowserRouter
-                                    basename={
-                                        process.env.NODE_ENV === 'production'
-                                            ? '/'
-                                            : ''
-                                    }
+            <React.Suspense fallback={<div>Loading...</div>}>
+                <CategoryServiceProvider>
+                    <PostServiceProvider>
+                        <AuthProvider>
+                            <BrowserRouter
+                                basename={
+                                    process.env.NODE_ENV === 'production'
+                                        ? '/'
+                                        : ''
+                                }
+                            >
+                                <Helmet
+                                    titleTemplate="%s - 어진석의 블로그"
+                                    defaultTitle="어진석의 블로그"
+                                    htmlAttributes={{ lang: i18n.language }}
                                 >
-                                    <Helmet
-                                        titleTemplate="%s - 어진석의 블로그"
-                                        defaultTitle="어진석의 블로그"
-                                        htmlAttributes={{ lang: i18n.language }}
-                                    >
-                                        <meta name="description" content="" />
-                                    </Helmet>
-                                    <GlobalStyle />
-                                    <Routes>
-                                        <Route
-                                            path={URL_MAP.LOGIN}
-                                            element={<LoginPage />}
-                                        />
-                                        <Route
-                                            path={URL_MAP.MAIN}
-                                            element={<PostsPage />}
-                                        />
-                                        <Route path="/posts">
-                                            <Route
-                                                index
-                                                element={<PostsPage />}
-                                            />
-                                            <Route
-                                                path=":postId"
-                                                element={<PostPage />}
-                                            />
-                                        </Route>
-                                        <Route
-                                            path={URL_MAP.POST_EDIT}
-                                            element={<PostEditorContainer />}
-                                        />
-                                        <Route
-                                            path="/github/callback"
-                                            element={<GithubCallbackPage />}
-                                        />
-                                        <Route
-                                            path="/404"
-                                            element={<NotFoundPage />}
-                                        />
-                                        <Route
-                                            path="*"
-                                            element={<NotFoundPage />}
-                                        />
-                                    </Routes>
-                                    <ToastContainer />
-                                </BrowserRouter>
-                            </AuthProvider>
-                        </PostServiceProvider>
-                    </CategoryServiceProvider>
-                </React.Suspense>
-            </RecoilRoot>
+                                    <meta name="description" content="" />
+                                </Helmet>
+                                <GlobalStyle />
+                                <Routes></Routes>
+                                <ToastContainer />
+                            </BrowserRouter>
+                        </AuthProvider>
+                    </PostServiceProvider>
+                </CategoryServiceProvider>
+            </React.Suspense>
         </QueryClientProvider>
     );
 }

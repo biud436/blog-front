@@ -103,7 +103,7 @@
         "web-vitals": "2.1.2"
     },
     "scripts": {
-        "next:dev": "next dev -p 8080",
+        "next:dev": "NODE_OPTIONS='--inspect' next dev -p 8080",
         "next:build": "next build -p 8080",
         "next:start": "next start -p 8080",
         "next:lint": "next lint -p 8080",
