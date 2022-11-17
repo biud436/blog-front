@@ -3,9 +3,10 @@ import { useAuthorized } from '@/hooks/useAuthorized';
 import { useNavigate } from 'react-router';
 import { usePostService } from '@/hooks/usePostService';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 export function PostFooter({ goBack }: { goBack: () => void }) {
-    const navigate = useNavigate();
+    const router = useRouter();
     const [isAuthorized] = useAuthorized();
     const postService = usePostService();
 
@@ -16,7 +17,7 @@ export function PostFooter({ goBack }: { goBack: () => void }) {
             const res = await postService.deletePost(currentPostId);
 
             if (res.result === 'success') {
-                navigate('/');
+                router.push('/');
             } else {
                 toast.error('삭제에 실패했습니다.');
             }
@@ -54,7 +55,7 @@ export function PostFooter({ goBack }: { goBack: () => void }) {
                         <Button
                             variant="outlined"
                             color="warning"
-                            onClick={() => navigate('/post/edit?mode=edit')}
+                            onClick={() => router.push('/post/edit?mode=edit')}
                         >
                             수정
                         </Button>

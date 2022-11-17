@@ -4,20 +4,21 @@ import { usePost } from '@/hooks/usePost';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useNavigate, useParams } from 'react-router';
 import { toast } from 'react-toastify';
 import { PostPresent } from '../../components/post/PostPresent';
+import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 export const PostPage = observer(() => {
-    const params = useParams();
-    const { postId } = params;
+    const router = useRouter();
+    const params = router.query;
+    const { id: postId } = params;
     const { post, error } = usePost(+postId!);
     const [thumbnail, setThumbnail] = useState<string>('');
-    const navigate = useNavigate();
 
     useEffect(() => {
         if (error) {
-            navigate('/404');
+            router.push('/404');
             toast.error(error.message, {
                 position: 'top-center',
             });
@@ -30,15 +31,15 @@ export const PostPage = observer(() => {
 
     const goBack = () => {
         if (window.history.length > 1) {
-            navigate(-1);
+            router.back();
         } else {
-            navigate(URL_MAP.MAIN);
+            router.push(URL_MAP.MAIN);
         }
     };
 
     return (
         <PageWrapper name={post.title}>
-            <Helmet>
+            <Head>
                 <title>{post.title}</title>
                 <meta name="referrer" content="unsafe-url"></meta>
                 <meta property="og:site_name" content={post.title} />
@@ -53,7 +54,7 @@ export const PostPage = observer(() => {
                 <meta property="og:image:witdh" content="1200" />
                 <meta property="og:image:height" content="630" />
                 <meta property="og:description" content={post.content} />
-            </Helmet>
+            </Head>
             <PostPresent post={post} goBack={goBack} />
         </PageWrapper>
     );

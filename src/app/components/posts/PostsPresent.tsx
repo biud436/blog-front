@@ -98,7 +98,7 @@ const PostsContainer = observer(() => {
     }, [categoryService.getCurrentMenuCategoryId()]);
 
     const goToPage = (postId: number) => {
-        router.push(`/posts/${postId}`);
+        router.push(`/posts/[id]`, `/posts/${postId}`);
     };
 
     return (

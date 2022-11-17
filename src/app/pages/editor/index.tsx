@@ -8,6 +8,7 @@ import { useAuthorized } from '@/hooks/useAuthorized';
 import { useParams } from 'react-router';
 // import { useSearchParams } from 'react-router-dom';
 import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { PostEditorPresent } from '@/app/components/editor/PostEditorPresent';
 
@@ -46,42 +47,45 @@ export const PostEditor = observer(({ mode }: EditPageProps) => {
     return <PostEditorPresent mode={mode} />;
 });
 
-export const PostEditorContainer = observer(() => {
-    const search = useSearchParams();
-    const [isAuthorized, isDone] = useAuthorized();
-    const [mode, setMode] = useState<EditPageProps['mode']>('create');
+export const PostEditorContainer = observer(
+    ({ editorMode }: { editorMode: string }) => {
+        const router = useRouter();
+        const [isAuthorized, isDone] = useAuthorized();
+        const [mode, setMode] = useState<EditPageProps['mode']>('create');
 
-    const LoginGuard = ({ children }: { children: JSX.Element }) => {
-        return !isAuthorized ? (
-            <Grid container>
-                <Grid item xs={12}>
-                    <Alert variant="filled" severity="error">
-                        로그인이 필요한 서비스입니다
-                    </Alert>
-                </Grid>
-            </Grid>
-        ) : (
-            children
-        );
-    };
-
-    useEffect(() => {
-        if (search.get('mode') === 'edit') {
-            setMode('edit');
-        }
-    }, [isDone]);
-
-    return (
-        <PageWrapper name="포스트 에디터">
-            <Paper sx={{ padding: 2 }} key="editor">
-                <LoginGuard>
-                    <Grid container gap={3}>
-                        <PageHeader mode={mode} />
-                        <PageDescription mode={mode} />
-                        <PostEditor mode={mode} />
+        const LoginGuard = ({ children }: { children: JSX.Element }) => {
+            return !isAuthorized ? (
+                <Grid container>
+                    <Grid item xs={12}>
+                        <Alert variant="filled" severity="error">
+                            로그인이 필요한 서비스입니다
+                        </Alert>
                     </Grid>
-                </LoginGuard>
-            </Paper>
-        </PageWrapper>
-    );
-});
+                </Grid>
+            ) : (
+                children
+            );
+        };
+
+        useEffect(() => {
+            console.log('editorMode : ' + editorMode);
+            if (editorMode === 'edit') {
+                setMode('edit');
+            }
+        }, [isDone]);
+
+        return (
+            <PageWrapper name="포스트 에디터">
+                <Paper sx={{ padding: 2 }} key="editor">
+                    <LoginGuard>
+                        <Grid container gap={3}>
+                            <PageHeader mode={mode} />
+                            <PageDescription mode={mode} />
+                            <PostEditor mode={mode} />
+                        </Grid>
+                    </LoginGuard>
+                </Paper>
+            </PageWrapper>
+        );
+    },
+);

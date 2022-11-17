@@ -186,6 +186,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
 
     useEffect(() => {
         if (mode === 'edit') {
+            console.log(postService.getTitle());
             setTitle(postService.getTitle());
             editorRef.current
                 ?.getInstance()
