@@ -32,6 +32,7 @@ import { DateUtil, Formatter } from '../../api/date';
 import { useNavigate } from 'react-router';
 import { URL_MAP } from '@/common/URL';
 import { useCategoryService } from '@/hooks/useCategoryService';
+import { useRouter } from 'next/router';
 
 function PageHeader() {
     return <></>;
@@ -46,7 +47,7 @@ const SearchBox = SearchBuilder<PostsSearchType>(postsStore);
 const PostsContainer = observer(() => {
     const service = usePostsService();
     const categoryService = useCategoryService();
-    const navigate = useNavigate();
+    const router = useRouter();
 
     const fetchData = async (page?: number) => {
         try {
@@ -97,7 +98,7 @@ const PostsContainer = observer(() => {
     }, [categoryService.getCurrentMenuCategoryId()]);
 
     const goToPage = (postId: number) => {
-        navigate(`/posts/${postId}`);
+        router.push(`/posts/${postId}`);
     };
 
     return (

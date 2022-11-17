@@ -12,6 +12,7 @@ import { Collapse } from '@mui/material';
 import { CategoryDepthVO } from '@/services/CategoryService';
 import { useCategoryService } from '@/hooks/useCategoryService';
 import { observer } from 'mobx-react-lite';
+import { useRouter, NextRouter } from 'next/router';
 
 interface CategoryWrapperProps {
     categoryList: CategoryDepthVO[];
@@ -19,7 +20,7 @@ interface CategoryWrapperProps {
     toggleDrawer: (
         open: boolean,
     ) => (event: React.KeyboardEvent | React.MouseEvent) => void;
-    navigate: NavigateFunction;
+    router: NextRouter;
     rootCategory: CategoryDepthVO | undefined;
 }
 
@@ -29,7 +30,7 @@ export const CategoryWrapper = React.memo(
             categoryList,
             setCategoryList,
             toggleDrawer,
-            navigate,
+            router,
             rootCategory,
         }: CategoryWrapperProps) => {
             const categoryService = useCategoryService();
@@ -60,7 +61,7 @@ export const CategoryWrapper = React.memo(
                                                 : category.id,
                                         );
                                         toggleDrawer(false);
-                                        navigate(URL_MAP.MAIN);
+                                        router.push(URL_MAP.MAIN);
                                     }}
                                     onKeyDown={toggleDrawer(false)}
                                     sx={{

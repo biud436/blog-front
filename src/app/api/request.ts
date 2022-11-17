@@ -1,6 +1,6 @@
 import { IRequestHandler } from '@/types/IRequest';
 
-export const API_URL = process.env.REACT_APP_SERVER_URL;
+export const API_URL = process.env.NEXT_PUBLIC_SERVER_URL;
 
 // 토큰 캐시
 const requestCache: { token?: string | null } = { token: null };

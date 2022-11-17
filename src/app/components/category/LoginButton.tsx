@@ -6,13 +6,14 @@ import ListItemText from '@mui/material/ListItemText';
 import { NavigateFunction } from 'react-router';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { URL_MAP } from '@/common/URL';
+import { NextRouter } from 'next/router';
 
-export function LoginButton({ navigate }: { navigate: NavigateFunction }) {
+export function LoginButton({ router }: { router: NextRouter }) {
     return (
         <ListItem
             key={'login'}
             disablePadding
-            onClick={() => navigate(URL_MAP.LOGIN)}
+            onClick={() => router.push(URL_MAP.LOGIN)}
         >
             <ListItemButton>
                 <ListItemIcon>

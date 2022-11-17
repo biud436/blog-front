@@ -33,10 +33,11 @@ import { menuStore } from '@/store/menu';
 import { CategoryWrapper } from '../app/components/category/CategoryWrapper';
 import { Main } from '../app/components/menu/Main';
 import { AppBar, drawerWidth } from '../app/components/menu/AppBar';
+import { useRouter } from 'next/router';
 
 export const PageWrapper = observer(
     ({ name, children }: { name: string; children: React.ReactNode }) => {
-        const navigate = useNavigate();
+        const router = useRouter();
         const matches = useMediaQuery({
             query: '(max-width: 768px)',
         });
@@ -49,12 +50,12 @@ export const PageWrapper = observer(
             (e: React.MouseEvent) => {
                 menuStore.open();
             },
-            [open],
+            [menuStore.isOpen],
         );
 
         const handleDrawerClose = useCallback(() => {
             menuStore.close();
-        }, [open]);
+        }, [menuStore.isOpen]);
 
         const toggleDrawer = useCallback(
             (open: boolean) =>
@@ -139,14 +140,14 @@ export const PageWrapper = observer(
                             component="div"
                             sx={{ flexGrow: 1, cursor: 'pointer' }}
                             onClick={() => {
-                                navigate(URL_MAP.MAIN);
+                                router.push(URL_MAP.MAIN);
                             }}
                         >
                             {name}
                         </Typography>
                         <Button
                             color="inherit"
-                            onClick={() => navigate(URL_MAP.POST_EDIT)}
+                            onClick={() => router.push(URL_MAP.POST_EDIT)}
                         >
                             <Typography
                                 variant="h6"
@@ -194,7 +195,7 @@ export const PageWrapper = observer(
                                     categoryList,
                                     setCategoryList,
                                     toggleDrawer,
-                                    navigate,
+                                    router,
                                     rootCategory,
                                 }}
                             />
@@ -215,7 +216,7 @@ export const PageWrapper = observer(
 
 export function LoginWrapper() {
     const auth = useAuth();
-    const navigate = useNavigate();
+    const router = useRouter();
     const [, setIsLoggedIn] = React.useState(false);
     const [isAuthorized, setIsAuthorized] = React.useState(false);
 
@@ -250,7 +251,7 @@ export function LoginWrapper() {
                 <LogoutButton auth={auth} />
             ) : (
                 <>
-                    <LoginButton navigate={navigate} />
+                    <LoginButton router={router} />
                 </>
             )}
         </>
