@@ -40,6 +40,7 @@ import { PostContent } from '@/services/PostService';
 import { useSWRConfig } from 'swr';
 import { API_URL } from '@/app/api/request';
 import { useMediaQuery } from 'react-responsive';
+import imageCompression from 'browser-image-compression';
 
 export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
     const navigate = useNavigate();
@@ -77,23 +78,38 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
      * @param callback
      */
     const addImageBlobHook = (blob, callback) => {
-        const formData = new FormData();
-        formData.append('files', blob);
-        formData.append(
-            'postId',
-            mode === 'edit' ? postService.getId() + '' : '0',
-        );
+        const options = {
+            maxSizeMB: 2,
+            maxWidthOrHeight: 1920,
+            useWebWorker: true,
+        };
 
-        axios
-            .post('/image/s3/upload', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
+        imageCompression(blob, options)
+            .then(compressedFile => {
+                const formData = new FormData();
+                formData.append('files', compressedFile);
+                formData.append(
+                    'postId',
+                    mode === 'edit' ? postService.getId() + '' : '0',
+                );
+
+                axios
+                    .post('/image/s3/upload', formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    })
+                    .then(res => {
+                        const { data } = res.data;
+
+                        callback(data.location, data.originalName);
+                    })
+                    .catch(err => {
+                        toast.error('이미지 업로드에 실패하였습니다.');
+                    });
             })
-            .then(res => {
-                const { data } = res.data;
-
-                callback(data.location, data.originalName);
+            .catch(err => {
+                toast.error('이미지 압축에 실패했습니다.');
             });
 
         return false;
