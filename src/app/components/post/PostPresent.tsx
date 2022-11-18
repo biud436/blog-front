@@ -5,6 +5,8 @@ import { PostFooter } from './PostFooter';
 import GithubComment from './Comment';
 import { PostContent } from './PostContent';
 import { PostHeader } from './PostHeader';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 export function PostPresent({
     post,
@@ -38,6 +40,7 @@ export function PostPresent({
                 </Typography>
                 <GithubComment />
             </Card>
+            <ToastContainer />
             <PostFooter goBack={goBack} />
         </>
     );
