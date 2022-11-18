@@ -33,7 +33,7 @@ export function PostFooter({
 
     const handleEditPost = () => {
         const id = post.id;
-        router.push(`/post/edit?mode=edit&id=${id}`, undefined, {
+        router.push(`/edit?mode=edit&id=${id}`, undefined, {
             shallow: true,
         });
     };

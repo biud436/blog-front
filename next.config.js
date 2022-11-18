@@ -18,7 +18,7 @@ const nextConfig = {
                 permanent: true,
             },
             {
-                source: '/post/edit',
+                source: '/edit',
                 destination: '/',
                 permanent: true,
             },

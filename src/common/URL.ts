@@ -2,7 +2,7 @@ export const URL_MAP = {
     MAIN: '/',
     LOGIN: '/login',
 
-    POST_EDIT: '/post/edit',
+    POST_EDIT: '/edit',
     POSTS: '/post',
 };
 
