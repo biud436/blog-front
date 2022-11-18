@@ -28,6 +28,7 @@ const nextConfig = {
         backendUrl: process.env.NEXT_PUBLIC_SERVER_URL,
     },
     crossOrigin: 'anonymous',
+    output: 'standalone',
 };
 
 module.exports = nextConfig;
