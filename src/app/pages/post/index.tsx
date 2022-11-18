@@ -15,6 +15,7 @@ export const PostPage = observer(({ post, error, id: postId }: PostsProps) => {
     const router = useRouter();
 
     const [thumbnail, setThumbnail] = useState<string>('');
+    const [postUrl, setPostUrl] = useState('');
 
     useEffect(() => {
         if (error) {
@@ -27,6 +28,8 @@ export const PostPage = observer(({ post, error, id: postId }: PostsProps) => {
         if (post && post.images && post.images.length > 0) {
             setThumbnail(post.images[0].path);
         }
+
+        setPostUrl(`https://blog.biud436.com/posts/${postId}`);
     }, [post, error]);
 
     const goBack = () => {
@@ -46,15 +49,15 @@ export const PostPage = observer(({ post, error, id: postId }: PostsProps) => {
                 <meta name="referrer" content="unsafe-url"></meta>
                 <meta property="og:site_name" content={post.title} />
                 <meta property="og:title" content={post.title} />"
-                <meta property="og:type" content="article" />
+                {/* <meta property="og:type" content="article" /> */}
                 <meta
                     property="og:article:author"
                     content={post.user?.profile?.nickname}
                 />
-                <meta property="og:url" content={window.location.href} />
+                <meta property="og:url" content={postUrl} />
                 <meta property="og:image" content={thumbnail} />
-                <meta property="og:image:witdh" content="1200" />
-                <meta property="og:image:height" content="630" />
+                {/* <meta property="og:image:witdh" content="1200" />
+                <meta property="og:image:height" content="630" /> */}
                 <meta property="og:description" content={post.content} />
             </Head>
             <PostPresent post={post} goBack={goBack} />
