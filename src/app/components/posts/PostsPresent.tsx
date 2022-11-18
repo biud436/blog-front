@@ -124,8 +124,6 @@ const PostsContainer = observer(() => {
                     sm={12}
                     md={6}
                     lg={6}
-                    spacing={2}
-                    rowSpacing={2}
                     sx={{
                         display: 'flex',
                         justifyContent: 'center',
@@ -213,7 +211,7 @@ const PostsContainer = observer(() => {
                         })}
                 </Grid>
             </Grid>
-            <Grid item spacing={0} direction="row">
+            <Grid item>
                 <Pagination
                     count={postsStore.getPagination().maxPage}
                     page={postsStore.getPageNumber()}

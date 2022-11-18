@@ -41,14 +41,6 @@ export class PostsStore implements Searchable<PostsSearchType>, Paginable {
 
     constructor() {
         makeAutoObservable(this);
-
-        if (typeof window !== 'undefined') {
-            makePersistable(this, {
-                name: 'PostsStore',
-                properties: ['search', 'list', 'currentCategoryId'],
-                storage: window.localStorage,
-            });
-        }
     }
 
     setPageNumber(pageNumber: number) {

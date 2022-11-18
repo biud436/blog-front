@@ -44,7 +44,6 @@ export function PostContent({ post }: { post: Post }) {
     return (
         <Grid item xs={12}>
             <TuiEditorViewer content={post.content} />
-            {/* <Markdown value={post.content} renderer={CodeRenderer} /> */}
         </Grid>
     );
 }

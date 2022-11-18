@@ -38,20 +38,13 @@ import { useRouter } from 'next/router';
 import { PostTuiEditor } from './PostTuiEditor';
 import dynamic from 'next/dynamic';
 
-const CSREditor = dynamic(
-    () => import('./PostTuiEditor') as any as Promise<typeof PostTuiEditor>,
-    {
-        ssr: false,
-    },
-);
-
 export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
     const router = useRouter();
     // const navigate = useNavigate();
     const [categories, setCategories] = useState<CategoryDepthVO[]>([]);
     const [title, setTitle] = useState('');
     const [currentCategoryId, setCurrentCategoryId] = useState(1);
-    const editorRef = useRef<Editor>(null);
+    const editorRef = useRef<any>(null);
     const postService = usePostService();
     const matches = useMediaQuery({
         query: '(max-width: 768px)',
@@ -191,6 +184,9 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
             editorRef.current
                 ?.getInstance()
                 .setMarkdown(postService.getContent());
+        } else {
+            setTitle('');
+            editorRef.current?.getInstance().setMarkdown('');
         }
 
         setCategories(getFlatCategories());
@@ -214,7 +210,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
             <Grid item xs={12} lg={12} sm={12}>
                 <PostTuiEditor
                     toolbarItems={toolbarItems}
-                    editorRef={editorRef}
+                    ref={editorRef}
                     addImageBlobHook={addImageBlobHook}
                 />
             </Grid>

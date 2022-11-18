@@ -42,7 +42,7 @@ export function PostFooter({ goBack }: { goBack: () => void }) {
                 </Button>
             </Grid>
             {isAuthorized && (
-                <Grid container spacing={0} xs={4}>
+                <Grid container spacing={0}>
                     <Grid
                         item
                         xs={12}

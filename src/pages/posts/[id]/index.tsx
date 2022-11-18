@@ -27,3 +27,11 @@ export default function Posts() {
         </ErrorBoundary>
     );
 }
+
+// export const getServerSideProps: GetServerSideProps = async (
+//     context: GetServerSidePropsContext,
+// ) => {
+//     return {
+//         props: {},
+//     };
+// };
