@@ -6,7 +6,6 @@ import { RequireAuth } from '@/app/providers/auth/authProvider';
 import { Suspense, useEffect, useState } from 'react';
 import { useAuthorized } from '@/hooks/useAuthorized';
 import { useParams } from 'react-router';
-// import { useSearchParams } from 'react-router-dom';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
