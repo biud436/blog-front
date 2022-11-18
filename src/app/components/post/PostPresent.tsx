@@ -41,7 +41,7 @@ export function PostPresent({
                 <GithubComment />
             </Card>
             <ToastContainer />
-            <PostFooter goBack={goBack} />
+            <PostFooter post={post} goBack={goBack} />
         </>
     );
 }

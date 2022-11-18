@@ -9,10 +9,13 @@ import { useParams } from 'react-router';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export type EditMode = 'create' | 'edit';
 export interface EditPageProps {
     mode: EditMode;
+    id?: number;
 }
 
 function PageHeader({ mode }: EditPageProps) {
@@ -61,7 +64,6 @@ export const PostEditor = observer(({ mode }: EditPageProps) => {
 
 export const PostEditorContainer = observer(
     ({ editorMode }: { editorMode: string }) => {
-        const router = useRouter();
         const [isAuthorized, isDone] = useAuthorized();
         const [mode, setMode] = useState<EditPageProps['mode']>('create');
 
@@ -80,7 +82,6 @@ export const PostEditorContainer = observer(
         };
 
         useEffect(() => {
-            console.log('editorMode : ' + editorMode);
             if (editorMode === 'edit') {
                 setMode('edit');
             }
@@ -96,6 +97,7 @@ export const PostEditorContainer = observer(
                             <PostEditor mode={mode} />
                         </Grid>
                     </LoginGuard>
+                    <ToastContainer />
                 </Paper>
             </PageWrapper>
         );

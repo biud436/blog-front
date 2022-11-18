@@ -174,10 +174,18 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
 
     useEffect(() => {
         if (mode === 'edit') {
-            setTitle(postService.getTitle());
-            editorRef.current
-                ?.getInstance()
-                .setMarkdown(postService.getContent());
+            const id = parseInt(router.query.id as string, 10);
+            postService
+                .getPost(id)
+                .then(res => {
+                    setTitle(postService.getTitle());
+                    editorRef.current
+                        ?.getInstance()
+                        .setMarkdown(postService.getContent());
+                })
+                .catch(err => {
+                    toast.error('글을 불러오는데 실패했습니다.');
+                });
         } else {
             setTitle('');
             editorRef.current?.getInstance().setMarkdown('');

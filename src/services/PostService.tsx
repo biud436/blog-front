@@ -20,6 +20,7 @@ export interface IPostService {
     writePost: (payload: PostContent) => Promise<any>;
     updatePost: (postId: number, payload: PostContent) => Promise<any>;
     deletePost(postId: number): Promise<any>;
+    getPost(postId: number): Promise<any>;
 }
 
 export interface PostContent {
@@ -107,6 +108,19 @@ export class PostServiceImpl implements IPostService {
         const res = await axios.delete(`${API_URL}/posts/${postId}`);
 
         return res.data;
+    }
+
+    async getPost(postId: number): Promise<any> {
+        this.isLoading = true;
+
+        try {
+            const res = await axios.get(`${API_URL}/posts/${postId}`);
+
+            this.setData(res.data.data);
+        } catch (e) {
+        } finally {
+            this.isLoading = false;
+        }
     }
 }
 
