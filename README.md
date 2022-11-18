@@ -33,6 +33,7 @@ This project is the blog that is made with the javascript library called React, 
 -   [x] 마크다운에 코드 하이라이트 기능 추가
 -   [x] 포스트 글 주기적 페칭 기능 간격 수정하기
 -   [x] TUI Editor에 Image Middleware (이미지 미들웨어 -> 링크 대체) 추가하기
+-   [x] 서버 사이드 렌더링 적용하기 (Next.js)
 
 ## 설치 방법
 
