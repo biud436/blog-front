@@ -17,13 +17,12 @@ export interface PostsProps {
     error: any;
 }
 
-export default function Posts() {
+export default function Posts({ post, error }: { post: Post; error: any }) {
     const router = useRouter();
-    const { post, error } = usePost(+(router.query.id as string));
 
     return (
         <ErrorBoundary>
-            <PostPage {...{ post, id: router.query.id as string, error }} />
+            <PostPage {...{ post, id: String(post.id), error: error }} />
         </ErrorBoundary>
     );
 }
@@ -31,7 +30,22 @@ export default function Posts() {
 export const getServerSideProps: GetServerSideProps = async (
     context: GetServerSidePropsContext,
 ) => {
+    const { id } = context.query;
+    let post = {};
+    let error = null;
+
+    try {
+        const { data: res } = await axios.get('/posts/' + id);
+
+        post = res.data;
+    } catch (e: any) {
+        error = e;
+    }
+
     return {
-        props: {},
+        props: {
+            post,
+            error,
+        },
     };
 };
