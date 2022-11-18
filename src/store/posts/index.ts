@@ -3,6 +3,7 @@ import { makeAutoObservable } from 'mobx';
 import { BaseDataListDto, Paginable } from '../types/list';
 import { Searchable } from '../types/searchable';
 import { PostDto, PostsSearchType } from './posts.dto';
+import { makePersistable } from 'mobx-persist-store';
 
 export class PostsStore implements Searchable<PostsSearchType>, Paginable {
     list: BaseDataListDto = {
@@ -40,6 +41,14 @@ export class PostsStore implements Searchable<PostsSearchType>, Paginable {
 
     constructor() {
         makeAutoObservable(this);
+
+        if (typeof window !== 'undefined') {
+            makePersistable(this, {
+                name: 'PostsStore',
+                properties: ['search', 'list', 'currentCategoryId'],
+                storage: window.localStorage,
+            });
+        }
     }
 
     setPageNumber(pageNumber: number) {

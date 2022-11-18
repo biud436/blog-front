@@ -1,10 +1,19 @@
 import { makeAutoObservable } from 'mobx';
+import { makePersistable } from 'mobx-persist-store';
 
 export class MenuStore {
     isOpen = false;
 
     constructor() {
         makeAutoObservable(this);
+
+        if (typeof window !== 'undefined') {
+            makePersistable(this, {
+                name: 'MenuStore',
+                properties: ['isOpen'],
+                storage: window.localStorage,
+            });
+        }
     }
 
     toggle() {
