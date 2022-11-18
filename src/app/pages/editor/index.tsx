@@ -10,7 +10,6 @@ import { useParams } from 'react-router';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
-import { PostEditorPresent } from '@/app/components/editor/PostEditorPresent';
 
 export type EditMode = 'create' | 'edit';
 export interface EditPageProps {
@@ -42,6 +41,20 @@ function PageDescription({ mode }: EditPageProps) {
         </Grid>
     );
 }
+
+const PostEditorPresent = dynamic(
+    async () => {
+        const [mod] = await Promise.all([
+            import('../../components/editor/PostEditorPresent'),
+        ]);
+
+        return mod.PostEditorPresent;
+    },
+    {
+        ssr: false,
+        loading: () => <div>Loading...</div>,
+    },
+);
 
 export const PostEditor = observer(({ mode }: EditPageProps) => {
     return <PostEditorPresent mode={mode} />;

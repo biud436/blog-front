@@ -105,9 +105,9 @@
     },
     "scripts": {
         "next:dev": "next dev -p 8080",
-        "next:build": "next build -p 8080",
-        "next:start": "next start -p 8080",
-        "next:lint": "next lint -p 8080",
+        "next:build": "next build",
+        "next:start": "next start -p 8084",
+        "next:lint": "next lint -p 8084",
         "start": "env-cmd -f .env.development craco start",
         "start:win32": "env-cmd -f .env.development craco start",
         "build": "env-cmd -f .env.production craco build",

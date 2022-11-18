@@ -5,16 +5,6 @@ import { PostFooter } from './PostFooter';
 import GithubComment from './Comment';
 import { PostContent } from './PostContent';
 import { PostHeader } from './PostHeader';
-import dynamic from 'next/dynamic';
-import { Suspense } from 'react';
-import { ErrorBoundary } from '@/app/components/error/boundary';
-
-const GithubCommentDynamic = dynamic(
-    () => import('./Comment').then(mod => mod.GithubComment),
-    {
-        ssr: false,
-    },
-);
 
 export function PostPresent({
     post,
@@ -46,9 +36,7 @@ export function PostPresent({
                 >
                     ⭐️ Comments
                 </Typography>
-                <ErrorBoundary>
-                    <GithubCommentDynamic />
-                </ErrorBoundary>
+                <GithubComment />
             </Card>
             <PostFooter goBack={goBack} />
         </>

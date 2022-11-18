@@ -3,11 +3,11 @@ import { useCategoryService } from '@/hooks/useCategoryService';
 import { CategoryDepthVO } from '@/services/CategoryService';
 import { Grid, Typography } from '@mui/material';
 import '@toast-ui/editor/dist/toastui-editor.css';
-import { Editor } from '@toast-ui/react-editor';
 
 import { observer } from 'mobx-react-lite';
 import {
     createRef,
+    Suspense,
     useCallback,
     useEffect,
     useId,
@@ -15,15 +15,12 @@ import {
     useRef,
     useState,
 } from 'react';
-import { useNavigate } from 'react-router';
 import { toJS } from 'mobx';
-import { useAuth } from '../../providers/auth/authProvider';
 import React from 'react';
 import { toast } from 'react-toastify';
 import { PostButtonGroup } from './PostButtonGroup';
 import { PostSelectCategory } from './PostSelectCategory';
 import { PostTitleInput } from './PostTitleInput';
-import { useAuthorized } from '@/hooks/useAuthorized';
 import * as DOMPurify from 'dompurify';
 
 import axios from 'axios';
@@ -36,11 +33,9 @@ import { useMediaQuery } from 'react-responsive';
 import imageCompression from 'browser-image-compression';
 import { useRouter } from 'next/router';
 import { PostTuiEditor } from './PostTuiEditor';
-import dynamic from 'next/dynamic';
 
 export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
     const router = useRouter();
-    // const navigate = useNavigate();
     const [categories, setCategories] = useState<CategoryDepthVO[]>([]);
     const [title, setTitle] = useState('');
     const [currentCategoryId, setCurrentCategoryId] = useState(1);
@@ -179,7 +174,6 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
 
     useEffect(() => {
         if (mode === 'edit') {
-            console.log(postService.getTitle());
             setTitle(postService.getTitle());
             editorRef.current
                 ?.getInstance()

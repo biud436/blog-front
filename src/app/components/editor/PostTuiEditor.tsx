@@ -1,62 +1,70 @@
-import { Editor } from '@toast-ui/react-editor';
-import { EditorProps } from '@toast-ui/react-editor';
-import React from 'react';
-import * as Prism from 'prismjs';
-import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
-import 'prismjs/themes/prism.css';
-import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
+import { Editor as EditorType, EditorProps } from '@toast-ui/react-editor';
+import React, { useCallback } from 'react';
 
+import dynamic from 'next/dynamic';
+import { TuiEditorWithForwardedProps } from './TUIEditorWrapper';
+
+import Prism from 'prismjs';
 import 'prismjs/components/prism-clojure.js';
 import 'prismjs/components/prism-typescript.js';
 
-import dynamic from 'next/dynamic';
+import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 
-// /**
-//  * https://paigekim29.medium.com/toast-ui-editor-next-js-c9b48927fbf7
-//  */
+const Editor = dynamic<TuiEditorWithForwardedProps>(
+    async () => {
+        const [mod] = await Promise.all([
+            import('./TUIEditorWrapper'),
+            import('@toast-ui/editor/dist/i18n/ko-kr'),
+        ]);
 
-// const Editor = dynamic<EditorProps>(
-//     () => import('@toast-ui/react-editor').then(m => m.Editor),
-//     { ssr: false },
-// );
+        return mod.default;
+    },
+    {
+        ssr: false,
+        loading: () => <div>로딩중....</div>,
+    },
+);
 
 type PostTuiEditorProps = {
     toolbarItems: string[][];
     addImageBlobHook: (blob: any, callback: any) => boolean;
 };
 
-export const PostTuiEditor: React.ForwardRefExoticComponent<
-    PostTuiEditorProps & React.RefAttributes<Editor>
-> = React.forwardRef(
-    (
-        { toolbarItems, addImageBlobHook }: PostTuiEditorProps,
-        editorRef: React.ForwardedRef<Editor>,
-    ) => {
-        return (
-            <>
-                {editorRef && (
-                    <Editor
-                        usageStatistics={false}
-                        initialValue={''}
-                        previewHighlight={false}
-                        initialEditType="markdown"
-                        useCommandShortcut={true}
-                        css={{
-                            width: '100%',
-                        }}
-                        height="600px"
-                        toolbarItems={toolbarItems}
-                        plugins={[
-                            [codeSyntaxHighlight, { highlighter: Prism }],
-                        ]}
-                        ref={editorRef}
-                        viewer={true}
-                        hooks={{
-                            addImageBlobHook,
-                        }}
-                    />
-                )}
-            </>
-        );
-    },
+export const PostTuiEditor = React.memo(
+    React.forwardRef(
+        (
+            { toolbarItems, addImageBlobHook }: PostTuiEditorProps,
+            editorRef: React.ForwardedRef<EditorType>,
+        ) => {
+            return (
+                <div>
+                    {editorRef && (
+                        <Editor
+                            language="ko-KR"
+                            usageStatistics={false}
+                            initialValue={''}
+                            previewHighlight={false}
+                            initialEditType="markdown"
+                            useCommandShortcut={true}
+                            css={{
+                                width: '100%',
+                            }}
+                            height="600px"
+                            toolbarItems={toolbarItems}
+                            plugins={[
+                                [codeSyntaxHighlight, { highlighter: Prism }],
+                            ]}
+                            forwardedRef={
+                                editorRef as React.MutableRefObject<EditorType>
+                            }
+                            viewer={true}
+                            hooks={{
+                                addImageBlobHook,
+                            }}
+                        />
+                    )}
+                </div>
+            );
+        },
+    ),
 );

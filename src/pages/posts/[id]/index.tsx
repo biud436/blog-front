@@ -28,10 +28,10 @@ export default function Posts() {
     );
 }
 
-// export const getServerSideProps: GetServerSideProps = async (
-//     context: GetServerSidePropsContext,
-// ) => {
-//     return {
-//         props: {},
-//     };
-// };
+export const getServerSideProps: GetServerSideProps = async (
+    context: GetServerSidePropsContext,
+) => {
+    return {
+        props: {},
+    };
+};
