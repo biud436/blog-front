@@ -4,13 +4,14 @@ import { PostsPresent } from '../../components/posts/PostsPresent';
 import Head from 'next/head';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Meta } from '@/app/components/utils/Meta';
 
 export const PostsPage = observer(() => {
     return (
         <PageWrapper name="어진석의 블로그">
-            <Head>
-                <title>어진석의 블로그</title>
-            </Head>
+            <Meta
+                {...{ title: '포스트 목록', description: '포스트 목록입니다' }}
+            />
             <PostsPresent />
             <ToastContainer />
         </PageWrapper>

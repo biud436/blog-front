@@ -12,6 +12,7 @@ import { LoginTab } from './components/LoginTab';
 import { Container, Grid, Stack } from '@mui/material';
 import { URL_MAP } from '@/common/URL';
 import { useRouter } from 'next/router';
+import { Meta } from '@/app/components/utils/Meta';
 
 type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
@@ -130,6 +131,12 @@ export function LoginPage() {
 
     return (
         <Container maxWidth="sm">
+            <Meta
+                {...{
+                    title: '로그인',
+                    description: '관리자 로그인',
+                }}
+            />
             <Grid
                 container
                 spacing={0}

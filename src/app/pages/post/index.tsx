@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { Post } from '@/store/post';
 import { PostsProps } from '@/pages/posts/[id]';
+import { Meta } from '@/app/components/utils/Meta';
 
 export const PostPage = observer(({ post, error, id: postId }: PostsProps) => {
     const router = useRouter();
@@ -42,25 +43,15 @@ export const PostPage = observer(({ post, error, id: postId }: PostsProps) => {
 
     return (
         <PageWrapper name={post.title}>
-            <Head>
-                <title>
-                    {postId} - {post.title}
-                </title>
-                <meta name="referrer" content="unsafe-url"></meta>
-                <meta property="og:site_name" content={post.title} />
-                <meta property="og:title" content={post.title} />"
-                <meta
-                    property="og:article:author"
-                    content={post.user?.profile?.nickname}
-                />
-                <meta property="og:url" content={postUrl} />
-                <meta property="og:image" content={thumbnail} />
-                <meta property="og:image:width" content="1200" />
-                <meta property="og:image:height" content="630" />
-                <meta property="og:type" content="blog" />
-                <meta property="twitter:card" content="summary_large_image" />
-                <meta property="og:description" content={post.content} />
-            </Head>
+            <Meta
+                {...{
+                    title: post.title,
+                    description: post.content,
+                    url: postUrl,
+                    image: thumbnail,
+                    nickname: post?.user?.profile?.nickname,
+                }}
+            />
             <PostPresent post={post} goBack={goBack} />
         </PageWrapper>
     );

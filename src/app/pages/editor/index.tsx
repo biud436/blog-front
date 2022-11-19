@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Meta } from '@/app/components/utils/Meta';
 
 export type EditMode = 'create' | 'edit';
 export interface EditPageProps {
@@ -89,6 +90,12 @@ export const PostEditorContainer = observer(
 
         return (
             <PageWrapper name="포스트 에디터">
+                <Meta
+                    {...{
+                        title: '포스트 에디터',
+                        description: '포스트를 작성하거나 수정합니다',
+                    }}
+                />
                 <Paper sx={{ padding: 2 }} key="editor">
                     <LoginGuard>
                         <Grid container gap={3}>
