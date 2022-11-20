@@ -8,6 +8,6 @@ const TUIEditorWrapper = (props: TuiEditorWithForwardedProps) => {
     return <Editor ref={props.forwardedRef} {...props} />;
 };
 
-TUIEditorWrapper.prototype = {};
+TUIEditorWrapper.propTypes = {};
 
 export default TUIEditorWrapper;
