@@ -11,11 +11,12 @@ import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import { ForwardedScrollProgressBar } from '../atomic/ScrollProgressBar';
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useInView } from 'framer-motion';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
+import { motion } from 'framer-motion';
 
 const ViewerWrapper = styled.div`
     .post-heading {
@@ -36,19 +37,55 @@ const ViewerWrapper = styled.div`
     }
 `;
 
-const HeadingElementWrapper = React.forwardRef(
-    (props, elementRef: React.ForwardedRef<HTMLHeadingElement>) => {
-        const isInView = useInView(elementRef as React.RefObject<Element>);
+const ForcusToc = () => {
+    const ref = useRef<HTMLDivElement>(null);
 
-        useEffect(() => {
+    const isInView = useInView(ref, {});
+
+    useEffect(() => {
+        const items = Array.from(document.querySelectorAll('.toc a'));
+
+        if (ref.current?.parentElement) {
+            const { parentElement } = ref.current;
+
             if (isInView) {
-                console.log(elementRef);
-            }
-        }, [isInView]);
+                const targets = items.filter(item =>
+                    item.getAttribute('href')?.includes(`#${parentElement.id}`),
+                );
 
-        return <></>;
-    },
-);
+                targets.forEach(target => {
+                    target.classList.add('active');
+                });
+            }
+        }
+    }, [isInView]);
+
+    return (
+        <div ref={ref}>
+            <div className={isInView ? 'in-view' : ''}></div>
+        </div>
+    );
+};
+
+const HeadingElementWrapper = () => {
+    const [activeComponents, setActiveComponents] = React.useState<
+        React.ReactNode[]
+    >([]);
+
+    useEffect(() => {
+        const anchorItems = Array.from<HTMLAnchorElement>(
+            document.querySelectorAll('.post-heading'),
+        );
+
+        anchorItems.forEach(item => {
+            const portal = ReactDOM.createPortal(<ForcusToc />, item);
+
+            setActiveComponents(prev => [...prev, portal]);
+        });
+    }, []);
+
+    return <>{activeComponents}</>;
+};
 
 const TuiEditorViewer = ({ content }: { content: string }) => {
     const viewerRef = useRef<Viewer>(null);
@@ -108,6 +145,7 @@ const TuiEditorViewer = ({ content }: { content: string }) => {
                 linkAttributes={{ target: '_blank', rel: 'noreferrer' }}
                 customHTMLRenderer={customRenderer}
             />
+            <HeadingElementWrapper />
         </ViewerWrapper>
     );
 };
