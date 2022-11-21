@@ -1,9 +1,11 @@
 import { motion, useScroll, useSpring } from 'framer-motion';
-import { useEffect } from 'react';
+import { Ref, useEffect, useRef } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import ReactDOM from 'react-dom';
 import { useRouter } from 'next/router';
 import { URL_MAP } from '@/common/URL';
+import React from 'react';
+import { Viewer } from '@toast-ui/react-editor';
 
 const ProgressBarWrapper = createGlobalStyle`
     .progress-bar {
@@ -19,7 +21,7 @@ const ProgressBarWrapper = createGlobalStyle`
     }
 `;
 
-export const ScrollProgressBar = () => {
+export const ScrollProgressBar = (props, ref: React.ForwardedRef<Viewer>) => {
     const router = useRouter();
     const { scrollYProgress } = useScroll();
     const scaleX = useSpring(scrollYProgress, {
@@ -27,15 +29,34 @@ export const ScrollProgressBar = () => {
         damping: 30,
         restDelta: 0.001,
     });
+    const [isRenderOK, setIsRenderOK] = React.useState(false);
 
     if (router.pathname === URL_MAP.MAIN) {
         return null;
     }
 
-    return (
+    useEffect(() => {
+        scrollYProgress.onChange(() => {
+            if (window.scrollY > 0) {
+                setIsRenderOK(true);
+            }
+        });
+    }, []);
+
+    return ReactDOM.createPortal(
         <>
-            <ProgressBarWrapper />
-            <motion.div className="progress-bar" style={{ scaleX }} />
-        </>
+            {isRenderOK && <ProgressBarWrapper />}
+            <motion.div
+                className="progress-bar"
+                style={{ scaleX }}
+                initial="hidden"
+                animate="show"
+            />
+        </>,
+        document.body,
     );
 };
+
+export const ForwardedScrollProgressBar = React.memo(
+    React.forwardRef(ScrollProgressBar),
+);

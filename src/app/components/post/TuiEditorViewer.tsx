@@ -10,13 +10,30 @@ import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin
 
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 import '@toast-ui/editor/dist/i18n/ko-kr';
+import {
+    ForwardedScrollProgressBar,
+    ScrollProgressBar,
+} from '../atomic/ScrollProgressBar';
+import { useEffect, useRef } from 'react';
 
 const TuiEditorViewer = ({ content }: { content: string }) => {
+    const viewerRef = useRef<Viewer>(null);
+
+    useEffect(() => {
+        if (viewerRef.current) {
+            viewerRef.current.getRootElement().scrollTo(0, 0);
+        }
+    }, [viewerRef]);
+
     return (
-        <Viewer
-            initialValue={content}
-            plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
-        />
+        <>
+            <ForwardedScrollProgressBar ref={viewerRef} />
+            <Viewer
+                initialValue={content}
+                plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
+                ref={viewerRef}
+            />
+        </>
     );
 };
 

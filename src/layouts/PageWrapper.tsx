@@ -207,7 +207,6 @@ export const PageWrapper = observer(
                     </Box>
                 </Drawer>
                 <Main open={menuStore.isOpen}>
-                    <ScrollProgressBar />
                     <DrawerHeader />
                     {children}
                 </Main>
