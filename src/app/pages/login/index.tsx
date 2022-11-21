@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 import { userState } from '../../../store/user';
 import { useAuth } from '@/app/providers/auth/authProvider';
 import { LoginResponse } from 'app/providers/auth/LoginResponse';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { State } from './common';
 import { useMethods, useRendersCount } from 'react-use';
 import { User } from 'store/types';
@@ -13,6 +13,7 @@ import { Container, Grid, Stack } from '@mui/material';
 import { URL_MAP } from '@/common/URL';
 import { useRouter } from 'next/router';
 import { Meta } from '@/app/components/utils/Meta';
+import 'react-toastify/dist/ReactToastify.css';
 
 type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
@@ -57,22 +58,17 @@ export function LoginPage() {
      * @returns
      */
     const login = async (username: string, password: string) => {
-        // 로그인 요청 중...
-        toast.info('로그인 요청 중...', {
-            position: 'top-center',
-            isLoading: true,
-        });
-
         try {
+            // 로그인 요청 중...
+            toast.info('로그인 요청 중...', {
+                position: 'top-center',
+            });
+
             return await auth.login(username, password, () => {
                 toast.dismiss();
                 router.push(URL_MAP.MAIN);
             });
-        } catch (e: any) {
-            toast.dismiss();
-            toast.error(e.message, {
-                position: 'top-center',
-            });
+        } finally {
         }
     };
 
@@ -156,6 +152,7 @@ export function LoginPage() {
                     />
                 </Grid>
             </Grid>
+            <ToastContainer />
         </Container>
     );
 }

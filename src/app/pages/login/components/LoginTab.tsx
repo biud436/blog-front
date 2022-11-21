@@ -16,11 +16,7 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import { State } from '../common';
-import { useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
 
 type LoginTagProps = {
@@ -62,12 +58,6 @@ export function LoginTab({
             setLoggedin(isLoggedIn);
         }
     }, []);
-
-    // 로그인 상태 유지 체크 박스 토글 함수
-    const changeLoggedIn = () => {
-        setLoggedin(!loggedin);
-        localStorage.setItem('isLoggedIn', !loggedin + '');
-    };
 
     return (
         <>

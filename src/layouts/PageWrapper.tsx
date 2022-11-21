@@ -34,6 +34,7 @@ import { CategoryWrapper } from '../app/components/category/CategoryWrapper';
 import { Main } from '../app/components/menu/Main';
 import { AppBar, drawerWidth } from '../app/components/menu/AppBar';
 import { useRouter } from 'next/router';
+import { ScrollProgressBar } from '@/app/components/atomic/ScrollProgressBar';
 
 export const PageWrapper = observer(
     ({ name, children }: { name: string; children: React.ReactNode }) => {
@@ -206,6 +207,7 @@ export const PageWrapper = observer(
                     </Box>
                 </Drawer>
                 <Main open={menuStore.isOpen}>
+                    <ScrollProgressBar />
                     <DrawerHeader />
                     {children}
                 </Main>

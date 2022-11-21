@@ -46,6 +46,7 @@
         "eslint-plugin-react-hooks": "4.3.0",
         "faker": "6.6.6",
         "fontfaceobserver": "2.1.0",
+        "framer-motion": "^7.6.7",
         "http-proxy-middleware": "^2.0.6",
         "husky": "7.0.4",
         "i18next": "21.6.6",

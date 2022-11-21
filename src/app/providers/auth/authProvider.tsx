@@ -45,10 +45,13 @@ export const AuthProvider = observer(
                 })) as LoginResponse;
 
                 if (res!.statusCode >= 400) {
-                    throw new Error(res.message);
+                    throw res;
                 }
             } catch (e: any) {
-                toast.error(e.message);
+                toast.dismiss();
+                toast.error(e.response ? e.response.data.message : e.message, {
+                    position: 'top-center',
+                });
                 return res!;
             }
 
