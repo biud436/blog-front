@@ -17,8 +17,10 @@ const Viewer = dynamic(
 
 export function PostContent({ post }: { post: Post }) {
     return (
-        <Grid item xs={12}>
-            <Viewer content={post.content} />
-        </Grid>
+        <>
+            <Grid item xs={12}>
+                <Viewer content={post.content} />
+            </Grid>
+        </>
     );
 }

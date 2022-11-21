@@ -10832,6 +10832,11 @@ react-toastify@^8.2.0:
   dependencies:
     clsx "^1.1.1"
 
+react-toc@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/react-toc/-/react-toc-3.1.0.tgz#9914189b5932f4f79c0c29df9bd72ed4d1883afa"
+  integrity sha512-JPvMScVqu8NuguplaM74lerkXVh4ASnnF6vrjUoHS0fTxOsNrLJEagwdfTXopY3iBMAuOFx9pOwuRYi8UfL4wQ==
+
 react-transition-group@^4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.4.2.tgz#8b59a56f09ced7b55cbd53c36768b922890d5470"
