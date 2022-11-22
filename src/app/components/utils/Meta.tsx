@@ -19,18 +19,6 @@ export const Meta = (props: MetaProps) => {
         return `${props.title} - ${SITE_NAME}`;
     }, [props.title, SITE_NAME]);
 
-    const collectImageOpenGraph = useCallback(() => {
-        if (props.image) {
-            return (
-                <>
-                    <meta property="og:image" content={props.image} />
-                    <meta property="og:image:width" content="1200" />
-                    <meta property="og:image:height" content="630" />
-                </>
-            );
-        }
-    }, [props.image]);
-
     return (
         <Head>
             <title>{TITLE}</title>
@@ -43,8 +31,14 @@ export const Meta = (props: MetaProps) => {
             {props.nickname && (
                 <meta property="og:article:author" content={props.nickname} />
             )}
-            {props.url && <meta property="og:url" content={props.url} />}
-            {props.image && collectImageOpenGraph()}
+            {
+                // prettier-ignore
+                props.url && (<meta property="og:url" content={props.url} />)
+            }
+            {
+                // prettier-ignore
+                props.image && (<meta property="og:image" content={props.image} />)
+            }
 
             <meta property="og:type" content="website" />
             <meta property="twitter:card" content="summary_large_image" />
