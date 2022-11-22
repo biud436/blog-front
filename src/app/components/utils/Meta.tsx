@@ -15,6 +15,10 @@ export const Meta = (props: MetaProps) => {
         return MetaCommonConfig.site_name;
     }, [MetaCommonConfig.site_name]);
 
+    const TITLE = useMemo(() => {
+        return `${props.title} - ${SITE_NAME}`;
+    }, [props.title, SITE_NAME]);
+
     const collectImageOpenGraph = useCallback(() => {
         if (props.image) {
             return (
@@ -29,9 +33,7 @@ export const Meta = (props: MetaProps) => {
 
     return (
         <Head>
-            <title>
-                {props.title} - {SITE_NAME}
-            </title>
+            <title>{TITLE}</title>
             <meta name="referrer" content="unsafe-url"></meta>
             <meta property="og:site_name" content={SITE_NAME} />
             <meta name="og:title" content={props.title} />
@@ -43,7 +45,7 @@ export const Meta = (props: MetaProps) => {
             {props.url && <meta property="og:url" content={props.url} />}
             {props.image && collectImageOpenGraph()}
 
-            <meta property="og:type" content="blog" />
+            <meta property="og:type" content="website" />
             <meta property="twitter:card" content="summary_large_image" />
             <meta name="og:description" content={props.description} />
         </Head>
