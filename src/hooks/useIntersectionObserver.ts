@@ -16,24 +16,31 @@ export function useIntersectionObserver() {
     ) => {
         visiableEntries.current = [];
         entries.forEach(entry => {
+            // 화면에 들어왔다
             if (entry.isIntersecting) {
                 visiableEntries.current = [...visiableEntries.current, entry];
 
                 getVisibleEntry();
+
+                // 화면에 들어왔다.
+                console.log('in : ' + entry.target);
+            } else {
+                // 화면에서 나갔다
+                console.log('out : ' + entry.target);
             }
         });
     };
 
     const getVisibleEntry = () => {
         if (visiableEntries.current.length > 0) {
-            // 화단 상단과 가장 가까운 요소를 찾습니다.
+            // 화면에 들어온 엘리먼트 중 가장 위에 있는 엘리먼트를 찾는다.
             visiableEntries.current = visiableEntries.current
                 ?.slice(0)
                 .sort((a, b) => {
                     return a.boundingClientRect.top - b.boundingClientRect.top;
                 });
 
-            const target = visiableEntries.current[0].target;
+            let target = visiableEntries.current[0].target;
             if (target) {
                 const targetIndex = observerableElements.current.findIndex(
                     e => e === target,
@@ -46,10 +53,9 @@ export function useIntersectionObserver() {
                     setDir('up');
                 }
 
-                setPrevTargetIndex(targetIndex);
-
                 // 현재 타겟 인덱스의 요소를 활성화합니다.
                 changeActiveTocItem(`${UNIQUE_PREFIX}-${targetIndex}`);
+                setPrevTargetIndex(targetIndex);
             }
         }
     };
@@ -61,8 +67,6 @@ export function useIntersectionObserver() {
 
         const observer = new IntersectionObserver(observerCallback, {
             rootMargin: '64px 0px 0px 0px',
-            threshold: 0.5,
-            root: document.querySelector('.toast-ui-editor-contents'),
         });
 
         observerableElements.current.forEach(element => {

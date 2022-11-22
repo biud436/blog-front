@@ -21,8 +21,8 @@ import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
 const ViewerWrapper = styled.div`
     .post-heading {
-        margin-top: 1rem;
-        margin-bottom: 1rem;
+        margin-top: 0rem;
+        margin-bottom: 0rem;
 
         cursor: pointer;
 
