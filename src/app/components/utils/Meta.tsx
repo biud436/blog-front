@@ -26,6 +26,7 @@ export const Meta = (props: MetaProps) => {
                 name="viewport"
                 content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
             ></meta>
+            <meta name="description" content={props.description} />
             <meta property="og:site_name" content={SITE_NAME} />
             <meta property="og:title" content={props.title} />
             {props.nickname && (
