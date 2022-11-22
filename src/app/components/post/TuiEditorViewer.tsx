@@ -17,6 +17,7 @@ import { useInView } from 'framer-motion';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { motion } from 'framer-motion';
+import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
 const ViewerWrapper = styled.div`
     .post-heading {
@@ -109,6 +110,17 @@ const HeadingElementWrapper = () => {
 };
 
 const TuiEditorViewer = ({ content }: { content: string }) => {
+    const isLoaded = useRef<boolean>(false);
+    const { createObserver } = useIntersectionObserver();
+
+    useEffect(() => {
+        let observer: IntersectionObserver = createObserver();
+
+        return () => {
+            observer?.disconnect();
+        };
+    }, [isLoaded]);
+
     const viewerRef = useRef<Viewer>(null);
     const customRenderer = useMemo<ViewerProps['customHTMLRenderer']>(() => {
         return {
@@ -165,6 +177,9 @@ const TuiEditorViewer = ({ content }: { content: string }) => {
                 ref={viewerRef}
                 linkAttributes={{ target: '_blank', rel: 'noreferrer' }}
                 customHTMLRenderer={customRenderer}
+                onLoad={() => {
+                    isLoaded.current = true;
+                }}
             />
             <HeadingElementWrapper />
         </ViewerWrapper>

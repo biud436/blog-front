@@ -8,7 +8,7 @@ export const GlobalStyle = createGlobalStyle`
   .tocWrapper {
     position: fixed;
     padding: 1rem;    
-    width: auto;
+    width: 15em;
   }
 
   .toc {

@@ -16,11 +16,20 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { PostContentToc } from './PostContentToc';
 import React from 'react';
+import dynamic from 'next/dynamic';
+
+const PostContentTocDynamic = dynamic(
+    () => import('./PostContentToc').then(m => m.PostContentToc),
+    {
+        ssr: false,
+        loading: () => <div>Loading...</div>,
+    },
+);
 
 export function TocWrapper({ content }: { content: string }) {
     return (
         <Paper>
-            <PostContentToc content={content} />
+            <PostContentTocDynamic content={content} />
         </Paper>
     );
 }

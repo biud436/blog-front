@@ -23,7 +23,6 @@ export default function Posts({ post, error }: { post: Post; error: any }) {
 
     return (
         <ErrorBoundary>
-            <GlobalStyle />
             <PostPage {...{ post, id: String(post.id), error: error }} />
         </ErrorBoundary>
     );

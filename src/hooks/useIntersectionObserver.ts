@@ -54,10 +54,7 @@ export function useIntersectionObserver() {
         }
     };
 
-    /**
-     * 관찰 가능한 요소를 찾아서 등록합니다.
-     */
-    useEffect(() => {
+    const createObserver = () => {
         observerableElements.current = Array.from<HTMLAnchorElement>(
             document.querySelectorAll('.post-heading'),
         );
@@ -72,10 +69,8 @@ export function useIntersectionObserver() {
             observer.observe(element);
         });
 
-        return () => {
-            observer.disconnect();
-        };
-    }, []);
+        return observer;
+    };
 
-    return [dir, visiableEntries];
+    return { dir, visiableEntries, createObserver };
 }

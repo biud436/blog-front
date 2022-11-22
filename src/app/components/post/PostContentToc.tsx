@@ -14,24 +14,12 @@ import { useInView } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import React from 'react';
-import { useTocItems } from '@/hooks/useTocItems';
-import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
 export interface PostContentTocProps {
     content: string;
 }
 
 export const PostContentToc = observer(({ content }: PostContentTocProps) => {
-    const ref = useRef<any>(null);
-    const isInView = useInView(ref);
-    const [visiableEntries] = useIntersectionObserver();
-
-    useEffect(() => {
-        if (isInView) {
-            console.log('inview');
-        }
-    }, [isInView, visiableEntries]);
-
     return (
         <Container className="tocWrapper">
             <Paper sx={{ padding: 1 }}>

@@ -11,6 +11,7 @@ import Head from 'next/head';
 import { Post } from '@/store/post';
 import { PostsProps } from '@/pages/posts/[id]';
 import { Meta } from '@/app/components/utils/Meta';
+import { GlobalStyle } from '@/styles/global-styles';
 
 export const PostPage = observer(({ post, error, id: postId }: PostsProps) => {
     const router = useRouter();
@@ -52,6 +53,7 @@ export const PostPage = observer(({ post, error, id: postId }: PostsProps) => {
                     nickname: post?.user?.profile?.nickname,
                 }}
             />
+            <GlobalStyle />
             <PostPresent post={post} goBack={goBack} />
         </PageWrapper>
     );
