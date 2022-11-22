@@ -16,9 +16,6 @@ import { GlobalStyle } from '@/styles/global-styles';
 export const PostPage = observer(({ post, error, id: postId }: PostsProps) => {
     const router = useRouter();
 
-    const [thumbnail, setThumbnail] = useState<string>('');
-    const [postUrl, setPostUrl] = useState('');
-
     useEffect(() => {
         if (error) {
             router.push('/404');
@@ -26,12 +23,6 @@ export const PostPage = observer(({ post, error, id: postId }: PostsProps) => {
                 position: 'top-center',
             });
         }
-
-        if (post && post.images && post.images.length > 0) {
-            setThumbnail(post.images[0].path);
-        }
-
-        setPostUrl(`https://blog.biud436.com/posts/${postId}`);
     }, [post, error]);
 
     const goBack = () => {
@@ -48,8 +39,8 @@ export const PostPage = observer(({ post, error, id: postId }: PostsProps) => {
                 {...{
                     title: post.title,
                     description: post.content,
-                    url: postUrl,
-                    image: thumbnail,
+                    url: `https://blog.biud436.com/posts/${postId}`,
+                    image: post.images[0].path ?? '',
                     nickname: post?.user?.profile?.nickname,
                 }}
             />
