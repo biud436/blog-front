@@ -32,13 +32,17 @@ export const getServerSideProps: GetServerSideProps = async (
     context: GetServerSidePropsContext,
 ) => {
     const { id } = context.query;
-    let post = {};
+    let post = {} as Post;
     let error = null;
 
     try {
         const { data: res } = await axios.get('/posts/' + id);
 
-        post = res.data;
+        post = res.data as Post;
+
+        if (post.images && post.images.length > 0) {
+            post.thumbnail = post.images[0].path;
+        }
     } catch (e: any) {
         error = e;
     }

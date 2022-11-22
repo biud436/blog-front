@@ -22,6 +22,7 @@ export interface Post {
         count: number;
     };
     images: PostImage[];
+    thumbnail?: string;
 }
 
 export interface PostImage {

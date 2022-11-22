@@ -40,7 +40,7 @@ export const PostPage = observer(({ post, error, id: postId }: PostsProps) => {
                     title: post.title,
                     description: post.content,
                     url: `https://blog.biud436.com/posts/${postId}`,
-                    image: post.images[0].path ?? '',
+                    image: post.thumbnail,
                     nickname: post?.user?.profile?.nickname,
                 }}
             />
