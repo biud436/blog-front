@@ -21,7 +21,7 @@ export interface PostContentTocProps {
 
 export const PostContentToc = observer(({ content }: PostContentTocProps) => {
     return (
-        <Container className="tocWrapper">
+        <div className="tocWrapper">
             <Paper sx={{ padding: 1 }}>
                 <Typography
                     variant="h6"
@@ -34,6 +34,6 @@ export const PostContentToc = observer(({ content }: PostContentTocProps) => {
                 <Divider />
                 <Toc markdownText={content} className="toc" type="raw" />
             </Paper>
-        </Container>
+        </div>
     );
 });
