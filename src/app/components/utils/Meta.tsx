@@ -31,15 +31,8 @@ export const Meta = (props: MetaProps) => {
             {props.nickname && (
                 <meta property="og:article:author" content={props.nickname} />
             )}
-            {
-                // prettier-ignore
-                props.url && (<meta property="og:url" content={props.url} />)
-            }
-            {
-                // prettier-ignore
-                props.image && (<meta property="og:image" content={props.image} />)
-            }
-
+            <meta property="og:url" content={props.url} />
+            <meta property="og:image" content={props.image} />
             <meta property="og:type" content="website" />
             <meta property="twitter:card" content="summary_large_image" />
             <meta property="og:description" content={props.description} />
