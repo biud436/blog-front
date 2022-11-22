@@ -11,6 +11,7 @@ import {
 } from 'next/types';
 import { useState } from 'react';
 import { Post } from '@/store/post';
+import { GlobalStyle } from '@/styles/global-styles';
 export interface PostsProps {
     id: string;
     post: Post;
@@ -22,6 +23,7 @@ export default function Posts({ post, error }: { post: Post; error: any }) {
 
     return (
         <ErrorBoundary>
+            <GlobalStyle />
             <PostPage {...{ post, id: String(post.id), error: error }} />
         </ErrorBoundary>
     );

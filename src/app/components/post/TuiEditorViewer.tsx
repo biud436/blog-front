@@ -32,18 +32,33 @@ const ViewerWrapper = styled.div`
         text-decoration: none;
     }
 
+    /* https://stackoverflow.com/a/24298427/15266929 */
+    [id]::before {
+        content: '';
+        display: block;
+        height: 75px;
+        margin-top: -75px;
+        visibility: hidden;
+    }
+
     .in-view {
         color: red;
     }
 `;
 
-const ForcusToc = () => {
+const ForcusToc = ({
+    setActiveId,
+}: {
+    setActiveId: React.Dispatch<React.SetStateAction<string | null>>;
+}) => {
     const ref = useRef<HTMLDivElement>(null);
 
     const isInView = useInView(ref, {});
 
     useEffect(() => {
-        const items = Array.from(document.querySelectorAll('.toc a'));
+        const items = Array.from<HTMLAnchorElement>(
+            document.querySelectorAll('.toc a'),
+        );
 
         if (ref.current?.parentElement) {
             const { parentElement } = ref.current;
@@ -54,7 +69,9 @@ const ForcusToc = () => {
                 );
 
                 targets.forEach(target => {
-                    target.classList.add('active');
+                    // target.classList.add('active');
+
+                    setActiveId(target.id);
                 });
             }
         }
@@ -68,6 +85,7 @@ const ForcusToc = () => {
 };
 
 const HeadingElementWrapper = () => {
+    const [activeId, setActiveId] = useState<string | null>(null);
     const [activeComponents, setActiveComponents] = React.useState<
         React.ReactNode[]
     >([]);
@@ -78,7 +96,10 @@ const HeadingElementWrapper = () => {
         );
 
         anchorItems.forEach(item => {
-            const portal = ReactDOM.createPortal(<ForcusToc />, item);
+            const portal = ReactDOM.createPortal(
+                <ForcusToc setActiveId={setActiveId} />,
+                item,
+            );
 
             setActiveComponents(prev => [...prev, portal]);
         });

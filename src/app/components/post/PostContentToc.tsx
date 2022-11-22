@@ -1,4 +1,12 @@
-import { Paper, Typography } from '@mui/material';
+import {
+    Container,
+    createStyles,
+    Divider,
+    makeStyles,
+    Paper,
+    Theme,
+    Typography,
+} from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import Toc from 'react-toc';
 import styled from 'styled-components';
@@ -6,54 +14,38 @@ import { useInView } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import React from 'react';
+import { useTocItems } from '@/hooks/useTocItems';
+import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
 export interface PostContentTocProps {
     content: string;
 }
 
-const TocContainer = styled.div`
-    position: fixed;
-    padding: 1rem;
-
-    .toc {
-        margin: 0;
-        padding: 0;
-
-        li {
-            list-style: none;
-            color: #000;
-            font-size: 0.8rem;
-            text-decoration: none;
-
-            a {
-                color: #000;
-                text-decoration: none;
-
-                &.active {
-                    font-weight: bold;
-                    color: red;
-                }
-            }
-        }
-    }
-`;
-
 export const PostContentToc = observer(({ content }: PostContentTocProps) => {
     const ref = useRef<any>(null);
     const isInView = useInView(ref);
+    const [visiableEntries] = useIntersectionObserver();
 
     useEffect(() => {
         if (isInView) {
             console.log('inview');
         }
-    }, [isInView]);
+    }, [isInView, visiableEntries]);
 
     return (
-        <TocContainer>
+        <Container className="tocWrapper">
             <Paper sx={{ padding: 1 }}>
-                <Typography variant="h6">목차</Typography>
-                <Toc markdownText={content} className="toc" />
+                <Typography
+                    variant="h6"
+                    sx={{
+                        fontWeight: 600,
+                    }}
+                >
+                    목차
+                </Typography>
+                <Divider />
+                <Toc markdownText={content} className="toc" type="raw" />
             </Paper>
-        </TocContainer>
+        </Container>
     );
 });
