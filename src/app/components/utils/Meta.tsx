@@ -34,20 +34,21 @@ export const Meta = (props: MetaProps) => {
     return (
         <Head>
             <title>{TITLE}</title>
-            <meta name="referrer" content="unsafe-url"></meta>
+            <meta
+                name="viewport"
+                content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
+            ></meta>
             <meta property="og:site_name" content={SITE_NAME} />
-            <meta name="og:title" content={props.title} />
-
+            <meta property="og:title" content={props.title} />
             {props.nickname && (
                 <meta property="og:article:author" content={props.nickname} />
             )}
-
             {props.url && <meta property="og:url" content={props.url} />}
             {props.image && collectImageOpenGraph()}
 
             <meta property="og:type" content="website" />
             <meta property="twitter:card" content="summary_large_image" />
-            <meta name="og:description" content={props.description} />
+            <meta property="og:description" content={props.description} />
         </Head>
     );
 };
