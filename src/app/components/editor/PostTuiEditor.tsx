@@ -44,6 +44,7 @@ export const PostTuiEditor = React.memo(
                             usageStatistics={false}
                             initialValue={''}
                             previewHighlight={false}
+                            previewStyle="vertical"
                             initialEditType="markdown"
                             useCommandShortcut={true}
                             css={{

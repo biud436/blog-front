@@ -6,6 +6,7 @@ import {
     Typography,
     Paper,
     Container,
+    useMediaQuery,
 } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { PostFooter } from './PostFooter';
@@ -51,16 +52,23 @@ export function PostPresent({
                     flexDirection: 'row',
                 }}
             >
-                <Grid item xs={10}>
+                <Grid item xs={12} sm={12} md={10} lg={10}>
                     <Card
-                        sx={{ padding: 2, marginBottom: 3 }}
+                        sx={{
+                            marginBottom: 3,
+                            padding: {
+                                xs: 2,
+                                sm: 2,
+                                md: 3,
+                                lg: 3,
+                            },
+                        }}
                         key={post.id}
                         elevation={3}
                     >
                         <Grid container gap={1}>
                             <PostHeader post={post} />
                             <PostContent post={post} />
-                            <Grid item xs={12}></Grid>
                         </Grid>
                         <Divider />
                         <Typography
@@ -75,13 +83,25 @@ export function PostPresent({
                         </Typography>
                         <GithubComment />
                     </Card>
+                    <PostFooter post={post} goBack={goBack} />
                 </Grid>
-                <Grid item xs={2}>
+                <Grid
+                    item
+                    xs={0}
+                    sm={0}
+                    md={2}
+                    lg={2}
+                    display={{
+                        xs: 'none',
+                        sm: 'none',
+                        md: 'block',
+                        lg: 'block',
+                    }}
+                >
                     <TocWrapper content={post.content} />
                 </Grid>
             </Grid>
             <ToastContainer />
-            <PostFooter post={post} goBack={goBack} />
         </Container>
     );
 }

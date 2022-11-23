@@ -144,25 +144,17 @@ const PostsContainer = observer(() => {
                                         display: 'block',
                                         justifyContent: 'center',
                                         alignItems: 'center',
-                                        '@media (min-width: 320px)': {
-                                            minWidth: 240,
-                                            maxWidth: 240,
+                                        minWidth: {
+                                            xs: 240,
+                                            sm: 540,
+                                            md: 640,
+                                            lg: 740,
                                         },
-                                        '@media (min-width: 600px)': {
-                                            minWidth: 540,
-                                            maxWidth: 540,
-                                        },
-                                        '@media (min-width: 900px)': {
-                                            minWidth: 640,
-                                            maxWidth: 640,
-                                        },
-                                        '@media (min-width: 1200px)': {
-                                            minWidth: 640,
-                                            maxWidth: 640,
-                                        },
-                                        '@media (min-width: 1536px)': {
-                                            minWidth: 640,
-                                            maxWidth: 640,
+                                        maxWidth: {
+                                            xs: 240,
+                                            sm: 540,
+                                            md: 640,
+                                            lg: 740,
                                         },
                                     }}
                                     key={post.id}
@@ -176,8 +168,18 @@ const PostsContainer = observer(() => {
                                             sx={{
                                                 cursor: 'pointer',
                                                 width: '100%',
-                                                minHeight: 200,
-                                                maxHeight: 200,
+                                                minHeight: {
+                                                    xs: 100,
+                                                    sm: 120,
+                                                    md: 200,
+                                                    lg: 200,
+                                                },
+                                                maxHeight: {
+                                                    xs: 100,
+                                                    sm: 120,
+                                                    md: 200,
+                                                    lg: 200,
+                                                },
                                             }}
                                             onClick={() => goToPage(post.id!)}
                                         />

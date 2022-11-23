@@ -34,7 +34,24 @@ export function PostHeader({ post }: { post: Post }) {
                 item
                 xs={12}
                 display="flex"
-                justifyContent="flex-start"
+                justifyContent={{
+                    xs: 'space-between',
+                    sm: 'space-between',
+                    md: 'space-between',
+                    lg: 'flex-start',
+                }}
+                flexDirection={{
+                    xs: 'column',
+                    sm: 'column',
+                    md: 'column',
+                    lg: 'row',
+                }}
+                flexShrink={{
+                    xs: 0,
+                    sm: 0,
+                    md: 0,
+                    lg: 1,
+                }}
                 gap={3}
             >
                 <Typography variant="subtitle2">
@@ -50,10 +67,13 @@ export function PostHeader({ post }: { post: Post }) {
                     </Typography>
                 </Typography>
                 <Typography variant="subtitle2">
-                    {DateUtil.ToDateStringBySeoul(
-                        post?.uploadDate!,
-                        Formatter.DATETIME,
-                    )}
+                    작성일{' '}
+                    <Typography sx={{ color: 'GrayText' }}>
+                        {DateUtil.ToDateStringBySeoul(
+                            post?.uploadDate!,
+                            Formatter.DATETIME,
+                        )}
+                    </Typography>
                 </Typography>
             </Grid>
             <Grid

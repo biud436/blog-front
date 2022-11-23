@@ -1,17 +1,9 @@
 import { ErrorBoundary } from '@/app/components/error/boundary';
 import { PostPage } from '@/app/pages/post';
-import { usePost } from '@/hooks/usePost';
 
 import axios from 'axios';
-import { useRouter } from 'next/router';
-import {
-    GetServerSideProps,
-    GetServerSidePropsContext,
-    InferGetServerSidePropsType,
-} from 'next/types';
-import { useState } from 'react';
+import { GetServerSideProps, GetServerSidePropsContext } from 'next/types';
 import { Post } from '@/store/post';
-import { GlobalStyle } from '@/styles/global-styles';
 export interface PostsProps {
     id: string;
     post: Post;
@@ -19,8 +11,6 @@ export interface PostsProps {
 }
 
 export default function Posts({ post, error }: { post: Post; error: any }) {
-    const router = useRouter();
-
     return (
         <ErrorBoundary>
             <PostPage {...{ post, id: String(post.id), error: error }} />
