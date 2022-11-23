@@ -23,6 +23,10 @@ export const Meta = (props: MetaProps) => {
         <Head>
             <title>{TITLE}</title>
             <meta
+                name="google-site-verification"
+                content="USuFxQ-7Vvhq7U5wfcyO9QExgHdPZeKBojcxaWbcbu0"
+            />
+            <meta
                 name="viewport"
                 content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
             ></meta>
