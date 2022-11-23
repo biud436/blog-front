@@ -9,7 +9,7 @@ import { State } from './common';
 import { useMethods, useRendersCount } from 'react-use';
 import { User } from 'store/types';
 import { LoginTab } from './components/LoginTab';
-import { Container, Grid, Stack } from '@mui/material';
+import { Box, Container, Grid, Stack } from '@mui/material';
 import { URL_MAP } from '@/common/URL';
 import { useRouter } from 'next/router';
 import { Meta } from '@/app/components/utils/Meta';
@@ -126,32 +126,28 @@ export function LoginPage() {
     }, []);
 
     return (
-        <Container maxWidth="sm">
+        <Container>
             <Meta
                 {...{
                     title: '로그인',
                     description: '관리자 로그인',
                 }}
             />
-            <Grid
-                container
-                spacing={0}
-                direction="column"
-                alignItems="center"
+            <Box
+                display="flex"
                 justifyContent="center"
-                style={{ minHeight: '100vh' }}
+                alignItems="center"
+                minHeight="100vh"
             >
-                <Grid item xs={3}>
-                    <LoginTab
-                        handleChange={handleChange}
-                        handleLogin={handleLogin}
-                        handleMouseDownPassword={handleMouseDownPassword}
-                        setValue={setValue}
-                        values={values}
-                        handleClickShowPassword={toggleShowPassword}
-                    />
-                </Grid>
-            </Grid>
+                <LoginTab
+                    handleChange={handleChange}
+                    handleLogin={handleLogin}
+                    handleMouseDownPassword={handleMouseDownPassword}
+                    setValue={setValue}
+                    values={values}
+                    handleClickShowPassword={toggleShowPassword}
+                />
+            </Box>
             <ToastContainer />
         </Container>
     );

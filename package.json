@@ -12,6 +12,7 @@
         "@mui/material": "^5.9.2",
         "@mui/styled-engine-sc": "^5.8.0",
         "@mui/x-date-pickers": "^5.0.0-alpha.3",
+        "@next/font": "^13.0.4",
         "@reduxjs/toolkit": "^1.8.6",
         "@testing-library/jest-dom": "5.16.1",
         "@testing-library/react": "12.1.2",

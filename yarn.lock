@@ -1823,6 +1823,11 @@
   resolved "https://registry.yarnpkg.com/@next/env/-/env-13.0.3.tgz#f2ecec9a6634aed28dca9e7b79bd65d9c516a1b4"
   integrity sha512-/4WzeG61Ot/PxsghXkSqQJ6UohFfwXoZ3dtsypmR9EBP+OIax9JRq0trq8Z/LCT9Aq4JbihVkaazRWguORjTAw==
 
+"@next/font@^13.0.4":
+  version "13.0.4"
+  resolved "https://registry.yarnpkg.com/@next/font/-/font-13.0.4.tgz#43a9d38df0279745d2119bf79f10882b825a01a3"
+  integrity sha512-csZhVqe870p7XE03WfbDLzjVwdBAWxe6/lWGQosfqY/XN5tsmfDLpj442veicfCiiuF7/ydSnAAJxH8PQVBVWQ==
+
 "@next/swc-android-arm-eabi@13.0.3":
   version "13.0.3"
   resolved "https://registry.yarnpkg.com/@next/swc-android-arm-eabi/-/swc-android-arm-eabi-13.0.3.tgz#87ce3b7d81ec198f5360f4393e5e03f112758696"

@@ -1,16 +1,30 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
+
+  /**
+   * 스크롤을 부드럽게 설정
+   */
   html {
     scroll-behavior: smooth;
   }
 
+  * {
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+
+  /**
+   * 목차 컨테이너
+   */
   .tocWrapper {
     position: fixed;
     padding: 1rem;    
     width: 15em;
   }
 
+  /**
+   * 목차 리스트 아이템
+   */
   .toc {
         margin: 0;
         padding: 0;
@@ -53,5 +67,6 @@ export const GlobalStyle = createGlobalStyle`
                 }
             }            
         }
-    }  
+    } 
+    
 `;
