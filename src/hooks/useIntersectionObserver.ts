@@ -37,7 +37,10 @@ export function useIntersectionObserver() {
             visiableEntries.current = visiableEntries.current
                 ?.slice(0)
                 .sort((a, b) => {
-                    return a.boundingClientRect.top - b.boundingClientRect.top;
+                    return (
+                        a.target.getBoundingClientRect().top -
+                        b.target.getBoundingClientRect().top
+                    );
                 });
 
             let target = visiableEntries.current[0].target;
@@ -66,7 +69,7 @@ export function useIntersectionObserver() {
         );
 
         const observer = new IntersectionObserver(observerCallback, {
-            rootMargin: '64px 0px 0px 0px',
+            rootMargin: '-10% 0px -50% 0px',
         });
 
         observerableElements.current.forEach(element => {
