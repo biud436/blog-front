@@ -4,7 +4,7 @@ import { UNIQUE_PREFIX, useTocItems } from './useTocItems';
 
 export function useScrollTopTocItem() {
     const { anchorElements, changeActiveTocItem } = useTocItems();
-    const { scrollY } = useScroll();
+    const { scrollY, scrollYProgress } = useScroll();
 
     useEffect(() => {
         return scrollY.onChange(y => {
@@ -15,12 +15,16 @@ export function useScrollTopTocItem() {
                 const { top } = item.getBoundingClientRect();
                 return top > 0;
             });
+            const visibleObjects = tocItems.filter(item => {
+                const { top } = item.getBoundingClientRect();
+                return top > 0;
+            });
+
+            const numOfVisibleObjects = visibleObjects.length;
 
             if (currentHeading) {
-                // find index
-                const targetIndex = tocItems.findIndex(
-                    item => item === currentHeading,
-                );
+                let targetIndex = tocItems.indexOf(currentHeading);
+
                 changeActiveTocItem(`${UNIQUE_PREFIX}-${targetIndex}`);
             }
         });

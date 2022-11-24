@@ -114,15 +114,6 @@ const HeadingElementWrapper = () => {
 const TuiEditorViewer = ({ content }: { content: string }) => {
     const isLoaded = useRef<boolean>(false);
     const [scrollY] = useScrollTopTocItem();
-    // const { createObserver } = useIntersectionObserver();
-
-    // useEffect(() => {
-    //     let observer: IntersectionObserver = createObserver();
-
-    //     return () => {
-    //         observer?.disconnect();
-    //     };
-    // }, [isLoaded]);
 
     const viewerRef = useRef<Viewer | null>(null);
 
