@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { UNIQUE_PREFIX, useTocItems } from './useTocItems';
 
 /**
- * 버그로 인해, IntersectionObserver를 사용하지 않고, framer-motion의 useScroll을 사용합니다.
+ * 버그로 인해, IntersectionObserver를 사용하지 않고, `framer-motion`의 useScroll을 사용합니다.
  *
  * [useScrollTopTocItem](./useScrollTopTocItem.ts) 파일을 참고하세요.
  *
