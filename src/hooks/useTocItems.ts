@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 export const UNIQUE_PREFIX = 'toc-item';
 
@@ -26,6 +26,10 @@ export function useTocItems() {
         changeActiveTocItem(`${UNIQUE_PREFIX}-0`);
     }, [anchorElements.current]);
 
+    const setAnchorElements = useCallback((node: HTMLAnchorElement[]) => {
+        anchorElements.current = node;
+    }, []);
+
     const changeActiveTocItem = (id: string) => {
         anchorElements.current.forEach(anchor => {
             if (anchor.id === id) {
@@ -36,5 +40,5 @@ export function useTocItems() {
         });
     };
 
-    return { anchorElements, changeActiveTocItem };
+    return { anchorElements: setAnchorElements, changeActiveTocItem };
 }

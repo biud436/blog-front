@@ -2,6 +2,13 @@ import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { UNIQUE_PREFIX, useTocItems } from './useTocItems';
 
+/**
+ * 버그로 인해, IntersectionObserver를 사용하지 않고, framer-motion의 useScroll을 사용합니다.
+ *
+ * [useScrollTopTocItem](./useScrollTopTocItem.ts) 파일을 참고하세요.
+ *
+ * @returns
+ */
 export function useIntersectionObserver() {
     const observerableElements = useRef<HTMLAnchorElement[]>([]);
     const observer = useRef<IntersectionObserver>();
@@ -10,10 +17,7 @@ export function useIntersectionObserver() {
     const [prevTargetIndex, setPrevTargetIndex] = useState<number>(0);
     const visiableEntries = useRef<IntersectionObserverEntry[]>([]);
 
-    const observerCallback: IntersectionObserverCallback = (
-        entries,
-        observer,
-    ) => {
+    const observerCallback: IntersectionObserverCallback = entries => {
         visiableEntries.current = [];
         entries.forEach(entry => {
             // 화면에 들어왔다

@@ -35,6 +35,7 @@ import { Main } from '../app/components/menu/Main';
 import { AppBar, drawerWidth } from '../app/components/menu/AppBar';
 import { useRouter } from 'next/router';
 import { ScrollProgressBar } from '@/app/components/atomic/ScrollProgressBar';
+import { ManageButton } from '@/app/components/category/ManageButton';
 
 export const PageWrapper = observer(
     ({ name, children }: { name: string; children: React.ReactNode }) => {
@@ -249,7 +250,10 @@ export function LoginWrapper() {
     return (
         <>
             {isAuthorized ? (
-                <LogoutButton auth={auth} />
+                <>
+                    <ManageButton />
+                    <LogoutButton auth={auth} />
+                </>
             ) : (
                 <>
                     <LoginButton router={router} />

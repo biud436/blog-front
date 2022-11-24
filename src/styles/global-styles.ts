@@ -30,6 +30,8 @@ export const GlobalStyle = createGlobalStyle`
         padding: 0;
 
         * {
+          transition: 0.125s all ease-in;
+
           &:hover {
                 background: #d2d2d2;
                 opacity: 0.8;
@@ -56,10 +58,16 @@ export const GlobalStyle = createGlobalStyle`
                 &.active {
                     font-weight: bold;
                     color: #323233;
+
+                    border-left: 0.25rem solid #323233;
+                    padding-left: 0.5rem;
+
+                    transition: 0.125s all ease-in;
+                    transform: scale(1.05);
                 }
 
                 &:before {
-                    content: '-';
+                    content: '';
                     display: inline-block;
                     width: 0.5rem;
                     height: 0.5rem;

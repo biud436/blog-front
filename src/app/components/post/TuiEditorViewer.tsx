@@ -15,9 +15,11 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useInView } from 'framer-motion';
 import * as React from 'react';
+import { useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import { motion } from 'framer-motion';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
+import { useScrollTopTocItem } from '@/hooks/useScrollTopTocItem';
 
 const ViewerWrapper = styled.div`
     .post-heading {
@@ -111,17 +113,26 @@ const HeadingElementWrapper = () => {
 
 const TuiEditorViewer = ({ content }: { content: string }) => {
     const isLoaded = useRef<boolean>(false);
-    const { createObserver } = useIntersectionObserver();
+    const [scrollY] = useScrollTopTocItem();
+    // const { createObserver } = useIntersectionObserver();
 
-    useEffect(() => {
-        let observer: IntersectionObserver = createObserver();
+    // useEffect(() => {
+    //     let observer: IntersectionObserver = createObserver();
 
-        return () => {
-            observer?.disconnect();
-        };
-    }, [isLoaded]);
+    //     return () => {
+    //         observer?.disconnect();
+    //     };
+    // }, [isLoaded]);
 
-    const viewerRef = useRef<Viewer>(null);
+    const viewerRef = useRef<Viewer | null>(null);
+
+    const setViewerRef = useCallback(
+        (node: Viewer) => {
+            viewerRef.current = node;
+        },
+        [viewerRef],
+    );
+
     const customRenderer = useMemo<ViewerProps['customHTMLRenderer']>(() => {
         return {
             heading(node: any, { entering }) {
@@ -174,7 +185,7 @@ const TuiEditorViewer = ({ content }: { content: string }) => {
             <Viewer
                 initialValue={content}
                 plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
-                ref={viewerRef}
+                ref={setViewerRef}
                 linkAttributes={{ target: '_blank', rel: 'noreferrer' }}
                 customHTMLRenderer={customRenderer}
                 onLoad={() => {

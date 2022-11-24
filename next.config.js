@@ -2,14 +2,6 @@
 const nextConfig = {
     reactStrictMode: true,
     swcMinify: true,
-    // async rewrites() {
-    //     return [
-    //         {
-    //             source: '/:path*',
-    //             destination: 'http://localhost:3000/:path*',
-    //         },
-    //     ];
-    // },
     async redirects() {
         return [
             {
@@ -19,6 +11,11 @@ const nextConfig = {
             },
             {
                 source: '/edit',
+                destination: '/',
+                permanent: true,
+            },
+            {
+                source: '/manange',
                 destination: '/',
                 permanent: true,
             },
