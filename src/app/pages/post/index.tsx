@@ -1,14 +1,10 @@
 import { PageWrapper } from '@/layouts/PageWrapper';
 import { URL_MAP } from '@/common/URL';
-import { usePost } from '@/hooks/usePost';
 import { observer } from 'mobx-react-lite';
-import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { PostPresent } from '../../components/post/PostPresent';
 import { useRouter } from 'next/router';
-import Head from 'next/head';
-import { Post } from '@/store/post';
 import { PostsProps } from '@/pages/posts/[id]';
 import { Meta } from '@/app/components/utils/Meta';
 import { GlobalStyle } from '@/styles/global-styles';
