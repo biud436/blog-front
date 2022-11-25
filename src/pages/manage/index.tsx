@@ -1,5 +1,10 @@
 import { ManagePresent } from '@/app/components/manage/ManagePresent';
+import { ManageLayout } from '@/layouts/ManageLayout';
 
 export default function ManagePage() {
-    return <ManagePresent />;
+    return (
+        <ManageLayout>
+            <ManagePresent />
+        </ManageLayout>
+    );
 }

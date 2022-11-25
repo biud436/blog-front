@@ -1,66 +1,49 @@
 {
-  "compilerOptions": {
-    "noImplicitAny": false,
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "noFallthroughCasesInSwitch": true,
-    "jsx": "preserve",
-    "baseUrl": "src",
-    "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "@/images/": [
-        "./assets/images/*"
-      ]
-    },
-    "useDefineForClassFields": true,
-    "experimentalDecorators": true,
-    "declaration": true,
-    "types": [
-      "node",
-      "react",
-      "kakao.maps.d.ts",
-      "webpack-env"
-    ],
-    "typeRoots": [
-      "./src/types",
-      "./node_modules/@types"
-    ],
-    "incremental": true
-  },
-  "exclude": [
-    "node_modules"
-  ],
-  "include": [
-    "src",
-    "internals/startingTemplate/**/*",
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ],
-  "ts-node": {
     "compilerOptions": {
-      "esModuleInterop": true,
-      "module": "commonjs",
-      "moduleResolution": "node",
-      "noEmit": true,
-      "allowSyntheticDefaultImports": true
+        "noImplicitAny": false,
+        "target": "es5",
+        "lib": ["dom", "dom.iterable", "esnext"],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "noFallthroughCasesInSwitch": true,
+        "jsx": "preserve",
+        "baseUrl": "src",
+        "paths": {
+            "@/*": ["./*"],
+            "@/images/": ["./assets/images/*"]
+        },
+        "useDefineForClassFields": true,
+        "experimentalDecorators": true,
+        "declaration": true,
+        "types": ["node", "react", "kakao.maps.d.ts", "webpack-env"],
+        "typeRoots": ["./src/types", "./node_modules/@types"],
+        "incremental": true
+    },
+    "exclude": ["node_modules"],
+    "include": [
+        "src",
+        "internals/startingTemplate/**/*",
+        "next-env.d.ts",
+        "**/*.ts",
+        "**/*.tsx",
+        "mdx.d.ts"
+    ],
+    "ts-node": {
+        "compilerOptions": {
+            "esModuleInterop": true,
+            "module": "commonjs",
+            "moduleResolution": "node",
+            "noEmit": true,
+            "allowSyntheticDefaultImports": true
+        }
     }
-  }
 }

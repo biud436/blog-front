@@ -5,6 +5,8 @@ import { GlobalStyle } from '@/styles/global-styles';
 import type { AppProps } from 'next/app';
 import { RecoilRoot } from 'recoil';
 import { Noto_Sans_KR } from '@next/font/google';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const notoSansKR = Noto_Sans_KR({
     weight: '100',
@@ -23,6 +25,7 @@ export default function App({ Component, pageProps }: AppProps) {
                         </AuthProvider>
                     </PostServiceProvider>
                 </CategoryServiceProvider>
+                <ToastContainer />
             </RecoilRoot>
         </main>
     );

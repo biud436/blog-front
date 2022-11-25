@@ -1,5 +1,13 @@
+const withMDX = require('@next/mdx')({
+    extension: /\.mdx?$/,
+    options: {
+        remarkPlugins: [],
+        rehypePlugins: [],
+    },
+});
+
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig = withMDX({
     reactStrictMode: true,
     swcMinify: true,
     async redirects() {
@@ -26,6 +34,7 @@ const nextConfig = {
     },
     crossOrigin: 'anonymous',
     output: 'standalone',
-};
+    pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
+});
 
 module.exports = nextConfig;
