@@ -14,6 +14,8 @@ import {
     ThemeProvider,
     CssBaseline,
     Grid,
+    Divider,
+    Box,
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { createTheme } from '@mui/material/styles';
@@ -28,6 +30,8 @@ import {
 } from '@minoru/react-dnd-treeview';
 import AddIcon from '@mui/icons-material/Add';
 import { useCallback, useState } from 'react';
+import { useRouter } from 'next/router';
+import { URL_MAP } from '@/common/URL';
 
 /**
  * 본 컴포넌트는 MUI 용 react-dnd 예제를 참고한 것입니다.
@@ -93,6 +97,7 @@ export const CategoryNode = observer(
 );
 
 export const CategoryTreeEditor = observer(() => {
+    const router = useRouter();
     const [open, setOpen] = useState<boolean>(false);
     const [sampleData, setSampleData] = useState<any[]>(() => {
         return [
@@ -221,6 +226,10 @@ export const CategoryTreeEditor = observer(() => {
         [],
     );
 
+    const returnToManagePage = useCallback(() => {
+        router.push(URL_MAP.MANAGE);
+    }, [router]);
+
     /**
      * 드래그 도중에 표시될 컴포넌트
      *
@@ -236,31 +245,46 @@ export const CategoryTreeEditor = observer(() => {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <DndProvider backend={MultiBackend} options={getBackendOptions()}>
-                <Grid container spacing={0}>
-                    <Grid item xs={12}>
-                        <Button onClick={handleOpen} startIcon={<AddIcon />}>
-                            노드 추가
-                        </Button>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Tree
-                            tree={sampleData}
-                            rootId={0}
-                            render={(node: NodeModel<any>, options) => (
-                                <CategoryNode
-                                    node={node}
-                                    {...options}
-                                    onDelete={handleDelete}
-                                    onCopy={handleCopy}
-                                />
-                            )}
-                            dragPreviewRender={dragPreviewRender}
-                            onDrop={handleDrop}
-                        />
-                    </Grid>
+            <Grid container spacing={0} marginBottom={2}>
+                <Grid item xs={12}>
+                    <Button variant="contained" onClick={returnToManagePage}>
+                        관리자 페이지 메인으로
+                    </Button>
                 </Grid>
-            </DndProvider>
+            </Grid>
+            <Box>
+                <DndProvider
+                    backend={MultiBackend}
+                    options={getBackendOptions()}
+                >
+                    <Grid container spacing={0}>
+                        <Grid item xs={12}>
+                            <Button
+                                onClick={handleOpen}
+                                startIcon={<AddIcon />}
+                            >
+                                노드 추가
+                            </Button>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Tree
+                                tree={sampleData}
+                                rootId={0}
+                                render={(node: NodeModel<any>, options) => (
+                                    <CategoryNode
+                                        node={node}
+                                        {...options}
+                                        onDelete={handleDelete}
+                                        onCopy={handleCopy}
+                                    />
+                                )}
+                                dragPreviewRender={dragPreviewRender}
+                                onDrop={handleDrop}
+                            />
+                        </Grid>
+                    </Grid>
+                </DndProvider>
+            </Box>
         </ThemeProvider>
     );
 });
