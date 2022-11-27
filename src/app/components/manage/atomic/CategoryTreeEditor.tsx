@@ -162,9 +162,14 @@ interface FreeNodeModel extends NodeModel<Pick<CategoryDepthVO, 'depth'>> {
     parent: number;
 }
 
+interface AddNodeFormProps {
+    categoryName: string;
+    rootNodeName: string;
+}
 export const CategoryAddDialog = observer(
     ({ open, onClose }: { open: boolean; onClose: () => void }) => {
         const categoryService = useCategoryService();
+        const [categoryName, setCategoryName] = useState('');
         const [rootCategoryId, setRootCategoryId] = useState<string>('');
         const [categoryNames, setCategoryNames] = useState<string[]>(['']);
 
@@ -187,6 +192,20 @@ export const CategoryAddDialog = observer(
             setCategoryNames([...names]);
         }, [categoryService]);
 
+        const handleSubmit = async () => {
+            const res = await axios.post<AddNodeFormProps>(
+                `${API_URL}/admin/category`,
+                {
+                    categoryName,
+                    rootNodeName: rootCategoryId,
+                },
+            );
+
+            if ([200, 201].includes(res.status)) {
+                onClose();
+            }
+        };
+
         return (
             <Modal open={open}>
                 <Box
@@ -197,7 +216,6 @@ export const CategoryAddDialog = observer(
                         left: '50%',
                         transform: 'translate(-50%, -50%)',
                         width: 400,
-                        border: '2px solid #000',
                         boxShadow: 24,
                         p: 4,
                     }}
@@ -243,14 +261,19 @@ export const CategoryAddDialog = observer(
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Grid item xs={12}>
-                            <Button
-                                variant="contained"
-                                sx={{
-                                    width: '100%',
-                                }}
-                                onClick={onClose}
-                            >
+                        <Grid
+                            item
+                            xs={12}
+                            gap={2}
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'flex-end',
+                            }}
+                        >
+                            <Button variant="contained" onClick={handleSubmit}>
+                                추가
+                            </Button>
+                            <Button variant="contained" onClick={onClose}>
                                 닫기
                             </Button>
                         </Grid>
