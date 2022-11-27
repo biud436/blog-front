@@ -16,6 +16,7 @@ import {
     Grid,
     Divider,
     Box,
+    Modal,
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { createTheme } from '@mui/material/styles';
@@ -29,9 +30,16 @@ import {
     NodeModel,
 } from '@minoru/react-dnd-treeview';
 import AddIcon from '@mui/icons-material/Add';
-import { useCallback, useState } from 'react';
+import CopyIcon from '@mui/icons-material/FileCopy';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { URL_MAP } from '@/common/URL';
+import { toJS } from 'mobx';
+import { CategoryDepthVO } from '@/services/CategoryService';
+import { useCategoryService } from '@/hooks/useCategoryService';
+import { API_URL } from '@/app/api/request';
+import axios, { AxiosResponse } from 'axios';
 
 /**
  * 본 컴포넌트는 MUI 용 react-dnd 예제를 참고한 것입니다.
@@ -39,7 +47,6 @@ import { URL_MAP } from '@/common/URL';
  *
  * @link https://codesandbox.io/s/add-remove-duplicate-ts-8q20pd?from-embed=&file=/package.json:212-238
  */
-
 const theme = createTheme({
     components: {
         MuiCssBaseline: {
@@ -92,71 +99,225 @@ export const CategoryNode = observer(
         onDelete,
         onCopy,
     }: CategoryNodeProps<CategoryModel>) => {
-        return <div>{node.text}</div>;
+        const handleToggle = useCallback(() => {
+            onToggle(node.id);
+        }, [node.id, onToggle]);
+
+        if (node.droppable) {
+            return (
+                <Grid
+                    container
+                    spacing={1}
+                    sx={{
+                        background: 'rgba(0, 0, 0, 0.02)',
+                        mb: 2,
+                    }}
+                >
+                    <Grid item pl={depth * 2}>
+                        <Button
+                            variant="outlined"
+                            onClick={handleToggle}
+                            sx={{
+                                color: 'text.secondary',
+                            }}
+                        >
+                            {node.text}
+                        </Button>
+                    </Grid>
+                </Grid>
+            );
+        }
+
+        return (
+            <Grid
+                container
+                spacing={0}
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    pl: depth * 2,
+                }}
+            >
+                <Button
+                    variant="contained"
+                    sx={{
+                        m: 1,
+                    }}
+                >
+                    {node.text}
+                </Button>
+                <Button onClick={() => onCopy(node.id)}>
+                    <CopyIcon />
+                </Button>
+                <Button onClick={() => onDelete(node.id)}>
+                    <DeleteIcon />
+                </Button>
+            </Grid>
+        );
+    },
+);
+
+interface FreeNodeModel extends NodeModel<Pick<CategoryDepthVO, 'depth'>> {
+    id: number;
+    parent: number;
+}
+
+export const CategoryAddDialog = observer(
+    ({ open, onClose }: { open: boolean; onClose: () => void }) => {
+        const categoryService = useCategoryService();
+        const [rootCategoryId, setRootCategoryId] = useState<string>('');
+        const [categoryNames, setCategoryNames] = useState<string[]>(['']);
+
+        useEffect(() => {
+            const names = [] as string[];
+            const getCategoryName = (category: CategoryDepthVO) => {
+                if (!category) {
+                    return;
+                }
+                names.push(category.name);
+
+                if (category.children) {
+                    category.children.forEach(child => {
+                        getCategoryName(child);
+                    });
+                }
+            };
+
+            getCategoryName(categoryService.getCategories()[0]);
+            setCategoryNames([...names]);
+        }, [categoryService]);
+
+        return (
+            <Modal open={open}>
+                <Box
+                    sx={{
+                        background: 'white',
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: 400,
+                        border: '2px solid #000',
+                        boxShadow: 24,
+                        p: 4,
+                    }}
+                >
+                    <Grid container spacing={4}>
+                        <Grid item xs={12}>
+                            <TextField
+                                label="카테고리명"
+                                variant="outlined"
+                                sx={{
+                                    width: '100%',
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <FormControl
+                                fullWidth
+                                sx={{
+                                    width: '100%',
+                                }}
+                            >
+                                <InputLabel id="root-category-select-label">
+                                    상위 카테고리
+                                </InputLabel>
+                                <Select
+                                    label="상위 카테고리"
+                                    labelId="root-category-select-label"
+                                    value={rootCategoryId}
+                                    onChange={e => {
+                                        setRootCategoryId(e.target.value);
+                                    }}
+                                >
+                                    {categoryNames.map(e => {
+                                        return (
+                                            <MenuItem
+                                                value={e}
+                                                key={`root-category-${e}`}
+                                            >
+                                                {e}
+                                            </MenuItem>
+                                        );
+                                    })}
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button
+                                variant="contained"
+                                sx={{
+                                    width: '100%',
+                                }}
+                                onClick={onClose}
+                            >
+                                닫기
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Box>
+            </Modal>
+        );
     },
 );
 
 export const CategoryTreeEditor = observer(() => {
     const router = useRouter();
     const [open, setOpen] = useState<boolean>(false);
-    const [sampleData, setSampleData] = useState<any[]>(() => {
-        return [
-            {
-                id: 1,
-                parent: 0,
-                droppable: true,
-                text: 'Folder 1',
-            },
-            {
-                id: 2,
-                parent: 1,
-                droppable: false,
-                text: 'File 1-1',
-                data: {
-                    fileType: 'csv',
-                },
-            },
-            {
-                id: 3,
-                parent: 1,
-                droppable: false,
-                text: 'File 1-2',
-                data: {
-                    fileType: 'text',
-                },
-            },
-            {
-                id: 4,
-                parent: 0,
-                droppable: true,
-                text: 'Folder 2',
-            },
-            {
-                id: 5,
-                parent: 4,
-                droppable: true,
-                text: 'Folder 2-1',
-            },
-            {
-                id: 6,
-                parent: 5,
-                droppable: false,
-                text: 'File 2-1-1',
-                data: {
-                    fileType: 'image',
-                },
-            },
-            {
-                id: 7,
-                parent: 0,
-                droppable: false,
-                text: 'File 3',
-                data: {
-                    fileType: 'image',
-                },
-            },
-        ];
-    });
+    const categoryService = useCategoryService();
+    const [treeData, setTreeData] = useState<FreeNodeModel[] | any>([]);
+    const [mounted, setMounted] = useState<boolean>(false);
+
+    const initCategoryList = useCallback(async () => {
+        const res: AxiosResponse<any> = await axios.get(
+            `${API_URL}/admin/category?isBeautify=true`,
+            {},
+        );
+
+        const categories: CategoryDepthVO[] = res.data.data;
+
+        // 몹엑스와 연동
+        categoryService.setCategories(categories);
+    }, []);
+
+    /**
+     * 카테고리를 획득합니다.
+     */
+    const getFlatCategories = useCallback(() => {
+        const raw = toJS(categoryService.getCategories());
+        let resultData: [CategoryDepthVO, CategoryDepthVO | null, number][] =
+            [];
+        const nodeItems: NodeModel[] = [];
+
+        const convertWithData = (data: CategoryDepthVO[]) => {
+            const result: [CategoryDepthVO, CategoryDepthVO | null, number][] =
+                [];
+
+            const convertRecursive = (
+                data: CategoryDepthVO[],
+                parent: CategoryDepthVO | null,
+            ) => {
+                data.forEach(item => {
+                    const node = [item, parent ?? null, item.depth] as [
+                        CategoryDepthVO,
+                        CategoryDepthVO | null,
+                        number,
+                    ];
+                    result.push(node);
+                    if (item.children) {
+                        convertRecursive(item.children, item);
+                    }
+                }, this);
+            };
+            convertRecursive(data, null);
+
+            return result;
+        };
+
+        resultData = convertWithData(raw);
+
+        return { flatCategories: resultData, nodeItems };
+    }, []);
 
     const handleOpen = useCallback(() => {
         setOpen(true);
@@ -166,22 +327,25 @@ export const CategoryTreeEditor = observer(() => {
         setOpen(false);
     }, [open]);
 
+    /**
+     * 노드 삭제
+     */
     const handleDelete: CategoryNodeEventHandler = id => {
         const deleteIds = [
             id,
-            ...getDescendants(sampleData, id).map(node => node.id),
+            ...getDescendants(treeData, id).map(node => node.id),
         ];
 
-        const copiedNodes = sampleData.filter(
+        const copiedNodes = treeData.filter(
             node => !deleteIds.includes(node.id),
         );
 
-        setSampleData([...copiedNodes]);
+        setTreeData([...copiedNodes]);
     };
 
     const getLastId = useCallback(
         (treeData: NodeModel[]) => {
-            const reversedArray = [...sampleData].sort((a, b) => {
+            const reversedArray = [...treeData].sort((a, b) => {
                 if (a.id < b.id) {
                     return 1;
                 } else if (a.id > b.id) {
@@ -197,22 +361,22 @@ export const CategoryTreeEditor = observer(() => {
 
             return 0;
         },
-        [sampleData],
+        [treeData],
     );
 
     const handleCopy: CategoryNodeEventHandler = id => {
-        const lastId = getLastId(sampleData);
-        const targetNode = sampleData.find(node => node.id === id);
+        const lastId = getLastId(treeData) as number;
+        const targetNode = treeData.find(node => node.id === id);
 
-        const descendants = getDescendants(sampleData, id);
+        const descendants = getDescendants(treeData, id);
         const partialTree = descendants.map(node => ({
             ...node,
-            id: node.id + lastId,
-            parent: node.parent + lastId,
+            id: (node.id as number) + lastId,
+            parent: (node.parent as number) + lastId,
         }));
 
-        setSampleData([
-            ...sampleData,
+        setTreeData([
+            ...treeData,
             {
                 ...targetNode,
                 id: targetNode.id + lastId,
@@ -222,10 +386,13 @@ export const CategoryTreeEditor = observer(() => {
     };
 
     const handleDrop = useCallback(
-        (newTree: NodeModel<CategoryModel>[]) => setSampleData(newTree),
+        (newTree: NodeModel<CategoryModel>[]) => setTreeData(newTree),
         [],
     );
 
+    /**
+     * 메인 페이지로 돌아가기
+     */
     const returnToManagePage = useCallback(() => {
         router.push(URL_MAP.MANAGE);
     }, [router]);
@@ -242,6 +409,34 @@ export const CategoryTreeEditor = observer(() => {
         return <Button variant="contained">{monitorProps.item.text}</Button>;
     };
 
+    const init = async () => {
+        await initCategoryList();
+        const { flatCategories } = getFlatCategories();
+
+        const nodeItems: NodeModel[] = [];
+
+        flatCategories.forEach(([category, parent, depth]) => {
+            nodeItems.push({
+                id: category.id,
+                parent: parent ? parent.id : 0,
+                droppable: category.children.length > 0,
+                text: category.name,
+                data: {
+                    depth,
+                },
+            });
+        });
+
+        setTreeData([...nodeItems]);
+        setMounted(true);
+    };
+
+    useEffect(() => {
+        if (!mounted) {
+            init();
+        }
+    }, [mounted]);
+
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -252,12 +447,13 @@ export const CategoryTreeEditor = observer(() => {
                     </Button>
                 </Grid>
             </Grid>
+            <CategoryAddDialog open={open} onClose={handleClose} />
             <Box>
                 <DndProvider
                     backend={MultiBackend}
                     options={getBackendOptions()}
                 >
-                    <Grid container spacing={0}>
+                    <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <Button
                                 onClick={handleOpen}
@@ -268,7 +464,7 @@ export const CategoryTreeEditor = observer(() => {
                         </Grid>
                         <Grid item xs={12}>
                             <Tree
-                                tree={sampleData}
+                                tree={treeData}
                                 rootId={0}
                                 render={(node: NodeModel<any>, options) => (
                                     <CategoryNode
