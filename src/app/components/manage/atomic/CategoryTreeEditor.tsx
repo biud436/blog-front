@@ -31,6 +31,7 @@ import {
 } from '@minoru/react-dnd-treeview';
 import AddIcon from '@mui/icons-material/Add';
 import CopyIcon from '@mui/icons-material/FileCopy';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -88,6 +89,7 @@ export interface CategoryNodeProps<T> {
     onToggle: CategoryNodeEventHandler;
     onDelete: CategoryNodeEventHandler;
     onCopy: CategoryNodeEventHandler;
+    onEdit: CategoryNodeEventHandler;
 }
 
 export const CategoryNode = observer(
@@ -98,6 +100,7 @@ export const CategoryNode = observer(
         onToggle,
         onDelete,
         onCopy,
+        onEdit,
     }: CategoryNodeProps<CategoryModel>) => {
         const handleToggle = useCallback(() => {
             onToggle(node.id);
@@ -146,8 +149,8 @@ export const CategoryNode = observer(
                 >
                     {node.text}
                 </Button>
-                <Button onClick={() => onCopy(node.id)}>
-                    <CopyIcon />
+                <Button onClick={() => onEdit(node.id)}>
+                    <ModeEditIcon />
                 </Button>
                 <Button onClick={() => onDelete(node.id)}>
                     <DeleteIcon />
@@ -228,6 +231,8 @@ export const CategoryAddDialog = observer(
                                 sx={{
                                     width: '100%',
                                 }}
+                                value={categoryName}
+                                onChange={e => setCategoryName(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -284,11 +289,13 @@ export const CategoryAddDialog = observer(
     },
 );
 
+export type CategoryTreeModel = FreeNodeModel[] | any;
+
 export const CategoryTreeEditor = observer(() => {
     const router = useRouter();
     const [open, setOpen] = useState<boolean>(false);
     const categoryService = useCategoryService();
-    const [treeData, setTreeData] = useState<FreeNodeModel[] | any>([]);
+    const [treeData, setTreeData] = useState<CategoryTreeModel>([]);
     const [mounted, setMounted] = useState<boolean>(false);
 
     const initCategoryList = useCallback(async () => {
@@ -365,6 +372,8 @@ export const CategoryTreeEditor = observer(() => {
 
         setTreeData([...copiedNodes]);
     };
+
+    const handleEdit: CategoryNodeEventHandler = id => {};
 
     const getLastId = useCallback(
         (treeData: NodeModel[]) => {
@@ -489,12 +498,16 @@ export const CategoryTreeEditor = observer(() => {
                             <Tree
                                 tree={treeData}
                                 rootId={0}
-                                render={(node: NodeModel<any>, options) => (
+                                render={(
+                                    node: NodeModel<CategoryTreeModel>,
+                                    options,
+                                ) => (
                                     <CategoryNode
                                         node={node}
                                         {...options}
                                         onDelete={handleDelete}
                                         onCopy={handleCopy}
+                                        onEdit={handleEdit}
                                     />
                                 )}
                                 dragPreviewRender={dragPreviewRender}
