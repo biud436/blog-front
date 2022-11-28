@@ -17,6 +17,7 @@ import {
     Divider,
     Box,
     Modal,
+    Input,
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { createTheme } from '@mui/material/styles';
@@ -33,7 +34,7 @@ import AddIcon from '@mui/icons-material/Add';
 import CopyIcon from '@mui/icons-material/FileCopy';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { URL_MAP } from '@/common/URL';
 import { toJS } from 'mobx';
@@ -41,13 +42,29 @@ import { CategoryDepthVO } from '@/services/CategoryService';
 import { useCategoryService } from '@/hooks/useCategoryService';
 import { API_URL } from '@/app/api/request';
 import axios, { AxiosResponse } from 'axios';
+import { toast } from 'react-toastify';
 
-/**
- * 본 컴포넌트는 MUI 용 react-dnd 예제를 참고한 것입니다.
- * 클라이언트 사이드 렌더링을 위해 동적 컴포넌트로 불러와야 합니다.
- *
- * @link https://codesandbox.io/s/add-remove-duplicate-ts-8q20pd?from-embed=&file=/package.json:212-238
- */
+type CategoryNodeEventHandler = (id: NodeModel['id']) => void;
+
+type CategoryNodeEditEventHandler = (
+    id: NodeModel['id'],
+    newCategoryName: string,
+) => void;
+
+type CategoryModel = {
+    id: string;
+};
+
+interface FreeNodeModel extends NodeModel<Pick<CategoryDepthVO, 'depth'>> {
+    id: number;
+    parent: number;
+}
+
+interface AddNodeFormProps {
+    categoryName: string;
+    rootNodeName: string;
+}
+
 const theme = createTheme({
     components: {
         MuiCssBaseline: {
@@ -77,11 +94,6 @@ const theme = createTheme({
     },
 });
 
-type CategoryNodeEventHandler = (id: NodeModel['id']) => void;
-type CategoryModel = {
-    id: string;
-};
-
 export interface CategoryNodeProps<T> {
     node: NodeModel<T>;
     depth: number;
@@ -89,7 +101,7 @@ export interface CategoryNodeProps<T> {
     onToggle: CategoryNodeEventHandler;
     onDelete: CategoryNodeEventHandler;
     onCopy: CategoryNodeEventHandler;
-    onEdit: CategoryNodeEventHandler;
+    onEdit: CategoryNodeEditEventHandler;
 }
 
 export const CategoryNode = observer(
@@ -102,10 +114,33 @@ export const CategoryNode = observer(
         onCopy,
         onEdit,
     }: CategoryNodeProps<CategoryModel>) => {
+        const [categoryName, setCategoryName] = useState('');
+        const [editMode, setEditMode] = useState(false);
         const handleToggle = useCallback(() => {
             onToggle(node.id);
         }, [node.id, onToggle]);
 
+        const emitOnEdit = useCallback(
+            (nodeId: string | number) => {
+                setEditMode(true);
+            },
+            [onEdit],
+        );
+
+        const handleSubmit = useCallback(() => {
+            setEditMode(false);
+            onEdit(node.id, categoryName);
+        }, [node.id, categoryName]);
+
+        const onChangeInput = (
+            e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+        ) => {
+            setCategoryName(e.target.value);
+        };
+
+        /**
+         * 카테고리에 children이 있으면 펼쳐지는 클릭 핸들러를 장착한다.
+         */
         if (node.droppable) {
             return (
                 <Grid
@@ -149,9 +184,36 @@ export const CategoryNode = observer(
                 >
                     {node.text}
                 </Button>
-                <Button onClick={() => onEdit(node.id)}>
-                    <ModeEditIcon />
-                </Button>
+                {editMode ? (
+                    <Grid
+                        item
+                        gap={2}
+                        sx={{
+                            display: 'flex',
+                        }}
+                    >
+                        <Input
+                            value={categoryName}
+                            onChange={onChangeInput}
+                            sx={{
+                                mr: 1,
+                            }}
+                        />
+                        <Button
+                            variant="contained"
+                            onClick={() => setEditMode(false)}
+                        >
+                            취소
+                        </Button>
+                        <Button variant="contained" onClick={handleSubmit}>
+                            확인
+                        </Button>
+                    </Grid>
+                ) : (
+                    <Button onClick={() => emitOnEdit(node.id)}>
+                        <ModeEditIcon />
+                    </Button>
+                )}
                 <Button onClick={() => onDelete(node.id)}>
                     <DeleteIcon />
                 </Button>
@@ -160,15 +222,6 @@ export const CategoryNode = observer(
     },
 );
 
-interface FreeNodeModel extends NodeModel<Pick<CategoryDepthVO, 'depth'>> {
-    id: number;
-    parent: number;
-}
-
-interface AddNodeFormProps {
-    categoryName: string;
-    rootNodeName: string;
-}
 export const CategoryAddDialog = observer(
     ({ open, onClose }: { open: boolean; onClose: () => void }) => {
         const categoryService = useCategoryService();
@@ -290,7 +343,22 @@ export const CategoryAddDialog = observer(
 );
 
 export type CategoryTreeModel = FreeNodeModel[] | any;
+export type CategoryResultTuple = [
+    CategoryDepthVO,
+    CategoryDepthVO | null,
+    number,
+];
 
+/**
+ * 본 컴포넌트는 MUI 용 react-dnd 예제를 참고한 것입니다.
+ * 기본적으로 동적 컴포넌트 사용 없이도 서버 사이드 렌더링에서 잘 동작합니다.
+ * 하지만 혹시 모를 문제를 방지하기 위해, 동적 컴포넌트(`코드 스플릿팅`) 사용을 염두에 두었고,
+ * 이를 위해 한 파일에 모든 컴포넌트를 정의하였습니다.
+ *
+ * [링크](https://codesandbox.io/s/add-remove-duplicate-ts-8q20pd?from-embed=&file=/package.json:212-238)
+ *
+ * 본 코드는 위 링크에서 대부분을 가져온 것입니다.
+ */
 export const CategoryTreeEditor = observer(() => {
     const router = useRouter();
     const [open, setOpen] = useState<boolean>(false);
@@ -298,6 +366,9 @@ export const CategoryTreeEditor = observer(() => {
     const [treeData, setTreeData] = useState<CategoryTreeModel>([]);
     const [mounted, setMounted] = useState<boolean>(false);
 
+    /**
+     * 카테고리를 불러옵니다.
+     */
     const initCategoryList = useCallback(async () => {
         const res: AxiosResponse<any> = await axios.get(
             `${API_URL}/admin/category?isBeautify=true`,
@@ -315,24 +386,22 @@ export const CategoryTreeEditor = observer(() => {
      */
     const getFlatCategories = useCallback(() => {
         const raw = toJS(categoryService.getCategories());
-        let resultData: [CategoryDepthVO, CategoryDepthVO | null, number][] =
-            [];
+        let resultData: CategoryResultTuple[] = [];
         const nodeItems: NodeModel[] = [];
 
         const convertWithData = (data: CategoryDepthVO[]) => {
-            const result: [CategoryDepthVO, CategoryDepthVO | null, number][] =
-                [];
+            const result: CategoryResultTuple[] = [];
 
             const convertRecursive = (
                 data: CategoryDepthVO[],
                 parent: CategoryDepthVO | null,
             ) => {
                 data.forEach(item => {
-                    const node = [item, parent ?? null, item.depth] as [
-                        CategoryDepthVO,
-                        CategoryDepthVO | null,
-                        number,
-                    ];
+                    const node = [
+                        item,
+                        parent ?? null,
+                        item.depth,
+                    ] as CategoryResultTuple;
                     result.push(node);
                     if (item.children) {
                         convertRecursive(item.children, item);
@@ -373,7 +442,20 @@ export const CategoryTreeEditor = observer(() => {
         setTreeData([...copiedNodes]);
     };
 
-    const handleEdit: CategoryNodeEventHandler = id => {};
+    const handleEdit: CategoryNodeEditEventHandler = (id, newCategoryName) => {
+        const prevNoode = treeData.find(e => e.id === id);
+
+        if (prevNoode) {
+            const copiedNodes = treeData.map(node => {
+                if (node.id === id) {
+                    node.text = newCategoryName;
+                }
+                return node;
+            });
+
+            setTreeData([...copiedNodes]);
+        }
+    };
 
     const getLastId = useCallback(
         (treeData: NodeModel[]) => {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect, useCallback, useState, useMemo } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -12,30 +12,26 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { useNavigate } from 'react-router';
 import { useAuth } from '@/app/providers/auth/authProvider';
 import { DrawerHeader } from '@/app/components/atomic/DrawerHeader';
 import { URL_MAP } from '@/common/URL';
-import { Button, Container } from '@mui/material';
+import { Button, Container, Grid, Link } from '@mui/material';
 import { API_URL } from '../app/api/request';
 import axios, { AxiosResponse } from 'axios';
 import { CategoryDepthVO } from '@/services/CategoryService';
 import { useCategoryService } from '@/hooks/useCategoryService';
 import { observer } from 'mobx-react-lite';
-import { useCookies } from 'react-cookie';
 import { LoginButton } from '../app/components/category/LoginButton';
 import { LogoutButton } from '../app/components/category/LogoutButton';
-import { MenuPostWriteButton } from '../app/components/category/MenuPostWriteButton';
 import { RequestHandler } from '../app/api/axios';
 import { useMediaQuery } from 'react-responsive';
-import { GrAddCircle } from 'react-icons/gr';
 import { menuStore } from '@/store/menu';
 import { CategoryWrapper } from '../app/components/category/CategoryWrapper';
 import { Main } from '../app/components/menu/Main';
 import { AppBar, drawerWidth } from '../app/components/menu/AppBar';
 import { useRouter } from 'next/router';
-import { ScrollProgressBar } from '@/app/components/atomic/ScrollProgressBar';
 import { ManageButton } from '@/app/components/category/ManageButton';
+import NextLink from 'next/link';
 
 export const PageWrapper = observer(
     ({ name, children }: { name: string; children: React.ReactNode }) => {
@@ -115,9 +111,39 @@ export const PageWrapper = observer(
             await initCategories();
         };
 
+        const onMenuCloseHandler = (e: MouseEvent) => {
+            if (menuStore.isOpen) {
+                const target = e.target as HTMLElement;
+
+                if (e.clientX > drawerWidth) {
+                    menuStore.close();
+                }
+            }
+        };
+
         useEffect(() => {
             initWithSettings();
         }, [matches]);
+
+        useEffect(() => {
+            if (typeof window !== 'undefined') {
+                window.addEventListener(
+                    'mousedown',
+                    onMenuCloseHandler.bind(this),
+                    false,
+                );
+            }
+
+            return () => {
+                if (typeof window !== 'undefined') {
+                    window.removeEventListener(
+                        'mousedown',
+                        onMenuCloseHandler.bind(this),
+                        false,
+                    );
+                }
+            };
+        }, []);
 
         return (
             <Container>
@@ -176,6 +202,7 @@ export const PageWrapper = observer(
                     }}
                     anchor="left"
                     open={menuStore.isOpen}
+                    id="drawer-menu"
                 >
                     <Box
                         onKeyDown={toggleDrawer(false)}
@@ -211,6 +238,31 @@ export const PageWrapper = observer(
                     <DrawerHeader />
                     {children}
                 </Main>
+                <Grid container spacing={2} sx={{}}>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                padding: '1rem',
+                            }}
+                        >
+                            <Typography variant="body2" color="text.secondary">
+                                © 2022
+                            </Typography>
+                            <Button
+                                variant="text"
+                                color="primary"
+                                href={'https://github.com/biud436'}
+                                LinkComponent={NextLink}
+                                target="_blank"
+                            >
+                                어진석
+                            </Button>
+                        </Box>
+                    </Grid>
+                </Grid>
             </Container>
         );
     },

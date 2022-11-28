@@ -28,6 +28,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
         SitemapPostService.getPosts(2),
         SitemapPostService.getPosts(3),
     ]);
+    1;
 
     const posts = [...posts1.entities, ...posts2.entities, ...posts3.entities];
 
