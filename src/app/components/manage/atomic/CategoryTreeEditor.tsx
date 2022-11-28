@@ -18,6 +18,7 @@ import {
     Box,
     Modal,
     Input,
+    Typography,
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { createTheme } from '@mui/material/styles';
@@ -33,6 +34,8 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 import CopyIcon from '@mui/icons-material/FileCopy';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import ArrowRight from '@mui/icons-material/ArrowRight';
+import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
 import DeleteIcon from '@mui/icons-material/Delete';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -114,7 +117,7 @@ export const CategoryNode = observer(
         onCopy,
         onEdit,
     }: CategoryNodeProps<CategoryModel>) => {
-        const [categoryName, setCategoryName] = useState('');
+        const [categoryName, setCategoryName] = useState(node.text);
         const [editMode, setEditMode] = useState(false);
         const handleToggle = useCallback(() => {
             onToggle(node.id);
@@ -147,17 +150,26 @@ export const CategoryNode = observer(
                     container
                     spacing={1}
                     sx={{
-                        background: 'rgba(0, 0, 0, 0.02)',
                         mb: 2,
+                        '&:hover': {
+                            background: 'rgba(0, 0, 0, 0.02)',
+                        },
+                        borderRadius: 1,
                     }}
+                    onClick={handleToggle}
                 >
                     <Grid item pl={depth * 2}>
                         <Button
-                            variant="outlined"
-                            onClick={handleToggle}
+                            variant="text"
                             sx={{
                                 color: 'text.secondary',
+                                '&:hover': {
+                                    color: 'text.primary',
+                                },
                             }}
+                            startIcon={
+                                isOpen ? <ArrowDropDown /> : <ArrowRight />
+                            }
                         >
                             {node.text}
                         </Button>
@@ -171,25 +183,42 @@ export const CategoryNode = observer(
                 container
                 spacing={0}
                 sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    pl: depth * 2,
+                    m: 1,
+                    ml: depth * 1.2,
+                    p: 1,
+                    boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.1)',
+                    borderRadius: 1,
+                    borderLeft: '3px solid #1976d2',
+
+                    '&:hover': {
+                        background: 'rgba(0, 0, 0, 0.04)',
+                        cursor: 'move',
+                    },
                 }}
             >
-                <Button
-                    variant="contained"
-                    sx={{
-                        m: 1,
-                    }}
-                >
-                    {node.text}
-                </Button>
+                {!editMode && (
+                    <Grid item xs={8}>
+                        <Typography
+                            sx={{
+                                m: 1,
+                                color: 'text.secondary',
+                            }}
+                            variant="body2"
+                        >
+                            {node.text}
+                        </Typography>
+                    </Grid>
+                )}
                 {editMode ? (
                     <Grid
                         item
                         gap={2}
+                        xs={12}
                         sx={{
                             display: 'flex',
+
+                            justifyContent: 'space-between',
+                            p: 2,
                         }}
                     >
                         <Input
@@ -199,24 +228,42 @@ export const CategoryNode = observer(
                                 mr: 1,
                             }}
                         />
-                        <Button
-                            variant="contained"
-                            onClick={() => setEditMode(false)}
-                        >
-                            취소
-                        </Button>
-                        <Button variant="contained" onClick={handleSubmit}>
-                            확인
-                        </Button>
+                        <Grid container>
+                            <Button
+                                variant="text"
+                                onClick={() => setEditMode(false)}
+                            >
+                                취소
+                            </Button>
+                            <Button variant="text" onClick={handleSubmit}>
+                                확인
+                            </Button>
+                        </Grid>
                     </Grid>
                 ) : (
-                    <Button onClick={() => emitOnEdit(node.id)}>
-                        <ModeEditIcon />
-                    </Button>
+                    <Grid item xs={2}>
+                        <Button
+                            onClick={() => emitOnEdit(node.id)}
+                            sx={{
+                                color: 'text.secondary',
+                            }}
+                        >
+                            <ModeEditIcon />
+                        </Button>
+                    </Grid>
                 )}
-                <Button onClick={() => onDelete(node.id)}>
-                    <DeleteIcon />
-                </Button>
+                {!editMode && (
+                    <Grid item xs={2}>
+                        <Button
+                            onClick={() => onDelete(node.id)}
+                            sx={{
+                                color: 'text.secondary',
+                            }}
+                        >
+                            <DeleteIcon />
+                        </Button>
+                    </Grid>
+                )}
             </Grid>
         );
     },
@@ -442,7 +489,10 @@ export const CategoryTreeEditor = observer(() => {
         setTreeData([...copiedNodes]);
     };
 
-    const handleEdit: CategoryNodeEditEventHandler = (id, newCategoryName) => {
+    const handleEdit: CategoryNodeEditEventHandler = async (
+        id,
+        newCategoryName,
+    ) => {
         const prevNoode = treeData.find(e => e.id === id);
 
         if (prevNoode) {
@@ -454,6 +504,16 @@ export const CategoryTreeEditor = observer(() => {
             });
 
             setTreeData([...copiedNodes]);
+
+            const res = await axios.patch(`${API_URL}/admin/category/${id}`, {
+                categoryName: newCategoryName,
+            });
+
+            if (res.data.result === 'success') {
+                toast.info('카테고리 명이 변경되었습니다.', {
+                    position: 'top-center',
+                });
+            }
         }
     };
 
@@ -520,7 +580,27 @@ export const CategoryTreeEditor = observer(() => {
     const dragPreviewRender = (
         monitorProps: DragLayerMonitorProps<CategoryModel>,
     ) => {
-        return <Button variant="contained">{monitorProps.item.text}</Button>;
+        return (
+            <Grid
+                container
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    mb: 1,
+                    background: 'rgba(0, 0, 0, 0.02)',
+                    boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.1)',
+                }}
+            >
+                <Button
+                    variant="text"
+                    sx={{
+                        color: 'text.secondary',
+                    }}
+                >
+                    {monitorProps.item.text}
+                </Button>
+            </Grid>
+        );
     };
 
     const init = async () => {
@@ -554,29 +634,62 @@ export const CategoryTreeEditor = observer(() => {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Grid container spacing={0} marginBottom={2}>
+            <Grid container spacing={0} marginBottom={2} gap={2}>
+                <Grid item xs={12}>
+                    <Typography variant="h4" component="h1">
+                        카테고리 관리
+                    </Typography>
+                </Grid>
                 <Grid item xs={12}>
                     <Button variant="contained" onClick={returnToManagePage}>
                         관리자 페이지 메인으로
                     </Button>
                 </Grid>
             </Grid>
+
             <CategoryAddDialog open={open} onClose={handleClose} />
-            <Box>
+            <Box
+                sx={{
+                    border: '1px solid #e0e0e0',
+                    borderRadius: 1,
+                    padding: 2,
+                }}
+            >
                 <DndProvider
                     backend={MultiBackend}
                     options={getBackendOptions()}
                 >
                     <Grid container spacing={2}>
-                        <Grid item xs={12}>
+                        <Grid
+                            item
+                            xs={12}
+                            sx={{
+                                mb: 2,
+                            }}
+                        >
                             <Button
                                 onClick={handleOpen}
                                 startIcon={<AddIcon />}
+                                sx={{
+                                    color: 'text.secondary',
+                                    mb: 1,
+                                }}
+                                variant="outlined"
                             >
-                                노드 추가
+                                새로운 카테고리 추가
                             </Button>
+                            <Divider />
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid
+                            item
+                            xs={12}
+                            sx={{
+                                border: '1px solid #e0e0e0',
+                                borderRadius: 1,
+                                p: 2,
+                                m: 1,
+                            }}
+                        >
                             <Tree
                                 tree={treeData}
                                 rootId={0}
