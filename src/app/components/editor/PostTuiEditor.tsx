@@ -9,6 +9,7 @@ import 'prismjs/components/prism-clojure.js';
 import 'prismjs/components/prism-typescript.js';
 
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
+import { useMediaQuery } from '@mui/material';
 
 const Editor = dynamic<TuiEditorWithForwardedProps>(
     async () => {
@@ -36,6 +37,8 @@ export const PostTuiEditor = React.memo(
             { toolbarItems, addImageBlobHook }: PostTuiEditorProps,
             editorRef: React.ForwardedRef<EditorType>,
         ) => {
+            const match = useMediaQuery('(max-width: 768px)');
+
             return (
                 <div>
                     {editorRef && (
@@ -44,8 +47,8 @@ export const PostTuiEditor = React.memo(
                             usageStatistics={false}
                             initialValue={''}
                             previewHighlight={false}
-                            previewStyle="vertical"
-                            initialEditType="markdown"
+                            previewStyle={match ? 'tab' : 'vertical'}
+                            initialEditType={match ? 'wysiwyg' : 'markdown'}
                             useCommandShortcut={true}
                             css={{
                                 width: '100%',
