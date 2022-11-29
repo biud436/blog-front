@@ -83,6 +83,30 @@ export const PageWrapper = observer(
 
             const categories: CategoryDepthVO[] = res.data.data;
 
+            const { data: postCountData } = await axios.get(
+                `${API_URL}/posts/categories`,
+            );
+            const postCountMap = postCountData.data.reduce(
+                (acc: any, cur: any) => {
+                    acc[cur.id] = cur.postCount;
+                    return acc;
+                },
+                {},
+            );
+
+            const getCategory = (_categoryList: CategoryDepthVO[]) => {
+                _categoryList.forEach(category => {
+                    if (category.children) {
+                        getCategory(category.children);
+                    }
+                    category.name = `${category.name} (${
+                        postCountMap[category.id]
+                    })`;
+                });
+            };
+
+            getCategory(categories);
+
             checkCategoriesOpen(categories);
             setCategoryList(categories);
 
