@@ -21,16 +21,16 @@ class SitemapPostService {
 
         return posts;
     }
+
+    static async getSitemap() {
+        const { data: res } = await axios.get(`/posts/sitemap`);
+        const items = res.data as number[];
+
+        return items;
+    }
 }
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-    const [posts1, posts2, posts3] = await Promise.all([
-        SitemapPostService.getPosts(1),
-        SitemapPostService.getPosts(2),
-        SitemapPostService.getPosts(3),
-    ]);
-    1;
-
-    const posts = [...posts1.entities, ...posts2.entities, ...posts3.entities];
+    const [posts] = await Promise.all([SitemapPostService.getSitemap()]);
 
     const lastmod = new Date().toISOString();
 
@@ -43,8 +43,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
         },
     ];
 
-    const postFields = posts.map((post: Post) => ({
-        loc: `${process.env.NEXT_PUBLIC_FRONT_URL}/posts/${post.id}`,
+    const postFields = posts.map((post: number) => ({
+        loc: `${process.env.NEXT_PUBLIC_FRONT_URL}/posts/${post}`,
         changefreq: 'daily',
         priority: 1.0,
         lastmod,
