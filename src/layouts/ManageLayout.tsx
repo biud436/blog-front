@@ -26,10 +26,19 @@ export const drawerWidth = 240;
 export const styles: Record<string, SxProps<Theme>> = {
     appBar: {
         width: {
-            xs: `calc(100% - ${drawerWidth}px)`,
-            sm: `calc(100% - ${drawerWidth}px)`,
+            xs: `calc(100%)`,
+            sm: `calc(100%)`,
+            md: `calc(100% - ${drawerWidth}px)`,
+            lg: `calc(100% - ${drawerWidth}px)`,
+            xl: `calc(100% - ${drawerWidth}px)`,
         },
-        mr: `${drawerWidth}px`,
+        mr: {
+            xs: 0,
+            sm: 0,
+            md: `${drawerWidth}px`,
+            lg: `${drawerWidth}px`,
+            xl: `${drawerWidth}px`,
+        },
     },
     main: {
         flexGrow: 1,

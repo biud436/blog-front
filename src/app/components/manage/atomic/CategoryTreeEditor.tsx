@@ -151,6 +151,7 @@ export const CategoryNode = observer(
                     spacing={1}
                     sx={{
                         mb: 2,
+                        ml: depth * 1.2,
                         '&:hover': {
                             background: 'rgba(0, 0, 0, 0.02)',
                         },

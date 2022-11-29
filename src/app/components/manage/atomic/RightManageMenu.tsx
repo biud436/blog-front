@@ -11,10 +11,22 @@ export const RightManageMenu = observer(() => {
             variant="permanent"
             anchor="right"
             sx={{
-                width: drawerWidth,
+                width: {
+                    xs: 0,
+                    sm: 0,
+                    md: drawerWidth,
+                    lg: drawerWidth,
+                    xl: drawerWidth,
+                },
                 flexShrink: 0,
                 [`& .MuiDrawer-paper`]: {
-                    width: drawerWidth,
+                    width: {
+                        xs: 0,
+                        sm: 0,
+                        md: drawerWidth,
+                        lg: drawerWidth,
+                        xl: drawerWidth,
+                    },
                     boxSizing: 'border-box',
                 },
             }}

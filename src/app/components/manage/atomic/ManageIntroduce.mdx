@@ -1,6 +1,7 @@
 import { Alert, Button, Grid, Box, Typography } from '@mui/material';
 import Link from 'next/link';
 import { URL_MAP } from '@/common/URL';
+import { createTheme } from '@mui/material/styles';
 
 # 소개
 
@@ -16,7 +17,7 @@ import { URL_MAP } from '@/common/URL';
     <Grid item xs={12}>
         <Typography variant="h5">메뉴</Typography>
     </Grid>
-    <Grid item xs={6}>
+    <Grid item xs={12} sm={12} md={6} lg={4}>
         <Button
             variant="contained"
             color="primary"
@@ -27,7 +28,7 @@ import { URL_MAP } from '@/common/URL';
             카테고리 관리
         </Button>
     </Grid>
-    <Grid item xs={6}>
+    <Grid item xs={12} sm={12} md={6} lg={4}>
         <Button
             variant="contained"
             color="primary"
@@ -36,6 +37,27 @@ import { URL_MAP } from '@/common/URL';
             LinkComponent={Link}
         >
             기본 정보 설정
+        </Button>
+    </Grid>
+    <Grid item xs={12} sm={12} md={6} lg={4}>
+        <Button
+            variant="contained"
+            color="secondary"
+            theme={createTheme({
+                palette: {
+                    primary: {
+                        main: '#f44336',
+                    },
+                    secondary: {
+                        main: '#890b44',
+                    },
+                },
+            })}
+            fullWidth
+            href={URL_MAP.MAIN}
+            LinkComponent={Link}
+        >
+            메인 화면
         </Button>
     </Grid>
 </Grid>
