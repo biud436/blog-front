@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Meta } from '@/app/components/utils/Meta';
+import { GlobalStyle } from '@/styles/global-styles';
 
 export const PostsPage = observer(() => {
     return (
@@ -12,6 +13,7 @@ export const PostsPage = observer(() => {
             <Meta
                 {...{ title: '포스트 목록', description: '포스트 목록입니다' }}
             />
+            <GlobalStyle />
             <PostsPresent />
             <ToastContainer />
         </PageWrapper>
