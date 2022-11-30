@@ -6,9 +6,12 @@ import 'prismjs/components/prism-clojure.js';
 import 'prismjs/components/prism-typescript.js';
 
 import 'prismjs/themes/prism.css';
+import 'prismjs/themes/prism-okaidia.css';
 import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
 
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
+import '@toast-ui/editor/dist/toastui-editor.css';
+// import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import { ForwardedScrollProgressBar } from '../atomic/ScrollProgressBar';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -46,6 +49,14 @@ const ViewerWrapper = styled.div`
 
     .in-view {
         color: red;
+    }
+
+    .toastui-editor-dark .toastui-editor-contents pre {
+        background-color: #232428;
+
+        code {
+            color: #c1798b;
+        }
     }
 `;
 
@@ -114,6 +125,7 @@ const HeadingElementWrapper = () => {
 const TuiEditorViewer = ({ content }: { content: string }) => {
     const isLoaded = useRef<boolean>(false);
     const [scrollY] = useScrollTopTocItem();
+    const [theme, setTheme] = useState('dark');
 
     const viewerRef = useRef<Viewer | null>(null);
 
@@ -170,6 +182,12 @@ const TuiEditorViewer = ({ content }: { content: string }) => {
         };
     }, []);
 
+    useEffect(() => {
+        if (viewerRef.current) {
+            const elem = viewerRef.current.getRootElement();
+        }
+    });
+
     return (
         <ViewerWrapper>
             <ForwardedScrollProgressBar ref={viewerRef} />
@@ -182,6 +200,7 @@ const TuiEditorViewer = ({ content }: { content: string }) => {
                 onLoad={() => {
                     isLoaded.current = true;
                 }}
+                theme="dark"
             />
             <HeadingElementWrapper />
         </ViewerWrapper>
