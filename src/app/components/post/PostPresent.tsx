@@ -66,11 +66,17 @@ export function PostPresent({
                                 md: 3,
                                 lg: 3,
                             },
-                            boxShadow: 1,
+                            boxShadow: {
+                                xs: 2,
+                                sm: 2,
+                                md: 2,
+                                lg: 2,
+                                xl: 2,
+                            },
+                            borderLeft: '5px solid #1976d2',
                             width: '100%',
                         }}
                         key={post.id}
-                        elevation={1}
                     >
                         <Grid container gap={2}>
                             <PostHeader post={post} />

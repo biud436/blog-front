@@ -149,6 +149,7 @@ const PostsContainer = observer(() => {
                                         alignItems: 'center',
                                         flexDirection: 'column',
                                         width: '100%',
+                                        borderLeft: '4px solid #1976d2',
                                     }}
                                     key={post.id}
                                     elevation={1}

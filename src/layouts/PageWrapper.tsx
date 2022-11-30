@@ -206,7 +206,7 @@ export const PageWrapper = observer(
             <Box
                 sx={{
                     width: '100%',
-                    background: '#f8f8f8',
+                    background: 'white',
                 }}
             >
                 <CssBaseline />

@@ -43,6 +43,7 @@ export const GlobalStyle = createGlobalStyle`
             list-style: none;
             margin: 0;
             padding-left: 0.8rem;
+
         }
 
         li {
@@ -78,4 +79,8 @@ export const GlobalStyle = createGlobalStyle`
         }
     } 
     
+
+    .utterances {
+      max-width: 100%;
+    }
 `;

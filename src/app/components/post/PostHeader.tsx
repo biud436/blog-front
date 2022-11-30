@@ -1,16 +1,6 @@
 import { DateUtil, Formatter } from '@/app/api/date';
-import { API_URL } from '@/app/api/request';
 import { Post } from '@/store/post';
-import {
-    Breadcrumbs,
-    Button,
-    Divider,
-    Grid,
-    Link,
-    Typography,
-} from '@mui/material';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { Button, Divider, Grid, Typography } from '@mui/material';
 import { toast } from 'react-toastify';
 
 export function PostHeader({ post }: { post: Post }) {
@@ -25,7 +15,7 @@ export function PostHeader({ post }: { post: Post }) {
     return (
         <>
             <Grid item xs={12}>
-                <Typography variant="h6" sx={{ color: 'primary.main' }}>
+                <Typography variant="h3" sx={{ color: 'primary.main' }}>
                     {post.title}
                 </Typography>
             </Grid>
