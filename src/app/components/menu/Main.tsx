@@ -1,4 +1,4 @@
-import { styled } from '@mui/material/styles';
+import { styled } from '@mui/system';
 
 export const Main = styled('main', {
     shouldForwardProp: prop => prop !== 'open',
@@ -7,15 +7,18 @@ export const Main = styled('main', {
 }>(({ theme, open }) => ({
     flexGrow: 1,
     padding: theme.spacing(2),
-    transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
+
+    // transition: (theme: Theme) =>
+    //     theme.transitions.create('margin', {
+    //         easing: theme.transitions.easing.sharp,
+    //         duration: theme.transitions.duration.leavingScreen,
+    //     }),
     ...(open && {
-        transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-        marginLeft: 0,
+        // transition: theme =>
+        //     theme.transitions.create('margin', {
+        //         easing: theme.transitions.easing.easeOut,
+        //         duration: theme.transitions.duration.enteringScreen,
+        //     }),
+        marginLeft: 2,
     }),
 }));

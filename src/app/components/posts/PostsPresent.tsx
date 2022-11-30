@@ -122,14 +122,17 @@ const PostsContainer = observer(() => {
                     item
                     xs={12}
                     sm={12}
-                    md={6}
-                    lg={6}
+                    md={12}
+                    lg={12}
+                    xl={12}
                     sx={{
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
                         flexDirection: 'column',
-                        marginTop: 4,
+                        marginTop: 2,
+                        width: '100%',
+                        px: 2,
                     }}
                 >
                     {postsStore.getEntities() &&
@@ -141,24 +144,14 @@ const PostsContainer = observer(() => {
                                         '&:hover': {
                                             backgroundColor: '#f5f5f5',
                                         },
-                                        display: 'block',
+                                        display: 'flex',
                                         justifyContent: 'center',
                                         alignItems: 'center',
-                                        minWidth: {
-                                            xs: 240,
-                                            sm: 540,
-                                            md: 640,
-                                            lg: 740,
-                                        },
-                                        maxWidth: {
-                                            xs: 240,
-                                            sm: 540,
-                                            md: 640,
-                                            lg: 740,
-                                        },
+                                        flexDirection: 'column',
+                                        width: '100%',
                                     }}
                                     key={post.id}
-                                    elevation={2}
+                                    elevation={1}
                                 >
                                     {post.images && post.images.length > 0 && (
                                         <CardMedia
@@ -203,7 +196,11 @@ const PostsContainer = observer(() => {
                                         }}
                                         onClick={() => goToPage(post.id!)}
                                     ></CardHeader>
-                                    <CardActions sx={{ justifyContent: 'end' }}>
+                                    <CardActions
+                                        sx={{
+                                            alignSelf: 'flex-end',
+                                        }}
+                                    >
                                         <Typography variant="subtitle2">
                                             {post.category?.name}
                                         </Typography>

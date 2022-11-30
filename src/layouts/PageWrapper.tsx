@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useCallback, useState, useMemo } from 'react';
 import { useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
+
+import { ListItemText } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,7 +16,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useAuth } from '@/app/providers/auth/authProvider';
 import { DrawerHeader } from '@/app/components/atomic/DrawerHeader';
 import { URL_MAP } from '@/common/URL';
-import { Button, Container, Grid, Link } from '@mui/material';
+import { Button, Container, Box, Grid, Link, ListItem } from '@mui/material';
 import { API_URL } from '../app/api/request';
 import axios, { AxiosResponse } from 'axios';
 import { CategoryDepthVO } from '@/services/CategoryService';
@@ -27,11 +28,42 @@ import { RequestHandler } from '../app/api/axios';
 import { useMediaQuery } from 'react-responsive';
 import { menuStore } from '@/store/menu';
 import { CategoryWrapper } from '../app/components/category/CategoryWrapper';
-import { Main } from '../app/components/menu/Main';
 import { AppBar, drawerWidth } from '../app/components/menu/AppBar';
 import { useRouter } from 'next/router';
 import { ManageButton } from '@/app/components/category/ManageButton';
+import CreateIcon from '@mui/icons-material/Create';
 import NextLink from 'next/link';
+import MetaCommonConfig from '@/app/components/utils/meta-config.json';
+
+const WriteButton = React.memo(() => {
+    const router = useRouter();
+
+    return (
+        <Button
+            color="inherit"
+            onClick={() => router.push(URL_MAP.POST_EDIT)}
+            startIcon={<CreateIcon />}
+        >
+            <Typography
+                variant="button"
+                sx={{
+                    color: {
+                        xs: 'white',
+                        sm: 'white',
+                        md: 'white',
+                        lg: '#1e1e1e',
+                        xl: '#1e1e1e',
+                    },
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                }}
+            >
+                글쓰기
+            </Typography>
+        </Button>
+    );
+});
 
 export const PageWrapper = observer(
     ({ name, children }: { name: string; children: React.ReactNode }) => {
@@ -170,10 +202,25 @@ export const PageWrapper = observer(
         }, []);
 
         return (
-            <Container>
+            <Box
+                sx={{
+                    width: '100%',
+                    background: '#f8f8f8',
+                }}
+            >
                 <CssBaseline />
                 <AppBar position="fixed" open={menuStore.isOpen}>
-                    <Toolbar>
+                    <Toolbar
+                        sx={{
+                            display: {
+                                xs: 'flex',
+                                sm: 'flex',
+                                md: 'flex',
+                                lg: 'none',
+                                xl: 'none',
+                            },
+                        }}
+                    >
                         <IconButton
                             color="inherit"
                             aria-label="open drawer"
@@ -197,27 +244,18 @@ export const PageWrapper = observer(
                         >
                             {name}
                         </Typography>
-                        <Button
-                            color="inherit"
-                            onClick={() => router.push(URL_MAP.POST_EDIT)}
-                        >
-                            <Typography
-                                variant="h6"
-                                sx={{
-                                    color: 'white',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '0.5rem',
-                                }}
-                            >
-                                글쓰기
-                            </Typography>
-                        </Button>
+                        <WriteButton />
                     </Toolbar>
                 </AppBar>
                 <Drawer
                     sx={{
-                        width: drawerWidth,
+                        width: {
+                            xs: drawerWidth,
+                            sm: drawerWidth,
+                            md: 0,
+                            lg: 0,
+                            xl: 0,
+                        },
                         flexShrink: 0,
                         '& .MuiDrawer-paper': {
                             width: drawerWidth,
@@ -258,10 +296,140 @@ export const PageWrapper = observer(
                         <Divider />
                     </Box>
                 </Drawer>
-                <Main open={menuStore.isOpen}>
-                    <DrawerHeader />
-                    {children}
-                </Main>
+                <Box
+                    sx={{
+                        width: {
+                            xs: `100%`,
+                            sm: `100%`,
+                            md: '100%',
+                            lg: '100%',
+                            xl: '100%',
+                        },
+                    }}
+                >
+                    <Grid
+                        container
+                        xs={12}
+                        sm={12}
+                        md={12}
+                        lg={12}
+                        xl={12}
+                        sx={{
+                            p: 2,
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                        }}
+                    >
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="a"
+                            onClick={() => {
+                                router.push(URL_MAP.MAIN);
+                            }}
+                            sx={{
+                                mr: 2,
+                                display: { xs: 'none', md: 'flex' },
+                                fontWeight: 700,
+                                letterSpacing: '.2rem',
+                                color: 'inherit',
+                                textDecoration: 'none',
+                                cursor: 'pointer',
+                                transition: 'all .3s ease-in-out',
+                                '&:hover': {
+                                    color: 'primary.main',
+                                    letterSpacing: '.4rem',
+                                    transform: 'scale(1.1)',
+                                },
+                                borderLeft: '3px solid #1976d2',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                pl: 1,
+                            }}
+                        >
+                            {MetaCommonConfig.site_name}
+                        </Typography>
+
+                        <WriteButton />
+                    </Grid>
+                    <Grid
+                        container
+                        spacing={0}
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            justifyItems: 'center',
+                            alignItems: 'start',
+                            flexWrap: 'nowrap',
+                            flexDirection: 'row',
+                            gap: '1rem',
+                            width: '100%',
+                            p: 2,
+                            m: 0,
+                        }}
+                    >
+                        <DrawerHeader />
+                        <Grid
+                            item
+                            xs={0}
+                            sm={0}
+                            md={0}
+                            lg
+                            xl
+                            sx={{
+                                display: {
+                                    xs: 'none',
+                                    sm: 'none',
+                                    md: 'none',
+                                    lg: 'block',
+                                    xl: 'block',
+                                },
+                            }}
+                        >
+                            <List
+                                component="nav"
+                                sx={{
+                                    boxShadow: '0 0 0.8em 0 rgba(0, 0, 0, 0.1)',
+                                    background: 'white',
+                                }}
+                            >
+                                <ListItem
+                                    sx={{
+                                        borderLeft: '3px solid #1976d2',
+                                    }}
+                                >
+                                    <ListItemText
+                                        primary="카테고리"
+                                        sx={{ fontWeight: 'bold' }}
+                                    >
+                                        <Typography
+                                            variant="h6"
+                                            sx={{
+                                                fontWeight: 'bold',
+                                                color: 'black',
+                                            }}
+                                        >
+                                            카테고리
+                                        </Typography>
+                                    </ListItemText>
+                                </ListItem>
+                                <CategoryWrapper
+                                    {...{
+                                        categoryList,
+                                        setCategoryList,
+                                        toggleDrawer,
+                                        router,
+                                        rootCategory,
+                                    }}
+                                />
+                                <LoginWrapper />
+                            </List>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={12} lg={9} xl={9}>
+                            {children}
+                        </Grid>
+                    </Grid>
+                </Box>
                 <Grid container spacing={2} sx={{}}>
                     <Grid item xs={12}>
                         <Box
@@ -287,7 +455,7 @@ export const PageWrapper = observer(
                         </Box>
                     </Grid>
                 </Grid>
-            </Container>
+            </Box>
         );
     },
 );

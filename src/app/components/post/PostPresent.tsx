@@ -7,6 +7,7 @@ import {
     Paper,
     Container,
     useMediaQuery,
+    Box,
 } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { PostFooter } from './PostFooter';
@@ -46,7 +47,7 @@ export function PostPresent({
     goBack: () => void;
 }) {
     return (
-        <Container>
+        <Box>
             <Grid
                 container
                 spacing={2}
@@ -65,11 +66,13 @@ export function PostPresent({
                                 md: 3,
                                 lg: 3,
                             },
+                            boxShadow: 1,
+                            width: '100%',
                         }}
                         key={post.id}
-                        elevation={3}
+                        elevation={1}
                     >
-                        <Grid container gap={1}>
+                        <Grid container gap={2}>
                             <PostHeader post={post} />
                             <PostContent post={post} />
                         </Grid>
@@ -82,7 +85,7 @@ export function PostPresent({
                                 cursor: 'pointer',
                             }}
                         >
-                            ⭐️ Comments
+                            ⭐️ 댓글
                         </Typography>
                         <GithubComment />
                     </Card>
@@ -105,6 +108,6 @@ export function PostPresent({
                 </Grid>
             </Grid>
             <ToastContainer />
-        </Container>
+        </Box>
     );
 }
