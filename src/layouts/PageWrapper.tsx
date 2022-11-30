@@ -32,6 +32,7 @@ import { AppBar, drawerWidth } from '../app/components/menu/AppBar';
 import { useRouter } from 'next/router';
 import { ManageButton } from '@/app/components/category/ManageButton';
 import CreateIcon from '@mui/icons-material/Create';
+import GitHubIcon from '@mui/icons-material/GitHub';
 import NextLink from 'next/link';
 import MetaCommonConfig from '@/app/components/utils/meta-config.json';
 
@@ -349,8 +350,19 @@ export const PageWrapper = observer(
                         >
                             {MetaCommonConfig.site_name}
                         </Typography>
-
-                        <WriteButton />
+                        <Box>
+                            <Button
+                                startIcon={<GitHubIcon />}
+                                LinkComponent="a"
+                                href="https://github.com/biud436"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                sx={{
+                                    color: 'text.secondary',
+                                }}
+                            />
+                            <WriteButton />
+                        </Box>
                     </Grid>
                     <Grid
                         container
