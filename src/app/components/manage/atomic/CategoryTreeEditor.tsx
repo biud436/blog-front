@@ -1,11 +1,6 @@
 import {
     Button,
-    Select,
-    TextField,
-    MenuItem,
-    FormControl,
     FormControlLabel,
-    InputLabel,
     Checkbox,
     Dialog,
     DialogTitle,
@@ -16,13 +11,11 @@ import {
     Grid,
     Divider,
     Box,
-    Modal,
-    Input,
     Typography,
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { createTheme } from '@mui/material/styles';
-import { DndProvider } from 'react-dnd';
+import { createTheme, SxProps } from '@mui/material/styles';
+import { DndProvider, useDrag } from 'react-dnd';
 import {
     Tree,
     MultiBackend,
@@ -31,13 +24,14 @@ import {
     getBackendOptions,
     NodeModel,
 } from '@minoru/react-dnd-treeview';
+import { TouchBackend } from 'react-dnd-touch-backend';
 import AddIcon from '@mui/icons-material/Add';
 import CopyIcon from '@mui/icons-material/FileCopy';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import ArrowRight from '@mui/icons-material/ArrowRight';
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
 import DeleteIcon from '@mui/icons-material/Delete';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { URL_MAP } from '@/common/URL';
 import { toJS } from 'mobx';
@@ -46,27 +40,19 @@ import { useCategoryService } from '@/hooks/useCategoryService';
 import { API_URL } from '@/app/api/request';
 import axios, { AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
-
-type CategoryNodeEventHandler = (id: NodeModel['id']) => void;
-
-type CategoryNodeEditEventHandler = (
-    id: NodeModel['id'],
-    newCategoryName: string,
-) => void;
-
-type CategoryModel = {
-    id: string;
-};
-
-interface FreeNodeModel extends NodeModel<Pick<CategoryDepthVO, 'depth'>> {
-    id: number;
-    parent: number;
-}
-
-interface AddNodeFormProps {
-    categoryName: string;
-    rootNodeName: string;
-}
+import { Theme } from '@mui/system';
+import { CategoryEditSection } from './CategoryEditSection';
+import { CategoryAddDialog } from './CategoryAddDialog';
+import {
+    CategoryNodeEventHandler,
+    CategoryNodeEditEventHandler,
+    CategoryModel,
+    FreeNodeModel,
+    CategoryResultTuple,
+    CategoryTreeModel,
+} from './CategoryTypes';
+import { DragPreview } from './DragPreview';
+import { CategoryEditorHeader } from './CategoryEditorHeader';
 
 const theme = createTheme({
     components: {
@@ -119,6 +105,21 @@ export const CategoryNode = observer(
     }: CategoryNodeProps<CategoryModel>) => {
         const [categoryName, setCategoryName] = useState(node.text);
         const [editMode, setEditMode] = useState(false);
+        const categoryNodeProp: SxProps<Theme> = useMemo(() => {
+            return {
+                m: 1,
+                ml: depth * 1.2,
+                p: 1,
+                boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.1)',
+                borderRadius: 1,
+                borderLeft: '3px solid #1976d2',
+
+                '&:hover': {
+                    background: 'rgba(0, 0, 0, 0.04)',
+                    cursor: 'move',
+                },
+            };
+        }, [depth]);
         const handleToggle = useCallback(() => {
             onToggle(node.id);
         }, [node.id, onToggle]);
@@ -167,6 +168,7 @@ export const CategoryNode = observer(
                                 '&:hover': {
                                     color: 'text.primary',
                                 },
+                                ...categoryNodeProp,
                             }}
                             startIcon={
                                 isOpen ? <ArrowDropDown /> : <ArrowRight />
@@ -180,25 +182,9 @@ export const CategoryNode = observer(
         }
 
         return (
-            <Grid
-                container
-                spacing={0}
-                sx={{
-                    m: 1,
-                    ml: depth * 1.2,
-                    p: 1,
-                    boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.1)',
-                    borderRadius: 1,
-                    borderLeft: '3px solid #1976d2',
-
-                    '&:hover': {
-                        background: 'rgba(0, 0, 0, 0.04)',
-                        cursor: 'move',
-                    },
-                }}
-            >
+            <Grid container spacing={0} sx={categoryNodeProp}>
                 {!editMode && (
-                    <Grid item xs={8}>
+                    <Grid item xs={11}>
                         <Typography
                             sx={{
                                 m: 1,
@@ -211,38 +197,22 @@ export const CategoryNode = observer(
                     </Grid>
                 )}
                 {editMode ? (
+                    <CategoryEditSection
+                        {...{
+                            categoryName,
+                            onChangeInput,
+                            setEditMode,
+                            handleSubmit,
+                        }}
+                    />
+                ) : (
                     <Grid
                         item
-                        gap={2}
-                        xs={12}
+                        xs={1}
                         sx={{
                             display: 'flex',
-
-                            justifyContent: 'space-between',
-                            p: 2,
                         }}
                     >
-                        <Input
-                            value={categoryName}
-                            onChange={onChangeInput}
-                            sx={{
-                                mr: 1,
-                            }}
-                        />
-                        <Grid container>
-                            <Button
-                                variant="text"
-                                onClick={() => setEditMode(false)}
-                            >
-                                취소
-                            </Button>
-                            <Button variant="text" onClick={handleSubmit}>
-                                확인
-                            </Button>
-                        </Grid>
-                    </Grid>
-                ) : (
-                    <Grid item xs={2}>
                         <Button
                             onClick={() => emitOnEdit(node.id)}
                             sx={{
@@ -251,10 +221,6 @@ export const CategoryNode = observer(
                         >
                             <ModeEditIcon />
                         </Button>
-                    </Grid>
-                )}
-                {!editMode && (
-                    <Grid item xs={2}>
                         <Button
                             onClick={() => onDelete(node.id)}
                             sx={{
@@ -269,133 +235,6 @@ export const CategoryNode = observer(
         );
     },
 );
-
-export const CategoryAddDialog = observer(
-    ({ open, onClose }: { open: boolean; onClose: () => void }) => {
-        const categoryService = useCategoryService();
-        const [categoryName, setCategoryName] = useState('');
-        const [rootCategoryId, setRootCategoryId] = useState<string>('');
-        const [categoryNames, setCategoryNames] = useState<string[]>(['']);
-
-        useEffect(() => {
-            const names = [] as string[];
-            const getCategoryName = (category: CategoryDepthVO) => {
-                if (!category) {
-                    return;
-                }
-                names.push(category.name);
-
-                if (category.children) {
-                    category.children.forEach(child => {
-                        getCategoryName(child);
-                    });
-                }
-            };
-
-            getCategoryName(categoryService.getCategories()[0]);
-            setCategoryNames([...names]);
-        }, [categoryService]);
-
-        const handleSubmit = async () => {
-            const res = await axios.post<AddNodeFormProps>(
-                `${API_URL}/admin/category`,
-                {
-                    categoryName,
-                    rootNodeName: rootCategoryId,
-                },
-            );
-
-            if ([200, 201].includes(res.status)) {
-                onClose();
-            }
-        };
-
-        return (
-            <Modal open={open}>
-                <Box
-                    sx={{
-                        background: 'white',
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        width: 400,
-                        boxShadow: 24,
-                        p: 4,
-                    }}
-                >
-                    <Grid container spacing={4}>
-                        <Grid item xs={12}>
-                            <TextField
-                                label="카테고리명"
-                                variant="outlined"
-                                sx={{
-                                    width: '100%',
-                                }}
-                                value={categoryName}
-                                onChange={e => setCategoryName(e.target.value)}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <FormControl
-                                fullWidth
-                                sx={{
-                                    width: '100%',
-                                }}
-                            >
-                                <InputLabel id="root-category-select-label">
-                                    상위 카테고리
-                                </InputLabel>
-                                <Select
-                                    label="상위 카테고리"
-                                    labelId="root-category-select-label"
-                                    value={rootCategoryId}
-                                    onChange={e => {
-                                        setRootCategoryId(e.target.value);
-                                    }}
-                                >
-                                    {categoryNames.map(e => {
-                                        return (
-                                            <MenuItem
-                                                value={e}
-                                                key={`root-category-${e}`}
-                                            >
-                                                {e}
-                                            </MenuItem>
-                                        );
-                                    })}
-                                </Select>
-                            </FormControl>
-                        </Grid>
-                        <Grid
-                            item
-                            xs={12}
-                            gap={2}
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'flex-end',
-                            }}
-                        >
-                            <Button variant="contained" onClick={handleSubmit}>
-                                추가
-                            </Button>
-                            <Button variant="contained" onClick={onClose}>
-                                닫기
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </Box>
-            </Modal>
-        );
-    },
-);
-
-export type CategoryTreeModel = FreeNodeModel[] | any;
-export type CategoryResultTuple = [
-    CategoryDepthVO,
-    CategoryDepthVO | null,
-    number,
-];
 
 /**
  * 본 컴포넌트는 MUI 용 react-dnd 예제를 참고한 것입니다.
@@ -581,27 +420,7 @@ export const CategoryTreeEditor = observer(() => {
     const dragPreviewRender = (
         monitorProps: DragLayerMonitorProps<CategoryModel>,
     ) => {
-        return (
-            <Grid
-                container
-                sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    mb: 1,
-                    background: 'rgba(0, 0, 0, 0.02)',
-                    boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.1)',
-                }}
-            >
-                <Button
-                    variant="text"
-                    sx={{
-                        color: 'text.secondary',
-                    }}
-                >
-                    {monitorProps.item.text}
-                </Button>
-            </Grid>
-        );
+        return DragPreview({ monitorProps });
     };
 
     const init = async () => {
@@ -635,18 +454,7 @@ export const CategoryTreeEditor = observer(() => {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Grid container spacing={0} marginBottom={2} gap={2}>
-                <Grid item xs={12}>
-                    <Typography variant="h4" component="h1">
-                        카테고리 관리
-                    </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                    <Button variant="contained" onClick={returnToManagePage}>
-                        관리자 페이지 메인으로
-                    </Button>
-                </Grid>
-            </Grid>
+            <CategoryEditorHeader {...{ returnToManagePage }} />
 
             <CategoryAddDialog open={open} onClose={handleClose} />
             <Box
