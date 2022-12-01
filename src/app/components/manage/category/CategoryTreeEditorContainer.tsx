@@ -11,10 +11,9 @@ import {
     Grid,
     Divider,
     Box,
-    Typography,
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { createTheme, SxProps } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 import { DndProvider, useDrag } from 'react-dnd';
 import {
     Tree,
@@ -27,11 +26,7 @@ import {
 import { TouchBackend } from 'react-dnd-touch-backend';
 import AddIcon from '@mui/icons-material/Add';
 import CopyIcon from '@mui/icons-material/FileCopy';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import ArrowRight from '@mui/icons-material/ArrowRight';
-import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
-import DeleteIcon from '@mui/icons-material/Delete';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { URL_MAP } from '@/common/URL';
 import { toJS } from 'mobx';
@@ -40,8 +35,6 @@ import { useCategoryService } from '@/hooks/useCategoryService';
 import { API_URL } from '@/app/api/request';
 import axios, { AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
-import { Theme } from '@mui/system';
-import { CategoryEditSection } from './CategoryEditSection';
 import { CategoryAddDialog } from './CategoryAddDialog';
 import {
     CategoryNodeEventHandler,
@@ -53,6 +46,7 @@ import {
 } from './CategoryTypes';
 import { DragPreview } from './DragPreview';
 import { CategoryEditorHeader } from './CategoryEditorHeader';
+import { CategoryNode } from './CategoryNode';
 
 const theme = createTheme({
     components: {
@@ -83,170 +77,7 @@ const theme = createTheme({
     },
 });
 
-export interface CategoryNodeProps<T> {
-    node: NodeModel<T>;
-    depth: number;
-    isOpen: boolean;
-    onToggle: CategoryNodeEventHandler;
-    onDelete: CategoryNodeEventHandler;
-    onCopy: CategoryNodeEventHandler;
-    onEdit: CategoryNodeEditEventHandler;
-}
-
-export const CategoryNode = observer(
-    ({
-        node,
-        depth,
-        isOpen,
-        onToggle,
-        onDelete,
-        onCopy,
-        onEdit,
-    }: CategoryNodeProps<CategoryModel>) => {
-        const [categoryName, setCategoryName] = useState(node.text);
-        const [editMode, setEditMode] = useState(false);
-        const categoryNodeProp: SxProps<Theme> = useMemo(() => {
-            return {
-                m: 1,
-                ml: depth * 1.2,
-                p: 1,
-                boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.1)',
-                borderRadius: 1,
-                borderLeft: '3px solid #1976d2',
-
-                '&:hover': {
-                    background: 'rgba(0, 0, 0, 0.04)',
-                    cursor: 'move',
-                },
-            };
-        }, [depth]);
-        const handleToggle = useCallback(() => {
-            onToggle(node.id);
-        }, [node.id, onToggle]);
-
-        const emitOnEdit = useCallback(
-            (nodeId: string | number) => {
-                setEditMode(true);
-            },
-            [onEdit],
-        );
-
-        const handleSubmit = useCallback(() => {
-            setEditMode(false);
-            onEdit(node.id, categoryName);
-        }, [node.id, categoryName]);
-
-        const onChangeInput = (
-            e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-        ) => {
-            setCategoryName(e.target.value);
-        };
-
-        /**
-         * 카테고리에 children이 있으면 펼쳐지는 클릭 핸들러를 장착한다.
-         */
-        if (node.droppable) {
-            return (
-                <Grid
-                    container
-                    spacing={1}
-                    sx={{
-                        mb: 2,
-                        ml: depth * 1.2,
-                        '&:hover': {
-                            background: 'rgba(0, 0, 0, 0.02)',
-                        },
-                        borderRadius: 1,
-                    }}
-                    onClick={handleToggle}
-                >
-                    <Grid item pl={depth * 2}>
-                        <Button
-                            variant="text"
-                            sx={{
-                                color: 'text.secondary',
-                                '&:hover': {
-                                    color: 'text.primary',
-                                },
-                                ...categoryNodeProp,
-                            }}
-                            startIcon={
-                                isOpen ? <ArrowDropDown /> : <ArrowRight />
-                            }
-                        >
-                            {node.text}
-                        </Button>
-                    </Grid>
-                </Grid>
-            );
-        }
-
-        return (
-            <Grid container spacing={0} sx={categoryNodeProp}>
-                {!editMode && (
-                    <Grid item xs={11}>
-                        <Typography
-                            sx={{
-                                m: 1,
-                                color: 'text.secondary',
-                            }}
-                            variant="body2"
-                        >
-                            {node.text}
-                        </Typography>
-                    </Grid>
-                )}
-                {editMode ? (
-                    <CategoryEditSection
-                        {...{
-                            categoryName,
-                            onChangeInput,
-                            setEditMode,
-                            handleSubmit,
-                        }}
-                    />
-                ) : (
-                    <Grid
-                        item
-                        xs={1}
-                        sx={{
-                            display: 'flex',
-                        }}
-                    >
-                        <Button
-                            onClick={() => emitOnEdit(node.id)}
-                            sx={{
-                                color: 'text.secondary',
-                            }}
-                        >
-                            <ModeEditIcon />
-                        </Button>
-                        <Button
-                            onClick={() => onDelete(node.id)}
-                            sx={{
-                                color: 'text.secondary',
-                            }}
-                        >
-                            <DeleteIcon />
-                        </Button>
-                    </Grid>
-                )}
-            </Grid>
-        );
-    },
-);
-
-/**
- * 본 컴포넌트는 MUI 용 react-dnd 예제를 참고한 것입니다.
- * 기본적으로 동적 컴포넌트 사용 없이도 서버 사이드 렌더링에서 잘 동작합니다.
- * 하지만 혹시 모를 문제를 방지하기 위해, 동적 컴포넌트(`코드 스플릿팅`) 사용을 염두에 두었고,
- * 이를 위해 한 파일에 모든 컴포넌트를 정의하였습니다.
- *
- * [링크](https://codesandbox.io/s/add-remove-duplicate-ts-8q20pd?from-embed=&file=/package.json:212-238)
- *
- * 본 코드는 위 링크에서 대부분을 가져온 것입니다.
- */
-export const CategoryTreeEditor = observer(() => {
+export const CategoryTreeEditorContainer = observer(() => {
     const router = useRouter();
     const [open, setOpen] = useState<boolean>(false);
     const categoryService = useCategoryService();

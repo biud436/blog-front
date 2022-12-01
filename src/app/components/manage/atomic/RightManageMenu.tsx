@@ -2,7 +2,7 @@ import { Divider, Drawer, List } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { drawerWidth } from '../../../../layouts/ManageLayout';
 import { BrandLogo } from './BrandLogo';
-import { CategoryManageButton } from './CategoryManageButton';
+import { CategoryManageButton } from '../category/CategoryManageButton';
 import { HomeButton } from './HomeButton';
 
 export const RightManageMenu = observer(() => {

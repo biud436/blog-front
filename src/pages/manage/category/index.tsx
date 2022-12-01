@@ -1,10 +1,10 @@
-import { CategoryTreeEditor } from '@/app/components/manage/atomic/CategoryTreeEditor';
+import { CategoryTreeEditorContainer } from '@/app/components/manage/category/CategoryTreeEditorContainer';
 import { ManageLayout } from '@/layouts/ManageLayout';
 
 export default function CategoryEditorPage() {
     return (
         <ManageLayout>
-            <CategoryTreeEditor />
+            <CategoryTreeEditorContainer />
         </ManageLayout>
     );
 }
