@@ -71,8 +71,7 @@ export const CategoryWrapper = React.memo(
                                             category.id
                                                 ? 'rgba(0, 0, 0, 0.04)'
                                                 : 'transparent',
-                                        transition:
-                                            'background-color 0.3s ease-in-out 0.5s',
+                                        transition: 'background-color 0.3s',
                                     }}
                                 >
                                     <ListItemIcon>

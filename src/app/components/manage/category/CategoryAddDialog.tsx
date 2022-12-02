@@ -10,15 +10,20 @@ import {
     Modal,
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { CategoryDepthVO } from '@/services/CategoryService';
 import { useCategoryService } from '@/hooks/useCategoryService';
 import { API_URL } from '@/app/api/request';
 import axios from 'axios';
 import { AddNodeFormProps } from './CategoryTypes';
 
+interface CategoryAddDialogProps {
+    open: boolean;
+    onClose: () => void;
+}
+
 export const CategoryAddDialog = observer(
-    ({ open, onClose }: { open: boolean; onClose: () => void }) => {
+    ({ open, onClose }: CategoryAddDialogProps) => {
         const categoryService = useCategoryService();
         const [categoryName, setCategoryName] = useState('');
         const [rootCategoryId, setRootCategoryId] = useState<string>('');
@@ -43,7 +48,7 @@ export const CategoryAddDialog = observer(
             setCategoryNames([...names]);
         }, [categoryService]);
 
-        const handleSubmit = async () => {
+        const handleSubmit = useCallback(async () => {
             const res = await axios.post<AddNodeFormProps>(
                 `${API_URL}/admin/category`,
                 {
@@ -55,7 +60,7 @@ export const CategoryAddDialog = observer(
             if ([200, 201].includes(res.status)) {
                 onClose();
             }
-        };
+        }, [categoryName, rootCategoryId]);
 
         return (
             <Modal open={open}>

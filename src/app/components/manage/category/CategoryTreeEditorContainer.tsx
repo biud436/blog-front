@@ -209,26 +209,29 @@ export const CategoryTreeEditorContainer = observer(() => {
         [treeData],
     );
 
-    const handleCopy: CategoryNodeEventHandler = id => {
-        const lastId = getLastId(treeData) as number;
-        const targetNode = treeData.find(node => node.id === id);
+    const handleCopy: CategoryNodeEventHandler = useCallback(
+        id => {
+            const lastId = getLastId(treeData) as number;
+            const targetNode = treeData.find(node => node.id === id);
 
-        const descendants = getDescendants(treeData, id);
-        const partialTree = descendants.map(node => ({
-            ...node,
-            id: (node.id as number) + lastId,
-            parent: (node.parent as number) + lastId,
-        }));
+            const descendants = getDescendants(treeData, id);
+            const partialTree = descendants.map(node => ({
+                ...node,
+                id: (node.id as number) + lastId,
+                parent: (node.parent as number) + lastId,
+            }));
 
-        setTreeData([
-            ...treeData,
-            {
-                ...targetNode,
-                id: targetNode.id + lastId,
-            },
-            ...partialTree,
-        ]);
-    };
+            setTreeData([
+                ...treeData,
+                {
+                    ...targetNode,
+                    id: targetNode.id + lastId,
+                },
+                ...partialTree,
+            ]);
+        },
+        [treeData],
+    );
 
     const handleDrop = useCallback(
         (newTree: NodeModel<CategoryModel>[]) => setTreeData(newTree),
@@ -324,8 +327,6 @@ export const CategoryTreeEditorContainer = observer(() => {
                             item
                             xs={12}
                             sx={{
-                                border: '1px solid #e0e0e0',
-                                borderRadius: 1,
                                 p: 2,
                                 m: 1,
                             }}

@@ -2,10 +2,8 @@ import { Button, Grid, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { SxProps } from '@mui/material/styles';
 import { NodeModel } from '@minoru/react-dnd-treeview';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import ArrowRight from '@mui/icons-material/ArrowRight';
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
-import DeleteIcon from '@mui/icons-material/Delete';
 import React, { useCallback, useMemo, useState } from 'react';
 import { Theme } from '@mui/system';
 import { CategoryEditSection } from './CategoryEditSection';
@@ -14,6 +12,7 @@ import {
     CategoryNodeEditEventHandler,
     CategoryModel,
 } from './CategoryTypes';
+import { CategoryNodeHandler } from './CategoryNodeHandler';
 
 export interface CategoryNodeProps<T> {
     node: NodeModel<T>;
@@ -52,9 +51,13 @@ export const CategoryNode = observer(
                 },
             };
         }, [depth]);
-        const handleToggle = useCallback(() => {
-            onToggle(node.id);
-        }, [node.id, onToggle]);
+        const handleToggle = useCallback(
+            (e: React.MouseEvent) => {
+                e.preventDefault();
+                onToggle(node.id);
+            },
+            [node.id, onToggle],
+        );
 
         const emitOnEdit = useCallback(
             (nodeId: string | number) => {
@@ -79,36 +82,39 @@ export const CategoryNode = observer(
          */
         if (node.droppable) {
             return (
-                <Grid
-                    container
-                    spacing={1}
-                    sx={{
-                        mb: 2,
-                        ml: depth * 1.2,
-                        '&:hover': {
-                            background: 'rgba(0, 0, 0, 0.02)',
-                        },
-                        borderRadius: 1,
-                    }}
-                    onClick={handleToggle}
-                >
-                    <Grid item pl={depth * 2}>
-                        <Button
-                            variant="text"
-                            sx={{
-                                color: 'text.secondary',
-                                '&:hover': {
-                                    color: 'text.primary',
-                                },
-                                ...categoryNodeProp,
+                <Grid container sx={categoryNodeProp}>
+                    {!editMode && (
+                        <Grid item pl={depth * 2} onClick={handleToggle}>
+                            <Button
+                                variant="text"
+                                sx={{
+                                    color: 'text.secondary',
+                                    '&:hover': {
+                                        color: 'text.primary',
+                                    },
+                                }}
+                                startIcon={
+                                    isOpen ? <ArrowDropDown /> : <ArrowRight />
+                                }
+                            >
+                                {node.text}
+                            </Button>
+                        </Grid>
+                    )}
+                    {editMode ? (
+                        <CategoryEditSection
+                            {...{
+                                categoryName,
+                                onChangeInput,
+                                setEditMode,
+                                handleSubmit,
                             }}
-                            startIcon={
-                                isOpen ? <ArrowDropDown /> : <ArrowRight />
-                            }
-                        >
-                            {node.text}
-                        </Button>
-                    </Grid>
+                        />
+                    ) : (
+                        <CategoryNodeHandler
+                            {...{ emitOnEdit, node, onDelete }}
+                        />
+                    )}
                 </Grid>
             );
         }
@@ -138,30 +144,7 @@ export const CategoryNode = observer(
                         }}
                     />
                 ) : (
-                    <Grid
-                        item
-                        xs={1}
-                        sx={{
-                            display: 'flex',
-                        }}
-                    >
-                        <Button
-                            onClick={() => emitOnEdit(node.id)}
-                            sx={{
-                                color: 'text.secondary',
-                            }}
-                        >
-                            <ModeEditIcon />
-                        </Button>
-                        <Button
-                            onClick={() => onDelete(node.id)}
-                            sx={{
-                                color: 'text.secondary',
-                            }}
-                        >
-                            <DeleteIcon />
-                        </Button>
-                    </Grid>
+                    <CategoryNodeHandler {...{ emitOnEdit, node, onDelete }} />
                 )}
             </Grid>
         );

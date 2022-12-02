@@ -39,11 +39,24 @@ export const styles: Record<string, SxProps<Theme>> = {
             lg: `${drawerWidth}px`,
             xl: `${drawerWidth}px`,
         },
+        display: {
+            xs: 'fixed',
+            sm: 'fixed',
+            md: 'none',
+            lg: 'none',
+            xl: 'none',
+        },
     },
     main: {
         flexGrow: 1,
         p: 3,
-        pt: 10,
+        pt: {
+            xs: 10,
+            sm: 10,
+            md: 2,
+            lg: 2,
+            xl: 2,
+        },
         bgcolor: 'background.default',
     },
 };

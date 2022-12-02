@@ -354,7 +354,7 @@ export const PageWrapper = observer(
                             <Button
                                 startIcon={<GitHubIcon />}
                                 LinkComponent="a"
-                                href="https://github.com/biud436"
+                                href={MetaCommonConfig.github_url}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 sx={{
@@ -386,8 +386,6 @@ export const PageWrapper = observer(
                             xs={0}
                             sm={0}
                             md={0}
-                            lg
-                            xl
                             sx={{
                                 display: {
                                     xs: 'none',
@@ -458,7 +456,7 @@ export const PageWrapper = observer(
                             <Button
                                 variant="text"
                                 color="primary"
-                                href={'https://github.com/biud436'}
+                                href={MetaCommonConfig.github_url}
                                 LinkComponent={NextLink}
                                 target="_blank"
                             >
