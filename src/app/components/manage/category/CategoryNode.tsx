@@ -82,9 +82,14 @@ export const CategoryNode = observer(
          */
         if (node.droppable) {
             return (
-                <Grid container sx={categoryNodeProp}>
+                <Grid container spacing={0} sx={categoryNodeProp}>
                     {!editMode && (
-                        <Grid item pl={depth * 2} onClick={handleToggle}>
+                        <Grid
+                            item
+                            pl={depth * 2}
+                            xs={11}
+                            onClick={handleToggle}
+                        >
                             <Button
                                 variant="text"
                                 sx={{
@@ -101,6 +106,7 @@ export const CategoryNode = observer(
                             </Button>
                         </Grid>
                     )}
+
                     {editMode ? (
                         <CategoryEditSection
                             {...{

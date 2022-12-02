@@ -11,6 +11,7 @@ import {
     Grid,
     Divider,
     Box,
+    Typography,
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { createTheme } from '@mui/material/styles';
@@ -22,6 +23,7 @@ import {
     getDescendants,
     getBackendOptions,
     NodeModel,
+    DropOptions,
 } from '@minoru/react-dnd-treeview';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import AddIcon from '@mui/icons-material/Add';
@@ -43,6 +45,7 @@ import {
     FreeNodeModel,
     CategoryResultTuple,
     CategoryTreeModel,
+    MoveCategoryDto,
 } from './CategoryTypes';
 import { DragPreview } from './DragPreview';
 import { CategoryEditorHeader } from './CategoryEditorHeader';
@@ -233,8 +236,56 @@ export const CategoryTreeEditorContainer = observer(() => {
         [treeData],
     );
 
-    const handleDrop = useCallback(
-        (newTree: NodeModel<CategoryModel>[]) => setTreeData(newTree),
+    const handleDrop = useCallback<
+        (
+            tree: NodeModel<CategoryModel>[],
+            options?: DropOptions<any> | undefined,
+        ) => void
+    >(
+        (
+            newTree: NodeModel<CategoryModel>[],
+            options: DropOptions<any> | undefined,
+        ) => {
+            console.log(newTree);
+            console.log(options);
+
+            if (options) {
+                const {
+                    dragSourceId: prevCategoryId,
+                    dropTargetId: newCategoryParentId,
+                } = options;
+
+                const dto: MoveCategoryDto = {
+                    newCategoryParentId: +newCategoryParentId,
+                };
+
+                axios
+                    .post(
+                        `${API_URL}/admin/category/${prevCategoryId}/move`,
+                        dto,
+                    )
+                    .then(res => {
+                        const { data, result } = res.data;
+
+                        if (result === 'success' && data.success) {
+                            toast.info('카테고리가 이동되었습니다.', {
+                                position: 'top-center',
+                            });
+                        } else {
+                            toast.error('카테고리 이동에 실패했습니다.', {
+                                position: 'top-center',
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        toast.error('카테고리 이동에 실패했습니다.', {
+                            position: 'top-center',
+                        });
+                    });
+            }
+
+            setTreeData(newTree);
+        },
         [],
     );
 
@@ -267,7 +318,7 @@ export const CategoryTreeEditorContainer = observer(() => {
             nodeItems.push({
                 id: category.id,
                 parent: parent ? parent.id : 0,
-                droppable: category.children.length > 0,
+                droppable: true,
                 text: category.name,
                 data: {
                     depth,
@@ -293,8 +344,6 @@ export const CategoryTreeEditorContainer = observer(() => {
             <CategoryAddDialog open={open} onClose={handleClose} />
             <Box
                 sx={{
-                    border: '1px solid #e0e0e0',
-                    borderRadius: 1,
                     padding: 2,
                 }}
             >
@@ -321,7 +370,6 @@ export const CategoryTreeEditorContainer = observer(() => {
                             >
                                 새로운 카테고리 추가
                             </Button>
-                            <Divider />
                         </Grid>
                         <Grid
                             item
@@ -329,8 +377,13 @@ export const CategoryTreeEditorContainer = observer(() => {
                             sx={{
                                 p: 2,
                                 m: 1,
+                                border: '1px solid #e0e0e0',
+                                borderLeft: '5px solid #1976d2',
+                                borderRadius: 3,
+                                boxShadow: 1,
                             }}
                         >
+                            <Typography variant="h6">카테고리 편집</Typography>
                             <Tree
                                 tree={treeData}
                                 rootId={0}

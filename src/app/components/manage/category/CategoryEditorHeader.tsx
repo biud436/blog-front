@@ -1,4 +1,5 @@
 import { Button, Grid, Typography } from '@mui/material';
+import ReturnIcon from '@mui/icons-material/KeyboardBackspace';
 import React from 'react';
 
 export function CategoryEditorHeader({
@@ -14,7 +15,11 @@ export function CategoryEditorHeader({
                 </Typography>
             </Grid>
             <Grid item xs={12}>
-                <Button variant="contained" onClick={returnToManagePage}>
+                <Button
+                    variant="text"
+                    onClick={returnToManagePage}
+                    startIcon={<ReturnIcon />}
+                >
                     관리자 페이지 메인으로
                 </Button>
             </Grid>

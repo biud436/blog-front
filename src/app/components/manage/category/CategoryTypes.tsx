@@ -24,3 +24,15 @@ export type CategoryResultTuple = [
     CategoryDepthVO | null,
     number,
 ];
+
+export interface MoveCategoryDto {
+    /**
+     * 기존 카테고리의 ID (PK)
+     */
+    prevCategoryId?: number;
+
+    /**
+     * 이동할 곳의 부모 카테고리의 ID (PK)
+     */
+    newCategoryParentId: number;
+}
