@@ -1,5 +1,5 @@
 import { Editor as EditorType, EditorProps } from '@toast-ui/react-editor';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import dynamic from 'next/dynamic';
 import { TuiEditorWithForwardedProps } from './TUIEditorWrapper';
@@ -10,6 +10,7 @@ import 'prismjs/components/prism-typescript.js';
 
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 import { useMediaQuery } from '@mui/material';
+import { usePostService } from '@/hooks/usePostService';
 
 const Editor = dynamic<TuiEditorWithForwardedProps>(
     async () => {

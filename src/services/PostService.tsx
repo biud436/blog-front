@@ -21,12 +21,24 @@ export interface IPostService {
     updatePost: (postId: number, payload: PostContent) => Promise<any>;
     deletePost(postId: number): Promise<any>;
     getPost(postId: number): Promise<any>;
+    isFetchTempPostState(): boolean;
+    fetchTempPostState(): void;
+    flushTempPostState(): void;
+    setTempPostContent(content: TempPostContent): void;
+    getTempPostContent(): TempPostContent;
+    clearTempPostContent(): void;
+    isFetchTempPost: boolean;
 }
 
 export interface PostContent {
     title: string;
     content: string;
     categoryId: number;
+}
+
+export interface TempPostContent {
+    title: string;
+    content: string;
 }
 
 export interface IServerResponse {
@@ -43,6 +55,12 @@ export class PostServiceImpl implements IPostService {
     isError: boolean = false;
     isLoading: boolean = false;
     errorMessage: string = '';
+
+    isFetchTempPost: boolean = false;
+    tempPostContent: TempPostContent = {
+        content: '',
+        title: '',
+    };
 
     constructor() {
         makeAutoObservable(this);
@@ -90,6 +108,37 @@ export class PostServiceImpl implements IPostService {
 
     getId(): number {
         return this.getData().id;
+    }
+
+    /**
+     * 임시 저장된 포스트를 가져와야 하는가?
+     * @returns
+     */
+    isFetchTempPostState(): boolean {
+        return this.isFetchTempPost;
+    }
+
+    fetchTempPostState(): void {
+        this.isFetchTempPost = true;
+    }
+
+    flushTempPostState(): void {
+        this.isFetchTempPost = false;
+    }
+
+    getTempPostContent(): TempPostContent {
+        return this.tempPostContent;
+    }
+
+    setTempPostContent(content: TempPostContent): void {
+        this.tempPostContent = content;
+    }
+
+    clearTempPostContent(): void {
+        this.tempPostContent = {
+            content: '',
+            title: '',
+        };
     }
 
     async writePost(payload: PostContent): Promise<any> {

@@ -33,6 +33,7 @@ import { useMediaQuery } from 'react-responsive';
 import imageCompression from 'browser-image-compression';
 import { useRouter } from 'next/router';
 import { PostTuiEditor } from './PostTuiEditor';
+import { TempPostBox } from './TempPostBox';
 
 export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
     const router = useRouter();
@@ -194,6 +195,15 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
         setCategories(getFlatCategories());
     }, []);
 
+    useEffect(() => {
+        if (postService.isFetchTempPostState()) {
+            const { title, content } = postService.getTempPostContent();
+            setTitle(title);
+            editorRef.current?.getInstance().setMarkdown(content);
+            postService.flushTempPostState();
+        }
+    }, [postService.isFetchTempPost]);
+
     return (
         <Grid container>
             <Grid item xs={12} lg={12} md={12}>
@@ -209,6 +219,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
                     categories={categories}
                 />
             </Grid>
+            <TempPostBox />
             <Grid item xs={12} lg={12} sm={12}>
                 <PostTuiEditor
                     toolbarItems={toolbarItems}
