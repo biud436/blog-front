@@ -44,6 +44,28 @@ export namespace DateUtil {
     }
 
     /**
+     * 현지화된 날짜 문자열을 표시합니다.
+     *
+     * @param iso8601
+     * @param formatter
+     * @returns
+     */
+    export function ToDateStringUsingIntl(
+        iso8601: string,
+        formatter: DateFormatter[DateFormatterKeyMap],
+    ): string {
+        const dt = moment(iso8601).add(9, 'hour').format(formatter);
+        return Intl.DateTimeFormat('ko-KR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+        }).format(new Date(dt));
+    }
+
+    /**
      * 현재 컴퓨터 시간을 반환합니다.
      *
      * @param formatter 날짜 포맷터를 선택하세요.

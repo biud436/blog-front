@@ -34,6 +34,7 @@ import imageCompression from 'browser-image-compression';
 import { useRouter } from 'next/router';
 import { PostTuiEditor } from './PostTuiEditor';
 import { TempPostBox } from './TempPostBox';
+import { useRendersCount } from 'react-use';
 
 export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
     const router = useRouter();
@@ -61,6 +62,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
             return [['image'], ['heading', 'bold'], ['codeblock']];
         }
     }, [matches]);
+    const rendersCount: number = useRendersCount();
 
     const categoryService = useCategoryService();
 
@@ -151,10 +153,16 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
         }
     }, [editorRef, title, currentCategoryId, mode]);
 
+    /**
+     * 글 작성 취소
+     */
     const handleCancel = useCallback(() => {
         router.push(URL_MAP.MAIN);
     }, []);
 
+    /**
+     * 카테고리를 플랫하게 만들어서 반환한다.
+     */
     const getFlatCategories = useCallback(() => {
         const raw = toJS(categoryService.getCategories());
         const flatCategories: CategoryDepthVO[] = [];
@@ -193,7 +201,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
         }
 
         setCategories(getFlatCategories());
-    }, []);
+    }, [editorRef]);
 
     useEffect(() => {
         if (postService.isFetchTempPostState()) {
@@ -202,10 +210,20 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
             editorRef.current?.getInstance().setMarkdown(content);
             postService.flushTempPostState();
         }
-    }, [postService.isFetchTempPost]);
+    }, [postService.isFetchTempPost, editorRef.current]);
+
+    const onEditorForcusWhenMount = () => {
+        if (postService.isFetchTempPostState()) {
+            const { title, content } = postService.getTempPostContent();
+            setTitle(title);
+            editorRef.current?.getInstance().setMarkdown(content);
+            postService.flushTempPostState();
+        }
+    };
 
     return (
         <Grid container>
+            렌더링 횟수 : {rendersCount}
             <Grid item xs={12} lg={12} md={12}>
                 <PostTitleInput
                     key="PostTitleInput-grid"
@@ -223,6 +241,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
             <Grid item xs={12} lg={12} sm={12}>
                 <PostTuiEditor
                     toolbarItems={toolbarItems}
+                    onEditorForcusWhenMount={onEditorForcusWhenMount}
                     ref={editorRef}
                     addImageBlobHook={addImageBlobHook}
                 />

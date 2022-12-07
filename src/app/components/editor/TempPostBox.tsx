@@ -8,6 +8,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import { usePostService } from '@/hooks/usePostService';
 import { toJS } from 'mobx';
 import { useTempPost, useTempPostList } from '@/hooks/useTempPostList';
+import { toast } from 'react-toastify';
+import { DateUtil } from '@/app/api/date';
 
 export type TempPostBoxStyleKeyCollection = [
     'mainBox',
@@ -101,25 +103,44 @@ export const TempPostBox = observer(() => {
         setOpen(true);
     };
 
-    const getTempPostById = async (post: any) => {
-        const id = post.id;
+    const getTempPostById = async (_post: any) => {
+        const id = _post.id;
+        setSelectedId(id);
 
         const newPost = await postMutate('/admin/temp/post/' + id);
 
-        postService.setTempPostContent({
-            title: newPost.data.title,
-            content: newPost.data.content,
-        });
-        postService.fetchTempPostState();
-        setSelectedId(id);
+        // if (!newPost.data) {
+        //     return;
+        // }
 
         handleClose();
     };
 
-    const removeTempPostById = (id: number) => {
+    /**
+     * Delete temporary post by id.
+     *
+     * @param id
+     * @returns
+     */
+    const removeTempPostById = async (id: number) => {
+        // CSR only
         if (typeof window !== 'undefined') {
-            if (!id) id = 1;
-            alert('임시 포스트 삭제 처리 ' + id);
+            if (id <= 0) {
+                toast.error('삭제할 임시 포스트가 없습니다.');
+                return;
+            }
+
+            if (window.confirm('정말 삭제하시겠습니까?')) {
+                // TODO: it needs to a code splited as a new file or service.
+                const key = '/admin/temp/post';
+                const { data: res } = await axios.delete(`${key}/${id}`);
+                if (res.result === 'success') {
+                    toast.success('삭제되었습니다.');
+                    mutate(key);
+                } else {
+                    toast.error(res.message ?? '포스트를 삭제하지 못했습니다.');
+                }
+            }
         }
     };
 
@@ -128,6 +149,14 @@ export const TempPostBox = observer(() => {
             setCount(posts.data.count);
         }
     }, [posts]);
+
+    useEffect(() => {
+        postService.setTempPostContent({
+            title: post?.data?.title,
+            content: post?.data?.content,
+        });
+        postService.fetchTempPostState();
+    }, [post, selectedId]);
 
     return (
         <React.Fragment>
@@ -149,18 +178,6 @@ export const TempPostBox = observer(() => {
                     <Typography variant="subtitle1">
                         <strong>임시 저장 목록 </strong>({count} / 20 개)
                     </Typography>
-                    <Typography variant="subtitle1">
-                        <strong>선택된 포스트 </strong>
-                        {post?.data?.id}
-                    </Typography>
-                    <Typography variant="subtitle1">
-                        <strong>선택된 포스트 제목 </strong>
-                        {post?.data?.title}
-                    </Typography>
-                    <Typography variant="subtitle1">
-                        <strong>선택된 포스트 내용 </strong>
-                        {post?.data?.content}
-                    </Typography>
 
                     {posts?.data?.entities?.map((post: any) => (
                         <Box
@@ -180,7 +197,10 @@ export const TempPostBox = observer(() => {
                                 </Grid>
                                 <Grid item xs={3} sm={3} md={3} lg={3} xl={3}>
                                     <Typography variant="subtitle1">
-                                        {post.createdAt}
+                                        {DateUtil.ToDateStringUsingIntl(
+                                            post.createdAt,
+                                            'YYYY-MM-DD HH:mm:ss',
+                                        )}
                                     </Typography>
                                 </Grid>
                                 <Grid
@@ -192,7 +212,7 @@ export const TempPostBox = observer(() => {
                                     xl={1}
                                     onClick={(e: React.MouseEvent) => {
                                         e.stopPropagation();
-                                        removeTempPostById(1);
+                                        removeTempPostById(post.id);
                                     }}
                                 >
                                     <CloseIcon />

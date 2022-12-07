@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import useSWR, { mutate } from 'swr';
 
 const getPost = (url: string) => {
@@ -16,6 +16,16 @@ export function useTempPostList() {
     };
 }
 
+export interface TempPost {
+    id: number;
+    title: string;
+    content: string;
+    checksum: string;
+    userId: number;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
 export function useTempPost(selectedId: number) {
     const {
         data,
@@ -24,7 +34,7 @@ export function useTempPost(selectedId: number) {
     } = useSWR(() => '/admin/temp/post/' + selectedId, getPost);
 
     return {
-        post: data,
+        post: data as AxiosResponse<TempPost>,
         isLoading: !error && !data,
         isError: error,
         postMutate,

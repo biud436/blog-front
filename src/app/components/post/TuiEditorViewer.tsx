@@ -36,6 +36,9 @@ const ViewerWrapper = styled.div`
         font-size: 1.5rem;
 
         text-decoration: none;
+        border-left: 4px solid #1976d2;
+        margin: 14px 0;
+        padding: 0 16px;
     }
 
     /* https://stackoverflow.com/a/24298427/15266929 */
@@ -57,6 +60,10 @@ const ViewerWrapper = styled.div`
         code {
             color: #c1798b;
         }
+    }
+
+    .toastui-editor-contents blockquote {
+        border-left: 4px solid #1976d2;
     }
 `;
 

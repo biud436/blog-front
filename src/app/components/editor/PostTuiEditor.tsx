@@ -1,5 +1,5 @@
 import { Editor as EditorType, EditorProps } from '@toast-ui/react-editor';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import dynamic from 'next/dynamic';
 import { TuiEditorWithForwardedProps } from './TUIEditorWrapper';
@@ -30,15 +30,21 @@ const Editor = dynamic<TuiEditorWithForwardedProps>(
 type PostTuiEditorProps = {
     toolbarItems: string[][];
     addImageBlobHook: (blob: any, callback: any) => boolean;
+    onEditorForcusWhenMount?: () => void;
 };
 
 export const PostTuiEditor = React.memo(
     React.forwardRef(
         (
-            { toolbarItems, addImageBlobHook }: PostTuiEditorProps,
+            {
+                toolbarItems,
+                addImageBlobHook,
+                onEditorForcusWhenMount,
+            }: PostTuiEditorProps,
             editorRef: React.ForwardedRef<EditorType>,
         ) => {
-            const match = useMediaQuery('(max-width: 768px)');
+            // const match = useMediaQuery('(max-width: 768px)');
+            const match = false;
 
             return (
                 <div>
@@ -46,7 +52,7 @@ export const PostTuiEditor = React.memo(
                         <Editor
                             language="ko-KR"
                             usageStatistics={false}
-                            initialValue={''}
+                            initialValue={' '} // initialValue가 undefined일 경우 첫 마운트 시, 편집, 미리보기, 마크다운, 위지윅 등의 텍스트가 표시된다 #18
                             previewHighlight={false}
                             previewStyle={match ? 'tab' : 'vertical'}
                             initialEditType={match ? 'wysiwyg' : 'markdown'}
@@ -65,6 +71,13 @@ export const PostTuiEditor = React.memo(
                             viewer={true}
                             hooks={{
                                 addImageBlobHook,
+                            }}
+                            onLoad={() => {
+                                console.log(
+                                    '%c[toast.ui] %conLoad()',
+                                    'color:red',
+                                    'color:black',
+                                );
                             }}
                         />
                     )}
