@@ -1,14 +1,20 @@
 # Introduction
 
-This project is the blog that is made with the javascript library called React, this is still in the works 😂
+This project is the blog that is made with the javascript framework named Next.js. it is compatibled with the [blog-api-server](https://github.com/biud436/blog-api-server)
 
----
+# Features
 
-노드 블로그 서버 [blog-api-server](https://github.com/biud436/blog-api-server)와 연동되는 블로그 프론트 페이지입니다.
+## Category Editor
+
+The category editor allows you to create a category with a hierarchical structure. You can create a category with a parent-child relationship. You can also change the order of the category by dragging and dropping using `react-dnd`
 
 ![code-13](https://user-images.githubusercontent.com/13586185/205221912-1b0640ae-96c9-4367-8e2e-85c742a07e8a.gif)
 
-## Skills
+## Blog Post Editor
+
+You would be able to write the a new post using [TUI-Editor](https://ui.toast.com/tui-editor), it is able to select the category after clicking the category select box. You can also upload the image to the AWS S3 bucket. and it supports the code highlight feature that used a dark theme.
+
+## Tech Stack
 
 -   Typescript
 -   Next.js
@@ -16,9 +22,9 @@ This project is the blog that is made with the javascript library called React, 
 -   Mobx
 -   SWR
 
-## 개발 기간
+## Period of Development
 
-2022.10.10 ~ 2022.11.15 (약 1개월)
+2022.10.10 ~ 2022.11.15 (about a month)
 
 ## Todo List
 
@@ -31,8 +37,6 @@ This project is the blog that is made with the javascript library called React, 
 -   [x] 포스트 작성 페이지
 -   [x] AWS S3로 이미지 업로드 기능 만들기
 -   [x] 파일 업로드 기능 만들기
--   [x] 포스트 내용을 Helmet을 이용한 SEO 처리하기
--   [x] Helmet에서 meta 태그를 이용하여 이미지 미리보기 처리하기
 -   [x] 블로그 링크 기능 복사 기능 만들기
 -   [x] 포스트 수정 기능
 -   [x] 포스트 삭제 기능
@@ -43,7 +47,8 @@ This project is the blog that is made with the javascript library called React, 
 -   [x] 마크다운에 코드 하이라이트 기능 추가
 -   [x] 포스트 글 주기적 페칭 기능 간격 수정하기
 -   [x] TUI Editor에 Image Middleware (이미지 미들웨어 -> 링크 대체) 추가하기
--   [x] 서버 사이드 렌더링 적용하기 (Next.js)
+-   [x] 카카오톡 등에서 블로그 링크 복사 시, 이미지 미리보기 처리
+-   [x] Next.js로 SEO 처리
 
 ## 설치 방법
 
