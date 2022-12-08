@@ -1,13 +1,13 @@
 import { FormControl, Input, InputLabel } from '@mui/material';
 import React from 'react';
+import { useController, UseFormSetValue } from 'react-hook-form';
 
-export function PostTitleInput({
-    title,
-    setTitle,
-}: {
+export interface PostTitleInputProps {
     title: string;
-    setTitle: React.Dispatch<React.SetStateAction<string>>;
-}) {
+    setTitle: (title: string) => void;
+}
+
+export function PostTitleInput({ title, setTitle }: PostTitleInputProps) {
     return (
         <FormControl fullWidth sx={{ marginBottom: 2 }}>
             <InputLabel>제목</InputLabel>

@@ -35,11 +35,20 @@ import { useRouter } from 'next/router';
 import { PostTuiEditor } from './PostTuiEditor';
 import { TempPostBox } from './TempPostBox';
 import { useRendersCount } from 'react-use';
+import { Controller, useForm } from 'react-hook-form';
+
+const EPOCH_EDITOR_TIME = 1000;
 
 export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
+    const { control, watch, setValue } = useForm<{ title: string }>({
+        defaultValues: {
+            title: '',
+        },
+    });
+
+    const title = watch('title');
     const router = useRouter();
     const [categories, setCategories] = useState<CategoryDepthVO[]>([]);
-    const [title, setTitle] = useState('');
     const [currentCategoryId, setCurrentCategoryId] = useState(1);
     const editorRef = useRef<any>(null);
     const postService = usePostService();
@@ -114,8 +123,10 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
      * 글 작성 및 수정 이벤트
      */
     const handleWrite = useCallback(async () => {
+        const title_ = watch('title');
+
         const payload = {
-            title,
+            title: title_,
             // TUI Editor에서 내부에서 DOMPurify를 사용하고 있어서,
             // XSS 공격을 기본적으로 방어하지만 다른 에디터 변경 가능성을 열어두기 위해 추가
             content: DOMPurify.sanitize(
@@ -160,6 +171,13 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
         router.push(URL_MAP.MAIN);
     }, []);
 
+    const setTitle = (title: string) => {
+        setValue('title', title, {
+            shouldValidate: true,
+            shouldDirty: true,
+        });
+    };
+
     /**
      * 카테고리를 플랫하게 만들어서 반환한다.
      */
@@ -184,13 +202,22 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
     useEffect(() => {
         if (mode === 'edit') {
             const id = parseInt(router.query.id as string, 10);
+
             postService
                 .getPost(id)
                 .then(res => {
-                    setTitle(postService.getTitle());
-                    editorRef.current
-                        ?.getInstance()
-                        .setMarkdown(postService.getContent());
+                    const fetchData = () => {
+                        setTitle(postService.getTitle());
+                        editorRef.current
+                            ?.getInstance()
+                            .setMarkdown(postService.getContent());
+                    };
+
+                    if (!editorRef.current) {
+                        setTimeout(fetchData, EPOCH_EDITOR_TIME);
+                    } else {
+                        fetchData();
+                    }
                 })
                 .catch(err => {
                     toast.error('글을 불러오는데 실패했습니다.');
@@ -223,12 +250,19 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
 
     return (
         <Grid container>
-            렌더링 횟수 : {rendersCount}
             <Grid item xs={12} lg={12} md={12}>
-                <PostTitleInput
-                    key="PostTitleInput-grid"
-                    title={title}
-                    setTitle={setTitle}
+                <Controller
+                    name="title"
+                    control={control}
+                    render={({ field }) => (
+                        <PostTitleInput
+                            key="PostTitleInput-grid"
+                            title={field.value}
+                            setTitle={(title: string) => {
+                                field.onChange(title);
+                            }}
+                        />
+                    )}
                 />
                 <PostSelectCategory
                     key="PostSelectCategory-grid"
