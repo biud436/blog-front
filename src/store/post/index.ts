@@ -23,6 +23,7 @@ export interface Post {
     };
     images: PostImage[];
     thumbnail?: string;
+    previewContent?: string;
 }
 
 export interface PostImage {

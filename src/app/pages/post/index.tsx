@@ -34,7 +34,7 @@ export const PostPage = observer(({ post, error, id: postId }: PostsProps) => {
             <Meta
                 {...{
                     title: post.title,
-                    description: post.content,
+                    description: post.previewContent!,
                     url: `https://blog.biud436.com/posts/${postId}`,
                     image: post.thumbnail,
                     nickname: post?.user?.profile?.nickname,
