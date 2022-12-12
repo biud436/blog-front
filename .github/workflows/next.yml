@@ -12,6 +12,14 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v2
 
+            - name: Make .env file
+              run: |
+                  echo "GENERATE_SOURCEMAP=${{ secrets.GENERATE_SOURCEMAP }}" >> .env
+                  echo "PORT=${{ secrets.PORT }}" >> .env
+                  echo "REACT_APP_SERVER_URL=${{ secrets.REACT_APP_SERVER_URL }}" >> .env
+                  echo "NEXT_PUBLIC_FRONT_URL=${{ secrets.NEXT_PUBLIC_FRONT_URL }}" >> .env
+                  echo "NEXT_PUBLIC_SERVER_URL=${{ secrets.NEXT_PUBLIC_SERVER_URL }}" >> .env
+
             - name: Docker QEMU
               uses: docker/setup-qemu-action@v1
 
