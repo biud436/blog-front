@@ -1,6 +1,9 @@
 import { IRequestHandler } from '@/types/IRequest';
+import getConfig from 'next/config';
 
-export const API_URL = process.env.NEXT_PUBLIC_SERVER_URL;
+const { publicRuntimeConfig: config } = getConfig();
+
+export const API_URL = config.backendUrl;
 
 // 토큰 캐시
 const requestCache: { token?: string | null } = { token: null };
