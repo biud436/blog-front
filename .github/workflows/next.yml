@@ -42,3 +42,28 @@ jobs:
                   cache-from: type=gha
                   cache-to: type=gha,mode=max
                   tags: ghcr.io/${{ github.repository_owner }}/blog-front:latest
+
+            - name: Configure AWS credential
+              uses: aws-actions/configure-aws-credentials@v1
+              with:
+                  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  aws-region: ${{ secrets.AWS_REGION }}
+
+            - name: AWS Deploy push
+              run: |
+                  aws deploy push \
+                    --application-name blog-front \
+                    --s3-location s3://${{ secrets.AWS_S3_BUCKET }}/blog-front-${{ github.sha }}.zip \
+                    --description "blog-front-${{ github.sha }}" \
+                    --source .
+
+            - name: AWS Deploy create
+              run: |
+                  aws deploy create-deployment \
+                    --application-name blog-front \
+                    --deployment-config-name CodeDeployDefault.AllAtOnce \
+                    --deployment-group-name blog-front-code-deploy \
+                    --description "blog-front-${{ github.sha }}" \
+                    --s3-location bucket=${{ secrets.AWS_S3_BUCKET }},key=blog-front-${{ github.sha }}.zip,bundleType=zip \
+                    --file-exists-behavior OVERWRITE

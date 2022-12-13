@@ -1,0 +1,12 @@
+version: 0.0
+os: linux
+files:
+    - source: /
+      destination: /home/ubuntu/blog-front
+      overwrite: true
+file_exists_behavior: OVERWRITE
+hooks:
+    ApplicationStart:
+        - location: scripts/restart-server.sh
+          timeout: 60
+          runas: ubuntu
