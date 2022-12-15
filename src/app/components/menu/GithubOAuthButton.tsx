@@ -3,6 +3,9 @@ import axios from 'axios';
 import { Button, css, Grid } from '@mui/material';
 import { API_URL } from '@/app/api/request';
 
+/**
+ * @deprecated
+ */
 export const GithubOAuthButton = observer(() => {
     const requestGithubOAUth = async () => {
         const res = await axios.get(API_URL + '/auth/github/identity');

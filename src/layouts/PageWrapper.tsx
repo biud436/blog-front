@@ -32,11 +32,11 @@ import { AppBar, drawerWidth } from '../app/components/menu/AppBar';
 import { useRouter } from 'next/router';
 import { ManageButton } from '@/app/components/category/ManageButton';
 import CreateIcon from '@mui/icons-material/Create';
-import GitHubIcon from '@mui/icons-material/GitHub';
 import NextLink from 'next/link';
 import MetaCommonConfig from '@/app/components/utils/meta-config.json';
+import { MyBlogHeader } from '../app/components/header/MyBlogHeader';
 
-const WriteButton = React.memo(() => {
+export const WriteButton = React.memo(() => {
     const router = useRouter();
 
     return (
@@ -91,11 +91,13 @@ export const PageWrapper = observer(
         const toggleDrawer = useCallback(
             (open: boolean) =>
                 (event: React.KeyboardEvent | React.MouseEvent) => {
-                    if (
+                    const keyboardEvent = event as React.KeyboardEvent;
+                    const isPressedTabOrShift =
                         event.type === 'keydown' &&
-                        ((event as React.KeyboardEvent).key === 'Tab' ||
-                            (event as React.KeyboardEvent).key === 'Shift')
-                    ) {
+                        (keyboardEvent.key === 'Tab' ||
+                            keyboardEvent.key === 'Shift');
+
+                    if (isPressedTabOrShift) {
                         event.preventDefault();
                     }
 
@@ -109,6 +111,7 @@ export const PageWrapper = observer(
          * @returns
          */
         const initCategories = useCallback(async () => {
+            // TODO: SWR 또는 서비스로 변경 필요
             const res: AxiosResponse<any> = await axios.get(
                 `${API_URL}/admin/category?isBeautify=true`,
                 {},
@@ -116,6 +119,7 @@ export const PageWrapper = observer(
 
             const categories: CategoryDepthVO[] = res.data.data;
 
+            // TODO: SWR 또는 서비스로 변경 필요
             const { data: postCountData } = await axios.get(
                 `${API_URL}/posts/categories`,
             );
@@ -210,7 +214,14 @@ export const PageWrapper = observer(
                 }}
             >
                 <CssBaseline />
-                <AppBar position="fixed" open={menuStore.isOpen}>
+                <AppBar
+                    position="fixed"
+                    open={menuStore.isOpen}
+                    // https://stackoverflow.com/a/69689658
+                    sx={{
+                        bgcolor: '#3c3c3c',
+                    }}
+                >
                     <Toolbar
                         sx={{
                             display: {
@@ -308,62 +319,7 @@ export const PageWrapper = observer(
                         },
                     }}
                 >
-                    <Grid
-                        container
-                        xs={12}
-                        sm={12}
-                        md={12}
-                        lg={12}
-                        xl={12}
-                        sx={{
-                            p: 2,
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                        }}
-                    >
-                        <Typography
-                            variant="h6"
-                            noWrap
-                            component="a"
-                            onClick={() => {
-                                router.push(URL_MAP.MAIN);
-                            }}
-                            sx={{
-                                mr: 2,
-                                display: { xs: 'none', md: 'flex' },
-                                fontWeight: 700,
-                                letterSpacing: '.2rem',
-                                color: 'inherit',
-                                textDecoration: 'none',
-                                cursor: 'pointer',
-                                transition: 'all .3s ease-in-out',
-                                '&:hover': {
-                                    color: 'primary.main',
-                                    letterSpacing: '.4rem',
-                                    transform: 'scale(1.1)',
-                                },
-                                borderLeft: '3px solid #1976d2',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                pl: 1,
-                            }}
-                        >
-                            {MetaCommonConfig.site_name}
-                        </Typography>
-                        <Box>
-                            <Button
-                                startIcon={<GitHubIcon />}
-                                LinkComponent="a"
-                                href={MetaCommonConfig.github_url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                sx={{
-                                    color: 'text.secondary',
-                                }}
-                            />
-                            <WriteButton />
-                        </Box>
-                    </Grid>
+                    <MyBlogHeader router={router} />
                     <Grid
                         container
                         spacing={0}
