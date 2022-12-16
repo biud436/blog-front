@@ -62,8 +62,12 @@ const ViewerWrapper = styled.div`
         }
     }
 
-    .toastui-editor-contents blockquote {
-        border-left: 4px solid #1976d2;
+    .toastui-editor-contents {
+        font-size: 1.2rem;
+
+        blockquote {
+            border-left: 4px solid #1976d2;
+        }
     }
 `;
 
