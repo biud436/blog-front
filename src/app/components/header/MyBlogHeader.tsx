@@ -11,26 +11,6 @@ import Link from 'next/link';
 
 const HeaderStyleGuard = styled.div``;
 
-const Line = styled.div`
-    width: 0%;
-    border-bottom: 3px solid #1976d2;
-
-    &:hover {
-        @keyframes slidein {
-            from {
-                width: 0%;
-            }
-
-            to {
-                width: 100%;
-            }
-        }
-
-        animation: slidein 0.5s ease-in-out;
-        width: 100%;
-    }
-`;
-
 export function MyBlogHeader({ router }: { router: NextRouter }) {
     return (
         <HeaderStyleGuard>
@@ -42,92 +22,101 @@ export function MyBlogHeader({ router }: { router: NextRouter }) {
                 lg={12}
                 xl={12}
                 sx={{
-                    p: 2,
+                    p: 3,
                     display: 'flex',
-                    justifyContent: 'space-between',
+                    justifyContent: 'center',
+                    gap: 5,
+                    borderBottom: '1px solid #D8DEE4',
+                    mb: 5,
                 }}
             >
-                <Typography
-                    variant="h6"
-                    noWrap
-                    component="a"
-                    onClick={() => {
-                        router.push(URL_MAP.MAIN);
-                    }}
-                    sx={{
-                        mr: 2,
-                        display: { xs: 'none', md: 'flex' },
-                        fontWeight: 700,
-                        letterSpacing: '.2rem',
-                        color: 'inherit',
-                        textDecoration: 'none',
-                        cursor: 'pointer',
-                        transition: 'all .3s ease-in-out',
-                        '&:hover': {
-                            color: 'primary.main',
-                            letterSpacing: '.4rem',
-                            transform: 'scale(1.1)',
-                        },
-                        borderLeft: '3px solid #1976d2',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        pl: 1,
-                    }}
-                >
-                    {MetaCommonConfig.site_name}
-                </Typography>
-                <Box
-                    sx={{
-                        display: 'flex',
-                        ml: {
-                            xs: 0,
-                            sm: 0,
-                            md: 2,
-                            lg: 2,
-                            xl: 2,
-                        },
-                        alignItems: 'center',
-                    }}
-                >
-                    <Link
-                        href="/profile"
-                        passHref
-                        style={{ textDecoration: 'none' }}
-                    >
-                        <Typography
-                            variant="h6"
-                            sx={{
-                                color: 'black',
-                                cursor: 'pointer',
-                                borderBottom: '2px solid gray',
-
-                                '&:hover': {
-                                    letterSpacing: '.3rem',
-                                    transform: 'scale(1.1)',
-                                    borderBottom: '3px solid #1976d2',
-                                    pl: 1,
-                                    transition: 'all .3s ease-in-out',
-                                    userSelect: 'none',
-                                },
-                            }}
-                        >
-                            소개
-                        </Typography>
-                    </Link>
-                </Box>
-                <Box>
-                    <Button
-                        startIcon={<GitHubIcon />}
-                        LinkComponent="a"
-                        href={MetaCommonConfig.github_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        sx={{
-                            color: 'text.secondary',
+                <Grid item flexGrow={0.1}>
+                    <Typography
+                        variant="h5"
+                        noWrap
+                        component="a"
+                        onClick={() => {
+                            router.push(URL_MAP.MAIN);
                         }}
-                    />
-                    <WriteButton />
-                </Box>
+                        sx={{
+                            mr: 2,
+                            display: { xs: 'none', md: 'flex' },
+                            fontWeight: 700,
+                            letterSpacing: '.2rem',
+                            color: 'inherit',
+                            textDecoration: 'none',
+                            cursor: 'pointer',
+                            transition: 'all .3s ease-in-out',
+                            '&:hover': {
+                                color: 'primary.main',
+                                letterSpacing: '.4rem',
+                                transform: 'scale(1.1)',
+                            },
+                            alignItems: 'center',
+
+                            borderLeft: '3px solid #1976d2',
+                            pl: 1,
+                        }}
+                    >
+                        {MetaCommonConfig.site_name}
+                    </Typography>
+                </Grid>
+                <Grid item>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            ml: {
+                                xs: 0,
+                                sm: 0,
+                                md: 2,
+                                lg: 2,
+                                xl: 2,
+                            },
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Link
+                            href="/profile"
+                            passHref
+                            style={{ textDecoration: 'none' }}
+                        >
+                            <Typography
+                                variant="h6"
+                                sx={{
+                                    color: 'black',
+                                    cursor: 'pointer',
+                                    borderBottom: '2px solid gray',
+
+                                    '&:hover': {
+                                        letterSpacing: '.3rem',
+                                        transform: 'scale(1.1)',
+                                        borderBottom: '3px solid #1976d2',
+                                        pl: 1,
+                                        transition: 'all .3s ease-in-out',
+                                        userSelect: 'none',
+                                    },
+                                }}
+                            >
+                                About Me
+                            </Typography>
+                        </Link>
+                    </Box>
+                </Grid>
+                <Grid item>
+                    <Box>
+                        <Button
+                            startIcon={<GitHubIcon />}
+                            LinkComponent="a"
+                            href={MetaCommonConfig.github_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            sx={{
+                                color: 'text.secondary',
+                            }}
+                        />
+                        <WriteButton />
+                    </Box>
+                </Grid>
             </Grid>
         </HeaderStyleGuard>
     );
