@@ -28,9 +28,28 @@ export function MyBlogHeader({ router }: { router: NextRouter }) {
                     gap: 5,
                     borderBottom: '1px solid #D8DEE4',
                     mb: 5,
+                    mt: {
+                        xs: 10,
+                        sm: 10,
+                        md: 10,
+                        lg: 0,
+                        xl: 0,
+                    },
                 }}
             >
-                <Grid item flexGrow={0.1}>
+                <Grid
+                    item
+                    flexGrow={0.1}
+                    sx={{
+                        display: {
+                            xs: 'none',
+                            sm: 'none',
+                            md: 'flex',
+                            lg: 'flex',
+                            xl: 'flex',
+                        },
+                    }}
+                >
                     <Typography
                         variant="h5"
                         noWrap
@@ -133,7 +152,18 @@ export function MyBlogHeader({ router }: { router: NextRouter }) {
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid item>
+                <Grid
+                    item
+                    sx={{
+                        display: {
+                            xs: 'none',
+                            sm: 'none',
+                            md: 'flex',
+                            lg: 'flex',
+                            xl: 'flex',
+                        },
+                    }}
+                >
                     <Box>
                         <Button
                             startIcon={<GitHubIcon />}
