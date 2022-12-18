@@ -62,7 +62,9 @@ export function MyBlogHeader({ router }: { router: NextRouter }) {
                     </Typography>
                 </Grid>
                 <Grid item>
-                    <Box
+                    <Grid
+                        container
+                        gap={2}
                         sx={{
                             display: 'flex',
                             ml: {
@@ -75,32 +77,61 @@ export function MyBlogHeader({ router }: { router: NextRouter }) {
                             alignItems: 'center',
                         }}
                     >
-                        <Link
-                            href="/profile"
-                            passHref
-                            style={{ textDecoration: 'none' }}
-                        >
-                            <Typography
-                                variant="h6"
-                                sx={{
-                                    color: 'black',
-                                    cursor: 'pointer',
-                                    borderBottom: '2px solid gray',
-
-                                    '&:hover': {
-                                        letterSpacing: '.3rem',
-                                        transform: 'scale(1.1)',
-                                        borderBottom: '3px solid #1976d2',
-                                        pl: 1,
-                                        transition: 'all .3s ease-in-out',
-                                        userSelect: 'none',
-                                    },
-                                }}
+                        <Grid item>
+                            <Link
+                                href="/profile"
+                                passHref
+                                style={{ textDecoration: 'none' }}
                             >
-                                About Me
-                            </Typography>
-                        </Link>
-                    </Box>
+                                <Typography
+                                    variant="h6"
+                                    sx={{
+                                        color: 'black',
+                                        cursor: 'pointer',
+                                        borderBottom: '2px solid gray',
+
+                                        '&:hover': {
+                                            letterSpacing: '.3rem',
+                                            transform: 'scale(1.1)',
+                                            borderBottom: '3px solid #1976d2',
+                                            pl: 1,
+                                            transition: 'all .3s ease-in-out',
+                                            userSelect: 'none',
+                                        },
+                                    }}
+                                >
+                                    About Me
+                                </Typography>
+                            </Link>
+                        </Grid>
+                        <Grid item>
+                            <Link
+                                href="/career"
+                                passHref
+                                style={{ textDecoration: 'none' }}
+                            >
+                                <Typography
+                                    variant="h6"
+                                    sx={{
+                                        color: 'black',
+                                        cursor: 'pointer',
+                                        borderBottom: '2px solid gray',
+
+                                        '&:hover': {
+                                            letterSpacing: '.3rem',
+                                            transform: 'scale(1.1)',
+                                            borderBottom: '3px solid #1976d2',
+                                            pl: 1,
+                                            transition: 'all .3s ease-in-out',
+                                            userSelect: 'none',
+                                        },
+                                    }}
+                                >
+                                    Career
+                                </Typography>
+                            </Link>
+                        </Grid>
+                    </Grid>
                 </Grid>
                 <Grid item>
                     <Box>

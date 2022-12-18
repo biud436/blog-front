@@ -69,6 +69,7 @@
         "moment": "^2.29.3",
         "moment-timezone": "^0.5.34",
         "next": "^13.0.3",
+        "next-mdx-remote": "^4.2.0",
         "node-plop": "0.26.2",
         "plop": "2.7.4",
         "prismjs": "^1.29.0",

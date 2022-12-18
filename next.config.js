@@ -27,6 +27,11 @@ const nextConfig = withMDX({
                 destination: '/',
                 permanent: true,
             },
+            {
+                source: '/rss',
+                destination: `${process.env.NEXT_PUBLIC_SERVER_URL}/rss`,
+                permanent: true,
+            },
         ];
     },
     publicRuntimeConfig: {
