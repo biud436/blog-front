@@ -4,6 +4,7 @@ import { URL_MAP } from '@/common/URL';
 import { Button, Box, Grid } from '@mui/material';
 import { NextRouter } from 'next/router';
 import GitHubIcon from '@mui/icons-material/GitHub';
+import RssFeedIcon from '@mui/icons-material/RssFeed';
 import MetaCommonConfig from '@/app/components/utils/meta-config.json';
 import { WriteButton } from '../../../layouts/PageWrapper';
 import styled from 'styled-components';
@@ -169,6 +170,16 @@ export function MyBlogHeader({ router }: { router: NextRouter }) {
                             startIcon={<GitHubIcon />}
                             LinkComponent="a"
                             href={MetaCommonConfig.github_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            sx={{
+                                color: 'text.secondary',
+                            }}
+                        />
+                        <Button
+                            startIcon={<RssFeedIcon />}
+                            LinkComponent="a"
+                            href="/rss"
                             target="_blank"
                             rel="noopener noreferrer"
                             sx={{

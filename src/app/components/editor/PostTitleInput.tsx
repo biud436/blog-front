@@ -1,4 +1,11 @@
-import { FormControl, Input, InputLabel } from '@mui/material';
+import {
+    Checkbox,
+    FormControl,
+    FormControlLabel,
+    FormGroup,
+    Input,
+    InputLabel,
+} from '@mui/material';
 import React from 'react';
 import { useController, UseFormSetValue } from 'react-hook-form';
 
@@ -19,6 +26,9 @@ export function PostTitleInput({ title, setTitle }: PostTitleInputProps) {
                     setTitle(e.target.value);
                 }}
             />
+            <FormGroup>
+                <FormControlLabel control={<Checkbox />} label="나만 보기" />
+            </FormGroup>
         </FormControl>
     );
 }
