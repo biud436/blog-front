@@ -2,7 +2,7 @@ import { Grid, Paper, Typography, Divider, Alert } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import ChevronRight from '@mui/icons-material/ChevronRight';
 import { PageWrapper } from '@/layouts/PageWrapper';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { useAuthorized } from '@/hooks/useAuthorized';
 import { useParams } from 'react-router';
 import { useSearchParams } from 'next/navigation';
@@ -65,11 +65,20 @@ export const PostEditor = observer(({ mode }: EditPageProps) => {
 export const PostEditorContainer = observer(
     ({ editorMode }: { editorMode: string }) => {
         const [isAuthorized, isDone] = useAuthorized();
-        const [mode, setMode] = useState<EditPageProps['mode']>('create');
+
+        // useState로 할 경우, 렌더링이 두 번 일어나면서 버그가 발생합니다.
+        const mode = useRef<EditPageProps['mode']>('create');
 
         const LoginGuard = ({ children }: { children: JSX.Element }) => {
             return !isAuthorized ? (
-                <Grid container>
+                <Grid
+                    container
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                >
                     <Grid item xs={12}>
                         <Alert variant="filled" severity="error">
                             로그인이 필요한 서비스입니다
@@ -83,9 +92,9 @@ export const PostEditorContainer = observer(
 
         useEffect(() => {
             if (editorMode === 'edit') {
-                setMode('edit');
+                mode.current = 'edit';
             }
-        }, [isDone]);
+        }, []);
 
         return (
             <PageWrapper name="포스트 에디터">
@@ -98,9 +107,9 @@ export const PostEditorContainer = observer(
                 <Paper sx={{ padding: 2 }} key="editor">
                     <LoginGuard>
                         <Grid container gap={3}>
-                            <PageHeader mode={mode} />
-                            <PageDescription mode={mode} />
-                            <PostEditor mode={mode} />
+                            <PageHeader mode={mode.current} />
+                            <PageDescription mode={mode.current} />
+                            <PostEditor mode={mode.current} />
                         </Grid>
                     </LoginGuard>
                     <ToastContainer />
