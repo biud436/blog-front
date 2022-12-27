@@ -37,7 +37,7 @@ import { TempPostBox } from './TempPostBox';
 import { useRendersCount } from 'react-use';
 import { Controller, useForm } from 'react-hook-form';
 
-const EPOCH_EDITOR_TIME = 1000;
+const EPOCH_EDITOR_TIME = 2000;
 
 export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
     const { control, watch, setValue } = useForm<{ title: string }>({
