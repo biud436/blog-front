@@ -61,16 +61,12 @@ const PostsContainer = observer(() => {
             );
 
             // 카테고리 별 포스트 조회
-            const res = await service.fetch(
+            await service.fetch(
                 postsStore,
                 categoryService.getCurrentMenuCategoryId(),
             );
-
-            const { entities, pagination } = res.data;
-
-            postsStore.setPagination(pagination);
-            postsStore.setEntities(entities);
         } catch (e: any) {
+            console.warn(e);
             toast.error('조회 결과가 없습니다');
             postsStore.setEntities([]);
         }

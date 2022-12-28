@@ -15,6 +15,7 @@ import {
     useEffect,
     useState,
 } from 'react';
+import useSWR from 'swr';
 import { IReactService, ReactServiceStore } from './types/ReactServiceStore';
 
 export type IPostsService = IReactService<PostsSearchType> & {
@@ -85,12 +86,43 @@ export class PostsServiceImpl implements IPostsService {
     }
 }
 
+const fetcher = (url: string, queryParam: string) =>
+    axios.get(`${url}?${queryParam}`).then(res => res.data);
+
 export const PostsServiceProvider = observer(
     ({ children }: { children: ReactNode }) => {
         const auth = useAuth();
         const [postsService, setPostsService] = useState<IPostsService>(
             new PostsServiceImpl(auth.requestData),
         );
+
+        /**
+         * =====================================================================
+         * SWR을 이용한 데이터 조회 (클래스 믹스인)
+         * =====================================================================
+         */
+        const [queryParam, setQueryParam] = useState('');
+        const res = useSWR(
+            queryParam ? [`${API_URL}/posts`, queryParam] : null,
+            fetcher,
+        );
+
+        postsService.view = async (pageNumber: number, categoryId?: number) => {
+            setQueryParam(`page=${pageNumber}&categoryId=${categoryId}`);
+        };
+        /**
+         * =====================================================================
+         * 데이터 조회
+         * =====================================================================
+         */
+        useEffect(() => {
+            if (res.data) {
+                const { entities, pagination } = res.data?.data;
+
+                postsStore.setPagination(pagination);
+                postsStore.setEntities(entities);
+            }
+        }, [res.data]);
 
         return (
             <PostsServiceContext.Provider value={postsService}>
