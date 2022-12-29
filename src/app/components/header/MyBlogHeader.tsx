@@ -9,6 +9,10 @@ import MetaCommonConfig from '@/app/components/utils/meta-config.json';
 import { WriteButton } from '../../../layouts/PageWrapper';
 import styled from 'styled-components';
 import Link from 'next/link';
+import { GridLink } from '../common/GridLink';
+import { HeaderIconButton } from './HeaderIconButton';
+import { StatelessInput } from '../common/StatelessInput';
+import { useStatelessInput } from '../../../hooks/useStatelessInput';
 
 const HeaderStyleGuard = styled.div``;
 
@@ -97,60 +101,8 @@ export function MyBlogHeader({ router }: { router: NextRouter }) {
                             alignItems: 'center',
                         }}
                     >
-                        <Grid item>
-                            <Link
-                                href="/profile"
-                                passHref
-                                style={{ textDecoration: 'none' }}
-                            >
-                                <Typography
-                                    variant="h6"
-                                    sx={{
-                                        color: 'black',
-                                        cursor: 'pointer',
-                                        borderBottom: '2px solid gray',
-
-                                        '&:hover': {
-                                            letterSpacing: '.3rem',
-                                            transform: 'scale(1.1)',
-                                            borderBottom: '3px solid #1976d2',
-                                            pl: 1,
-                                            transition: 'all .3s ease-in-out',
-                                            userSelect: 'none',
-                                        },
-                                    }}
-                                >
-                                    About Me
-                                </Typography>
-                            </Link>
-                        </Grid>
-                        <Grid item>
-                            <Link
-                                href="/career"
-                                passHref
-                                style={{ textDecoration: 'none' }}
-                            >
-                                <Typography
-                                    variant="h6"
-                                    sx={{
-                                        color: 'black',
-                                        cursor: 'pointer',
-                                        borderBottom: '2px solid gray',
-
-                                        '&:hover': {
-                                            letterSpacing: '.3rem',
-                                            transform: 'scale(1.1)',
-                                            borderBottom: '3px solid #1976d2',
-                                            pl: 1,
-                                            transition: 'all .3s ease-in-out',
-                                            userSelect: 'none',
-                                        },
-                                    }}
-                                >
-                                    Career
-                                </Typography>
-                            </Link>
-                        </Grid>
+                        <GridLink href="/profile" text="About Me" />
+                        <GridLink href="/career" text="Career" />
                     </Grid>
                 </Grid>
                 <Grid
@@ -166,25 +118,13 @@ export function MyBlogHeader({ router }: { router: NextRouter }) {
                     }}
                 >
                     <Box>
-                        <Button
+                        <HeaderIconButton
                             startIcon={<GitHubIcon />}
-                            LinkComponent="a"
                             href={MetaCommonConfig.github_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            sx={{
-                                color: 'text.secondary',
-                            }}
                         />
-                        <Button
+                        <HeaderIconButton
                             startIcon={<RssFeedIcon />}
-                            LinkComponent="a"
                             href="/rss"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            sx={{
-                                color: 'text.secondary',
-                            }}
                         />
                         <WriteButton />
                     </Box>
