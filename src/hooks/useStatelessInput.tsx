@@ -11,8 +11,6 @@ import { StatelessInput } from '../app/components/common/StatelessInput';
  *    <StatelessInputForm />
  * )
  *
- * 입력 값이 변경될 때 마다, value가 업데이트 됩니다.
- *
  * @returns
  */
 export function useStatelessInput() {
