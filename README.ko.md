@@ -2,7 +2,7 @@
 
 Next.js로 만든 개인 블로그입니다. 실제로 사용하고 운영하기 위해 개발되었습니다.
 
-데이터는 별도의 백엔드 서버[blog-api-server](https://github.com/biud436/blog-api-server)에서 MariaDB를 통해 관리됩니다.
+데이터는 별도의 백엔드 서버 [blog-api-server](https://github.com/biud436/blog-api-server)에서 MariaDB를 통해 관리됩니다.
 
 블로그는 [blog.biud436.com](https://blog.biud436.com)에서 확인할 수 있습니다.
 

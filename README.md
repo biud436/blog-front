@@ -2,6 +2,8 @@
 
 This project is the blog that is made with the javascript framework named Next.js. it is compatibled with the [blog-api-server](https://github.com/biud436/blog-api-server)
 
+[한국어(Korean) 문서](https://github.com/biud436/blog-front/blob/main/README.ko.md)
+
 # Features
 
 ## Category Editor
