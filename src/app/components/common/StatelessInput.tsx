@@ -18,7 +18,6 @@ export const StatelessInput = ({
         <OutlinedInput
             {...props}
             ref={forwardedRef}
-            value={forwardedRef?.current?.value}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
         />
     );
