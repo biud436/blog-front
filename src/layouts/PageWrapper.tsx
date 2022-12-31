@@ -418,7 +418,7 @@ export const PageWrapper = observer(
                             }}
                         >
                             <Typography variant="body2" color="text.secondary">
-                                © 2022-2023
+                                © 2023
                             </Typography>
                             <Button
                                 variant="text"
