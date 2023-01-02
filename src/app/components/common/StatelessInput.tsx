@@ -1,4 +1,10 @@
-import { OutlinedInput, OutlinedInputProps } from '@mui/material';
+import {
+    FormControl,
+    Grid,
+    InputLabel,
+    OutlinedInput,
+    OutlinedInputProps,
+} from '@mui/material';
 
 export const StatelessInput = ({
     forwardedRef,
@@ -15,10 +21,21 @@ export const StatelessInput = ({
     };
 
     return (
-        <OutlinedInput
-            {...props}
-            ref={forwardedRef}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
-        />
+        <Grid container>
+            <Grid item xs={12}>
+                <FormControl sx={{ m: 1 }}>
+                    <InputLabel htmlFor={props.id}>{props.label}</InputLabel>
+                    <OutlinedInput
+                        {...props}
+                        ref={forwardedRef}
+                        fullWidth
+                        id={props.id}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            onChange(e)
+                        }
+                    />
+                </FormControl>
+            </Grid>
+        </Grid>
     );
 };

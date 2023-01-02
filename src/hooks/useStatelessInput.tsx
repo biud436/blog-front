@@ -1,3 +1,4 @@
+import { OutlinedInputProps } from '@mui/material';
 import { useRef } from 'react';
 import { StatelessInput } from '../app/components/common/StatelessInput';
 
@@ -23,6 +24,8 @@ export function useStatelessInput() {
                 return target;
             },
         }),
-        StatelessInputForm: () => <StatelessInput forwardedRef={inputRef} />,
+        StatelessInputForm: (props: OutlinedInputProps) => (
+            <StatelessInput forwardedRef={inputRef} {...props} />
+        ),
     };
 }
