@@ -1,3 +1,4 @@
+import { useStatelessInput } from '@/hooks/useStatelessInput';
 import { Button, Grid, Input } from '@mui/material';
 import React from 'react';
 
@@ -14,6 +15,8 @@ export function CategoryEditSection({
     setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
     handleSubmit: () => void;
 }) {
+    const { value, StatelessInputForm: EditForm } = useStatelessInput();
+
     return (
         <Grid
             item
@@ -33,6 +36,17 @@ export function CategoryEditSection({
                     mr: 1,
                 }}
             />
+            {/* <EditForm
+                value={categoryName}
+                onChange={e => {
+                    console.log('change');
+                    onChangeInput(e);
+                    e.target.focus();
+                }}
+                sx={{
+                    mr: 1,
+                }}
+            /> */}
             <Grid container>
                 <Button variant="text" onClick={() => setEditMode(false)}>
                     취소

@@ -5,6 +5,7 @@ import {
     OutlinedInput,
     OutlinedInputProps,
 } from '@mui/material';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 export const StatelessInput = ({
     forwardedRef,
@@ -12,6 +13,8 @@ export const StatelessInput = ({
 }: OutlinedInputProps & {
     forwardedRef?: React.RefObject<HTMLInputElement>;
 }) => {
+    const isTransition = useRef(false);
+
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (props.onChange) props.onChange(e);
 
