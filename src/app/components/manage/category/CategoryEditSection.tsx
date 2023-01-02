@@ -15,7 +15,7 @@ export function CategoryEditSection({
     setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
     handleSubmit: () => void;
 }) {
-    const { value, StatelessInputForm: EditForm } = useStatelessInput();
+    console.log('마우스가 나가거나 들어올 때마다 렌더링이 되는지 확인');
 
     return (
         <Grid
@@ -36,17 +36,7 @@ export function CategoryEditSection({
                     mr: 1,
                 }}
             />
-            {/* <EditForm
-                value={categoryName}
-                onChange={e => {
-                    console.log('change');
-                    onChangeInput(e);
-                    e.target.focus();
-                }}
-                sx={{
-                    mr: 1,
-                }}
-            /> */}
+
             <Grid container>
                 <Button variant="text" onClick={() => setEditMode(false)}>
                     취소
