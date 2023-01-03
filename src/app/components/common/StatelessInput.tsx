@@ -5,16 +5,21 @@ import {
     OutlinedInput,
     OutlinedInputProps,
 } from '@mui/material';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import {
+    useCallback,
+    useEffect,
+    useLayoutEffect,
+    useRef,
+    useState,
+} from 'react';
 
 export const StatelessInput = ({
     forwardedRef,
     ...props
 }: OutlinedInputProps & {
+    initialValue?: () => string | undefined;
     forwardedRef?: React.RefObject<HTMLInputElement>;
 }) => {
-    const isTransition = useRef(false);
-
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (props.onChange) props.onChange(e);
 
@@ -23,6 +28,18 @@ export const StatelessInput = ({
         }
     };
 
+    const onRefChange = useCallback(node => {
+        if (node === null) {
+        } else {
+            if (forwardedRef) {
+                const inputElem = node.childNodes[0];
+                (forwardedRef.current as HTMLInputElement) = inputElem;
+
+                forwardedRef.current!.value = props.initialValue?.() ?? '';
+            }
+        }
+    }, []);
+
     return (
         <Grid container>
             <Grid item xs={12}>
@@ -30,7 +47,7 @@ export const StatelessInput = ({
                     <InputLabel htmlFor={props.id}>{props.label}</InputLabel>
                     <OutlinedInput
                         {...props}
-                        ref={forwardedRef}
+                        ref={onRefChange}
                         fullWidth
                         id={props.id}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

@@ -24,8 +24,16 @@ export function useStatelessInput() {
                 return target;
             },
         }),
-        StatelessInputForm: (props: OutlinedInputProps) => (
-            <StatelessInput forwardedRef={inputRef} {...props} />
+        StatelessInputForm: (
+            props: OutlinedInputProps & {
+                initialValue?: () => string | undefined;
+            },
+        ) => (
+            <StatelessInput
+                forwardedRef={inputRef}
+                {...props}
+                initialValue={props.initialValue}
+            />
         ),
     };
 }
