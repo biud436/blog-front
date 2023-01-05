@@ -4,6 +4,12 @@ This project is the blog that is made with the javascript framework named Next.j
 
 [한국어(Korean) 문서](https://github.com/biud436/blog-front/blob/main/README.ko.md)
 
+## Contributors
+
+| <img src="https://avatars.githubusercontent.com/u/13586185?v=4" width="150px" /> |
+| :------------------------------------------------------------------------------: |
+|                   BE: [Jinseok Eo](https://github.com/biud436)                   |
+
 # Features
 
 ## Category Editor
