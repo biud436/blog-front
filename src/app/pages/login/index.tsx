@@ -3,19 +3,31 @@ import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { userState } from '../../../store/user';
 import { useAuth } from '@/app/providers/auth/authProvider';
-import { LoginResponse } from 'app/providers/auth/LoginResponse';
 import { toast, ToastContainer } from 'react-toastify';
-import { State } from './common';
-import { useMethods, useRendersCount } from 'react-use';
+import { State } from '../../components/common/login/common';
+import { useRendersCount } from 'react-use';
 import { User } from 'store/types';
-import { LoginTab } from './components/LoginTab';
-import { Box, Container, Grid, Stack } from '@mui/material';
+
+import { Box, Button, Container, Stack } from '@mui/material';
 import { URL_MAP } from '@/common/URL';
 import { useRouter } from 'next/router';
 import { Meta } from '@/app/components/utils/Meta';
 import 'react-toastify/dist/ReactToastify.css';
+import { LoginTab } from '@/app/components/common/login/components/LoginTab';
+import {
+    FormContainer,
+    PasswordElement,
+    TextFieldElement,
+    useForm,
+    useFormContext,
+} from 'react-hook-form-mui';
 
 type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
+
+export interface LoginFormProps {
+    username: string;
+    password: string;
+}
 
 /**
  * 로그인 페이지 메인
@@ -28,27 +40,18 @@ export function LoginPage() {
     });
     const [user] = useRecoilState(userState);
     const [, setValue] = React.useState(1);
+    const formContext = useForm<LoginFormProps>({
+        defaultValues: {
+            username: '',
+            password: '',
+        },
+    });
 
     /**
      * USE CONTEXTS
      */
     const router = useRouter();
     const auth = useAuth();
-    const rendersCount = useRendersCount();
-
-    /**
-     * 유저 데이터 변경 처리
-     *
-     * @param prop
-     * @returns
-     */
-    const handleChange = (prop: keyof State) => (event: InputChangeEvent) => {
-        setValues({ ...values, [prop]: event.target.value });
-    };
-
-    const toggleShowPassword = () => {
-        setValues({ ...values, showPassword: !values.showPassword });
-    };
 
     /**
      * 로그인 처리
@@ -72,13 +75,9 @@ export function LoginPage() {
         }
     };
 
-    /**
-     * 비밀번호 표시/감추기 제어
-     */
-    const handleMouseDownPassword = (
-        event: React.MouseEvent<HTMLButtonElement>,
-    ) => {
-        event.preventDefault();
+    const onSubmit = async (data: LoginFormProps) => {
+        const { username, password } = data;
+        return await login(username, password);
     };
 
     /**
@@ -91,28 +90,6 @@ export function LoginPage() {
             position: 'top-right',
             containerId: '#login-page',
         });
-    };
-
-    /**
-     * 로그인
-     */
-    const handleLogin = async (event: any) => {
-        event.preventDefault();
-
-        const idValue = values.username;
-        const pwValue = values.password;
-
-        if (idValue === '') {
-            toastWrapper('아이디를 입력해주세요');
-            return;
-        }
-
-        if (pwValue === '') {
-            toastWrapper('비밀번호를 입력해주세요');
-            return;
-        }
-
-        return login(idValue, pwValue);
     };
 
     /**
@@ -139,14 +116,28 @@ export function LoginPage() {
                 alignItems="center"
                 minHeight="100vh"
             >
-                <LoginTab
-                    handleChange={handleChange}
-                    handleLogin={handleLogin}
-                    handleMouseDownPassword={handleMouseDownPassword}
-                    setValue={setValue}
-                    values={values}
-                    handleClickShowPassword={toggleShowPassword}
-                />
+                <FormContainer formContext={formContext} onSuccess={() => {}}>
+                    <Stack direction={'column'} gap={2}>
+                        <TextFieldElement
+                            name="username"
+                            label="아이디"
+                            required
+                        />
+                        <PasswordElement
+                            name="password"
+                            label="비밀번호"
+                            required
+                        />
+                        <Button
+                            variant="contained"
+                            onClick={() => {
+                                formContext?.handleSubmit(onSubmit)();
+                            }}
+                        >
+                            로그인
+                        </Button>
+                    </Stack>
+                </FormContainer>
             </Box>
             <ToastContainer />
         </Container>

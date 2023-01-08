@@ -15,8 +15,6 @@ export function CategoryEditSection({
     setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
     handleSubmit: () => void;
 }) {
-    console.log('마우스가 나가거나 들어올 때마다 렌더링이 되는지 확인');
-
     return (
         <Grid
             item

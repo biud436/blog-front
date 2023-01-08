@@ -21,6 +21,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { State } from '../common';
 import { useEffect, useState } from 'react';
+import { PasswordElement } from 'react-hook-form-mui';
 
 export type LoginTagProps = {
     handleChange: (
@@ -160,9 +161,6 @@ export function LoginTab({
                                         }
                                     }}
                                 >
-                                    <InputLabel htmlFor="outlined-adornment-password">
-                                        비밀번호
-                                    </InputLabel>
                                     <OutlinedInput
                                         id="outlined-adornment-password"
                                         type={
