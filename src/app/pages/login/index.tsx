@@ -4,8 +4,6 @@ import { useRecoilState } from 'recoil';
 import { userState } from '../../../store/user';
 import { useAuth } from '@/app/providers/auth/authProvider';
 import { toast, ToastContainer } from 'react-toastify';
-import { State } from '../../components/common/login/common';
-import { useRendersCount } from 'react-use';
 import { User } from 'store/types';
 
 import { Box, Button, Container, Stack } from '@mui/material';
@@ -13,16 +11,13 @@ import { URL_MAP } from '@/common/URL';
 import { useRouter } from 'next/router';
 import { Meta } from '@/app/components/utils/Meta';
 import 'react-toastify/dist/ReactToastify.css';
-import { LoginTab } from '@/app/components/common/login/components/LoginTab';
+
 import {
     FormContainer,
     PasswordElement,
     TextFieldElement,
     useForm,
-    useFormContext,
 } from 'react-hook-form-mui';
-
-type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
 export interface LoginFormProps {
     username: string;
@@ -33,13 +28,7 @@ export interface LoginFormProps {
  * 로그인 페이지 메인
  */
 export function LoginPage() {
-    const [values, setValues] = React.useState<State>({
-        username: '',
-        password: '',
-        showPassword: false,
-    });
     const [user] = useRecoilState(userState);
-    const [, setValue] = React.useState(1);
     const formContext = useForm<LoginFormProps>({
         defaultValues: {
             username: '',
