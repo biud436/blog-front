@@ -36,6 +36,7 @@ import { PostTuiEditor } from './PostTuiEditor';
 import { TempPostBox } from './TempPostBox';
 import { useRendersCount } from 'react-use';
 import { Controller, useForm } from 'react-hook-form';
+import { ImageCompressionService } from '@/services/\bImageCompressionService';
 
 const EPOCH_EDITOR_TIME = 2000;
 
@@ -82,13 +83,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
      * @param callback
      */
     const addImageBlobHook = (blob, callback) => {
-        const options = {
-            maxSizeMB: 2,
-            maxWidthOrHeight: 1920,
-            useWebWorker: true,
-        };
-
-        imageCompression(blob, options)
+        ImageCompressionService.compress(blob, ImageCompressionService.options)
             .then(compressedFile => {
                 const formData = new FormData();
                 formData.append('files', compressedFile);
