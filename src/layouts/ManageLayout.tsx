@@ -10,6 +10,7 @@ import {
     Alert,
     ThemeProvider,
     useTheme,
+    Stack,
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { ToastContainer } from 'react-toastify';
@@ -20,6 +21,7 @@ import { Meta } from '@/blog/components/utils/Meta';
 import { useEffect, useState } from 'react';
 import React from 'react';
 import { useThemeStore } from '@/hooks/useThemeStore';
+import { ManageIntroducePresent } from '@/blog/components/manage/atomic/ManageIntroducePresent';
 
 export interface ManageLayoutProps {
     children: React.ReactNode;
@@ -109,7 +111,7 @@ export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
     return (
         <ThemeProvider theme={theme}>
             <LoginGuard>
-                <Box sx={{ display: 'flex' }}>
+                <Box>
                     <Meta
                         {...{
                             title: '관리자 페이지',
@@ -117,17 +119,26 @@ export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
                         }}
                     />
                     <CssBaseline />
-                    <AppBar position="fixed" sx={styles.appBar}>
-                        <Toolbar>
-                            <Typography variant="h6" noWrap component="div">
-                                관리자 페이지
-                            </Typography>
-                        </Toolbar>
-                    </AppBar>
-                    <Box component="main" sx={styles.main}>
-                        {children}
-                    </Box>
-                    <RightManageMenu />
+                    <Grid container>
+                        <Grid item>
+                            <RightManageMenu />
+                            <AppBar sx={styles.appBar}>
+                                <Toolbar>
+                                    <Typography
+                                        variant="h6"
+                                        noWrap
+                                        component="div"
+                                    >
+                                        관리자 페이지
+                                    </Typography>
+                                </Toolbar>
+                            </AppBar>
+                        </Grid>
+                        <Grid item sx={styles.main}>
+                            {children}
+                            <ManageIntroducePresent />
+                        </Grid>
+                    </Grid>
                     <ToastContainer />
                 </Box>
             </LoginGuard>
