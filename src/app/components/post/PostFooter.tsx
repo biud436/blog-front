@@ -1,6 +1,5 @@
 import { Button, Grid } from '@mui/material';
 import { useAuthorized } from '@/hooks/useAuthorized';
-import { useNavigate } from 'react-router';
 import { usePostService } from '@/hooks/usePostService';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';

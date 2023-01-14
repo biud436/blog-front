@@ -1,7 +1,7 @@
 import { Grid, Paper, Typography, Divider, Alert } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import ChevronRight from '@mui/icons-material/ChevronRight';
-import { PageWrapper } from '@/layouts/PageWrapper';
+import { PageWrapper } from '@/layouts/BlogMainLayout';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { useAuthorized } from '@/hooks/useAuthorized';
 import { useParams } from 'react-router';

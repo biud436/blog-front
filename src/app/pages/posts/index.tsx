@@ -1,4 +1,4 @@
-import { PageWrapper } from '@/layouts/PageWrapper';
+import { PageWrapper } from '@/layouts/BlogMainLayout';
 import { observer } from 'mobx-react-lite';
 import { PostsPresent } from '../../components/posts/PostsPresent';
 import Head from 'next/head';

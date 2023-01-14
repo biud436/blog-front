@@ -6,7 +6,7 @@ import { NextRouter } from 'next/router';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import RssFeedIcon from '@mui/icons-material/RssFeed';
 import MetaCommonConfig from '@/app/components/utils/meta-config.json';
-import { WriteButton } from '../../../layouts/PageWrapper';
+import { WriteButton } from '../../../layouts/BlogMainLayout';
 import styled from 'styled-components';
 import Link from 'next/link';
 import { GridLink } from '../common/GridLink';

@@ -128,5 +128,3 @@ export class PostsStore implements Searchable<PostsSearchType>, Paginable {
         return this.currentCategoryId;
     }
 }
-
-export const postsStore = new PostsStore();

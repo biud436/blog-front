@@ -1,4 +1,4 @@
-import { PageWrapper } from '@/layouts/PageWrapper';
+import { PageWrapper } from '@/layouts/BlogMainLayout';
 import { Box } from '@mui/system';
 import { GetStaticProps } from 'next';
 import * as path from 'path';

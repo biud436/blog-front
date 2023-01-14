@@ -26,7 +26,7 @@ import { LoginButton } from '../app/components/category/LoginButton';
 import { LogoutButton } from '../app/components/category/LogoutButton';
 import { RequestHandler } from '../app/api/axios';
 import { useMediaQuery } from 'react-responsive';
-import { menuStore } from '@/store/menu';
+import { menuStore } from '@/store/';
 import { CategoryWrapper } from '../app/components/category/CategoryWrapper';
 import { AppBar, drawerWidth } from '../app/components/menu/AppBar';
 import { useRouter } from 'next/router';
@@ -273,6 +273,10 @@ export const PageWrapper = observer(
                             width: drawerWidth,
                             boxSizing: 'border-box',
                         },
+                    }}
+                    SlideProps={{
+                        translate: 'yes',
+                        appear: true,
                     }}
                     anchor="left"
                     open={menuStore.isOpen}

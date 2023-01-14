@@ -1,10 +1,7 @@
 import { API_URL } from '@/app/api/request';
 import { HttpMethod, useAuth } from '@/app/providers/auth/authProvider';
-import { postsStore, PostsStore } from '@/store/posts';
+import { postsStore } from '@/store';
 import { PostsSearchType } from '@/store/posts/posts.dto';
-import { Paginable } from '@/store/types/list';
-import { Searchable } from '@/store/types/searchable';
-import { Container } from '@mui/material';
 import axios from 'axios';
 import { makeAutoObservable, toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';

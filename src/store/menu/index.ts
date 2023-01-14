@@ -32,5 +32,3 @@ export class MenuStore {
         this.isOpen = isOpen;
     }
 }
-
-export const menuStore = new MenuStore();

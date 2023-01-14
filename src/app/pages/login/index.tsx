@@ -18,6 +18,9 @@ import {
     TextFieldElement,
     useForm,
 } from 'react-hook-form-mui';
+import { ThemeProvider } from '@mui/system';
+import { observer } from 'mobx-react-lite';
+import { useThemeStore } from '@/hooks/useThemeStore';
 
 export interface LoginFormProps {
     username: string;
@@ -27,8 +30,10 @@ export interface LoginFormProps {
 /**
  * 로그인 페이지 메인
  */
-export function LoginPage() {
+export const LoginPage = observer(() => {
     const [user] = useRecoilState(userState);
+    const theme = useThemeStore('login');
+
     const formContext = useForm<LoginFormProps>({
         defaultValues: {
             username: '',
@@ -92,43 +97,53 @@ export function LoginPage() {
     }, []);
 
     return (
-        <Container>
-            <Meta
-                {...{
-                    title: '로그인',
-                    description: '관리자 로그인',
-                }}
-            />
-            <Box
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                minHeight="100vh"
-            >
-                <FormContainer formContext={formContext} onSuccess={() => {}}>
-                    <Stack direction={'column'} gap={2}>
-                        <TextFieldElement
-                            name="username"
-                            label="아이디"
-                            required
-                        />
-                        <PasswordElement
-                            name="password"
-                            label="비밀번호"
-                            required
-                        />
-                        <Button
-                            variant="contained"
-                            onClick={() => {
-                                formContext?.handleSubmit(onSubmit)();
-                            }}
-                        >
-                            로그인
-                        </Button>
-                    </Stack>
-                </FormContainer>
-            </Box>
-            <ToastContainer />
-        </Container>
+        <ThemeProvider theme={theme}>
+            <FormContainer formContext={formContext}>
+                <Container
+                    fixed
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        width: '100%',
+                        height: '100%',
+                    }}
+                >
+                    <Meta
+                        {...{
+                            title: '로그인',
+                            description: '관리자 로그인',
+                        }}
+                    />
+                    <Box
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                        minHeight="100vh"
+                    >
+                        <Stack direction={'column'} gap={2}>
+                            <TextFieldElement
+                                name="username"
+                                label="아이디"
+                                required
+                            />
+                            <PasswordElement
+                                name="password"
+                                label="비밀번호"
+                                required
+                            />
+                            <Button
+                                variant="contained"
+                                onClick={() => {
+                                    formContext?.handleSubmit(onSubmit)();
+                                }}
+                            >
+                                로그인
+                            </Button>
+                        </Stack>
+                    </Box>
+                    <ToastContainer />
+                </Container>
+            </FormContainer>
+        </ThemeProvider>
     );
-}
+});

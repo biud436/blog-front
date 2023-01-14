@@ -1,5 +1,5 @@
 import { API_URL } from '@/app/api/request';
-import { PageWrapper } from '@/layouts/PageWrapper';
+import { PageWrapper } from '@/layouts/BlogMainLayout';
 import { Avatar, ImageList, Typography } from '@mui/material';
 import axios from 'axios';
 import { observer } from 'mobx-react-lite';

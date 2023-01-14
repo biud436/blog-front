@@ -2,7 +2,7 @@ import { SearchBuilder } from '@/app/components/builder/SearchBuilder';
 import { useAuth } from '@/app/providers/auth/authProvider';
 import { usePostsService } from '@/hooks/usePostsService';
 import { PostsServiceProvider } from '@/services/PostsService';
-import { postsStore } from '@/store/posts';
+import { postsStore } from '@/store';
 import { PostsSearchType } from '@/store/posts/posts.dto';
 import ChevronRight from '@mui/icons-material/ChevronRight';
 import {
