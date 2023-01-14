@@ -2,7 +2,7 @@ import { Post } from '@/store/post';
 import axios from 'axios';
 import { GetServerSidePropsContext } from 'next';
 import { getServerSideSitemap, ISitemapField } from 'next-sitemap';
-import { Paginatable } from '@/app/common/pagination.type';
+import { Paginatable } from '@/blog/common/pagination.type';
 
 export type ChangeFreq =
     | 'always'

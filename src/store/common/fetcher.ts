@@ -1,4 +1,4 @@
-import { API_URL } from '@/app/api/request';
+import { API_URL } from '@/blog/api/request';
 import axios, { AxiosInstance } from 'axios';
 import { toast } from 'react-toastify';
 

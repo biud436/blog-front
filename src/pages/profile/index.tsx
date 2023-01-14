@@ -1,4 +1,4 @@
-import { Meta } from '@/app/components/utils/Meta';
+import { Meta } from '@/blog/components/utils/Meta';
 import { PageWrapper } from '@/layouts/BlogMainLayout';
 import { Box } from '@mui/material';
 import ProfileMdx from './profile.mdx';

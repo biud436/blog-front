@@ -1,4 +1,4 @@
-import { EditPageProps, PostEditorContainer } from '@/app/pages/editor';
+import { EditPageProps, PostEditorContainer } from '@/blog/pages/editor';
 import { Post } from '@/store/post';
 import axios from 'axios';
 import { GetServerSidePropsContext, GetStaticPaths } from 'next';

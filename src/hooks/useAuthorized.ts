@@ -1,5 +1,5 @@
-import { RequestHandler } from '@/app/api/axios';
-import { useAuth } from '@/app/providers/auth/authProvider';
+import { RequestHandler } from '@/blog/api/axios';
+import { useAuth } from '@/blog/providers/auth/authProvider';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import useSWR from 'swr';

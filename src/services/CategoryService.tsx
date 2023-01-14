@@ -1,4 +1,4 @@
-import { HttpMethod } from '@/app/providers/auth/authProvider';
+import { HttpMethod } from '@/blog/providers/auth/authProvider';
 import { PostsSearchType } from '@/store/posts/posts.dto';
 import { makeAutoObservable } from 'mobx';
 import { observer } from 'mobx-react-lite';

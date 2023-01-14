@@ -1,4 +1,4 @@
-import { API_URL } from '@/app/api/request';
+import { API_URL } from '@/blog/api/request';
 import { PostContext } from '@/services/PostService';
 import { Post } from '@/store/post';
 import axios from 'axios';

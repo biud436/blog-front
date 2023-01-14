@@ -1,6 +1,6 @@
 import { OutlinedInputProps } from '@mui/material';
 import { useRef } from 'react';
-import { StatelessInput } from '../app/components/common/StatelessInput';
+import { StatelessInput } from '../blog/components/common/StatelessInput';
 
 /**
  * Proxy 패턴을 사용하여 inputRef.current?.value에 대체 접근하는 StatelessInput 훅입니다.

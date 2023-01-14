@@ -12,9 +12,9 @@ import {
 import { observer } from 'mobx-react-lite';
 import { ToastContainer } from 'react-toastify';
 import { useAuthorized } from '@/hooks/useAuthorized';
-import { RightManageMenu } from '../app/components/manage/atomic/RightManageMenu';
+import { RightManageMenu } from '../blog/components/manage/atomic/RightManageMenu';
 import 'react-toastify/dist/ReactToastify.css';
-import { Meta } from '@/app/components/utils/Meta';
+import { Meta } from '@/blog/components/utils/Meta';
 import { useEffect, useState } from 'react';
 import React from 'react';
 

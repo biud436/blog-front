@@ -1,4 +1,4 @@
-import { useAuth } from '@/app/providers/auth/authProvider';
+import { useAuth } from '@/blog/providers/auth/authProvider';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 

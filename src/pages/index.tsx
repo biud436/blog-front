@@ -1,4 +1,4 @@
-import { PostsPage } from '@/app/pages/posts';
+import { PostsPage } from '@/blog/pages/posts';
 
 export default function MyMain() {
     return <PostsPage />;

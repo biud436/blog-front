@@ -1,5 +1,5 @@
-import { ErrorBoundary } from '@/app/components/error/boundary';
-import { PostPage } from '@/app/pages/post';
+import { ErrorBoundary } from '@/blog/components/error/boundary';
+import { PostPage } from '@/blog/pages/post';
 
 import axios from 'axios';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next/types';

@@ -1,5 +1,5 @@
-import { API_URL } from '@/app/api/request';
-import { HttpMethod, useAuth } from '@/app/providers/auth/authProvider';
+import { API_URL } from '@/blog/api/request';
+import { HttpMethod, useAuth } from '@/blog/providers/auth/authProvider';
 import { postsStore } from '@/store';
 import { PostsSearchType } from '@/store/posts/posts.dto';
 import axios from 'axios';

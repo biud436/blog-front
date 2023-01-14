@@ -1,4 +1,4 @@
-import { AuthProvider } from '@/app/providers/auth/authProvider';
+import { AuthProvider } from '@/blog/providers/auth/authProvider';
 import { CategoryServiceProvider } from '@/services/CategoryService';
 import { PostServiceProvider } from '@/services/PostService';
 import { GlobalStyle } from '@/styles/global-styles';

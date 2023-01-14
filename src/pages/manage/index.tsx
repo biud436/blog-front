@@ -1,4 +1,4 @@
-import { ManagePresent } from '@/app/components/manage/ManagePresent';
+import { ManagePresent } from '@/blog/components/manage/ManagePresent';
 import { ManageLayout } from '@/layouts/ManageLayout';
 
 export default function ManagePage() {
