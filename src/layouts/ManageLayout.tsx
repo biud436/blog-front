@@ -8,6 +8,8 @@ import {
     Typography,
     Grid,
     Alert,
+    ThemeProvider,
+    useTheme,
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { ToastContainer } from 'react-toastify';
@@ -17,6 +19,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Meta } from '@/blog/components/utils/Meta';
 import { useEffect, useState } from 'react';
 import React from 'react';
+import { useThemeStore } from '@/hooks/useThemeStore';
 
 export interface ManageLayoutProps {
     children: React.ReactNode;
@@ -62,14 +65,30 @@ export const styles: Record<string, SxProps<Theme>> = {
 };
 
 export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
-    const [isAuthorized, isDone] = useAuthorized();
+    const [isAuthorized] = useAuthorized();
     const [isMounted, setIsMounted] = useState<boolean>(false);
+    const theme = useThemeStore('manage');
 
     const LoginGuard = React.memo(({ children }: { children: JSX.Element }) => {
         return !isAuthorized ? (
-            <Grid container>
+            <Grid
+                container
+                sx={{
+                    display: 'flex',
+                    height: '100vh',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: '100%',
+                }}
+            >
                 <Grid item xs={12}>
-                    <Alert variant="filled" severity="error">
+                    <Alert
+                        variant="filled"
+                        severity="error"
+                        sx={{
+                            width: '100%',
+                        }}
+                    >
                         로그인이 필요한 서비스입니다
                     </Alert>
                 </Grid>
@@ -88,28 +107,30 @@ export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
     }
 
     return (
-        <LoginGuard>
-            <Box sx={{ display: 'flex' }}>
-                <Meta
-                    {...{
-                        title: '관리자 페이지',
-                        description: '관리자 페이지입니다',
-                    }}
-                />
-                <CssBaseline />
-                <AppBar position="fixed" sx={styles.appBar}>
-                    <Toolbar>
-                        <Typography variant="h6" noWrap component="div">
-                            관리자 페이지
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
-                <Box component="main" sx={styles.main}>
-                    {children}
+        <ThemeProvider theme={theme}>
+            <LoginGuard>
+                <Box sx={{ display: 'flex' }}>
+                    <Meta
+                        {...{
+                            title: '관리자 페이지',
+                            description: '관리자 페이지입니다',
+                        }}
+                    />
+                    <CssBaseline />
+                    <AppBar position="fixed" sx={styles.appBar}>
+                        <Toolbar>
+                            <Typography variant="h6" noWrap component="div">
+                                관리자 페이지
+                            </Typography>
+                        </Toolbar>
+                    </AppBar>
+                    <Box component="main" sx={styles.main}>
+                        {children}
+                    </Box>
+                    <RightManageMenu />
+                    <ToastContainer />
                 </Box>
-                <RightManageMenu />
-                <ToastContainer />
-            </Box>
-        </LoginGuard>
+            </LoginGuard>
+        </ThemeProvider>
     );
 });
