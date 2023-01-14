@@ -9,7 +9,7 @@ export const RightManageMenu = observer(() => {
     return (
         <Drawer
             variant="permanent"
-            anchor="right"
+            anchor="left"
             sx={{
                 width: {
                     xs: 0,
