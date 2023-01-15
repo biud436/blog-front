@@ -225,7 +225,11 @@ export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
                                     alignItems: 'center',
                                 }}
                             >
-                                <Stack direction="row" spacing={2}>
+                                <Stack
+                                    direction="row"
+                                    spacing={0}
+                                    alignItems="center"
+                                >
                                     <IconButton
                                         color="inherit"
                                         aria-label="open drawer"
@@ -233,9 +237,10 @@ export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
                                         edge="start"
                                         sx={{
                                             mr: 2,
+
                                             display: {
-                                                xs: 'block',
-                                                sm: 'block',
+                                                xs: 'flex',
+                                                sm: 'flex',
                                                 md: 'none',
                                             },
                                         }}
@@ -246,7 +251,6 @@ export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
                                         variant="h6"
                                         noWrap
                                         component="div"
-                                        sx={{ flexGrow: 1 }}
                                     >
                                         관리자 페이지
                                     </Typography>
