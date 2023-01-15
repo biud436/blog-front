@@ -12,6 +12,7 @@ import {
     useTheme,
     Stack,
     Button,
+    CircularProgress,
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { toast, ToastContainer } from 'react-toastify';
@@ -19,7 +20,7 @@ import { useAuthorized } from '@/hooks/useAuthorized';
 import { ManageMenu } from '../blog/components/manage/atomic/ManageMenu';
 import 'react-toastify/dist/ReactToastify.css';
 import { Meta } from '@/blog/components/utils/Meta';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import React from 'react';
 import { useThemeStore } from '@/hooks/useThemeStore';
 import { ManageIntroducePresent } from '@/blog/components/manage/atomic/ManageIntroducePresent';
@@ -69,40 +70,56 @@ export const styles: Record<string, SxProps<Theme>> = {
     },
 };
 
+function LoginGuardPresent() {
+    const timeRef = useRef<NodeJS.Timeout>(null!);
+
+    // 3초 후에 로그인 페이지로 이동
+    useEffect(() => {
+        timeRef.current = setTimeout(() => {
+            location.href = '/';
+        }, 3000);
+
+        return () => {
+            clearTimeout(timeRef.current);
+        };
+    });
+
+    return (
+        <Grid
+            container
+            sx={{
+                height: '100vh',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}
+        >
+            <Grid
+                item
+                xs={6}
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 2,
+                }}
+            >
+                <CircularProgress color="secondary" />
+            </Grid>
+        </Grid>
+    );
+}
+
 export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
     const [isAuthorized] = useAuthorized();
     const [isMounted, setIsMounted] = useState<boolean>(false);
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const theme = useThemeStore('manage');
 
-    const LoginGuard = React.memo(({ children }: { children: JSX.Element }) => {
-        return !isAuthorized ? (
-            <Grid
-                container
-                sx={{
-                    display: 'flex',
-                    height: '100vh',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    width: '100%',
-                }}
-            >
-                <Grid item xs={12}>
-                    <Alert
-                        variant="filled"
-                        severity="error"
-                        sx={{
-                            width: '100%',
-                        }}
-                    >
-                        로그인이 필요한 서비스입니다
-                    </Alert>
-                </Grid>
-            </Grid>
-        ) : (
-            children
-        );
-    });
+    const LoginGuard = ({ children }: { children: JSX.Element }) => {
+        return !isAuthorized ? <LoginGuardPresent /> : children;
+    };
 
     const handleDrawerOpen = (e: React.MouseEvent) => {
         setIsOpen(true);
