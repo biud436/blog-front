@@ -15,7 +15,14 @@ import { URL_MAP } from '@/common/URL';
 
 export const ManageIntroducePresent = () => {
     return (
-        <Stack>
+        <Stack
+            justifyContent={'center'}
+            alignItems="center"
+            direction={'column'}
+            sx={{
+                width: '100%',
+            }}
+        >
             <Grid
                 container
                 spacing={2}

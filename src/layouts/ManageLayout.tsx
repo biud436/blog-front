@@ -11,17 +11,20 @@ import {
     ThemeProvider,
     useTheme,
     Stack,
+    Button,
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { useAuthorized } from '@/hooks/useAuthorized';
-import { RightManageMenu } from '../blog/components/manage/atomic/RightManageMenu';
+import { ManageMenu } from '../blog/components/manage/atomic/ManageMenu';
 import 'react-toastify/dist/ReactToastify.css';
 import { Meta } from '@/blog/components/utils/Meta';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import React from 'react';
 import { useThemeStore } from '@/hooks/useThemeStore';
 import { ManageIntroducePresent } from '@/blog/components/manage/atomic/ManageIntroducePresent';
+import MenuIcon from '@mui/icons-material/Menu';
+import IconButton from '@mui/material/IconButton';
 
 export interface ManageLayoutProps {
     children: React.ReactNode;
@@ -69,6 +72,7 @@ export const styles: Record<string, SxProps<Theme>> = {
 export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
     const [isAuthorized] = useAuthorized();
     const [isMounted, setIsMounted] = useState<boolean>(false);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
     const theme = useThemeStore('manage');
 
     const LoginGuard = React.memo(({ children }: { children: JSX.Element }) => {
@@ -100,6 +104,25 @@ export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
         );
     });
 
+    const handleDrawerOpen = (e: React.MouseEvent) => {
+        setIsOpen(true);
+    };
+
+    const toggleDrawer = useCallback(
+        (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+            if (
+                event.type === 'keydown' &&
+                ((event as React.KeyboardEvent).key === 'Tab' ||
+                    (event as React.KeyboardEvent).key === 'Shift')
+            ) {
+                event.preventDefault();
+            }
+
+            setIsOpen(open);
+        },
+        [],
+    );
+
     useEffect(() => {
         setIsMounted(true);
     }, []);
@@ -111,7 +134,7 @@ export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
     return (
         <ThemeProvider theme={theme}>
             <LoginGuard>
-                <Box>
+                <Box sx={{ display: 'flex' }}>
                     <Meta
                         {...{
                             title: '관리자 페이지',
@@ -119,26 +142,116 @@ export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
                         }}
                     />
                     <CssBaseline />
-                    <Grid container>
-                        <Grid item>
-                            <RightManageMenu />
-                            <AppBar sx={styles.appBar}>
-                                <Toolbar>
+                    <ManageMenu
+                        variant="permanent"
+                        isOpen={true}
+                        sx={{
+                            display: {
+                                xs: 'none',
+                                sm: 'none',
+                                md: 'block',
+                                lg: 'block',
+                                xl: 'block',
+                            },
+                            flexShrink: 0,
+                            width: {
+                                xs: 0,
+                                sm: 0,
+                                md: drawerWidth,
+                            },
+                            '& .MuiDrawer-paper': {
+                                display: 'block',
+                                width: {
+                                    xs: 0,
+                                    sm: 0,
+                                    md: drawerWidth,
+                                },
+                                boxSizing: 'border-box',
+                                boxShadow: '0 0 5px 0 rgba(0, 0, 0, 0.2)',
+                            },
+                        }}
+                    />
+                    <Box
+                        onKeyDown={toggleDrawer(false)}
+                        onClick={toggleDrawer(false)}
+                    >
+                        <ManageMenu
+                            variant="temporary"
+                            isOpen={isOpen}
+                            sx={{
+                                width: drawerWidth,
+                                flexShrink: 0,
+                            }}
+                        />
+                    </Box>
+                    <Box>
+                        <AppBar
+                            sx={{
+                                display: {
+                                    xs: 'block',
+                                },
+                                width: {
+                                    xs: '100%',
+                                    sm: '100%',
+                                    md: `calc(100% - ${drawerWidth}px)`,
+                                },
+                                marginLeft: {
+                                    xs: 0,
+                                    sm: 0,
+                                    md: `${drawerWidth}px`,
+                                },
+                            }}
+                        >
+                            <Toolbar
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <Stack direction="row" spacing={2}>
+                                    <IconButton
+                                        color="inherit"
+                                        aria-label="open drawer"
+                                        onClick={handleDrawerOpen}
+                                        edge="start"
+                                        sx={{
+                                            mr: 2,
+                                            display: {
+                                                xs: 'block',
+                                                sm: 'block',
+                                                md: 'none',
+                                            },
+                                        }}
+                                    >
+                                        <MenuIcon />
+                                    </IconButton>
                                     <Typography
                                         variant="h6"
                                         noWrap
                                         component="div"
+                                        sx={{ flexGrow: 1 }}
                                     >
                                         관리자 페이지
                                     </Typography>
-                                </Toolbar>
-                            </AppBar>
-                        </Grid>
-                        <Grid item sx={styles.main}>
-                            {children}
-                            <ManageIntroducePresent />
-                        </Grid>
-                    </Grid>
+                                </Stack>
+                            </Toolbar>
+                        </AppBar>
+                    </Box>
+                    <Box
+                        component="main"
+                        sx={{
+                            flexGrow: 1,
+                            p: 3,
+                            mt: 10,
+                            width: {
+                                xs: '100%',
+                                sm: '100%',
+                                md: `calc(98vw - ${drawerWidth}px)`,
+                            },
+                        }}
+                    >
+                        {children}
+                    </Box>
                     <ToastContainer />
                 </Box>
             </LoginGuard>

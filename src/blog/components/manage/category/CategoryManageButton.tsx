@@ -13,7 +13,7 @@ export const CategoryManageButton = observer(() => {
     const router = useRouter();
 
     const handleClick = () => {
-        router.push(URL_MAP.MAIN);
+        router.push(URL_MAP.ADMIN_CATEGORY);
     };
 
     return (
