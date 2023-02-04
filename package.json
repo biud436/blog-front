@@ -6,6 +6,7 @@
     "dependencies": {
         "@emotion/react": "11.9.0",
         "@emotion/styled": "11.8.1",
+        "@giscus/react": "^2.2.6",
         "@mdx-js/loader": "^2.1.5",
         "@mdx-js/react": "^2.1.5",
         "@minoru/react-dnd-treeview": "^3.3.0",
