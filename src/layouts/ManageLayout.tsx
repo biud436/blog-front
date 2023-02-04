@@ -6,124 +6,44 @@ import {
     Theme,
     Toolbar,
     Typography,
-    Grid,
     Alert,
     ThemeProvider,
     useTheme,
     Stack,
     Button,
-    CircularProgress,
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { toast, ToastContainer } from 'react-toastify';
 import { useAuthorized } from '@/hooks/useAuthorized';
-import { ManageMenu } from '../blog/components/manage/atomic/ManageMenu';
+import { ManageMenu } from '../blog/components/manage/ManageMenu';
 import 'react-toastify/dist/ReactToastify.css';
 import { Meta } from '@/blog/components/utils/Meta';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import React from 'react';
 import { useThemeStore } from '@/hooks/useThemeStore';
-import { ManageIntroducePresent } from '@/blog/components/manage/atomic/ManageIntroducePresent';
+import { ManageIntroducePresent } from '@/blog/components/manage/ManageIntroducePresent';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
+import { useMounted } from '@/hooks/useMounted';
+import {
+    LoginGuard,
+    LoginGuardPresent,
+} from '../blog/components/manage/LoginGuard';
 
 export interface ManageLayoutProps {
     children: React.ReactNode;
 }
 
-export const drawerWidth = 240;
-export const styles: Record<string, SxProps<Theme>> = {
-    appBar: {
-        width: {
-            xs: `calc(100%)`,
-            sm: `calc(100%)`,
-            md: `calc(100% - ${drawerWidth}px)`,
-            lg: `calc(100% - ${drawerWidth}px)`,
-            xl: `calc(100% - ${drawerWidth}px)`,
-        },
-        mr: {
-            xs: 0,
-            sm: 0,
-            md: `${drawerWidth}px`,
-            lg: `${drawerWidth}px`,
-            xl: `${drawerWidth}px`,
-        },
-        display: {
-            xs: 'fixed',
-            sm: 'fixed',
-            md: 'none',
-            lg: 'none',
-            xl: 'none',
-        },
-    },
-    main: {
-        flexGrow: 1,
-        p: 3,
-        pt: {
-            xs: 10,
-            sm: 10,
-            md: 2,
-            lg: 2,
-            xl: 2,
-        },
-        bgcolor: 'background.default',
-    },
-};
-
-function LoginGuardPresent() {
-    const timeRef = useRef<NodeJS.Timeout>(null!);
-
-    // 3초 후에 로그인 페이지로 이동
-    useEffect(() => {
-        timeRef.current = setTimeout(() => {
-            location.href = '/';
-        }, 3000);
-
-        return () => {
-            clearTimeout(timeRef.current);
-        };
-    });
-
-    return (
-        <Grid
-            container
-            sx={{
-                height: '100vh',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-            }}
-        >
-            <Grid
-                item
-                xs={6}
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 2,
-                }}
-            >
-                <CircularProgress color="secondary" />
-            </Grid>
-        </Grid>
-    );
-}
+export const drawerWidth = 280;
 
 export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
-    const [isAuthorized] = useAuthorized();
-    const [isMounted, setIsMounted] = useState<boolean>(false);
+    const isMounted = useMounted();
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const theme = useThemeStore('manage');
 
-    const LoginGuard = ({ children }: { children: JSX.Element }) => {
-        return !isAuthorized ? <LoginGuardPresent /> : children;
-    };
-
-    const handleDrawerOpen = (e: React.MouseEvent) => {
+    const handleDrawerOpen = useCallback((e: React.MouseEvent) => {
         setIsOpen(true);
-    };
+    }, []);
 
     const toggleDrawer = useCallback(
         (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -139,10 +59,6 @@ export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
         },
         [],
     );
-
-    useEffect(() => {
-        setIsMounted(true);
-    }, []);
 
     if (!isMounted) {
         return <></>;

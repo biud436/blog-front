@@ -1,20 +1,18 @@
 import { Divider, Drawer, List, SxProps, Theme } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { drawerWidth } from '../../../../layouts/ManageLayout';
+import { drawerWidth } from '../../../layouts/ManageLayout';
 import { BrandLogo } from './BrandLogo';
-import { CategoryManageButton } from '../category/CategoryManageButton';
+import { CategoryManageButton } from './category/CategoryManageButton';
 import { HomeButton } from './HomeButton';
 
+interface ManageMenuProps {
+    isOpen: boolean;
+    sx: SxProps<Theme> | undefined;
+    variant: 'permanent' | 'persistent' | 'temporary' | undefined;
+}
+
 export const ManageMenu = observer(
-    ({
-        isOpen,
-        sx,
-        variant,
-    }: {
-        isOpen: boolean;
-        sx: SxProps<Theme> | undefined;
-        variant: 'permanent' | 'persistent' | 'temporary' | undefined;
-    }) => {
+    ({ isOpen, sx, variant }: ManageMenuProps) => {
         return (
             <Drawer
                 variant={variant}
