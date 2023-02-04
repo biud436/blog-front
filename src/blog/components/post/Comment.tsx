@@ -79,13 +79,16 @@ const COMMENTS_ID = 'comments-container';
 export const GithubComment = observer(() => {
     return (
         <Giscus
-            id={COMMENTS_ID}
+            // id={COMMENTS_ID}
             repo={repo}
             repoId="R_kgDOILkZfQ"
+            category="Announcements"
+            categoryId="DIC_kwDOILkZfc4CT_gP"
             lang={'ko'}
             mapping="pathname"
             loading="lazy"
             theme="light"
+            strict="0"
         />
     );
 });
