@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import ManageIntroduce from './atomic/ManageIntroduce.mdx';
+import ManageIntroduce from './ManageIntroduce.mdx';
 
 export const ManagePresent = observer(() => {
     return (
