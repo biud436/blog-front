@@ -4,6 +4,7 @@ import { PostPage } from '@/blog/pages/post';
 import axios from 'axios';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next/types';
 import { Post } from '@/store/post';
+import { API_URL } from '@/blog/api/request';
 export interface PostsProps {
     id: string;
     post: Post;
@@ -26,7 +27,20 @@ export const getServerSideProps: GetServerSideProps = async (
     let error = null;
 
     try {
-        const { data: res } = await axios.get('/posts/' + id);
+        // 쿠키가 있는지 확인
+        let hasCookie = !!context.req.headers.cookie;
+
+        const { data: res } = await axios.get(API_URL + '/posts/' + id, {
+            withCredentials: true,
+            headers: {
+                // @ts-ignore
+                ...(hasCookie
+                    ? {
+                          Cookie: context.req.headers.cookie,
+                      }
+                    : {}),
+            },
+        });
 
         post = res.data as Post;
 

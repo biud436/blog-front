@@ -163,7 +163,9 @@ export class PostServiceImpl implements IPostService {
         this.isLoading = true;
 
         try {
-            const res = await axios.get(`${API_URL}/posts/${postId}`);
+            const res = await axios.get(`${API_URL}/posts/${postId}`, {
+                withCredentials: true,
+            });
 
             this.setData(res.data.data);
         } catch (e) {
