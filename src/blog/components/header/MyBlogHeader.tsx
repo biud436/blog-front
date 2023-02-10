@@ -85,7 +85,7 @@ export function MyBlogHeader({ router }: { router: NextRouter }) {
                         {MetaCommonConfig.site_name}
                     </Typography>
                 </Grid>
-                <Grid item>
+                {/* <Grid item>
                     <Grid
                         container
                         gap={2}
@@ -104,7 +104,7 @@ export function MyBlogHeader({ router }: { router: NextRouter }) {
                         <GridLink href="/profile" text="About Me" />
                         <GridLink href="/career" text="Career" />
                     </Grid>
-                </Grid>
+                </Grid> */}
                 <Grid
                     item
                     sx={{
