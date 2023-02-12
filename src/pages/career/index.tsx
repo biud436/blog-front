@@ -45,9 +45,7 @@ const Career = ({
 
 export const getStaticProps: GetStaticProps = async () => {
     const getContents = async () => {
-        const files = await (await fs.promises.readdir(CONTENT_PATH)).reverse();
-
-        // files 배열에는 파일명이 있다. "-"을 기준으로 자르고, 0번째 인덱스로 파일을 정렬하여 반환하라.
+        const files = (await fs.promises.readdir(CONTENT_PATH)).reverse();
         files.sort((a, b) => {
             const aDate = a.split('-')[0];
             const bDate = b.split('-')[0];

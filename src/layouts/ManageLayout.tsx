@@ -25,10 +25,7 @@ import { ManageIntroducePresent } from '@/blog/components/manage/ManageIntroduce
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import { useMounted } from '@/hooks/useMounted';
-import {
-    LoginGuard,
-    LoginGuardPresent,
-} from '../blog/components/manage/LoginGuard';
+import { LoginGuard } from '../blog/components/manage/LoginGuard';
 
 export interface ManageLayoutProps {
     children: React.ReactNode;
@@ -36,10 +33,66 @@ export interface ManageLayoutProps {
 
 export const drawerWidth = 280;
 
+export function useManageMenuProps(drawerWidth: number) {
+    const [theme] = useState<SxProps>(() => {
+        return {
+            display: {
+                xs: 'none',
+                sm: 'none',
+                md: 'block',
+                lg: 'block',
+                xl: 'block',
+            },
+            flexShrink: 0,
+            width: {
+                xs: 0,
+                sm: 0,
+                md: drawerWidth,
+            },
+            '& .MuiDrawer-paper': {
+                display: 'block',
+                width: {
+                    xs: 0,
+                    sm: 0,
+                    md: drawerWidth,
+                },
+                boxSizing: 'border-box',
+                boxShadow: '0 0 5px 0 rgba(0, 0, 0, 0.2)',
+            },
+        };
+    });
+
+    return theme;
+}
+
+export function useAppBarProps(drawerWidth: number) {
+    const [theme] = useState<SxProps>(() => {
+        return {
+            display: {
+                xs: 'block',
+            },
+            width: {
+                xs: '100%',
+                sm: '100%',
+                md: `calc(100% - ${drawerWidth}px)`,
+            },
+            marginLeft: {
+                xs: 0,
+                sm: 0,
+                md: `${drawerWidth}px`,
+            },
+        };
+    });
+
+    return theme;
+}
+
 export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
     const isMounted = useMounted();
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const theme = useThemeStore('manage');
+    const manageMenuProps = useManageMenuProps(drawerWidth);
+    const appBarProps = useAppBarProps(drawerWidth);
 
     const handleDrawerOpen = useCallback((e: React.MouseEvent) => {
         setIsOpen(true);
@@ -78,31 +131,7 @@ export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
                     <ManageMenu
                         variant="permanent"
                         isOpen={true}
-                        sx={{
-                            display: {
-                                xs: 'none',
-                                sm: 'none',
-                                md: 'block',
-                                lg: 'block',
-                                xl: 'block',
-                            },
-                            flexShrink: 0,
-                            width: {
-                                xs: 0,
-                                sm: 0,
-                                md: drawerWidth,
-                            },
-                            '& .MuiDrawer-paper': {
-                                display: 'block',
-                                width: {
-                                    xs: 0,
-                                    sm: 0,
-                                    md: drawerWidth,
-                                },
-                                boxSizing: 'border-box',
-                                boxShadow: '0 0 5px 0 rgba(0, 0, 0, 0.2)',
-                            },
-                        }}
+                        sx={manageMenuProps}
                     />
                     <Box
                         onKeyDown={toggleDrawer(false)}
@@ -118,23 +147,7 @@ export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
                         />
                     </Box>
                     <Box>
-                        <AppBar
-                            sx={{
-                                display: {
-                                    xs: 'block',
-                                },
-                                width: {
-                                    xs: '100%',
-                                    sm: '100%',
-                                    md: `calc(100% - ${drawerWidth}px)`,
-                                },
-                                marginLeft: {
-                                    xs: 0,
-                                    sm: 0,
-                                    md: `${drawerWidth}px`,
-                                },
-                            }}
-                        >
+                        <AppBar sx={appBarProps}>
                             <Toolbar
                                 sx={{
                                     display: 'flex',
@@ -153,7 +166,6 @@ export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
                                         edge="start"
                                         sx={{
                                             mr: 2,
-
                                             display: {
                                                 xs: 'flex',
                                                 sm: 'flex',
