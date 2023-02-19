@@ -36,7 +36,7 @@ import { PostTuiEditor } from './PostTuiEditor';
 import { TempPostBox } from './TempPostBox';
 import { useRendersCount } from 'react-use';
 import { Controller, useForm } from 'react-hook-form';
-import { ImageCompressionService } from '@/services/\bImageCompressionService';
+import { ImageCompressionService } from '@/services/ImageCompressionService';
 
 const EPOCH_EDITOR_TIME = 2000;
 
