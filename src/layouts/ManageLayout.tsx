@@ -11,6 +11,7 @@ import {
     useTheme,
     Stack,
     Button,
+    Container,
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { toast, ToastContainer } from 'react-toastify';
@@ -123,8 +124,8 @@ export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
                 <Box sx={{ display: 'flex' }}>
                     <Meta
                         {...{
-                            title: '관리자 페이지',
-                            description: '관리자 페이지입니다',
+                            title: '관리자 모드',
+                            description: '관리자 모드',
                         }}
                     />
                     <CssBaseline />
@@ -147,7 +148,11 @@ export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
                         />
                     </Box>
                     <Box>
-                        <AppBar sx={appBarProps}>
+                        <AppBar
+                            sx={appBarProps}
+                            color="transparent"
+                            variant="outlined"
+                        >
                             <Toolbar
                                 sx={{
                                     display: 'flex',
@@ -186,21 +191,18 @@ export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
                             </Toolbar>
                         </AppBar>
                     </Box>
-                    <Box
-                        component="main"
-                        sx={{
-                            flexGrow: 1,
-                            p: 3,
-                            mt: 10,
-                            width: {
-                                xs: '100%',
-                                sm: '100%',
-                                md: `calc(98vw - ${drawerWidth}px)`,
-                            },
-                        }}
-                    >
-                        {children}
-                    </Box>
+                    <Container>
+                        <Box
+                            component="main"
+                            sx={{
+                                flexGrow: 1,
+                                p: 3,
+                                mt: 10,
+                            }}
+                        >
+                            {children}
+                        </Box>
+                    </Container>
                     <ToastContainer />
                 </Box>
             </LoginGuard>

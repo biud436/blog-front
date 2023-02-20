@@ -1,6 +1,8 @@
 import { rootStore } from '@/store';
 
-export function useThemeStore(themeName: string) {
+export type ThemeKey = 'login' | 'manage';
+
+export function useThemeStore(themeName: ThemeKey) {
     const { themeStore } = rootStore;
     return themeStore[themeName];
 }

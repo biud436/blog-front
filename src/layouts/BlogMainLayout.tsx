@@ -217,7 +217,6 @@ export const PageWrapper = observer(
                 <AppBar
                     position="fixed"
                     open={menuStore.isOpen}
-                    // https://stackoverflow.com/a/69689658
                     sx={{
                         bgcolor: '#3c3c3c',
                     }}
@@ -235,7 +234,6 @@ export const PageWrapper = observer(
                     >
                         <IconButton
                             color="inherit"
-                            aria-label="open drawer"
                             onClick={handleDrawerOpen}
                             edge="start"
                             sx={{

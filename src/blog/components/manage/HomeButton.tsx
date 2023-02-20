@@ -7,6 +7,7 @@ import {
 import CottageIcon from '@mui/icons-material/Cottage';
 import { useRouter } from 'next/router';
 import { URL_MAP } from '@/common/URL';
+import { DynamicMuiIcon } from '../common/DynamicIcon';
 
 export const HomeButton = () => {
     const router = useRouter();
@@ -16,10 +17,10 @@ export const HomeButton = () => {
     };
 
     return (
-        <ListItem button key="home" disablePadding>
+        <ListItem key="home" disablePadding>
             <ListItemButton onClick={handleClick}>
                 <ListItemIcon>
-                    <CottageIcon />
+                    <DynamicMuiIcon name="Cottage" />
                 </ListItemIcon>
                 <ListItemText primary="메인 화면으로" />
             </ListItemButton>
