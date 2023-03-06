@@ -1,78 +1,98 @@
-# Introduction
+# 소개
 
-This project is the blog that is made with the javascript framework named Next.js. it is compatibled with the [blog-api-server](https://github.com/biud436/blog-api-server)
+Next.js로 만든 개인 잡담 블로그입니다. 실제로 사용하기 위해 개발되었으나 잡다한 이야기, 일기 같은 내용만 기록 하고 있으며, 이외의 기술적인 내용은 오랫동안 운영해온 개인 네이버 블로그에 하고 있습니다. 데이터는 별도의 백엔드 서버 [blog-api-server](https://github.com/biud436/blog-api-server)에서 `MariaDB`를 통해 관리되고 있으며 블로그는 [blog.biud436.com](https://blog.biud436.com)에서 확인할 수 있습니다.
 
-[한국어(Korean) 문서](https://github.com/biud436/blog-front/blob/main/README.ko.md)
+## 🛠️ 기술 스택
 
-## Contributors
-
-| <img src="https://avatars.githubusercontent.com/u/13586185?v=4" width="150px" /> |
-| :------------------------------------------------------------------------------: |
-|                   BE: [Jinseok Eo](https://github.com/biud436)                   |
-
-# Features
-
-## Category Editor
-
-The category editor allows you to create a category with a hierarchical structure. You can create a category with a parent-child relationship. You can also change the order of the category by dragging and dropping using `react-dnd`
-
-![code-13](https://user-images.githubusercontent.com/13586185/205221912-1b0640ae-96c9-4367-8e2e-85c742a07e8a.gif)
-
-## Blog Post Editor
-
-You would be able to write the a new post using [TUI-Editor](https://ui.toast.com/tui-editor), it is able to select the category after clicking the category select box. You can also upload the image to the AWS S3 bucket. and it supports the code highlight feature that used a dark theme.
-
-## 🛠️ Tech Stack
+사용한 기술은 다음 몇 가지로 추려집니다.
 
 -   Typescript
 -   Next.js
 -   Material-UI
 -   Mobx
+-   Recoil
+-   Styled-Components
 -   SWR
 
-## Period of Development
+## 개발 기간
 
-2022.10.10 ~ 2022.11.15 (about a month)
+전반적인 기능은 한달 정도 걸렸으나, 계속 업데이트 중에 있습니다.
 
-## Todo List
+2022.10.10 ~ 2022.11.15 (약 1개월)
 
--   [x] Creating layouts
--   [x] Apply State Management Library (Mobx)
--   [x] Administrator Tool
--   [x] Creating a Hierarchical Categories using Nested Model
--   [x] Post (Pagination, Search, Write, Read, Delete)
--   [x] Image Upload Using AWS S3
--   [x] Copy Post Link
--   [x] Integrate with External Comment Plugin
--   [x] Code Highlighting
--   [x] Apply SWR to certain pages such as a page named `posts/[id].tsx`
--   [x] Apply Open Graph
--   [x] Porting with Next.js
+### 투두리스트
 
-## Installation
+블로그는 최소한의 기능만 탑재하고 있습니다.
 
-To start this project, you must have `Visual Studio Code` and `Node.js LTS v16` or higher installed. The node package manager uses `yarn`. `yarn berry` is faster, but `pure yarn` is used. Before starting this project, you must download the dependency node packages.
+-   [x] 공통 레이아웃 만들기
+-   [x] 공통 훅 만들기
+-   [x] 공통 서비스 프로바이더 만들기
+-   [x] Mobx를 통한 상태 관리
+-   [x] 중첩 트리 모델을 사용한 카테고리 자동 생성 시스템
+-   [x] 관리자 페이지 구현
+-   [x] 포스트 기능 (페이지네이션, 검색, 작성, 읽기, 삭제)
+-   [x] AWS S3를 이용한 이미지 업로드 및 삭제 기능 구현
+-   [x] TOC 기능 구현
+-   [x] 외부 댓글 라이브러리 연동
+-   [x] 마크다운 에디터에 코드 하이라이팅 추가
+-   [x] 서버 사이드 렌더링
+-   [x] 오픈그래프와 메타 태그를 추가하여 구글 검색 최적화
+-   [x] AWS 코드 디플로이와 깃허브 패키지를 이용한 도커 배포 자동화
+-   [x] RSS 피드 구현
 
-Open the integrated terminal or text editor (VS Code) and press Ctrl + ` or use the integrated terminal open feature to open the terminal at the bottom.
+## 폴더 구조
 
-You can install all project dependency packages with the following command.
+폴더 구조는 크게, `app`, `common`, `hooks`, `layouts`, `pages`, `services`, `store`, `styles`, `types`, `utils`로 구성되어 있습니다.
 
-```bash
-yarn install
+-   `app/components`에는 공통 컴포넌트가 위치합니다.
+-   `app/api`에는 axios와 fetch에 대한 추상화 레이어가 존재합니다.
+-   `hooks`에는 커스텀 훅이 있습니다.
+-   `services`에는 API 서버와 통신하는 로직이 있습니다.
+-   `layouts`에는 공통 레이아웃 파일이 있습니다.
+-   `store`에서는 상태 관리 로직을 관리합니다.
+
+```txt
+├── _contents
+├── app
+│   ├── api
+│   ├── common
+│   ├── components
+│   ├── pages
+│   └── providers
+├── common
+├── hooks
+│   └── api
+├── layouts
+├── pages
+│   ├── career
+│   ├── edit
+│   ├── login
+│   ├── manage
+│   ├── posts
+│   └── profile
+├── services
+│   └── types
+├── store
+│   ├── common
+│   ├── github
+│   ├── login
+│   ├── menu
+│   ├── post
+│   ├── posts
+│   ├── types
+│   └── user
+├── styles
+│   └── __tests__
+├── types
+└── utils
 ```
 
-When the above command is executed, the dependency packages will start to download. It may take several seconds or a minute or more, so please wait a moment. When the package download is complete, enter `yarn next:dev` in the terminal to start the development server.
+# 설치 및 실행 방법
 
-```bash
-yarn next:dev
-```
+전반적인 Node.js LTS v16 이상의 개발 환경이 구축되어있어야 합니다. 서버 실행 관련 명령어는 `package.json`에서 참조하실 수 있는데, `yarn next:dev` 명령으로 실행할 수 있습니다.
 
-This development server supports HMR (Hot Module Reload) via Webpack, so when you save the project, the browser will apply the CSS or tag (V-DOM) changes immediately.
+자세한 내용은 [설치 방법](https://github.com/biud436/blog-front#installation) 문서를 참고하십시오.
 
-Please open the `http://localhost:8080` in the browser to see the result.
+백엔드 서버는 별도의 저장소에서 관리하고 있고 레디스 의존성으로 인해, 다소 환경 설정이 프론트에 비해 복잡합니다.
 
-## Deployment
-
-This project is deployed a docker image using the GitHub Action and Github Package. The server automatically restarts using AWS CodeDeploy.
-
----
+따라서 본 문서의 범위를 벗어나므로 백엔드 서버 구동 방법은 이 문서에서는 생략하겠습니다.
