@@ -42,8 +42,9 @@ Next.js로 만든 개인 잡담 블로그입니다. 실제로 사용하기 위�
 
 ## 폴더 구조
 
-폴더 구조는 크게, `blog`, `common`, `hooks`, `layouts`, `pages`, `services`, `store`, `styles`, `types`, `utils`로 구성되어 있습니다.
+폴더 구조는 크게, `app`, `blog`, `common`, `hooks`, `layouts`, `pages`, `services`, `store`, `styles`, `types`, `utils`로 구성되어 있습니다.
 
+-   `app`에는 `next.js` 13 버전에서 사용하는 레이아웃, 페이지 등의 파일이 위치합니다.
 -   `blog/components`에는 공통 컴포넌트가 위치합니다.
 -   `blog/api`에는 axios와 fetch에 대한 추상화 레이어가 존재합니다.
 -   `hooks`에는 커스텀 훅이 있습니다.
@@ -54,6 +55,7 @@ Next.js로 만든 개인 잡담 블로그입니다. 실제로 사용하기 위�
 ```txt
 ├── _contents
 ├── app
+├── blog
 │   ├── api
 │   ├── common
 │   ├── components
