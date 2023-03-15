@@ -19,5 +19,6 @@
   "jest.autoRun": {
     "onStartup": [],
     "onSave": []
-  }
+  },
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }
