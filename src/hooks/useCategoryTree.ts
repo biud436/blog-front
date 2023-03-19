@@ -32,7 +32,9 @@ export function useCategoryTree() {
             if (category.children) {
                 changeCategoryName(category.children);
             }
-            category.name = `${category.name} (${postCountMap[category.id]})`;
+            category.name = category.name.includes('(')
+                ? category.name
+                : `${category.name} (${postCountMap[category.id] || 0})`;
         });
     };
 

@@ -23,6 +23,7 @@ export const MobileNav = observer(
         setCategoryList,
         router,
         rootCategory,
+        anchorEl,
     }: {
         toggleDrawer: (
             open: boolean,
@@ -35,6 +36,7 @@ export const MobileNav = observer(
         >;
         router;
         rootCategory: CategoryDepthVO | undefined;
+        anchorEl: HTMLElement | null;
     }) => {
         return (
             <Drawer
@@ -52,6 +54,7 @@ export const MobileNav = observer(
                         boxSizing: 'border-box',
                     },
                 }}
+                transitionDuration={400}
                 SlideProps={{
                     translate: 'yes',
                     appear: true,

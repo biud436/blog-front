@@ -20,6 +20,7 @@ import { useCategoryTree } from '@/hooks/useCategoryTree';
 
 export const PageWrapper = observer(
     ({ name, children }: { name: string; children: React.ReactNode }) => {
+        const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
         const router = useRouter();
         const matches = useMediaQuery({
             query: '(max-width: 768px)',
@@ -30,13 +31,17 @@ export const PageWrapper = observer(
         const categoryService = useCategoryService();
         const { categories, error: isCategoryError } = useCategoryTree();
 
+        const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+            setAnchorEl(event.currentTarget);
+        };
+
+        const handleClose = () => {
+            setAnchorEl(null);
+        };
+
         const handleDrawerOpen = useCallback(() => {
             menuStore.open();
-        }, [menuStore.isOpen]);
-
-        const handleDrawerClose = useCallback(() => {
-            menuStore.close();
-        }, [menuStore.isOpen]);
+        }, []);
 
         const toggleDrawer = useCallback(
             (open: boolean) =>
@@ -84,12 +89,13 @@ export const PageWrapper = observer(
                 <MobileNav
                     {...{
                         toggleDrawer,
-                        handleDrawerClose,
+                        handleDrawerClose: handleClose,
                         theme,
                         categoryList,
                         setCategoryList,
                         router,
                         rootCategory,
+                        anchorEl,
                     }}
                 />
                 <MyBlogContentContainer>
