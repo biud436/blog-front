@@ -1,3 +1,4 @@
+import React from 'react';
 import { Post } from '@/store/post';
 import { Grid } from '@mui/material';
 

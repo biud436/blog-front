@@ -3,7 +3,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { NavigateFunction } from 'react-router';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { URL_MAP } from '@/common/URL';
 import { NextRouter } from 'next/router';

@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button, Grid } from '@mui/material';
 import { useAuthorized } from '@/hooks/useAuthorized';
 import { usePostService } from '@/hooks/usePostService';

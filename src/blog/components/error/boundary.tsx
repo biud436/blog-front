@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from '@mui/material';
 import React from 'react';
 
@@ -15,7 +16,7 @@ export class ErrorBoundary extends React.Component<
 > {
     state = { hasError: false };
 
-    static getDerivedStateFromError(error) {
+    static getDerivedStateFromError() {
         return { hasError: true };
     }
 

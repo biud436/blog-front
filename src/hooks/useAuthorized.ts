@@ -1,12 +1,10 @@
 import { RequestHandler } from '@/blog/api/axios';
-import { useAuth } from '@/blog/providers/auth/authProvider';
 import { useEffect, useState } from 'react';
-import { useCookies } from 'react-cookie';
 import useSWR from 'swr';
 
 export function useAuthorized() {
     const [, setIsLoggedIn] = useState(false);
-    const [cookies] = useCookies(['username']);
+
     const [isAuthorized, setIsAuthorized] = useState(false);
     const [isDone, setIsDone] = useState(false);
 

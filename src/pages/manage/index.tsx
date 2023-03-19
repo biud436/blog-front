@@ -1,3 +1,4 @@
+import React from 'react';
 import { ManagePresent } from '@/blog/components/manage/ManagePresent';
 import { ManageLayout } from '@/layouts/ManageLayout';
 

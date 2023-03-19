@@ -1,4 +1,4 @@
-import { useCookies } from 'react-cookie';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import useSWR, { Key } from 'swr';
 import { HttpMethod, fetcherWithAuth } from './useSWRUtility';
 

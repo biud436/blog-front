@@ -5,14 +5,13 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { NavigateFunction } from 'react-router';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { URL_MAP } from '@/common/URL';
 import { Collapse } from '@mui/material';
 import { CategoryDepthVO } from '@/services/CategoryService';
 import { useCategoryService } from '@/hooks/useCategoryService';
 import { observer } from 'mobx-react-lite';
-import { useRouter, NextRouter } from 'next/router';
+import { NextRouter } from 'next/router';
 
 interface CategoryWrapperProps {
     categoryList: CategoryDepthVO[];
@@ -50,7 +49,7 @@ export const CategoryWrapper = React.memo(
                         return (
                             <React.Fragment key={key}>
                                 <ListItemButton
-                                    onClick={(e: React.MouseEvent) => {
+                                    onClick={() => {
                                         if (isNotEmpty) {
                                             setCategoryList([...categoryList]);
                                         }

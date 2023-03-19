@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { API_URL } from '@/blog/api/request';
 import axios, { AxiosInstance } from 'axios';
 import { toast } from 'react-toastify';
@@ -5,7 +6,7 @@ import { toast } from 'react-toastify';
 export type Nullable<T> = T | null;
 
 let _axiosInstance: Nullable<AxiosInstance> = null;
-let _axiosInterceptor = {
+const _axiosInterceptor = {
     requestId: 0,
     responseId: 0,
 };

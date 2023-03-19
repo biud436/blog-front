@@ -66,6 +66,7 @@ export const LoginPage = observer(() => {
                 router.push(URL_MAP.MAIN);
             });
         } finally {
+            // empty
         }
     };
 

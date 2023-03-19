@@ -15,7 +15,7 @@ export type ChangeFreq =
 export type ISiteMapProps = ISitemapField;
 
 class SitemapPostService {
-    static async getPosts(page: number = 1) {
+    static async getPosts(page = 1) {
         const { data: res } = await axios.get(`/posts?page=${page}`);
         const posts = res.data as Paginatable<Post>;
 

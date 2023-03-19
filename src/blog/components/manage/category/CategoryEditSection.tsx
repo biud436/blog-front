@@ -1,4 +1,3 @@
-import { useStatelessInput } from '@/hooks/useStatelessInput';
 import { Button, Grid, Input } from '@mui/material';
 import React from 'react';
 

@@ -1,3 +1,4 @@
+import React from 'react';
 import { Meta } from '@/blog/components/utils/Meta';
 import { MainLayout } from '@/layouts/BlogMainLayout';
 import { Box } from '@mui/material';

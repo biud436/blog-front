@@ -1,3 +1,4 @@
+import React from 'react';
 import { Grid, SxProps, Typography } from '@mui/material';
 import Link from 'next/link';
 

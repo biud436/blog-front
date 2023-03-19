@@ -3,8 +3,8 @@ import { Box } from '@mui/system';
 import { GetStaticProps } from 'next';
 import * as path from 'path';
 import * as fs from 'fs';
-import dynamic, { LoadableComponent } from 'next/dynamic';
-import React, { ComponentType, useEffect, useState } from 'react';
+
+import React from 'react';
 import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { Meta } from '@/blog/components/utils/Meta';
@@ -12,7 +12,6 @@ import { Meta } from '@/blog/components/utils/Meta';
 const CONTENT_PATH = path.join(process.cwd(), 'src', '_contents');
 
 const Career = ({
-    files,
     sources,
 }: {
     files: string[];

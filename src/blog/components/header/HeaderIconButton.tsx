@@ -22,3 +22,4 @@ export const HeaderIconButton = React.memo(
         );
     },
 );
+HeaderIconButton.displayName = 'HeaderIconButton';

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
     FormControl,
     Grid,
@@ -5,13 +6,7 @@ import {
     OutlinedInput,
     OutlinedInputProps,
 } from '@mui/material';
-import {
-    useCallback,
-    useEffect,
-    useLayoutEffect,
-    useRef,
-    useState,
-} from 'react';
+import React, { useCallback } from 'react';
 
 export const StatelessInput = ({
     forwardedRef,
@@ -29,8 +24,7 @@ export const StatelessInput = ({
     };
 
     const onRefChange = useCallback(node => {
-        if (node === null) {
-        } else {
+        if (node !== null) {
             if (forwardedRef) {
                 const inputElem = node.childNodes[0];
                 (forwardedRef.current as HTMLInputElement) = inputElem;

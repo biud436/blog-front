@@ -31,10 +31,6 @@ export const MainLayout = observer(
         const categoryService = useCategoryService();
         const { categories, error: isCategoryError } = useCategoryTree();
 
-        const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-            setAnchorEl(event.currentTarget);
-        };
-
         const handleClose = () => {
             setAnchorEl(null);
         };

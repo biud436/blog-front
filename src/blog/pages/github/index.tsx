@@ -1,11 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { API_URL } from '@/blog/api/request';
 import { MainLayout } from '@/layouts/BlogMainLayout';
-import { Avatar, ImageList, Typography } from '@mui/material';
+import { Avatar, Typography } from '@mui/material';
 import axios from 'axios';
 import { observer } from 'mobx-react-lite';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
-import { useCookie } from 'react-use';
+import React, { useEffect, useState } from 'react';
 
 export const GithubCallbackPage = observer(() => {
     const [githubData, setGithubData] = useState<any>();

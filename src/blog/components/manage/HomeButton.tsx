@@ -1,10 +1,10 @@
+import React from 'react';
 import {
     ListItem,
     ListItemButton,
     ListItemIcon,
     ListItemText,
 } from '@mui/material';
-import CottageIcon from '@mui/icons-material/Cottage';
 import { useRouter } from 'next/router';
 import { URL_MAP } from '@/common/URL';
 import { DynamicMuiIcon } from '../common/DynamicIcon';

@@ -3,7 +3,6 @@ import { makeAutoObservable } from 'mobx';
 import { BaseDataListDto, Paginable } from '../types/list';
 import { Searchable } from '../types/searchable';
 import { PostDto, PostsSearchType } from './posts.dto';
-import { makePersistable } from 'mobx-persist-store';
 
 export class PostsStore implements Searchable<PostsSearchType>, Paginable {
     list: BaseDataListDto = {
@@ -29,15 +28,15 @@ export class PostsStore implements Searchable<PostsSearchType>, Paginable {
     };
     modalEntity: PostDto | undefined;
 
-    isOpenModal: boolean = false;
-    defaultCategory: string = 'content';
+    isOpenModal = false;
+    defaultCategory = 'content';
 
     /**
      * 현재 카테고리 ID
      */
     currentCategoryId: CategoryItemId = 1;
 
-    private _isSearchMode: boolean = false;
+    private _isSearchMode = false;
 
     constructor() {
         makeAutoObservable(this);

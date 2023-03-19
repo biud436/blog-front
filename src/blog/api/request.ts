@@ -10,7 +10,7 @@ const requestCache: { token?: string | null } = { token: null };
 
 export function request<T = unknown>(
     url: string,
-    payload: Record<string, any>,
+    payload: Record<string, unknown>,
 ): Promise<T> {
     return new Promise((resolve, reject) => {
         fetch(`${API_URL}${url}`, {
@@ -28,13 +28,12 @@ export function request<T = unknown>(
 }
 
 export const auth = {
-    logout: (url: string, token: string) => {
+    logout: (url: string) => {
         return new Promise((resolve, reject) => {
             fetch(`${API_URL}${url}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    // Authorization: `Bearer ${token}`,
                 },
                 credentials: 'include',
             })
@@ -48,7 +47,7 @@ export const auth = {
 /**
  * ! AUTH
  */
-export function get<T = Record<string, any>>(
+export function get<T = Record<string, unknown>>(
     url: string,
     token: string,
 ): Promise<T> {
@@ -72,10 +71,10 @@ export function get<T = Record<string, any>>(
 /**
  * ! AUTH
  */
-export function post<T = Record<string, any>>(
+export function post<T = Record<string, unknown>>(
     url: string,
     token: string,
-    payload: Record<string, any>,
+    payload: Record<string, unknown>,
 ): Promise<T> {
     return new Promise((resolve, reject) => {
         requestCache.token = token;
@@ -102,7 +101,7 @@ export function post<T = Record<string, any>>(
  * @param token
  * @returns
  */
-export function getUser<T = Record<string, any>>(
+export function getUser<T = Record<string, unknown>>(
     url: string,
     token: string,
 ): Promise<T> {
@@ -122,7 +121,10 @@ export function getUser<T = Record<string, any>>(
     });
 }
 
-export const RequestHandler: IRequestHandler<unknown, Record<string, any>> = {
+export const RequestHandler: IRequestHandler<
+    unknown,
+    Record<string, unknown>
+> = {
     request,
     auth,
     get,

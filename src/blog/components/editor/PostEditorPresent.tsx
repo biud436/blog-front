@@ -1,20 +1,11 @@
 import { URL_MAP } from '@/common/URL';
 import { useCategoryService } from '@/hooks/useCategoryService';
 import { CategoryDepthVO } from '@/services/CategoryService';
-import { Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
 import { observer } from 'mobx-react-lite';
-import {
-    createRef,
-    Suspense,
-    useCallback,
-    useEffect,
-    useId,
-    useMemo,
-    useRef,
-    useState,
-} from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { toJS } from 'mobx';
 import React from 'react';
 import { toast } from 'react-toastify';
@@ -30,11 +21,9 @@ import { PostContent } from '@/services/PostService';
 import { useSWRConfig } from 'swr';
 import { API_URL } from '@/blog/api/request';
 import { useMediaQuery } from 'react-responsive';
-import imageCompression from 'browser-image-compression';
 import { useRouter } from 'next/router';
 import { PostTuiEditor } from './PostTuiEditor';
 import { TempPostBox } from './TempPostBox';
-import { useRendersCount } from 'react-use';
 import { Controller, useForm } from 'react-hook-form';
 import { ImageCompressionService } from '@/services/ImageCompressionService';
 
@@ -51,6 +40,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
     const router = useRouter();
     const [categories, setCategories] = useState<CategoryDepthVO[]>([]);
     const [currentCategoryId, setCurrentCategoryId] = useState(1);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const editorRef = useRef<any>(null);
     const postService = usePostService();
     const matches = useMediaQuery({
@@ -72,7 +62,6 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
             return [['image'], ['heading', 'bold'], ['codeblock']];
         }
     }, [matches]);
-    const rendersCount: number = useRendersCount();
 
     const categoryService = useCategoryService();
 
@@ -103,11 +92,11 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
 
                         callback(data.location, data.originalName);
                     })
-                    .catch(err => {
+                    .catch(() => {
                         toast.error('이미지 업로드에 실패하였습니다.');
                     });
             })
-            .catch(err => {
+            .catch(() => {
                 toast.error('이미지 압축에 실패했습니다.');
             });
 
@@ -154,6 +143,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
             }
 
             router.push(URL_MAP.MAIN);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (e: any) {
             toast.error(e.message);
         }
@@ -200,7 +190,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
 
             postService
                 .getPost(id)
-                .then(res => {
+                .then(() => {
                     const fetchData = () => {
                         setTitle(postService.getTitle());
                         editorRef.current
@@ -214,7 +204,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
                         fetchData();
                     }
                 })
-                .catch(err => {
+                .catch(() => {
                     toast.error('글을 불러오는데 실패했습니다.');
                 });
         } else {

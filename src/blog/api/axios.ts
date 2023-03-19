@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-namespace */
 import { IRequestHandler } from '@/types/IRequest';
 import axios, { AxiosInstance } from 'axios';
 import { API_URL } from './request';
@@ -12,7 +15,7 @@ type Optional<T> = T | null;
  */
 export namespace AxiosManager {
     let axiosInstance: Optional<AxiosInstance> = null;
-    let isReady: boolean = false;
+    let isReady = false;
 
     export function createAxiosInstance({
         AUTH_TOKEN,
@@ -65,7 +68,10 @@ export namespace AxiosManager {
  *
  * @author Jinseok Eo
  */
-export const RequestHandler: IRequestHandler<unknown, Record<string, any>> = {
+export const RequestHandler: IRequestHandler<
+    unknown,
+    Record<string, unknown>
+> = {
     request: async (url, payload) => {
         return (
             await axios.post(url, payload, {
@@ -87,18 +93,14 @@ export const RequestHandler: IRequestHandler<unknown, Record<string, any>> = {
         },
     },
     get: async (url, token) => {
-        try {
-            const res = await AxiosManager.getAxiosInstance(token)!.get(url, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                withCredentials: true,
-            });
+        const res = await AxiosManager.getAxiosInstance(token)!.get(url, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            withCredentials: true,
+        });
 
-            return res.data;
-        } catch (err) {
-            throw err;
-        }
+        return res.data;
     },
     post: async (url, token, payload) => {
         const res = await AxiosManager.getAxiosInstance(token)!.post(

@@ -3,11 +3,11 @@ import { useEffect } from 'react';
 import { UNIQUE_PREFIX, useTocItems } from './useTocItems';
 
 export function useScrollTopTocItem() {
-    const { anchorElements, changeActiveTocItem } = useTocItems();
-    const { scrollY, scrollYProgress } = useScroll();
+    const { changeActiveTocItem } = useTocItems();
+    const { scrollY } = useScroll();
 
     useEffect(() => {
-        return scrollY.onChange(y => {
+        return scrollY.onChange(() => {
             const tocItems = Array.from<HTMLAnchorElement>(
                 document.querySelectorAll('.post-heading'),
             );
@@ -15,15 +15,9 @@ export function useScrollTopTocItem() {
                 const { top } = item.getBoundingClientRect();
                 return top > 0;
             });
-            const visibleObjects = tocItems.filter(item => {
-                const { top } = item.getBoundingClientRect();
-                return top > 0;
-            });
-
-            const numOfVisibleObjects = visibleObjects.length;
 
             if (currentHeading) {
-                let targetIndex = tocItems.indexOf(currentHeading);
+                const targetIndex = tocItems.indexOf(currentHeading);
 
                 changeActiveTocItem(`${UNIQUE_PREFIX}-${targetIndex}`);
             }

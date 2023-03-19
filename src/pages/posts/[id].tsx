@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React from 'react';
 import { ErrorBoundary } from '@/blog/components/error/boundary';
 import { PostPage } from '@/blog/pages/post';
 
@@ -28,12 +30,11 @@ export const getServerSideProps: GetServerSideProps = async (
 
     try {
         // 쿠키가 있는지 확인
-        let hasCookie = !!context.req.headers.cookie;
+        const hasCookie = !!context.req.headers.cookie;
 
         const { data: res } = await axios.get(API_URL + '/posts/' + id, {
             withCredentials: true,
             headers: {
-                // @ts-ignore
                 ...(hasCookie
                     ? {
                           Cookie: context.req.headers.cookie,

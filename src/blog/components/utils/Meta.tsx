@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import MetaCommonConfig from './meta-config.json';
 
 interface MetaProps {

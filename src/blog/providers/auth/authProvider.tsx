@@ -1,18 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { auth } from '@/blog/api/request';
 import * as React from 'react';
-import { useEffect } from 'react';
+
 import { useCookies, CookiesProvider } from 'react-cookie';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+
 import { useRecoilState } from 'recoil';
 import { userState } from 'store/user';
 import { toast } from 'react-toastify';
 import { AxiosManager, RequestHandler } from '@/blog/api/axios';
-import Loading from '../../components/atomic/Loading';
+
 import { LoginResponse } from './LoginResponse';
 import { StatusCode } from './StatusCode';
 import { AuthContextType } from './AuthContextType';
 import { observer } from 'mobx-react-lite';
-import { URL_MAP } from '@/common/URL';
 
 export type HttpMethod = 'get' | 'post' | 'put' | 'delete' | 'patch';
 
@@ -20,8 +21,8 @@ export const AuthContext = React.createContext<AuthContextType>(null!);
 
 export const AuthProvider = observer(
     ({ children }: { children: React.ReactNode }) => {
-        let [user, setUser] = useRecoilState(userState);
-        const [cookies, setCookie, removeCookie] = useCookies(['username']);
+        const [user, setUser] = useRecoilState(userState);
+        const [, setCookie, removeCookie] = useCookies(['username']);
 
         /**
          * 로그인 요청
@@ -78,7 +79,7 @@ export const AuthProvider = observer(
                         '/auth/profile',
                         '',
                     );
-                    setUser(profile.user);
+                    setUser(profile.user as any);
                 } else {
                     toast.error(res!.message, {
                         position: 'top-center',
@@ -103,10 +104,7 @@ export const AuthProvider = observer(
             absolutlyExecutor?: () => void,
         ) => {
             try {
-                const res = (await auth.logout(
-                    `/auth/logout`,
-                    '',
-                )) as LoginResponse;
+                (await auth.logout(`/auth/logout`)) as LoginResponse;
 
                 // 로그인 상태 제거
                 localStorage.removeItem('isLoggedIn');
@@ -135,10 +133,7 @@ export const AuthProvider = observer(
          * @param callback
          * @returns
          */
-        const refreshAuth: AuthContextType['refreshAuth'] = async (
-            successCallback: VoidFunction,
-            errorCallback: VoidFunction,
-        ) => {
+        const refreshAuth: AuthContextType['refreshAuth'] = async () => {
             try {
                 const token = '';
 
@@ -157,15 +152,11 @@ export const AuthProvider = observer(
                     token,
                 );
                 if (profile) {
-                    setUser(profile.user);
-                    // successCallback();
+                    setUser(profile.user as any);
                     return true;
                 }
                 return false;
             } catch (e: any) {
-                // if (errorCallback) {
-                //     errorCallback();
-                // }
                 return false;
             }
         };
@@ -195,7 +186,7 @@ export const AuthProvider = observer(
             }
         };
 
-        let value = { user, login, logout, refreshAuth, requestData };
+        const value = { user, login, logout, refreshAuth, requestData };
 
         return (
             <CookiesProvider>

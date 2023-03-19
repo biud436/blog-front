@@ -26,7 +26,9 @@ export function LoginGuard() {
             if (profile) {
                 setIsAuthorized(true);
             }
-        } catch (e) {}
+        } catch (e) {
+            /** empty */
+        }
     };
 
     useEffect(() => {

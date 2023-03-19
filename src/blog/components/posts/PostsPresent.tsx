@@ -1,36 +1,29 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React from 'react';
 import { SearchBuilder } from '@/blog/components/builder/SearchBuilder';
-import { useAuth } from '@/blog/providers/auth/authProvider';
+
 import { usePostsService } from '@/hooks/usePostsService';
 import { PostsServiceProvider } from '@/services/PostsService';
 import { postsStore } from '@/store';
 import { PostsSearchType } from '@/store/posts/posts.dto';
-import ChevronRight from '@mui/icons-material/ChevronRight';
+
 import {
-    Alert,
-    Box,
-    Breadcrumbs,
-    Button,
     Card,
     CardActions,
-    CardContent,
     CardHeader,
     CardMedia,
-    Container,
-    css,
-    Divider,
     Grid,
     Pagination,
-    Paper,
-    Stack,
     Typography,
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { toast } from 'react-toastify';
-import Markdown from 'marked-react';
+
 import { DateUtil, Formatter } from '../../api/date';
-import { useNavigate } from 'react-router';
-import { URL_MAP } from '@/common/URL';
+
 import { useCategoryService } from '@/hooks/useCategoryService';
 import { useRouter } from 'next/router';
 
@@ -65,7 +58,7 @@ const PostsContainer = observer(() => {
                 postsStore,
                 categoryService.getCurrentMenuCategoryId(),
             );
-        } catch (e: any) {
+        } catch (e) {
             console.warn(e);
             toast.error('조회 결과가 없습니다');
             postsStore.setEntities([]);
@@ -78,7 +71,9 @@ const PostsContainer = observer(() => {
             postsStore.setPageNumber(1);
             await fetchData(page);
         } catch (e: any) {
-            postsStore.setSearchType(postsStore.getDefaultCategory() as any);
+            postsStore.setSearchType(
+                postsStore.getDefaultCategory() as PostsSearchType,
+            );
             postsStore.setSearchQuery('');
 
             toast.error(e.message);

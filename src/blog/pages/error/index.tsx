@@ -1,3 +1,4 @@
+import React from 'react';
 import { MainLayout } from '@/layouts/BlogMainLayout';
 import { Alert } from '@mui/material';
 import { observer } from 'mobx-react-lite';

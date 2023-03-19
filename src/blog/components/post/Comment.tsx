@@ -1,10 +1,9 @@
+import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { Children, createRef, useEffect, useRef, useState } from 'react';
 import Giscus from '@giscus/react';
 
 // const src = 'https://utteranc.es/client.js';
 const repo = 'biud436/blog-front';
-const COMMENTS_ID = 'comments-container';
 
 // type UtterancesAttributesType = {
 //     src: string;

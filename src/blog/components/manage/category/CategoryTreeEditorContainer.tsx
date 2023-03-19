@@ -1,21 +1,14 @@
 import {
     Button,
-    FormControlLabel,
-    Checkbox,
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogActions,
     ThemeProvider,
     CssBaseline,
     Grid,
-    Divider,
     Box,
     Typography,
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { createTheme } from '@mui/material/styles';
-import { DndProvider, useDrag } from 'react-dnd';
+import { DndProvider } from 'react-dnd';
 import {
     Tree,
     MultiBackend,
@@ -25,9 +18,7 @@ import {
     NodeModel,
     DropOptions,
 } from '@minoru/react-dnd-treeview';
-import { TouchBackend } from 'react-dnd-touch-backend';
 import AddIcon from '@mui/icons-material/Add';
-import CopyIcon from '@mui/icons-material/FileCopy';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { URL_MAP } from '@/common/URL';
@@ -42,7 +33,6 @@ import {
     CategoryNodeEventHandler,
     CategoryNodeEditEventHandler,
     CategoryModel,
-    FreeNodeModel,
     CategoryResultTuple,
     CategoryTreeModel,
     MoveCategoryDto,
@@ -50,6 +40,7 @@ import {
 import { DragPreview } from './DragPreview';
 import { CategoryEditorHeader } from './CategoryEditorHeader';
 import { CategoryNode } from './CategoryNode';
+import { ServerResponse } from '@/types/ServerResponse';
 
 const theme = createTheme({
     components: {
@@ -91,10 +82,8 @@ export const CategoryTreeEditorContainer = observer(() => {
      * 카테고리를 불러옵니다.
      */
     const initCategoryList = useCallback(async () => {
-        const res: AxiosResponse<any> = await axios.get(
-            `${API_URL}/admin/category?isBeautify=true`,
-            {},
-        );
+        const res: AxiosResponse<ServerResponse<CategoryDepthVO[]>> =
+            await axios.get(`${API_URL}/admin/category?isBeautify=true`, {});
 
         const categories: CategoryDepthVO[] = res.data.data;
 
@@ -239,12 +228,12 @@ export const CategoryTreeEditorContainer = observer(() => {
     const handleDrop = useCallback<
         (
             tree: NodeModel<CategoryModel>[],
-            options?: DropOptions<any> | undefined,
+            options?: DropOptions | undefined,
         ) => void
     >(
         (
             newTree: NodeModel<CategoryModel>[],
-            options: DropOptions<any> | undefined,
+            options: DropOptions | undefined,
         ) => {
             console.log(newTree);
             console.log(options);
@@ -277,7 +266,7 @@ export const CategoryTreeEditorContainer = observer(() => {
                             });
                         }
                     })
-                    .catch(err => {
+                    .catch(() => {
                         toast.error('카테고리 이동에 실패했습니다.', {
                             position: 'top-center',
                         });

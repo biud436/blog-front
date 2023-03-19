@@ -1,12 +1,10 @@
+import React from 'react';
 import { Grid, Paper, Typography, Divider, Alert } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import ChevronRight from '@mui/icons-material/ChevronRight';
 import { MainLayout } from '@/layouts/BlogMainLayout';
-import { Suspense, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useAuthorized } from '@/hooks/useAuthorized';
-import { useParams } from 'react-router';
-import { useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -64,7 +62,7 @@ export const PostEditor = observer(({ mode }: EditPageProps) => {
 
 export const PostEditorContainer = observer(
     ({ editorMode }: { editorMode: string }) => {
-        const [isAuthorized, isDone] = useAuthorized();
+        const [isAuthorized] = useAuthorized();
 
         // useState로 할 경우, 렌더링이 두 번 일어나면서 버그가 발생합니다.
         const mode = useRef<EditPageProps['mode']>('create');

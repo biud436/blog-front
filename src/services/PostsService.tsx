@@ -1,19 +1,17 @@
+/* eslint-disable no-unsafe-optional-chaining */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { API_URL } from '@/blog/api/request';
 import { HttpMethod, useAuth } from '@/blog/providers/auth/authProvider';
 import { postsStore } from '@/store';
 import { PostsSearchType } from '@/store/posts/posts.dto';
 import axios from 'axios';
-import { makeAutoObservable, toJS } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import {
-    createContext,
-    ReactNode,
-    useContext,
-    useEffect,
-    useState,
-} from 'react';
+import { createContext, ReactNode, useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { IReactService, ReactServiceStore } from './types/ReactServiceStore';
+import React from 'react';
 
 export type IPostsService = IReactService<PostsSearchType> & {
     getBreadcrumb: (categoryName: string) => Promise<any>;
@@ -89,7 +87,7 @@ const fetcher = (url: string, queryParam: string) =>
 export const PostsServiceProvider = observer(
     ({ children }: { children: ReactNode }) => {
         const auth = useAuth();
-        const [postsService, setPostsService] = useState<IPostsService>(
+        const [postsService] = useState<IPostsService>(
             new PostsServiceImpl(auth.requestData),
         );
 

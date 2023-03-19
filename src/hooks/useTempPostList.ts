@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import useSWR, { mutate } from 'swr';
+import useSWR from 'swr';
 
 const getPost = (url: string) => {
     return axios.get(url).then(res => res.data);

@@ -1,10 +1,11 @@
-import { Input, InputProps, TextField, TextFieldProps } from '@mui/material';
+import { TextField, TextFieldProps } from '@mui/material';
 import {
     FieldPath,
     FieldValues,
     useController,
     UseControllerProps,
 } from 'react-hook-form';
+import React from 'react';
 
 export type CustomInputProps<
     TFieldValues extends FieldValues = FieldValues,
@@ -14,7 +15,7 @@ export type CustomInputProps<
 export function CustomMUIInput(props: CustomInputProps) {
     const {
         field,
-        fieldState: { isTouched, isDirty, error },
+        fieldState: { error },
     } = useController(props);
 
     return (

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import '@toast-ui/editor/dist/toastui-editor.css';
 
 import { Viewer, ViewerProps } from '@toast-ui/react-editor';
@@ -11,7 +12,7 @@ import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin
 
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 import '@toast-ui/editor/dist/toastui-editor.css';
-// import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
+
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import { ForwardedScrollProgressBar } from '../atomic/ScrollProgressBar';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -20,9 +21,6 @@ import { useInView } from 'framer-motion';
 import * as React from 'react';
 import { useCallback } from 'react';
 import ReactDOM from 'react-dom';
-import { motion } from 'framer-motion';
-import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
-import { useScrollTopTocItem } from '@/hooks/useScrollTopTocItem';
 
 const ViewerWrapper = styled.div`
     .post-heading {
@@ -110,7 +108,7 @@ const ForcusToc = ({
 };
 
 const HeadingElementWrapper = () => {
-    const [activeId, setActiveId] = useState<string | null>(null);
+    const [, setActiveId] = useState<string | null>(null);
     const [activeComponents, setActiveComponents] = React.useState<
         React.ReactNode[]
     >([]);
@@ -135,9 +133,6 @@ const HeadingElementWrapper = () => {
 
 const TuiEditorViewer = ({ content }: { content: string }) => {
     const isLoaded = useRef<boolean>(false);
-    const [scrollY] = useScrollTopTocItem();
-    const [theme, setTheme] = useState('dark');
-
     const viewerRef = useRef<Viewer | null>(null);
 
     const setViewerRef = useCallback(
@@ -192,12 +187,6 @@ const TuiEditorViewer = ({ content }: { content: string }) => {
             },
         };
     }, []);
-
-    useEffect(() => {
-        if (viewerRef.current) {
-            const elem = viewerRef.current.getRootElement();
-        }
-    });
 
     return (
         <ViewerWrapper>

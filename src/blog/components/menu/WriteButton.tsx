@@ -1,11 +1,11 @@
-import * as React from 'react';
+import React, { memo } from 'react';
 import Typography from '@mui/material/Typography';
 import { URL_MAP } from '@/common/URL';
 import { Button } from '@mui/material';
 import { useRouter } from 'next/router';
 import CreateIcon from '@mui/icons-material/Create';
 
-export const WriteButton = React.memo(() => {
+export const WriteButton = memo(() => {
     const router = useRouter();
 
     return (
@@ -34,3 +34,4 @@ export const WriteButton = React.memo(() => {
         </Button>
     );
 });
+WriteButton.displayName = 'WriteButton';

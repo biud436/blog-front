@@ -1,15 +1,5 @@
 import { Post } from '@/store/post';
-import {
-    Card,
-    Divider,
-    Grid,
-    Typography,
-    Paper,
-    Container,
-    useMediaQuery,
-    Box,
-} from '@mui/material';
-import { Helmet } from 'react-helmet-async';
+import { Card, Divider, Grid, Typography, Paper, Box } from '@mui/material';
 import { PostFooter } from './PostFooter';
 import GithubComment from './Comment';
 import { PostContent } from './PostContent';

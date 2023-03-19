@@ -1,18 +1,15 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import { URL_MAP } from '@/common/URL';
-import { Button, Box, Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { NextRouter } from 'next/router';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import RssFeedIcon from '@mui/icons-material/RssFeed';
 import MetaCommonConfig from '@/blog/components/utils/meta-config.json';
 import { WriteButton } from '@/blog/components/menu/WriteButton';
 import styled from 'styled-components';
-import Link from 'next/link';
-import { GridLink } from '../common/GridLink';
+
 import { HeaderIconButton } from './HeaderIconButton';
-import { StatelessInput } from '../common/StatelessInput';
-import { useStatelessInput } from '../../../hooks/useStatelessInput';
 
 const HeaderStyleGuard = styled.div``;
 
@@ -85,26 +82,6 @@ export function MyBlogHeader({ router }: { router: NextRouter }) {
                         {MetaCommonConfig.site_name}
                     </Typography>
                 </Grid>
-                {/* <Grid item>
-                    <Grid
-                        container
-                        gap={2}
-                        sx={{
-                            display: 'flex',
-                            ml: {
-                                xs: 0,
-                                sm: 0,
-                                md: 2,
-                                lg: 2,
-                                xl: 2,
-                            },
-                            alignItems: 'center',
-                        }}
-                    >
-                        <GridLink href="/profile" text="About Me" />
-                        <GridLink href="/career" text="Career" />
-                    </Grid>
-                </Grid> */}
                 <Grid
                     item
                     sx={{

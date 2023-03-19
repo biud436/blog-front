@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { MainLayout } from '@/layouts/BlogMainLayout';
 import { URL_MAP } from '@/common/URL';
 import { observer } from 'mobx-react-lite';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { PostPresent } from '../../components/post/PostPresent';
 import { useRouter } from 'next/router';

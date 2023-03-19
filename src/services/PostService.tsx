@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { API_URL } from '@/blog/api/request';
 import { Post, PostStore } from '@/store/post';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { makeAutoObservable } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import { createContext, ReactNode } from 'react';
+import React, { createContext, ReactNode } from 'react';
 
 export interface IPostService {
     isSamePost(postId: number): boolean;
@@ -52,11 +54,11 @@ export const PostContext = createContext<IPostService>(null!);
 
 export class PostServiceImpl implements IPostService {
     postStore: PostStore = new PostStore();
-    isError: boolean = false;
-    isLoading: boolean = false;
-    errorMessage: string = '';
+    isError = false;
+    isLoading = false;
+    errorMessage = '';
 
-    isFetchTempPost: boolean = false;
+    isFetchTempPost = false;
     tempPostContent: TempPostContent = {
         content: '',
         title: '',
@@ -169,6 +171,7 @@ export class PostServiceImpl implements IPostService {
 
             this.setData(res.data.data);
         } catch (e) {
+            // empty
         } finally {
             this.isLoading = false;
         }

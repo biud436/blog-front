@@ -1,6 +1,6 @@
+import React from 'react';
 import { Divider, Drawer, List, SxProps, Theme } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { drawerWidth } from '../../../layouts/ManageLayout';
 import { BrandLogo } from './BrandLogo';
 import { CategoryManageButton } from './category/CategoryManageButton';
 import { HomeButton } from './HomeButton';

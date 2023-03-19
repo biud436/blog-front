@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import React from 'react';
 import { Searchable } from '@/store/types/searchable';
 import {
     Button,

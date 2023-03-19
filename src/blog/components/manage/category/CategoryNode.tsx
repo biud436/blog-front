@@ -31,7 +31,6 @@ export const CategoryNode = observer(
         isOpen,
         onToggle,
         onDelete,
-        onCopy,
         onEdit,
     }: CategoryNodeProps<CategoryModel>) => {
         const [categoryName, setCategoryName] = useState(node.text);
@@ -59,12 +58,9 @@ export const CategoryNode = observer(
             [node.id, onToggle],
         );
 
-        const emitOnEdit = useCallback(
-            (nodeId: string | number) => {
-                setEditMode(true);
-            },
-            [onEdit],
-        );
+        const emitOnEdit = useCallback(() => {
+            setEditMode(true);
+        }, [onEdit]);
 
         const handleSubmit = useCallback(() => {
             setEditMode(false);

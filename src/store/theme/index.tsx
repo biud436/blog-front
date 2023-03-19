@@ -1,5 +1,4 @@
 import { createTheme } from '@mui/material';
-import { grey, purple } from '@mui/material/colors';
 import { DefaultTheme, ThemeProviderProps } from '@mui/system';
 import { makeAutoObservable } from 'mobx';
 

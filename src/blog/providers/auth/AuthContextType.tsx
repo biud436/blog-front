@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { User } from 'store/types';
 import { HttpMethod } from './authProvider';
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-namespace */
 import imageCompression from 'browser-image-compression';
 
 type Optional<T> = {

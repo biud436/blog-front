@@ -1,6 +1,5 @@
-import { useAuth } from '@/blog/providers/auth/authProvider';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios';
-import { useEffect, useState } from 'react';
 
 export type AuthSwrType = {
     METHODS: 'GET' | 'POST' | 'PATCH' | 'DELETE';
@@ -35,8 +34,6 @@ export const fetcherWithAuth = (
     accessToken: string,
     data?: Record<string, any> | undefined,
 ) => {
-    const { user } = useAuth();
-
     if (method === 'GET' && data) {
         throw new Error('GET method cannot have a body content');
     }

@@ -1,11 +1,10 @@
 import { motion, useScroll, useSpring } from 'framer-motion';
-import { Ref, useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import ReactDOM from 'react-dom';
 import { useRouter } from 'next/router';
 import { URL_MAP } from '@/common/URL';
 import React from 'react';
-import { Viewer } from '@toast-ui/react-editor';
 
 const ProgressBarWrapper = createGlobalStyle`
     .progress-bar {
@@ -21,7 +20,7 @@ const ProgressBarWrapper = createGlobalStyle`
     }
 `;
 
-export const ScrollProgressBar = (props, ref: React.ForwardedRef<Viewer>) => {
+export const ScrollProgressBar = () => {
     const router = useRouter();
     const { scrollYProgress } = useScroll();
     const scaleX = useSpring(scrollYProgress, {

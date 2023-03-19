@@ -1,12 +1,12 @@
-import { Grid, Typography, SxProps, Modal, Box, Divider } from '@mui/material';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Grid, Typography, SxProps, Modal, Box } from '@mui/material';
 import axios from 'axios';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useMemo, useState } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
-import useSWR, { mutate } from 'swr';
+import { mutate } from 'swr';
 import CloseIcon from '@mui/icons-material/Close';
 import { usePostService } from '@/hooks/usePostService';
-import { toJS } from 'mobx';
 import { useTempPost, useTempPostList } from '@/hooks/useTempPostList';
 import { toast } from 'react-toastify';
 import { DateUtil } from '@/blog/api/date';
@@ -33,7 +33,7 @@ export const styles: Record<TempPostBoxStyleKeyCollection, SxProps> = {
         gap: 3,
     },
     tempPostModal: {
-        position: 'absolute' as 'absolute',
+        position: 'absolute',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
@@ -62,35 +62,13 @@ export const styles: Record<TempPostBoxStyleKeyCollection, SxProps> = {
     },
 };
 
-const getPost = (url: string) => {
-    return axios.get(url).then(res => res.data);
-};
-
-const getPostById = (url: string) => {
-    return axios.get(url).then(res => res.data);
-};
-
-interface CreatePostTempDo {
-    title: string;
-    content: string;
-}
-
-const createPost = (url: string, createPostTempDto: CreatePostTempDo) => {
-    return axios
-        .post(url, createPostTempDto)
-        .then(res => res.data)
-        .catch(err => {
-            console.error(err);
-        });
-};
-
 export const TempPostBox = observer(() => {
     const [open, setOpen] = useState(false);
     const [count, setCount] = useState(0);
     const postService = usePostService();
     const [selectedId, setSelectedId] = useState(1);
     const { posts } = useTempPostList();
-    const { post, postMutate } = useTempPost(selectedId);
+    const { post } = useTempPost(selectedId);
     const countText = useMemo(() => {
         return `임시 저장 (${count} 개)`;
     }, [count]);
@@ -106,12 +84,6 @@ export const TempPostBox = observer(() => {
     const getTempPostById = async (_post: any) => {
         const id = _post.id;
         setSelectedId(id);
-
-        const newPost = await postMutate('/admin/temp/post/' + id);
-
-        // if (!newPost.data) {
-        //     return;
-        // }
 
         handleClose();
     };
@@ -183,6 +155,7 @@ export const TempPostBox = observer(() => {
                         <Box
                             sx={styles.postListBoxItem}
                             onClick={() => getTempPostById(post)}
+                            key={'___f1f1d2' + post.id}
                         >
                             <Grid container>
                                 <Grid item xs={1} sm={1} md={1} lg={1} xl={1}>

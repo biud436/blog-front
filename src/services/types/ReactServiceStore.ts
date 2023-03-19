@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Paginable } from '@/store/types/list';
 import { Searchable } from '@/store/types/searchable';
 import { ReactNode } from 'react';

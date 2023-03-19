@@ -18,6 +18,7 @@ export interface AddNodeFormProps {
     categoryName: string;
     rootNodeName: string;
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type CategoryTreeModel = FreeNodeModel[] | any;
 export type CategoryResultTuple = [
     CategoryDepthVO,

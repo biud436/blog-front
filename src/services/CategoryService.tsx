@@ -1,9 +1,6 @@
-import { HttpMethod } from '@/blog/providers/auth/authProvider';
-import { PostsSearchType } from '@/store/posts/posts.dto';
 import { makeAutoObservable } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import { createContext, ReactNode, useState } from 'react';
-import { IReactService, ReactServiceStore } from './types/ReactServiceStore';
+import React, { createContext, ReactNode, useState } from 'react';
 
 export interface CategoryDepthVO {
     left: number;
@@ -29,7 +26,7 @@ export type CategoryItemId = number | undefined | null;
 
 export class CategoryService {
     categories: CategoryDepthVO[] = [];
-    isReady: boolean = false;
+    isReady = false;
     currentMenuCategoryId: CategoryItemId = undefined;
 
     constructor() {
@@ -59,9 +56,7 @@ export class CategoryService {
 
 export const CategoryServiceProvider = observer(
     ({ children }: { children: ReactNode }) => {
-        const [categoryService, setCategoryService] = useState(
-            new CategoryService(),
-        );
+        const [categoryService] = useState(new CategoryService());
 
         return (
             <>

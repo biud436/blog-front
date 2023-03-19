@@ -1,12 +1,12 @@
 import { makeAutoObservable } from 'mobx';
 
 export class LoginDataStore {
-  username: string = '';
-  passowrd: string = '';
-  showPasssword: boolean = false;
-  loggedIn: boolean = true;
+    username = '';
+    passowrd = '';
+    showPasssword = false;
+    loggedIn = true;
 
-  constructor() {
-    makeAutoObservable(this);
-  }
+    constructor() {
+        makeAutoObservable(this);
+    }
 }

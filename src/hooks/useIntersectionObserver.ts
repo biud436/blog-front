@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { UNIQUE_PREFIX, useTocItems } from './useTocItems';
 
 /**
@@ -11,8 +10,8 @@ import { UNIQUE_PREFIX, useTocItems } from './useTocItems';
  */
 export function useIntersectionObserver() {
     const observerableElements = useRef<HTMLAnchorElement[]>([]);
-    const observer = useRef<IntersectionObserver>();
-    const { anchorElements, changeActiveTocItem } = useTocItems();
+
+    const { changeActiveTocItem } = useTocItems();
     const [dir, setDir] = useState<'up' | 'down'>('down');
     const [prevTargetIndex, setPrevTargetIndex] = useState<number>(0);
     const visiableEntries = useRef<IntersectionObserverEntry[]>([]);
@@ -47,7 +46,7 @@ export function useIntersectionObserver() {
                     );
                 });
 
-            let target = visiableEntries.current[0].target;
+            const target = visiableEntries.current[0].target;
             if (target) {
                 const targetIndex = observerableElements.current.findIndex(
                     e => e === target,

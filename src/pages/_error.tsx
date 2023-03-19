@@ -1,3 +1,4 @@
+import React from 'react';
 import { NotFoundPage } from '@/blog/pages/error';
 
 export default function MyBlogError() {

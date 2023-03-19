@@ -3,26 +3,22 @@ import {
     Box,
     CssBaseline,
     SxProps,
-    Theme,
     Toolbar,
     Typography,
-    Alert,
     ThemeProvider,
-    useTheme,
     Stack,
-    Button,
     Container,
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { toast, ToastContainer } from 'react-toastify';
-import { useAuthorized } from '@/hooks/useAuthorized';
+import { ToastContainer } from 'react-toastify';
+
 import { ManageMenu } from '../blog/components/manage/ManageMenu';
 import 'react-toastify/dist/ReactToastify.css';
 import { Meta } from '@/blog/components/utils/Meta';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import React from 'react';
 import { useThemeStore } from '@/hooks/useThemeStore';
-import { ManageIntroducePresent } from '@/blog/components/manage/ManageIntroducePresent';
+
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import { useMounted } from '@/hooks/useMounted';
@@ -95,7 +91,7 @@ export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
     const manageMenuProps = useManageMenuProps(drawerWidth);
     const appBarProps = useAppBarProps(drawerWidth);
 
-    const handleDrawerOpen = useCallback((e: React.MouseEvent) => {
+    const handleDrawerOpen = useCallback(() => {
         setIsOpen(true);
     }, []);
 
