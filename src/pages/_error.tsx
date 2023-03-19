@@ -1,5 +1,5 @@
 import React from 'react';
-import { NotFoundPage } from '@/blog/pages/error';
+import { NotFoundPage } from '@/containers/NotFoundPage';
 
 export default function MyBlogError() {
     return <NotFoundPage />;

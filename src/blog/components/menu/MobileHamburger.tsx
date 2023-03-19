@@ -22,7 +22,6 @@ export const MobileHamburger = observer(
     }) => {
         return (
             <AppBar
-                // position="fixed"
                 open={menuStore.isOpen}
                 sx={{
                     bgcolor: '#3c3c3c',

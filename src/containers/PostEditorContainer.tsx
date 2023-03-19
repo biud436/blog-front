@@ -46,7 +46,7 @@ function PageDescription({ mode }: EditPageProps) {
 const PostEditorPresent = dynamic(
     async () => {
         const [mod] = await Promise.all([
-            import('../../components/editor/PostEditorPresent'),
+            import('../blog/components/editor/PostEditorPresent'),
         ]);
 
         return mod.PostEditorPresent;

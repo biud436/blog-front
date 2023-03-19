@@ -13,6 +13,7 @@ export const GlobalStyle = createGlobalStyle`
     font-family: 'Noto Sans KR', sans-serif;
   }
 
+
   /**
    * 목차 컨테이너
    */
