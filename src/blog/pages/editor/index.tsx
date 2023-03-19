@@ -9,6 +9,7 @@ import dynamic from 'next/dynamic';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Meta } from '@/blog/components/utils/Meta';
+import FlexibleLoading from '@/blog/components/common/FlexibleLoading';
 
 export type EditMode = 'create' | 'edit';
 export interface EditPageProps {
@@ -52,7 +53,7 @@ const PostEditorPresent = dynamic(
     },
     {
         ssr: false,
-        loading: () => <div>Loading...</div>,
+        loading: () => <FlexibleLoading />,
     },
 );
 

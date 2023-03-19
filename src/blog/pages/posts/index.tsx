@@ -1,7 +1,7 @@
 import React from 'react';
 import { MainLayout } from '@/layouts/BlogMainLayout';
 import { observer } from 'mobx-react-lite';
-import { PostsPresent } from '../../components/posts/PostsPresent';
+import { PostsContainer } from '../../../containers/PostsContainer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Meta } from '@/blog/components/utils/Meta';
@@ -14,7 +14,7 @@ export const PostsPage = observer(() => {
                 {...{ title: '포스트 목록', description: '포스트 목록입니다' }}
             />
             <GlobalStyle />
-            <PostsPresent />
+            <PostsContainer />
             <ToastContainer />
         </MainLayout>
     );
