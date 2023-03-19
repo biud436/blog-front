@@ -3,5 +3,9 @@ import React from 'react';
 import os from 'os';
 
 export default function TestPage() {
-    return <CheckPlatform platform={os.platform()} />;
+    return (
+        <main>
+            <CheckPlatform platform={os.platform()} />
+        </main>
+    );
 }
