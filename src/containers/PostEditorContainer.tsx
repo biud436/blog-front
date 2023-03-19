@@ -9,6 +9,7 @@ import dynamic from 'next/dynamic';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Meta } from '@/blog/components/utils/Meta';
+import FlexibleLoading from '@/blog/components/common/FlexibleLoading';
 
 export type EditMode = 'create' | 'edit';
 export interface EditPageProps {
@@ -45,14 +46,14 @@ function PageDescription({ mode }: EditPageProps) {
 const PostEditorPresent = dynamic(
     async () => {
         const [mod] = await Promise.all([
-            import('../../components/editor/PostEditorPresent'),
+            import('../blog/components/editor/PostEditorPresent'),
         ]);
 
         return mod.PostEditorPresent;
     },
     {
         ssr: false,
-        loading: () => <div>Loading...</div>,
+        loading: () => <FlexibleLoading />,
     },
 );
 

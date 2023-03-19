@@ -5,7 +5,6 @@ import React from 'react';
 import { SearchBuilder } from '@/blog/components/builder/SearchBuilder';
 
 import { usePostsService } from '@/hooks/usePostsService';
-import { PostsServiceProvider } from '@/services/PostsService';
 import { postsStore } from '@/store';
 import { PostsSearchType } from '@/store/posts/posts.dto';
 
@@ -26,18 +25,19 @@ import { DateUtil, Formatter } from '../../api/date';
 
 import { useCategoryService } from '@/hooks/useCategoryService';
 import { useRouter } from 'next/router';
+import { SearchComponent } from './SearchComponent';
 
-function PageHeader() {
+export function PageHeader() {
     return <></>;
 }
 
-const PageDescription = observer(() => {
+export const PageDescription = observer(() => {
     return <></>;
 });
 
-const SearchBox = SearchBuilder<PostsSearchType>(postsStore);
+export const SearchBox = SearchBuilder<PostsSearchType>(postsStore);
 
-const PostsContainer = observer(() => {
+export const PostsPresent = observer(() => {
     const service = usePostsService();
     const categoryService = useCategoryService();
     const router = useRouter();
@@ -221,30 +221,3 @@ const PostsContainer = observer(() => {
         </Grid>
     );
 });
-
-export const PostsPresent = observer(() => {
-    return (
-        <>
-            <PostsServiceProvider>
-                <PageHeader />
-                <PageDescription />
-                <PostsContainer />
-            </PostsServiceProvider>
-        </>
-    );
-});
-
-export const SearchComponent = observer(
-    ({
-        fetchDataBySearch,
-    }: {
-        fetchDataBySearch: (page?: number) => Promise<void>;
-    }) => {
-        return (
-            <SearchBox
-                store={postsStore}
-                fetchDataBySearch={fetchDataBySearch}
-            />
-        );
-    },
-);

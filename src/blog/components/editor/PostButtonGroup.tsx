@@ -1,4 +1,4 @@
-import { EditPageProps } from '@/blog/pages/editor';
+import { EditPageProps } from '@/containers/PostEditorContainer';
 import { Button, Grid } from '@mui/material';
 import React, { useMemo } from 'react';
 

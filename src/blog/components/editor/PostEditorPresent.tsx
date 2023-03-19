@@ -15,7 +15,7 @@ import { PostTitleInput } from './PostTitleInput';
 import * as DOMPurify from 'dompurify';
 
 import axios from 'axios';
-import { EditPageProps } from '@/blog/pages/editor';
+import { EditPageProps } from '@/containers/PostEditorContainer';
 import { usePostService } from '@/hooks/usePostService';
 import { PostContent } from '@/services/PostService';
 import { useSWRConfig } from 'swr';

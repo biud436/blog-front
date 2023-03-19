@@ -2,7 +2,7 @@ import { CategoryDepthVO } from '@/services/CategoryService';
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import useSWR from 'swr';
-import { CategoryPostCount } from './CategoryPostCount';
+import { CategoryPostCount } from '../types/CategoryPostCount';
 
 export const fetcher = (url: string) =>
     axios.get(url).then(res => res.data.data);

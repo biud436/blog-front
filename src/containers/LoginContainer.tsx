@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { userState } from '../../../store/user';
+import { userState } from '../store/user';
 import { useAuth } from '@/blog/providers/auth/authProvider';
 import { toast, ToastContainer } from 'react-toastify';
 import { User } from 'store/types';
 
-import { Box, Button, Container, Stack } from '@mui/material';
+import { Box, Button, Stack, Typography } from '@mui/material';
 import { URL_MAP } from '@/common/URL';
 import { useRouter } from 'next/router';
 import { Meta } from '@/blog/components/utils/Meta';
@@ -21,6 +21,7 @@ import {
 import { ThemeProvider } from '@mui/system';
 import { observer } from 'mobx-react-lite';
 import { useThemeStore } from '@/hooks/useThemeStore';
+import { grey } from '@mui/material/colors';
 
 export interface LoginFormProps {
     username: string;
@@ -30,7 +31,7 @@ export interface LoginFormProps {
 /**
  * 로그인 페이지 메인
  */
-export const LoginPage = observer(() => {
+export const LoginContainer = observer(() => {
     const [user] = useRecoilState(userState);
     const theme = useThemeStore('login');
 
@@ -100,13 +101,13 @@ export const LoginPage = observer(() => {
     return (
         <ThemeProvider theme={theme}>
             <FormContainer formContext={formContext}>
-                <Container
-                    fixed
+                <Box
                     sx={{
                         display: 'flex',
                         justifyContent: 'center',
                         width: '100%',
                         height: '100%',
+                        background: grey[100],
                     }}
                 >
                     <Meta
@@ -121,15 +122,40 @@ export const LoginPage = observer(() => {
                         alignItems="center"
                         minHeight="100vh"
                     >
-                        <Stack direction={'column'} gap={2}>
+                        <Stack
+                            direction={'column'}
+                            gap={2}
+                            sx={{
+                                borderRadius: 2,
+                                width: {
+                                    xs: '300px',
+                                    sm: '400px',
+                                    md: '500px',
+                                },
+                            }}
+                        >
+                            <Typography
+                                variant="h3"
+                                component="h1"
+                                textAlign={'center'}
+                                pb={1}
+                            >
+                                로그인
+                            </Typography>
                             <TextFieldElement
                                 name="username"
                                 label="아이디"
+                                sx={{
+                                    background: 'white',
+                                }}
                                 required
                             />
                             <PasswordElement
                                 name="password"
                                 label="비밀번호"
+                                sx={{
+                                    background: 'white',
+                                }}
                                 required
                             />
                             <Button
@@ -143,7 +169,7 @@ export const LoginPage = observer(() => {
                         </Stack>
                     </Box>
                     <ToastContainer />
-                </Container>
+                </Box>
             </FormContainer>
         </ThemeProvider>
     );
