@@ -1,4 +1,4 @@
-import { PageWrapper } from '@/layouts/BlogMainLayout';
+import { MainLayout } from '@/layouts/BlogMainLayout';
 import { URL_MAP } from '@/common/URL';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
@@ -30,7 +30,7 @@ export const PostPage = observer(({ post, error, id: postId }: PostsProps) => {
     };
 
     return (
-        <PageWrapper name={post.title}>
+        <MainLayout name={post.title}>
             <Meta
                 {...{
                     title: post.title,
@@ -42,6 +42,6 @@ export const PostPage = observer(({ post, error, id: postId }: PostsProps) => {
             />
             <GlobalStyle />
             <PostPresent post={post} goBack={goBack} />
-        </PageWrapper>
+        </MainLayout>
     );
 });

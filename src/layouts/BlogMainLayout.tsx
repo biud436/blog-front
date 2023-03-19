@@ -18,7 +18,7 @@ import { MyBlogContentContainer } from '../blog/components/menu/MyBlogContentCon
 import { MyBlogContentConsumer } from '../blog/components/menu/MyBlogContentConsumer';
 import { useCategoryTree } from '@/hooks/useCategoryTree';
 
-export const PageWrapper = observer(
+export const MainLayout = observer(
     ({ name, children }: { name: string; children: React.ReactNode }) => {
         const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
         const router = useRouter();

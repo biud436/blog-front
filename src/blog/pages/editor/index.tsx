@@ -1,7 +1,7 @@
 import { Grid, Paper, Typography, Divider, Alert } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import ChevronRight from '@mui/icons-material/ChevronRight';
-import { PageWrapper } from '@/layouts/BlogMainLayout';
+import { MainLayout } from '@/layouts/BlogMainLayout';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { useAuthorized } from '@/hooks/useAuthorized';
 import { useParams } from 'react-router';
@@ -97,7 +97,7 @@ export const PostEditorContainer = observer(
         }, []);
 
         return (
-            <PageWrapper name="포스트 에디터">
+            <MainLayout name="포스트 에디터">
                 <Meta
                     {...{
                         title: '포스트 에디터',
@@ -114,7 +114,7 @@ export const PostEditorContainer = observer(
                     </LoginGuard>
                     <ToastContainer />
                 </Paper>
-            </PageWrapper>
+            </MainLayout>
         );
     },
 );

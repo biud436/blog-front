@@ -1,5 +1,5 @@
 import { API_URL } from '@/blog/api/request';
-import { PageWrapper } from '@/layouts/BlogMainLayout';
+import { MainLayout } from '@/layouts/BlogMainLayout';
 import { Avatar, ImageList, Typography } from '@mui/material';
 import axios from 'axios';
 import { observer } from 'mobx-react-lite';
@@ -36,9 +36,9 @@ export const GithubCallbackPage = observer(() => {
     }, [githubData]);
 
     return (
-        <PageWrapper name="깃허브 로그인 콜백 페이지">
+        <MainLayout name="깃허브 로그인 콜백 페이지">
             <Avatar alt={githubData?.login} src={githubData?.avatar_url} />
             <Typography variant="h6">{githubData?.email}</Typography>
-        </PageWrapper>
+        </MainLayout>
     );
 });

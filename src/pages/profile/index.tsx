@@ -1,11 +1,11 @@
 import { Meta } from '@/blog/components/utils/Meta';
-import { PageWrapper } from '@/layouts/BlogMainLayout';
+import { MainLayout } from '@/layouts/BlogMainLayout';
 import { Box } from '@mui/material';
 import ProfileMdx from './profile.mdx';
 
 const ProfilePage = () => {
     return (
-        <PageWrapper name="Profile">
+        <MainLayout name="Profile">
             <Box
                 sx={{
                     width: '100%',
@@ -26,7 +26,7 @@ const ProfilePage = () => {
                 />
                 <ProfileMdx />
             </Box>
-        </PageWrapper>
+        </MainLayout>
     );
 };
 

@@ -39,33 +39,30 @@ export const MobileNav = observer(
         anchorEl: HTMLElement | null;
     }) => {
         return (
-            <Drawer
-                sx={{
-                    width: {
-                        xs: drawerWidth,
-                        sm: drawerWidth,
-                        md: 0,
-                        lg: 0,
-                        xl: 0,
-                    },
-                    flexShrink: 0,
-                    '& .MuiDrawer-paper': {
-                        width: drawerWidth,
-                        boxSizing: 'border-box',
-                    },
-                }}
-                transitionDuration={400}
-                SlideProps={{
-                    translate: 'yes',
-                    appear: true,
-                }}
-                anchor="left"
-                open={menuStore.isOpen}
-                id="drawer-menu"
-            >
-                <Box
-                    onKeyDown={toggleDrawer(false)}
-                    onClick={toggleDrawer(false)}
+            <Box onKeyDown={toggleDrawer(false)} onClick={toggleDrawer(false)}>
+                <Drawer
+                    sx={{
+                        width: {
+                            xs: drawerWidth,
+                            sm: drawerWidth,
+                            md: 0,
+                            lg: 0,
+                            xl: 0,
+                        },
+                        flexShrink: 0,
+                        '& .MuiDrawer-paper': {
+                            width: drawerWidth,
+                            boxSizing: 'border-box',
+                        },
+                    }}
+                    transitionDuration={400}
+                    SlideProps={{
+                        translate: 'yes',
+                        appear: true,
+                    }}
+                    anchor="left"
+                    open={menuStore.isOpen}
+                    id="drawer-menu"
                 >
                     <DrawerHeader>
                         <IconButton onClick={handleDrawerClose}>
@@ -91,8 +88,8 @@ export const MobileNav = observer(
                         <LoginGuard />
                     </List>
                     <Divider />
-                </Box>
-            </Drawer>
+                </Drawer>
+            </Box>
         );
     },
 );

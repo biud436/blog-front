@@ -8,7 +8,7 @@ import { observer } from 'mobx-react-lite';
 import { menuStore } from '@/store/';
 
 import { WriteButton } from './WriteButton';
-import { AppBar } from './AppBar';
+import { AppBar, drawerWidth } from './AppBar';
 
 export const MobileHamburger = observer(
     ({
@@ -22,10 +22,23 @@ export const MobileHamburger = observer(
     }) => {
         return (
             <AppBar
-                position="fixed"
+                // position="fixed"
                 open={menuStore.isOpen}
                 sx={{
                     bgcolor: '#3c3c3c',
+                    display: {
+                        xs: 'block',
+                    },
+                    width: {
+                        xs: '100%',
+                        sm: '100%',
+                        md: `calc(100% - ${drawerWidth}px)`,
+                    },
+                    marginLeft: {
+                        xs: 0,
+                        sm: 0,
+                        md: `${drawerWidth}px`,
+                    },
                 }}
             >
                 <Toolbar

@@ -1,4 +1,4 @@
-import { PageWrapper } from '@/layouts/BlogMainLayout';
+import { MainLayout } from '@/layouts/BlogMainLayout';
 import { Box } from '@mui/system';
 import { GetStaticProps } from 'next';
 import * as path from 'path';
@@ -22,7 +22,7 @@ const Career = ({
     >[];
 }) => {
     return (
-        <PageWrapper name="Career">
+        <MainLayout name="Career">
             <Meta
                 {...{
                     description: 'Career 페이지',
@@ -39,7 +39,7 @@ const Career = ({
                         return <MDXRemote {...source} key={index} />;
                     })}
             </Box>
-        </PageWrapper>
+        </MainLayout>
     );
 };
 
