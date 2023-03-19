@@ -1,15 +1,7 @@
-'use client';
-import { Box, Typography } from '@mui/material';
+import CheckPlatform from '@/blog/components/test/CheckPlatform';
 import React from 'react';
+import os from 'os';
 
 export default function TestPage() {
-    return (
-        <Box
-            sx={{
-                background: 'white',
-            }}
-        >
-            <Typography variant="h6">Next 13</Typography>
-        </Box>
-    );
+    return <CheckPlatform platform={os.platform()} />;
 }
