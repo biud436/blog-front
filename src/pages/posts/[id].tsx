@@ -6,7 +6,8 @@ import { PostPage } from '@/blog/pages/post';
 import axios from 'axios';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next/types';
 import { Post } from '@/store/post';
-import { API_URL } from '@/blog/api/request';
+import useSWR, { unstable_serialize } from 'swr';
+
 export interface PostsProps {
     id: string;
     post: Post;
@@ -14,13 +15,26 @@ export interface PostsProps {
 }
 
 export default function Posts({ post, error }: { post: Post; error: any }) {
+    const { data: postFromSWR } = useSWR(['/posts', post.id], () =>
+        axios.get(`/posts/${post.id}`).then(res => res.data.data),
+    );
+
     return (
         <ErrorBoundary>
-            <PostPage {...{ post, id: String(post.id), error: error }} />
+            <PostPage
+                {...{
+                    post: postFromSWR || post,
+                    id: String(post.id),
+                    error: error,
+                }}
+            />
         </ErrorBoundary>
     );
 }
 
+/**
+ * Next에서는 미리 텍스트를 HTML로 내보내고, 자바스크립트는 이후에 hydrated 됩니다.
+ */
 export const getServerSideProps: GetServerSideProps = async (
     context: GetServerSidePropsContext,
 ) => {
@@ -28,11 +42,17 @@ export const getServerSideProps: GetServerSideProps = async (
     let post = {} as Post;
     let error = null;
 
+    const extractThumbnail = (post: Post) => {
+        if (post.images && post.images.length > 0) {
+            post.thumbnail = post.images[0].path;
+        }
+    };
+
     try {
         // 쿠키가 있는지 확인
         const hasCookie = !!context.req.headers.cookie;
 
-        const { data: res } = await axios.get(API_URL + '/posts/' + id, {
+        const { data: res } = await axios.get('/posts/' + id, {
             withCredentials: true,
             headers: {
                 ...(hasCookie
@@ -45,9 +65,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
         post = res.data as Post;
 
-        if (post.images && post.images.length > 0) {
-            post.thumbnail = post.images[0].path;
-        }
+        extractThumbnail(post);
     } catch (e: any) {
         error = e;
     }
@@ -56,6 +74,7 @@ export const getServerSideProps: GetServerSideProps = async (
         props: {
             post,
             error,
+            [unstable_serialize(['posts', id])]: post,
         },
     };
 };
