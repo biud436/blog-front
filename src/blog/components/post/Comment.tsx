@@ -77,18 +77,20 @@ const repo = 'biud436/blog-front';
 
 export const GithubComment = observer(() => {
     return (
-        <Giscus
-            // id={COMMENTS_ID}
-            repo={repo}
-            repoId="R_kgDOILkZfQ"
-            category="Announcements"
-            categoryId="DIC_kwDOILkZfc4CT_gP"
-            lang={'ko'}
-            mapping="pathname"
-            loading="lazy"
-            theme="light"
-            strict="0"
-        />
+        <React.Fragment>
+            <Giscus
+                id="giscus-comments"
+                repo={repo}
+                repoId="R_kgDOILkZfQ"
+                category="Announcements"
+                categoryId="DIC_kwDOILkZfc4CT_gP"
+                lang={'ko'}
+                mapping="pathname"
+                loading="lazy"
+                theme="light"
+                strict="0"
+            />
+        </React.Fragment>
     );
 });
 
