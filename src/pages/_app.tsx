@@ -23,8 +23,8 @@ export default function App({ Component, pageProps }: AppProps) {
                 <GlobalStyle />
                 <CategoryServiceProvider>
                     <PostServiceProvider>
-                        <AuthProvider>
-                            <Component {...pageProps} />
+                        <AuthProvider>                            
+                                <Component {...pageProps} />
                         </AuthProvider>
                     </PostServiceProvider>
                 </CategoryServiceProvider>

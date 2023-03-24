@@ -24,7 +24,10 @@ export function MyBlogHeader({ router }: { router: NextRouter }) {
                 lg={12}
                 xl={12}
                 sx={{
-                    p: 3,
+                    p: {
+                        xs: 0,
+                        lg: 3,
+                    },
                     display: 'flex',
                     justifyContent: 'center',
                     gap: 5,
@@ -33,7 +36,7 @@ export function MyBlogHeader({ router }: { router: NextRouter }) {
                     mt: {
                         xs: 10,
                         sm: 10,
-                        md: 10,
+                        md: 0,
                         lg: 0,
                         xl: 0,
                     },

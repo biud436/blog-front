@@ -5,6 +5,19 @@ import { makeAutoObservable } from 'mobx';
 export type ThemeProps = ThemeProviderProps<DefaultTheme>['theme'];
 
 export class ThemeStore {
+
+    mainTheme: ThemeProps = createTheme({
+        components: {
+            MuiCard: {
+                styleOverrides: {
+                    root: {
+                        borderLeft: '4px solid #18599b',
+                    }
+                }
+            }
+        }
+    });
+
     loginTheme: ThemeProps = createTheme({
         palette: {
             mode: 'light',
@@ -99,5 +112,9 @@ export class ThemeStore {
 
     get manage() {
         return this.manageTheme;
+    }
+
+    get main() {
+        return this.mainTheme;
     }
 }

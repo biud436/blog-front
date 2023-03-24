@@ -41,7 +41,7 @@ export const MyBlogContentConsumer = observer(
         return (
             <Grid
                 container
-                spacing={0}
+                spacing={1}
                 sx={{
                     display: 'flex',
                     justifyContent: 'center',
@@ -49,7 +49,7 @@ export const MyBlogContentConsumer = observer(
                     alignItems: 'start',
                     flexWrap: 'nowrap',
                     flexDirection: 'row',
-                    gap: '1rem',
+                    gap: 1,
                     width: '100%',
                     p: 2,
                     m: 0,

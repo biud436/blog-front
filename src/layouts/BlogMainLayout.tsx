@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useCallback, useState } from 'react';
-import { useTheme } from '@mui/material/styles';
+import {  useTheme } from '@mui/material/styles';
 
 import CssBaseline from '@mui/material/CssBaseline';
 import { Box } from '@mui/material';
@@ -8,7 +8,7 @@ import { CategoryDepthVO } from '@/services/CategoryService';
 import { useCategoryService } from '@/hooks/useCategoryService';
 import { observer } from 'mobx-react-lite';
 import { useMediaQuery } from 'react-responsive';
-import { menuStore } from '@/store/';
+import { menuStore} from '@/store/';
 import { useRouter } from 'next/router';
 import { MyBlogHeader } from '../blog/components/header/MyBlogHeader';
 import { MobileNav } from '../blog/components/menu/MobileNav';
@@ -74,42 +74,42 @@ export const MainLayout = observer(
         }, [matches, categories, isCategoryError]);
 
         return (
-            <Box
-                sx={{
-                    width: '100%',
-                    background: 'white',
-                }}
-            >
-                <CssBaseline />
-                <MobileHamburger {...{ handleDrawerOpen, router, name }} />
-                <MobileNav
-                    {...{
-                        toggleDrawer,
-                        handleDrawerClose: handleClose,
-                        theme,
-                        categoryList,
-                        setCategoryList,
-                        router,
-                        rootCategory,
-                        anchorEl,
+                <Box
+                    sx={{
+                        width: '100%',
+                        background: 'white',
                     }}
-                />
-                <MyBlogContentContainer>
-                    <MyBlogHeader router={router} />
-                    <MyBlogContentConsumer
+                >
+                    <CssBaseline />
+                    <MobileHamburger {...{ handleDrawerOpen, router, name }} />
+                    <MobileNav
                         {...{
+                            toggleDrawer,
+                            handleDrawerClose: handleClose,
+                            theme,
                             categoryList,
                             setCategoryList,
-                            toggleDrawer,
                             router,
                             rootCategory,
+                            anchorEl,
                         }}
-                    >
-                        {children}
-                    </MyBlogContentConsumer>
-                </MyBlogContentContainer>
-                <MyBlogFooter />
-            </Box>
+                    />
+                    <MyBlogContentContainer>
+                        <MyBlogHeader router={router} />
+                        <MyBlogContentConsumer
+                            {...{
+                                categoryList,
+                                setCategoryList,
+                                toggleDrawer,
+                                router,
+                                rootCategory,
+                            }}
+                        >
+                            {children}
+                        </MyBlogContentConsumer>
+                    </MyBlogContentContainer>
+                    <MyBlogFooter />
+                </Box>
         );
     },
 );

@@ -9,12 +9,14 @@ import { postsStore } from '@/store';
 import { PostsSearchType } from '@/store/posts/posts.dto';
 
 import {
+    Box,
     Card,
     CardActions,
     CardHeader,
     CardMedia,
     Grid,
     Pagination,
+    SxProps,
     Typography,
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
@@ -117,9 +119,15 @@ export const PostsPresent = observer(() => {
                     lg={12}
                     xl={12}
                     sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
+                        display: 'grid',
+                        gridTemplateColumns: {
+                            xs: '1fr',
+                            sm: '1fr',
+                            md: '1fr 1fr ',
+                            lg: '1fr 1fr 1fr',
+                        },
+                        gridTemplateRows: '1fr',
+                        gap: 3,
                         flexDirection: 'column',
                         marginTop: 2,
                         width: '100%',
@@ -128,10 +136,16 @@ export const PostsPresent = observer(() => {
                 >
                     {postsStore.getEntities() &&
                         postsStore.getEntities()?.map(post => {
+                            const mediaProp: SxProps = {
+                                cursor: 'pointer',
+                                width: '100%',                            
+                                minHeight: 200,
+                                maxHeight: 200,
+                            };
                             return (
                                 <Card
                                     sx={{
-                                        marginBottom: 3,
+                                        marginBottom: 1,
                                         '&:hover': {
                                             backgroundColor: '#f5f5f5',
                                         },
@@ -139,33 +153,28 @@ export const PostsPresent = observer(() => {
                                         justifyContent: 'center',
                                         alignItems: 'center',
                                         flexDirection: 'column',
-                                        width: '100%',
                                         borderLeft: '4px solid #1976d2',
                                     }}
+                                    
                                     key={post.id}
                                     elevation={1}
                                 >
-                                    {post.images && post.images.length > 0 && (
+                                    {post.images && post.images.length > 0 ? (
                                         <CardMedia
                                             component="img"
-                                            image={post.images[0]!.path}
+                                            image={post.images[0].path}
                                             alt={post.title}
-                                            sx={{
-                                                cursor: 'pointer',
-                                                width: '100%',
-                                                minHeight: {
-                                                    xs: 100,
-                                                    sm: 120,
-                                                    md: 200,
-                                                    lg: 200,
-                                                },
-                                                maxHeight: {
-                                                    xs: 100,
-                                                    sm: 120,
-                                                    md: 200,
-                                                    lg: 200,
-                                                },
-                                            }}
+                                            sx={mediaProp}
+
+                                            onClick={() => goToPage(post.id!)}
+                                        />
+                                    ): (
+                                        <CardMedia
+                                            component="img"
+                                            // image="https://via.placeholder.com/300x200.png?text=No+Image"
+                                            image={"https://picsum.photos/200/300?random=" + post.id + "&blur=2"}
+                                            alt={post.title}
+                                            sx={mediaProp}
                                             onClick={() => goToPage(post.id!)}
                                         />
                                     )}
@@ -190,12 +199,19 @@ export const PostsPresent = observer(() => {
                                     ></CardHeader>
                                     <CardActions
                                         sx={{
-                                            alignSelf: 'flex-end',
+                                            alignSelf: 'flex-start',
                                         }}
                                     >
+                                        <Box sx={{
+                                            borderRadius: 10,
+                                            background: theme => theme.palette.text.secondary,
+                                            color: theme => theme.palette.primary.contrastText,
+                                            p: 1
+                                        }}>
                                         <Typography variant="subtitle2">
                                             {post.category?.name}
                                         </Typography>
+                                        </Box>
                                     </CardActions>
                                 </Card>
                             );

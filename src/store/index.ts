@@ -8,9 +8,9 @@ import { ThemeStore } from './theme';
 export class RootStore {
     postsStore: PostsStore = new PostsStore();
     menuStore: MenuStore = new MenuStore();
-    readonly themeStore: ThemeStore = new ThemeStore();
-    readonly loginStore: LoginDataStore = new LoginDataStore();
-    readonly githubUserData: GithubUserData = new GithubUserData();
+    readonly themeStore = new ThemeStore();
+    readonly loginStore = new LoginDataStore();
+    readonly githubUserData = new GithubUserData();
 
     constructor() {
         makeAutoObservable(this);
