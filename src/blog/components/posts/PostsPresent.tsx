@@ -171,8 +171,7 @@ export const PostsPresent = observer(() => {
                                     ): (
                                         <CardMedia
                                             component="img"
-                                            // image="https://via.placeholder.com/300x200.png?text=No+Image"
-                                            image={"https://picsum.photos/200/300?random=" + post.id + "&blur=2"}
+                                            image="https://via.placeholder.com/300x200.png?text=No+Image"
                                             alt={post.title}
                                             sx={mediaProp}
                                             onClick={() => goToPage(post.id!)}
