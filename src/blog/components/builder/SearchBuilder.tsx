@@ -47,12 +47,12 @@ export function SearchBuilder<T>(Store: InstanceType<new () => Searchable<T>>) {
                         }}
                     >
                         <FormControl sx={{ m: 1, width: '100%' }}>
-                            <InputLabel id="demo-simple-select-label">
+                            <InputLabel id="search-option-label">
                                 검색 옵션
                             </InputLabel>
                             <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
+                                labelId="search-option-label"
+                                id="search-option"
                                 value={
                                     store.getSearchType() ??
                                     store.getDefaultCategory()!

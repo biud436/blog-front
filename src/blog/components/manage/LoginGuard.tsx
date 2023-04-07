@@ -1,7 +1,7 @@
 import { Grid, CircularProgress } from '@mui/material';
 import React from 'react';
 import { FAKE_CRON, useTimedEffect } from '@/hooks/useTimedEffect';
-import { useAuthorized } from '@/hooks/useAuthorized';
+import { useAuthorized } from '@/hooks/auth/useAuthorized';
 
 export function LoginGuardPresent() {
     useTimedEffect(() => {

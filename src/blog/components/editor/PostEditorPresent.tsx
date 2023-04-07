@@ -1,5 +1,5 @@
 import { URL_MAP } from '@/common/URL';
-import { useCategoryService } from '@/hooks/useCategoryService';
+import { useCategoryService } from '@/hooks/services/useCategoryService';
 import { CategoryDepthVO } from '@/services/CategoryService';
 import { Grid } from '@mui/material';
 import '@toast-ui/editor/dist/toastui-editor.css';
@@ -16,7 +16,7 @@ import * as DOMPurify from 'dompurify';
 
 import axios from 'axios';
 import { EditPageProps } from '@/containers/PostEditorContainer';
-import { usePostService } from '@/hooks/usePostService';
+import { usePostService } from '@/hooks/services/usePostService';
 import { PostContent } from '@/services/PostService';
 import { useSWRConfig } from 'swr';
 import { API_URL } from '@/blog/api/request';

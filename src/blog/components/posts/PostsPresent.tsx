@@ -4,7 +4,7 @@
 import React from 'react';
 import { SearchBuilder } from '@/blog/components/builder/SearchBuilder';
 
-import { usePostsService } from '@/hooks/usePostsService';
+import { usePostsService } from '@/hooks/services/usePostsService';
 import { postsStore } from '@/store';
 import { PostsSearchType } from '@/store/posts/posts.dto';
 
@@ -25,7 +25,7 @@ import { toast } from 'react-toastify';
 
 import { DateUtil, Formatter } from '../../api/date';
 
-import { useCategoryService } from '@/hooks/useCategoryService';
+import { useCategoryService } from '@/hooks/services/useCategoryService';
 import { useRouter } from 'next/router';
 import { SearchComponent } from './SearchComponent';
 
@@ -138,7 +138,7 @@ export const PostsPresent = observer(() => {
                         postsStore.getEntities()?.map(post => {
                             const mediaProp: SxProps = {
                                 cursor: 'pointer',
-                                width: '100%',                            
+                                width: '100%',
                                 minHeight: 200,
                                 maxHeight: 200,
                             };
@@ -155,7 +155,6 @@ export const PostsPresent = observer(() => {
                                         flexDirection: 'column',
                                         borderLeft: '4px solid #1976d2',
                                     }}
-                                    
                                     key={post.id}
                                     elevation={1}
                                 >
@@ -165,10 +164,9 @@ export const PostsPresent = observer(() => {
                                             image={post.images[0].path}
                                             alt={post.title}
                                             sx={mediaProp}
-
                                             onClick={() => goToPage(post.id!)}
                                         />
-                                    ): (
+                                    ) : (
                                         <CardMedia
                                             component="img"
                                             image="https://via.placeholder.com/300x200.png?text=No+Image"
@@ -201,15 +199,21 @@ export const PostsPresent = observer(() => {
                                             alignSelf: 'flex-start',
                                         }}
                                     >
-                                        <Box sx={{
-                                            borderRadius: 10,
-                                            background: theme => theme.palette.text.secondary,
-                                            color: theme => theme.palette.primary.contrastText,
-                                            p: 1
-                                        }}>
-                                        <Typography variant="subtitle2">
-                                            {post.category?.name}
-                                        </Typography>
+                                        <Box
+                                            sx={{
+                                                borderRadius: 10,
+                                                background: theme =>
+                                                    theme.palette.text
+                                                        .secondary,
+                                                color: theme =>
+                                                    theme.palette.primary
+                                                        .contrastText,
+                                                p: 1,
+                                            }}
+                                        >
+                                            <Typography variant="subtitle2">
+                                                {post.category?.name}
+                                            </Typography>
                                         </Box>
                                     </CardActions>
                                 </Card>

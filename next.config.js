@@ -38,7 +38,6 @@ const nextConfig = withMDX({
         fontLoaders: [
             { loader: '@next/font/google', options: { subsets: ['latin'] } },
         ],
-        appDir: true,
     },
     publicRuntimeConfig: {
         backendUrl: process.env.NEXT_PUBLIC_SERVER_URL,

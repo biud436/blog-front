@@ -6,8 +6,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import { mutate } from 'swr';
 import CloseIcon from '@mui/icons-material/Close';
-import { usePostService } from '@/hooks/usePostService';
-import { useTempPost, useTempPostList } from '@/hooks/useTempPostList';
+import { usePostService } from '@/hooks/services/usePostService';
+import { useTempPost, useTempPostList } from '@/hooks/api/useTempPostList';
 import { toast } from 'react-toastify';
 import { DateUtil } from '@/blog/api/date';
 

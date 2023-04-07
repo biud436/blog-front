@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import ChevronRight from '@mui/icons-material/ChevronRight';
 import { MainLayout } from '@/layouts/BlogMainLayout';
 import { useEffect, useRef } from 'react';
-import { useAuthorized } from '@/hooks/useAuthorized';
+import { useAuthorized } from '@/hooks/auth/useAuthorized';
 import dynamic from 'next/dynamic';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Grid } from '@mui/material';
-import { useAuthorized } from '@/hooks/useAuthorized';
-import { usePostService } from '@/hooks/usePostService';
+import { useAuthorized } from '@/hooks/auth/useAuthorized';
+import { usePostService } from '@/hooks/services/usePostService';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { Post } from '@/store/post';
