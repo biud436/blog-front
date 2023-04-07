@@ -23,6 +23,9 @@ import { observer } from 'mobx-react-lite';
 import { useThemeStore } from '@/hooks/useThemeStore';
 import { grey } from '@mui/material/colors';
 
+import { signIn } from 'next-auth/react';
+import axios from 'axios';
+
 export interface LoginFormProps {
     username: string;
     password: string;
@@ -32,7 +35,7 @@ export interface LoginFormProps {
  * 로그인 페이지 메인
  */
 export const LoginContainer = observer(() => {
-    const [user] = useRecoilState(userState);
+    const [user, setUser] = useRecoilState(userState);
     const theme = useThemeStore('login');
 
     const formContext = useForm<LoginFormProps>({
@@ -73,6 +76,28 @@ export const LoginContainer = observer(() => {
 
     const onSubmit = async (data: LoginFormProps) => {
         const { username, password } = data;
+
+        // signIn('credentials', {
+        //     username,
+        //     password,
+        //     redirect: false,
+        // }).then(res => {
+        //     if (!res) return;
+        //     if (res.error) {
+        //         toastWrapper(res.error);
+        //     } else {
+        //         axios.get('/auth/profile').then(res => {
+        //             const profile = res.data;
+
+        //             setUser({
+        //                 ...profile.user,
+        //             });
+
+        //             router.push(URL_MAP.MAIN);
+        //         });
+        //     }
+        // });
+
         return await login(username, password);
     };
 
