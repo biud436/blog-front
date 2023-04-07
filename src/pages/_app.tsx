@@ -13,6 +13,7 @@ import { CssBaseline } from '@mui/material';
 const notoSansKR = Noto_Sans_KR({
     weight: '100',
     display: 'swap',
+    subsets: ['latin'],
 });
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -23,8 +24,8 @@ export default function App({ Component, pageProps }: AppProps) {
                 <GlobalStyle />
                 <CategoryServiceProvider>
                     <PostServiceProvider>
-                        <AuthProvider>                            
-                                <Component {...pageProps} />
+                        <AuthProvider>
+                            <Component {...pageProps} />
                         </AuthProvider>
                     </PostServiceProvider>
                 </CategoryServiceProvider>
