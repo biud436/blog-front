@@ -33,34 +33,54 @@ export interface CategoryService {
     getCurrentMenuCategoryId(): CategoryItemId;
 }
 
+export function useCategoryServiceBuilder() {
+    const [categories, setCategoriesAction] = useState<CategoryDepthVO[]>([]);
+    const [isReady, setIsReady] = useState(false);
+    const [currentMenuCategoryId, setCurrentMenuCategoryIdAction] =
+        useState<CategoryItemId>(undefined);
+
+    const setCategories = (categories: CategoryDepthVO[]) => {
+        setCategoriesAction(categories);
+
+        if (!isReady) {
+            setIsReady(true);
+        }
+    };
+
+    const getCategories = () => {
+        return categories;
+    };
+
+    const setCurrentMenuCategoryId = (id: CategoryItemId) => {
+        setCurrentMenuCategoryIdAction(id);
+    };
+
+    const getCurrentMenuCategoryId = () => {
+        return currentMenuCategoryId;
+    };
+
+    return {
+        categories,
+        isReady,
+        currentMenuCategoryId,
+        setCategories,
+        getCategories,
+        setCurrentMenuCategoryId,
+        getCurrentMenuCategoryId,
+    };
+}
+
 export const CategoryServiceProvider = observer(
     ({ children }: { children: ReactNode }) => {
-        const [categories, setCategoriesAction] = useState<CategoryDepthVO[]>(
-            [],
-        );
-        const [isReady, setIsReady] = useState(false);
-        const [currentMenuCategoryId, setCurrentMenuCategoryIdAction] =
-            useState<CategoryItemId>(undefined);
-
-        const setCategories = (categories: CategoryDepthVO[]) => {
-            setCategoriesAction(categories);
-
-            if (!isReady) {
-                setIsReady(true);
-            }
-        };
-
-        const getCategories = () => {
-            return categories;
-        };
-
-        const setCurrentMenuCategoryId = (id: CategoryItemId) => {
-            setCurrentMenuCategoryIdAction(id);
-        };
-
-        const getCurrentMenuCategoryId = () => {
-            return currentMenuCategoryId;
-        };
+        const {
+            categories,
+            isReady,
+            currentMenuCategoryId,
+            setCategories,
+            getCategories,
+            setCurrentMenuCategoryId,
+            getCurrentMenuCategoryId,
+        } = useCategoryServiceBuilder();
 
         return (
             <>

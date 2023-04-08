@@ -5,7 +5,7 @@ import { Post, PostStore } from '@/store/post';
 import axios from 'axios';
 import { makeAutoObservable } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import React, { createContext, ReactNode } from 'react';
+import React, { createContext, ReactNode, useState } from 'react';
 
 export interface IPostService {
     isSamePost(postId: number): boolean;
@@ -181,9 +181,15 @@ export class PostServiceImpl implements IPostService {
     }
 }
 
+export function usePostServiceBuilder() {
+    const [postService] = useState(() => new PostServiceImpl());
+
+    return postService;
+}
+
 export const PostServiceProvider = observer(
     ({ children }: { children: ReactNode }) => {
-        const postService = new PostServiceImpl();
+        const postService = usePostServiceBuilder();
 
         return (
             <PostContext.Provider value={postService}>

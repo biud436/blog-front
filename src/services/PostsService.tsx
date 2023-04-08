@@ -85,64 +85,71 @@ export class PostsServiceImpl implements IPostsService {
 const fetcher = (url: string, queryParam: string) =>
     axios.get(`${url}?${queryParam}`).then(res => res.data);
 
+export function usePostsServiceBuilder() {
+    const auth = useAuth();
+    const [postsService] = useState<IPostsService>(
+        new PostsServiceImpl(auth.requestData),
+    );
+
+    const initialListData = useMemo<BlogServerResponse>(
+        () => ({
+            message: '데이터 조회 성공',
+            statusCode: 200,
+            result: 'success',
+            data: {
+                pagination: {
+                    currentPage: 1,
+                    totalCount: 1,
+                    maxPage: 1,
+                    currentBlock: 1,
+                    maxBlock: 1,
+                },
+                entities: [],
+            },
+        }),
+        [],
+    );
+
+    /**
+     * =====================================================================
+     * SWR을 이용한 데이터 조회 (클래스 믹스인)
+     * =====================================================================
+     */
+    const [queryParam, setQueryParam] = useState('');
+    const res = useSWR<BlogServerResponse>(
+        queryParam ? [`${API_URL}/posts`, queryParam] : null,
+        fetcher,
+        {
+            fallbackData: initialListData,
+        },
+    );
+
+    postsService.view = async (pageNumber: number, categoryId?: number) => {
+        setQueryParam(`page=${pageNumber}&categoryId=${categoryId}`);
+    };
+
+    /**
+     * =====================================================================
+     * 데이터 조회
+     * =====================================================================
+     */
+    useEffect(() => {
+        if (res.data) {
+            const {
+                data: { entities, pagination },
+            } = res.data;
+
+            postsStore.setPagination(pagination);
+            postsStore.setEntities(entities as unknown as PostDto[]);
+        }
+    }, [res.data]);
+
+    return postsService;
+}
+
 export const PostsServiceProvider = observer(
     ({ children }: { children: ReactNode }) => {
-        const auth = useAuth();
-        const [postsService] = useState<IPostsService>(
-            new PostsServiceImpl(auth.requestData),
-        );
-
-        const initialListData = useMemo<BlogServerResponse>(
-            () => ({
-                message: '데이터 조회 성공',
-                statusCode: 200,
-                result: 'success',
-                data: {
-                    pagination: {
-                        currentPage: 1,
-                        totalCount: 1,
-                        maxPage: 1,
-                        currentBlock: 1,
-                        maxBlock: 1,
-                    },
-                    entities: [],
-                },
-            }),
-            [],
-        );
-
-        /**
-         * =====================================================================
-         * SWR을 이용한 데이터 조회 (클래스 믹스인)
-         * =====================================================================
-         */
-        const [queryParam, setQueryParam] = useState('');
-        const res = useSWR<BlogServerResponse>(
-            queryParam ? [`${API_URL}/posts`, queryParam] : null,
-            fetcher,
-            {
-                fallbackData: initialListData,
-            },
-        );
-
-        postsService.view = async (pageNumber: number, categoryId?: number) => {
-            setQueryParam(`page=${pageNumber}&categoryId=${categoryId}`);
-        };
-        /**
-         * =====================================================================
-         * 데이터 조회
-         * =====================================================================
-         */
-        useEffect(() => {
-            if (res.data) {
-                const {
-                    data: { entities, pagination },
-                } = res.data;
-
-                postsStore.setPagination(pagination);
-                postsStore.setEntities(entities as unknown as PostDto[]);
-            }
-        }, [res.data]);
+        const postsService = usePostsServiceBuilder();
 
         return (
             <PostsServiceContext.Provider value={postsService}>
