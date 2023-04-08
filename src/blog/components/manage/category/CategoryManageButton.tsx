@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import { URL_MAP } from '@/common/URL';
-import { DynamicMuiIcon } from '../../common/DynamicIcon';
+import Category from '@mui/icons-material/Category';
 
 export const CategoryManageButton = observer(() => {
     const router = useRouter();
@@ -21,7 +21,7 @@ export const CategoryManageButton = observer(() => {
         <ListItem key="home" disablePadding>
             <ListItemButton onClick={handleClick}>
                 <ListItemIcon>
-                    <DynamicMuiIcon name="Category" />
+                    <Category />
                 </ListItemIcon>
                 <ListItemText primary="카테고리 관리" />
             </ListItemButton>
