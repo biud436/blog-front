@@ -8,10 +8,11 @@ import { PostsSearchType } from '@/store/posts/posts.dto';
 import axios from 'axios';
 import { makeAutoObservable } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import { createContext, ReactNode, useEffect, useState } from 'react';
+import { createContext, ReactNode, useEffect, useMemo, useState } from 'react';
 import useSWR from 'swr';
 import { IReactService, ReactServiceStore } from './types/ReactServiceStore';
 import React from 'react';
+import { BlogServerResponse } from './types/PostDtoType';
 
 export type IPostsService = IReactService<PostsSearchType> & {
     getBreadcrumb: (categoryName: string) => Promise<any>;
@@ -91,6 +92,25 @@ export const PostsServiceProvider = observer(
             new PostsServiceImpl(auth.requestData),
         );
 
+        const initialData = useMemo<BlogServerResponse>(
+            () => ({
+                message: '데이터 조회 성공',
+                statusCode: 200,
+                result: 'success',
+                data: {
+                    pagination: {
+                        currentPage: 1,
+                        totalCount: 1,
+                        maxPage: 1,
+                        currentBlock: 1,
+                        maxBlock: 1,
+                    },
+                    entities: [],
+                },
+            }),
+            [],
+        );
+
         /**
          * =====================================================================
          * SWR을 이용한 데이터 조회 (클래스 믹스인)
@@ -100,6 +120,9 @@ export const PostsServiceProvider = observer(
         const res = useSWR(
             queryParam ? [`${API_URL}/posts`, queryParam] : null,
             fetcher,
+            {
+                fallbackData: initialData,
+            },
         );
 
         postsService.view = async (pageNumber: number, categoryId?: number) => {

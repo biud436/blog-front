@@ -52,6 +52,9 @@ export interface IServerResponse {
 
 export const PostContext = createContext<IPostService>(null!);
 
+/**
+ * 이 서비스는 Mobx(상태 관리)로 정의되어있습니다.
+ */
 export class PostServiceImpl implements IPostService {
     postStore: PostStore = new PostStore();
     isError = false;
