@@ -1,4 +1,3 @@
-import { makeAutoObservable } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React, { createContext, ReactNode, useState } from 'react';
 
@@ -24,43 +23,58 @@ export const CategoryServiceContext = createContext<
 
 export type CategoryItemId = number | undefined | null;
 
-export class CategoryService {
-    categories: CategoryDepthVO[] = [];
-    isReady = false;
-    currentMenuCategoryId: CategoryItemId = undefined;
-
-    constructor() {
-        makeAutoObservable(this);
-    }
-
-    setCategories(categories: CategoryDepthVO[]) {
-        this.categories = categories;
-
-        if (!this.isReady) {
-            this.isReady = true;
-        }
-    }
-
-    getCategories() {
-        return this.categories;
-    }
-
-    setCurrentMenuCategoryId(id: CategoryItemId) {
-        this.currentMenuCategoryId = id;
-    }
-
-    getCurrentMenuCategoryId() {
-        return this.currentMenuCategoryId;
-    }
+export interface CategoryService {
+    categories: CategoryDepthVO[];
+    isReady: boolean;
+    currentMenuCategoryId: CategoryItemId;
+    setCategories(categories: CategoryDepthVO[]);
+    getCategories(): CategoryDepthVO[];
+    setCurrentMenuCategoryId(id: CategoryItemId);
+    getCurrentMenuCategoryId(): CategoryItemId;
 }
 
 export const CategoryServiceProvider = observer(
     ({ children }: { children: ReactNode }) => {
-        const [categoryService] = useState(new CategoryService());
+        const [categories, setCategoriesAction] = useState<CategoryDepthVO[]>(
+            [],
+        );
+        const [isReady, setIsReady] = useState(false);
+        const [currentMenuCategoryId, setCurrentMenuCategoryIdAction] =
+            useState<CategoryItemId>(undefined);
+
+        const setCategories = (categories: CategoryDepthVO[]) => {
+            setCategoriesAction(categories);
+
+            if (!isReady) {
+                setIsReady(true);
+            }
+        };
+
+        const getCategories = () => {
+            return categories;
+        };
+
+        const setCurrentMenuCategoryId = (id: CategoryItemId) => {
+            setCurrentMenuCategoryIdAction(id);
+        };
+
+        const getCurrentMenuCategoryId = () => {
+            return currentMenuCategoryId;
+        };
 
         return (
             <>
-                <CategoryServiceContext.Provider value={categoryService}>
+                <CategoryServiceContext.Provider
+                    value={{
+                        categories,
+                        isReady,
+                        currentMenuCategoryId,
+                        setCategories,
+                        getCategories,
+                        setCurrentMenuCategoryId,
+                        getCurrentMenuCategoryId,
+                    }}
+                >
                     {children}
                 </CategoryServiceContext.Provider>
             </>
