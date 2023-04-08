@@ -21,7 +21,7 @@ export interface Category {
     groupId: number;
 }
 
-export interface Entity {
+export interface PostEntity {
     id: number;
     categoryId: number;
     isPrivate: boolean;
@@ -34,12 +34,12 @@ export interface Entity {
     previewContent: string;
 }
 
-export interface BlogServerResponse {
+export interface BlogServerResponse<T = PostEntity> {
     message: string;
     statusCode: number;
     result: 'success' | 'failure';
     data: {
         pagination: Pagination;
-        entities: Entity[];
+        entities: T[];
     };
 }

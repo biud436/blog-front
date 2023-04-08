@@ -4,7 +4,7 @@
 import { API_URL } from '@/blog/api/request';
 import { HttpMethod, useAuth } from '@/blog/providers/auth/authProvider';
 import { postsStore } from '@/store';
-import { PostsSearchType } from '@/store/posts/posts.dto';
+import { PostDto, PostsSearchType } from '@/store/posts/posts.dto';
 import axios from 'axios';
 import { makeAutoObservable } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -92,7 +92,7 @@ export const PostsServiceProvider = observer(
             new PostsServiceImpl(auth.requestData),
         );
 
-        const initialData = useMemo<BlogServerResponse>(
+        const initialListData = useMemo<BlogServerResponse>(
             () => ({
                 message: '데이터 조회 성공',
                 statusCode: 200,
@@ -117,11 +117,11 @@ export const PostsServiceProvider = observer(
          * =====================================================================
          */
         const [queryParam, setQueryParam] = useState('');
-        const res = useSWR(
+        const res = useSWR<BlogServerResponse>(
             queryParam ? [`${API_URL}/posts`, queryParam] : null,
             fetcher,
             {
-                fallbackData: initialData,
+                fallbackData: initialListData,
             },
         );
 
@@ -135,10 +135,12 @@ export const PostsServiceProvider = observer(
          */
         useEffect(() => {
             if (res.data) {
-                const { entities, pagination } = res.data?.data;
+                const {
+                    data: { entities, pagination },
+                } = res.data;
 
                 postsStore.setPagination(pagination);
-                postsStore.setEntities(entities);
+                postsStore.setEntities(entities as unknown as PostDto[]);
             }
         }, [res.data]);
 
