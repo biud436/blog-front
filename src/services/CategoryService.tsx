@@ -67,34 +67,16 @@ export function useCategoryServiceBuilder() {
         getCategories,
         setCurrentMenuCategoryId,
         getCurrentMenuCategoryId,
-    };
+    } as CategoryService;
 }
 
 export const CategoryServiceProvider = observer(
     ({ children }: { children: ReactNode }) => {
-        const {
-            categories,
-            isReady,
-            currentMenuCategoryId,
-            setCategories,
-            getCategories,
-            setCurrentMenuCategoryId,
-            getCurrentMenuCategoryId,
-        } = useCategoryServiceBuilder();
+        const value = useCategoryServiceBuilder() as CategoryService;
 
         return (
             <>
-                <CategoryServiceContext.Provider
-                    value={{
-                        categories,
-                        isReady,
-                        currentMenuCategoryId,
-                        setCategories,
-                        getCategories,
-                        setCurrentMenuCategoryId,
-                        getCurrentMenuCategoryId,
-                    }}
-                >
+                <CategoryServiceContext.Provider value={value}>
                     {children}
                 </CategoryServiceContext.Provider>
             </>

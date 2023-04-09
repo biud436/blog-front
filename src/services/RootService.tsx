@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import React, { useEffect } from 'react';
-import { createContext, useState } from 'react';
+import React, { useMemo } from 'react';
+import { createContext } from 'react';
 import { IPostsService, usePostsServiceBuilder } from './PostsService';
 import { IPostService, usePostServiceBuilder } from './PostService';
 import { CategoryService, useCategoryServiceBuilder } from './CategoryService';
@@ -23,14 +23,17 @@ export const RootServiceProvider = observer(
         const postService = usePostServiceBuilder();
         const postsService = usePostsServiceBuilder();
 
+        const value = useMemo<RootServiceContextType>(
+            () => ({
+                category: categoryService,
+                post: postService,
+                posts: postsService,
+            }),
+            [categoryService, postService, postsService],
+        );
+
         return (
-            <RootServiceContext.Provider
-                value={{
-                    category: categoryService,
-                    post: postService,
-                    posts: postsService,
-                }}
-            >
+            <RootServiceContext.Provider value={value}>
                 {children}
             </RootServiceContext.Provider>
         );

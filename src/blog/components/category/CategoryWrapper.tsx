@@ -12,6 +12,7 @@ import { CategoryDepthVO } from '@/services/CategoryService';
 import { useCategoryService } from '@/hooks/services/useCategoryService';
 import { observer } from 'mobx-react-lite';
 import { NextRouter } from 'next/router';
+import { useRootService } from '@/hooks/useRootService';
 
 interface CategoryWrapperProps {
     categoryList: CategoryDepthVO[];
@@ -33,6 +34,7 @@ export const CategoryWrapper = React.memo(
             rootCategory,
         }: CategoryWrapperProps) => {
             const categoryService = useCategoryService();
+            // const { category: categoryService } = useRootService();
 
             /**
              * 카테고리 리스트를 동적으로 생성합니다.
