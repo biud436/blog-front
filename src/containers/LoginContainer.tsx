@@ -22,15 +22,18 @@ import {
 import { ThemeProvider } from '@mui/system';
 import { observer } from 'mobx-react-lite';
 import { useThemeStore } from '@/hooks/useThemeStore';
-import { grey } from '@mui/material/colors';
-
-import { signIn } from 'next-auth/react';
-import axios from 'axios';
+import GithubIcon from '@mui/icons-material/Github';
+import styled from 'styled-components';
 
 export interface LoginFormProps {
     username: string;
     password: string;
 }
+
+const RedText = styled.span`
+    color: #9e1111;
+    text-decoration: underline;
+`;
 
 /**
  * 로그인 페이지 메인
@@ -78,27 +81,6 @@ export const LoginContainer = observer(() => {
     const onSubmit = async (data: LoginFormProps) => {
         const { username, password } = data;
 
-        // signIn('credentials', {
-        //     username,
-        //     password,
-        //     redirect: false,
-        // }).then(res => {
-        //     if (!res) return;
-        //     if (res.error) {
-        //         toastWrapper(res.error);
-        //     } else {
-        //         axios.get('/auth/profile').then(res => {
-        //             const profile = res.data;
-
-        //             setUser({
-        //                 ...profile.user,
-        //             });
-
-        //             router.push(URL_MAP.MAIN);
-        //         });
-        //     }
-        // });
-
         return await login(username, password);
     };
 
@@ -132,8 +114,8 @@ export const LoginContainer = observer(() => {
                         display: 'flex',
                         justifyContent: 'center',
                         width: '100%',
-                        height: '100%',
-                        background: grey[100],
+                        background: '#a0a0a0',
+                        flexDirection: 'column',
                     }}
                 >
                     <Meta
@@ -147,17 +129,22 @@ export const LoginContainer = observer(() => {
                         justifyContent="center"
                         alignItems="center"
                         minHeight="100vh"
+                        flexDirection="column"
                     >
                         <Stack
                             direction={'column'}
                             gap={2}
                             sx={{
-                                borderRadius: 2,
+                                borderRadius: 4,
                                 width: {
                                     xs: '300px',
                                     sm: '400px',
                                     md: '500px',
                                 },
+                                background: 'white',
+                                boxShadow: 1,
+                                border: '1px solid #e0e0e0',
+                                p: 3,
                             }}
                         >
                             <Typography
@@ -165,23 +152,18 @@ export const LoginContainer = observer(() => {
                                 component="h1"
                                 textAlign={'center'}
                                 pb={1}
+                                fontFamily={"Noto Sans KR', sans-serif"}
                             >
                                 로그인
                             </Typography>
                             <TextFieldElement
                                 name="username"
                                 label="아이디"
-                                sx={{
-                                    background: 'white',
-                                }}
                                 required
                             />
                             <PasswordElement
                                 name="password"
                                 label="비밀번호"
-                                sx={{
-                                    background: 'white',
-                                }}
                                 required
                             />
                             <Button
@@ -192,6 +174,29 @@ export const LoginContainer = observer(() => {
                             >
                                 로그인
                             </Button>
+                            <Button
+                                startIcon={<GithubIcon />}
+                                variant="contained"
+                                color="info"
+                                onClick={() => {
+                                    toast.info('준비중입니다', {
+                                        position: 'top-center',
+                                    });
+                                }}
+                            >
+                                Github 계정으로 로그인
+                            </Button>
+                        </Stack>
+                        <Stack mt={1}>
+                            <Typography
+                                variant="body2"
+                                sx={{
+                                    color: 'text.primary',
+                                }}
+                            >
+                                <RedText>관리자 계정</RedText>으로만 로그인이
+                                가능합니다.
+                            </Typography>
                         </Stack>
                     </Box>
                     <ToastContainer />
