@@ -5,17 +5,16 @@ import { makeAutoObservable } from 'mobx';
 export type ThemeProps = ThemeProviderProps<DefaultTheme>['theme'];
 
 export class ThemeStore {
-
     mainTheme: ThemeProps = createTheme({
         components: {
             MuiCard: {
                 styleOverrides: {
                     root: {
                         borderLeft: '4px solid #18599b',
-                    }
-                }
-            }
-        }
+                    },
+                },
+            },
+        },
     });
 
     loginTheme: ThemeProps = createTheme({
@@ -26,6 +25,9 @@ export class ThemeStore {
             },
             secondary: {
                 main: '#7046ca',
+            },
+            info: {
+                main: '#4e4957',
             },
         },
     });
