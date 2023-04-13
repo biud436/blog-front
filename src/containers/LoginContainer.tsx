@@ -24,6 +24,7 @@ import { observer } from 'mobx-react-lite';
 import { useThemeStore } from '@/hooks/useThemeStore';
 import GithubIcon from '@mui/icons-material/Github';
 import styled from 'styled-components';
+import axios from 'axios';
 
 export interface LoginFormProps {
     username: string;
@@ -41,7 +42,6 @@ const RedText = styled.span`
 export const LoginContainer = observer(() => {
     const [user, setUser] = useRecoilState(userState);
     const theme = useThemeStore('login');
-
     const formContext = useForm<LoginFormProps>({
         defaultValues: {
             username: '',
@@ -76,6 +76,10 @@ export const LoginContainer = observer(() => {
         } finally {
             // empty
         }
+    };
+
+    const loginByGithubId = async () => {
+        router.push('/api/github/login');
     };
 
     const onSubmit = async (data: LoginFormProps) => {
@@ -179,9 +183,7 @@ export const LoginContainer = observer(() => {
                                 variant="contained"
                                 color="info"
                                 onClick={() => {
-                                    toast.info('준비중입니다', {
-                                        position: 'top-center',
-                                    });
+                                    loginByGithubId();
                                 }}
                             >
                                 Github 계정으로 로그인
