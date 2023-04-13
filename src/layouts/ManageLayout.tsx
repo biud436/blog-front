@@ -195,7 +195,7 @@ export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
                                         variant="text"
                                         startIcon={<KeyboardReturnIcon />}
                                         onClick={() => {
-                                            router.push(URL_MAP.MAIN);
+                                            router.back();
                                         }}
                                     >
                                         돌아가기

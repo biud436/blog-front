@@ -12,7 +12,6 @@ import { CategoryDepthVO } from '@/services/CategoryService';
 import { useCategoryService } from '@/hooks/services/useCategoryService';
 import { observer } from 'mobx-react-lite';
 import { NextRouter } from 'next/router';
-import { useRootService } from '@/hooks/useRootService';
 
 interface CategoryWrapperProps {
     categoryList: CategoryDepthVO[];
