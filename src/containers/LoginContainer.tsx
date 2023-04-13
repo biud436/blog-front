@@ -22,9 +22,8 @@ import {
 import { ThemeProvider } from '@mui/system';
 import { observer } from 'mobx-react-lite';
 import { useThemeStore } from '@/hooks/useThemeStore';
-import GithubIcon from '@mui/icons-material/Github';
+import GitHubIcon from '@mui/icons-material/GitHub';
 import styled from 'styled-components';
-import axios from 'axios';
 
 export interface LoginFormProps {
     username: string;
@@ -179,7 +178,7 @@ export const LoginContainer = observer(() => {
                                 로그인
                             </Button>
                             <Button
-                                startIcon={<GithubIcon />}
+                                startIcon={<GitHubIcon />}
                                 variant="contained"
                                 color="info"
                                 onClick={() => {
