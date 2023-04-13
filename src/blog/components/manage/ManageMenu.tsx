@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, Drawer, List, SxProps, Theme } from '@mui/material';
+import { Box, Divider, Drawer, List, SxProps, Theme } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { BrandLogo } from './BrandLogo';
 import { CategoryManageButton } from './category/CategoryManageButton';
@@ -25,12 +25,28 @@ export const ManageMenu = observer(
                 }}
                 open={isOpen}
             >
-                <BrandLogo />
-                <Divider />
-                <List>
-                    <HomeButton />
-                    <CategoryManageButton />
-                </List>
+                <Box
+                    sx={{
+                        borderRadius: '1rem',
+                        p: 2,
+                        m: 2,
+                    }}
+                >
+                    <BrandLogo />
+                </Box>
+                <Box
+                    sx={{
+                        borderRadius: '1rem',
+                        p: 2,
+                        m: 2,
+                        background: 'linear-gradient(to top, #000000, #434343)',
+                    }}
+                >
+                    <List>
+                        <HomeButton />
+                        <CategoryManageButton />
+                    </List>
+                </Box>
             </Drawer>
         );
     },

@@ -83,12 +83,11 @@ export class ThemeStore {
                 styleOverrides: {
                     root: {
                         '& .MuiDrawer-paper': {
-                            background: '#27243B',
                             color: '#c1c1c1',
 
                             '& .MuiListItem-root': {
                                 '&:hover': {
-                                    background: '#583b97',
+                                    background: '#5f5f5f',
                                 },
                             },
                         },

@@ -8,6 +8,7 @@ import {
     ThemeProvider,
     Stack,
     Container,
+    Button,
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { ToastContainer } from 'react-toastify';
@@ -23,6 +24,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import { useMounted } from '@/hooks/useMounted';
 import { LoginGuard } from '../blog/components/manage/LoginGuard';
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
+import { useRouter } from 'next/router';
+import { URL_MAP } from '@/common/URL';
 
 export interface ManageLayoutProps {
     children: React.ReactNode;
@@ -71,8 +75,8 @@ export function useAppBarProps(drawerWidth: number) {
             width: {
                 xs: '100%',
                 sm: '100%',
-                md: `calc(100% - ${drawerWidth}px)`,
             },
+            background: 'linear-gradient(to top, #ece9e6, #ffffff)',
             marginLeft: {
                 xs: 0,
                 sm: 0,
@@ -88,8 +92,8 @@ export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
     const isMounted = useMounted();
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const theme = useThemeStore('manage');
-    const manageMenuProps = useManageMenuProps(drawerWidth);
     const appBarProps = useAppBarProps(drawerWidth);
+    const router = useRouter();
 
     const handleDrawerOpen = useCallback(() => {
         setIsOpen(true);
@@ -117,7 +121,13 @@ export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
     return (
         <ThemeProvider theme={theme}>
             <LoginGuard>
-                <Box sx={{ display: 'flex' }}>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+                        background: 'linear-gradient(to top, #FFFFFF, #ECE9E6)',
+                    }}
+                >
                     <Meta
                         {...{
                             title: '관리자 모드',
@@ -125,11 +135,6 @@ export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
                         }}
                     />
                     <CssBaseline />
-                    <ManageMenu
-                        variant="permanent"
-                        isOpen={true}
-                        sx={manageMenuProps}
-                    />
                     <Box
                         onKeyDown={toggleDrawer(false)}
                         onClick={toggleDrawer(false)}
@@ -153,6 +158,7 @@ export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
                                 sx={{
                                     display: 'flex',
                                     alignItems: 'center',
+                                    justifyContent: 'space-between',
                                 }}
                             >
                                 <Stack
@@ -183,6 +189,17 @@ export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
                                     >
                                         관리자 페이지
                                     </Typography>
+                                </Stack>
+                                <Stack>
+                                    <Button
+                                        variant="text"
+                                        startIcon={<KeyboardReturnIcon />}
+                                        onClick={() => {
+                                            router.push(URL_MAP.MAIN);
+                                        }}
+                                    >
+                                        돌아가기
+                                    </Button>
                                 </Stack>
                             </Toolbar>
                         </AppBar>

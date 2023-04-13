@@ -1,18 +1,19 @@
-import React from 'react';
-import {
-    Button,
-    Grid,
-    Stack,
-    Card,
-    CardHeader,
-    CardContent,
-    Divider,
-    Container,
-} from '@mui/material';
+import React, { useMemo } from 'react';
+import { Button, Grid, Stack, Container, SxProps, Theme } from '@mui/material';
 import Link from 'next/link';
 import { URL_MAP } from '@/common/URL';
+import SpeakerNotesIcon from '@mui/icons-material/SpeakerNotes';
+import CategoryIcon from '@mui/icons-material/Category';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 export const ManageIntroducePresent = () => {
+    const buttonProps: SxProps = useMemo<SxProps>(
+        () => ({
+            background: 'linear-gradient(to top, #000000, #434343)',
+        }),
+        [],
+    );
+
     return (
         <Container>
             <Stack
@@ -23,45 +24,47 @@ export const ManageIntroducePresent = () => {
                     width: '100%',
                 }}
             >
-                <Grid
-                    container
-                    spacing={2}
-                    sx={{
-                        mt: 4,
-                    }}
-                >
-                    <Grid item xs={12}>
-                        <Card>
-                            <CardHeader title="메뉴" />
-                            <Divider />
-                            <CardContent>관리자 페이지입니다.</CardContent>
-                        </Card>
-                    </Grid>
+                <Grid container>
                     <Grid item xs={12}>
                         <Stack
                             direction={'column'}
-                            spacing={2}
+                            spacing={0}
                             gap={2}
-                            m={1}
-                            p={1}
+                            m={0}
+                            p={0}
                         >
                             <Button
+                                startIcon={<CategoryIcon />}
                                 variant="contained"
                                 color="primary"
                                 fullWidth
                                 href={URL_MAP.ADMIN_CATEGORY}
                                 LinkComponent={Link}
+                                sx={buttonProps}
                             >
                                 카테고리 관리
                             </Button>
                             <Button
+                                startIcon={<SpeakerNotesIcon />}
                                 variant="contained"
-                                color="secondary"
+                                color="primary"
                                 fullWidth
-                                href={URL_MAP.MAIN}
+                                href={URL_MAP.ADMIN_POST}
                                 LinkComponent={Link}
+                                sx={buttonProps}
                             >
-                                메인 화면
+                                글 관리
+                            </Button>
+                            <Button
+                                startIcon={<CalendarMonthIcon />}
+                                variant="contained"
+                                color="primary"
+                                fullWidth
+                                href={URL_MAP.ADMIN_POST}
+                                LinkComponent={Link}
+                                sx={buttonProps}
+                            >
+                                일정 관리
                             </Button>
                         </Stack>
                     </Grid>

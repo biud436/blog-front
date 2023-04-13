@@ -24,7 +24,8 @@ export const MobileHamburger = observer(
             <AppBar
                 open={menuStore.isOpen}
                 sx={{
-                    bgcolor: '#3c3c3c',
+                    background: 'linear-gradient(to top, #ece9e6, #ffffff)',
+                    color: 'black',
                 }}
             >
                 <Toolbar

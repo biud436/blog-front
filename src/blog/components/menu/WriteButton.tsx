@@ -17,13 +17,7 @@ export const WriteButton = memo(() => {
             <Typography
                 variant="button"
                 sx={{
-                    color: {
-                        xs: 'white',
-                        sm: 'white',
-                        md: 'white',
-                        lg: '#1e1e1e',
-                        xl: '#1e1e1e',
-                    },
+                    color: '#1e1e1e',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '0.5rem',
