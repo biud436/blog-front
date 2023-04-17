@@ -27,6 +27,11 @@ export default function Posts({
     post: Post;
     error: ServerError;
 }) {
+    const { data: postFromSWR } = useSWR(
+        error ? null : ['/posts', post.id],
+        () => axios.get(`/posts/${post.id}`).then(res => res.data.data),
+    );
+
     if (error) {
         return (
             <ErrorComponent
@@ -35,10 +40,6 @@ export default function Posts({
             />
         );
     }
-
-    const { data: postFromSWR } = useSWR(['/posts', post.id], () =>
-        axios.get(`/posts/${post.id}`).then(res => res.data.data),
-    );
 
     return (
         <ErrorBoundary>
