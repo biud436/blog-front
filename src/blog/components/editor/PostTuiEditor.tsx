@@ -12,6 +12,7 @@ import 'prismjs/components/prism-clojure.js';
 import 'prismjs/components/prism-typescript.js';
 
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
+import { useMediaQuery } from '@mui/material';
 
 const Editor = dynamic<TuiEditorWithForwardedProps>(
     async () => {
@@ -29,7 +30,7 @@ const Editor = dynamic<TuiEditorWithForwardedProps>(
 );
 
 type PostTuiEditorProps = {
-    toolbarItems: string[][];
+    toolbarItems: string[][] | any;
     addImageBlobHook: (blob: any, callback: any) => boolean;
     onEditorForcusWhenMount?: () => void;
 };
@@ -44,8 +45,7 @@ export const PostTuiEditor = React.memo(
             }: PostTuiEditorProps,
             editorRef: React.ForwardedRef<EditorType>,
         ) => {
-            // const match = useMediaQuery('(max-width: 768px)');
-            const match = false;
+            const match = useMediaQuery('(max-width: 768px)');
 
             return (
                 <div>
@@ -55,7 +55,9 @@ export const PostTuiEditor = React.memo(
                             usageStatistics={false}
                             initialValue={' '} // initialValue가 undefined일 경우 첫 마운트 시, 편집, 미리보기, 마크다운, 위지윅 등의 텍스트가 표시된다 #18
                             previewHighlight={false}
-                            previewStyle={match ? 'tab' : 'vertical'}
+                            {...(!match && {
+                                previewStyle: 'vertical',
+                            })}
                             initialEditType={match ? 'wysiwyg' : 'markdown'}
                             useCommandShortcut={true}
                             css={{
@@ -79,6 +81,30 @@ export const PostTuiEditor = React.memo(
                                     'color:red',
                                     'color:black',
                                 );
+                            }}
+                            customHTMLRenderer={{
+                                htmlBlock: {
+                                    iframe(node: any) {
+                                        return [
+                                            {
+                                                type: 'openTag',
+                                                tagName: 'iframe',
+                                                outerNewLine: true,
+                                                attributes: node.attrs,
+                                            },
+                                            {
+                                                type: 'html',
+                                                content:
+                                                    node.childrenHTML || '',
+                                            },
+                                            {
+                                                type: 'closeTag',
+                                                tagName: 'iframe',
+                                                outerNewLine: true,
+                                            },
+                                        ];
+                                    },
+                                },
                             }}
                         />
                     )}

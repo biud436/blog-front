@@ -7,14 +7,35 @@ import axios from 'axios';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next/types';
 import { Post } from '@/store/post';
 import useSWR, { unstable_serialize } from 'swr';
+import { ErrorComponent } from '@/containers/ErrorFoundPage';
+
+export interface ServerError {
+    message: string;
+    status: number;
+}
 
 export interface PostsProps {
     id: string;
     post: Post;
-    error: any;
+    error: ServerError;
 }
 
-export default function Posts({ post, error }: { post: Post; error: any }) {
+export default function Posts({
+    post,
+    error,
+}: {
+    post: Post;
+    error: ServerError;
+}) {
+    if (error) {
+        return (
+            <ErrorComponent
+                message={error.message}
+                statusCode={error.status ?? 500}
+            />
+        );
+    }
+
     const { data: postFromSWR } = useSWR(['/posts', post.id], () =>
         axios.get(`/posts/${post.id}`).then(res => res.data.data),
     );
@@ -40,7 +61,7 @@ export const getServerSideProps: GetServerSideProps = async (
 ) => {
     const { id } = context.query;
     let post = {} as Post;
-    let error = null;
+    let error: ServerError | null = null;
 
     const extractThumbnail = (post: Post) => {
         if (post.images && post.images.length > 0) {
@@ -65,9 +86,17 @@ export const getServerSideProps: GetServerSideProps = async (
 
         post = res.data as Post;
 
+        console.log(res);
+
         extractThumbnail(post);
     } catch (e: any) {
-        error = e;
+        // axios error
+        console.log(e);
+
+        error = {
+            message: e.response.data.message,
+            status: e.response.status,
+        };
     }
 
     return {

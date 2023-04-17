@@ -6,6 +6,9 @@ export type ThemeProps = ThemeProviderProps<DefaultTheme>['theme'];
 
 export class ThemeStore {
     mainTheme: ThemeProps = createTheme({
+        typography: {
+            fontFamily: 'Noto Sans KR, sans-serif',
+        },
         components: {
             MuiCard: {
                 styleOverrides: {

@@ -1,7 +1,6 @@
 import React from 'react';
-import { Grid, Paper, Typography, Divider, Alert } from '@mui/material';
+import { Grid, Paper, Alert } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import ChevronRight from '@mui/icons-material/ChevronRight';
 import { MainLayout } from '@/layouts/BlogMainLayout';
 import { useEffect, useRef } from 'react';
 import { useAuthorized } from '@/hooks/auth/useAuthorized';
@@ -10,37 +9,13 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Meta } from '@/blog/components/utils/Meta';
 import FlexibleLoading from '@/blog/components/common/FlexibleLoading';
+import { PostEditorPageHeader } from './PostEditorPageHeader';
+import { PostEditorPageDescription } from './PostEditorPageDescription';
 
 export type EditMode = 'create' | 'edit';
 export interface EditPageProps {
     mode: EditMode;
     id?: number;
-}
-
-function PageHeader({ mode }: EditPageProps) {
-    return (
-        <Grid item xs={12}>
-            <Typography variant="h5">
-                <ChevronRight />
-                블로그 포스트 {mode === 'edit' ? '수정' : '작성'}
-            </Typography>
-            <Divider />
-        </Grid>
-    );
-}
-
-function PageDescription({ mode }: EditPageProps) {
-    return (
-        <Grid item xs={12}>
-            <Grid container gap={4}>
-                <Grid item xs={12}>
-                    <Alert severity="info">
-                        포스트를 {mode === 'edit' ? '수정' : '작성'}합니다.
-                    </Alert>
-                </Grid>
-            </Grid>
-        </Grid>
-    );
 }
 
 const PostEditorPresent = dynamic(
@@ -106,8 +81,8 @@ export const PostEditorContainer = observer(
                 <Paper sx={{ padding: 2 }} key="editor">
                     <LoginGuard>
                         <Grid container gap={3}>
-                            <PageHeader mode={mode.current} />
-                            <PageDescription mode={mode.current} />
+                            <PostEditorPageHeader mode={mode.current} />
+                            <PostEditorPageDescription mode={mode.current} />
                             <PostEditor mode={mode.current} />
                         </Grid>
                     </LoginGuard>

@@ -16,6 +16,7 @@ export function PostSelectCategory({
             <InputLabel>카테고리 선택</InputLabel>
             <Select
                 value={currentCategoryId}
+                label="카테고리 선택"
                 onChange={e => setCurrentCategoryId(+e.target.value)}
             >
                 <MenuItem value={0} key="0">

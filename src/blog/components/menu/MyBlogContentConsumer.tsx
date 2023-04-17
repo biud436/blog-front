@@ -73,10 +73,7 @@ export const MyBlogContentConsumer = observer(
                 >
                     <List
                         component="nav"
-                        sx={{
-                            boxShadow: '0 0 0.8em 0 rgba(0, 0, 0, 0.1)',
-                            background: 'white',
-                        }}
+                        className="p-4 border border-gray-200 rounded-md shadow"
                     >
                         <ListItem
                             sx={{

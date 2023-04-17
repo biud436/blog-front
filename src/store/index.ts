@@ -12,6 +12,8 @@ export class RootStore {
     readonly loginStore = new LoginDataStore();
     readonly githubUserData = new GithubUserData();
 
+    isPrivate = false;
+
     constructor() {
         makeAutoObservable(this);
     }
