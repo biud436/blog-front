@@ -28,6 +28,7 @@ import { DateUtil, Formatter } from '../../api/date';
 import { useCategoryService } from '@/hooks/services/useCategoryService';
 import { useRouter } from 'next/router';
 import { SearchComponent } from './SearchComponent';
+import LockIcon from '@mui/icons-material/Lock';
 
 export function PageHeader() {
     return <></>;
@@ -155,7 +156,7 @@ export const PostsPresent = observer(() => {
                                         flexDirection: 'column',
                                         borderLeft: '4px solid #1976d2',
                                     }}
-                                    key={post.id}
+                                    key={'unique__' + post.id}
                                     elevation={1}
                                 >
                                     {post.images && post.images.length > 0 ? (
@@ -215,6 +216,7 @@ export const PostsPresent = observer(() => {
                                                 {post.category?.name}
                                             </Typography>
                                         </Box>
+                                        {post.isPrivate && <LockIcon />}
                                     </CardActions>
                                 </Card>
                             );

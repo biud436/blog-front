@@ -1,7 +1,13 @@
 import { URL_MAP } from '@/common/URL';
 import { useCategoryService } from '@/hooks/services/useCategoryService';
 import { CategoryDepthVO } from '@/services/CategoryService';
-import { Grid } from '@mui/material';
+import {
+    Box,
+    Checkbox,
+    FormControlLabel,
+    FormGroup,
+    Grid,
+} from '@mui/material';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
 import { observer } from 'mobx-react-lite';
@@ -14,7 +20,7 @@ import { PostSelectCategory } from './PostSelectCategory';
 import { PostTitleInput } from './PostTitleInput';
 import * as DOMPurify from 'dompurify';
 
-import axios from 'axios';
+// import axios from 'axios';
 import { EditPageProps } from '@/containers/PostEditorContainer';
 import { usePostService } from '@/hooks/services/usePostService';
 import { PostContent } from '@/services/PostService';
@@ -23,9 +29,11 @@ import { API_URL } from '@/blog/api/request';
 import { useMediaQuery } from 'react-responsive';
 import { useRouter } from 'next/router';
 import { PostTuiEditor } from './PostTuiEditor';
-import { TempPostBox } from './TempPostBox';
+// import { TempPostBox } from './TempPostBox';
 import { Controller, useForm } from 'react-hook-form';
 import { ImageCompressionService } from '@/services/ImageCompressionService';
+import { rootStore } from '@/store';
+import uploadS3 from '@/blog/api/uploadS3';
 
 const EPOCH_EDITOR_TIME = 2000;
 
@@ -57,11 +65,23 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
                 ['table', 'image', 'link'],
                 ['code', 'codeblock'],
                 ['scrollSync'],
+                // [
+                //     {
+                //         name: 'youtube',
+                //         className: 'tui-youtube',
+                //         tooltip: 'Insert Youtube',
+                //         style: {
+                //             // backgroundImage: `url(${youtubeLogo})`,
+                //             backgroundSize: '25px',
+                //             color: 'red',
+                //         },
+                //     },
+                // ],
             ];
         } else {
             return [['image'], ['heading', 'bold'], ['codeblock']];
         }
-    }, [matches]);
+    }, [matches]) as any;
 
     const categoryService = useCategoryService();
 
@@ -81,12 +101,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
                     mode === 'edit' ? postService.getId() + '' : '0',
                 );
 
-                axios
-                    .post('/image/s3/upload', formData, {
-                        headers: {
-                            'Content-Type': 'multipart/form-data',
-                        },
-                    })
+                uploadS3(formData)
                     .then(res => {
                         const { data } = res.data;
 
@@ -109,14 +124,25 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
     const handleWrite = useCallback(async () => {
         const title_ = watch('title');
 
+        if (!title_) {
+            toast.error('제목을 입력해주세요.');
+            return;
+        }
+
+        const content = editorRef.current?.getInstance().getMarkdown();
+
+        if (!content) {
+            toast.error('내용을 입력해주세요.');
+            return;
+        }
+
         const payload = {
             title: title_,
             // TUI Editor에서 내부에서 DOMPurify를 사용하고 있어서,
             // XSS 공격을 기본적으로 방어하지만 다른 에디터 변경 가능성을 열어두기 위해 추가
-            content: DOMPurify.sanitize(
-                editorRef.current?.getInstance().getMarkdown(),
-            ),
+            content: DOMPurify.sanitize(content),
             categoryId: currentCategoryId,
+            isPrivate: rootStore.isPrivate,
         } as PostContent;
 
         try {
@@ -147,7 +173,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
         } catch (e: any) {
             toast.error(e.message);
         }
-    }, [editorRef, title, currentCategoryId, mode]);
+    }, [editorRef, title, currentCategoryId, mode, rootStore.isPrivate]);
 
     /**
      * 글 작성 취소
@@ -156,6 +182,10 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
         router.push(URL_MAP.MAIN);
     }, []);
 
+    /**
+     * 타이틀을 변경한다.
+     * @param title
+     */
     const setTitle = (title: string) => {
         setValue('title', title, {
             shouldValidate: true,
@@ -224,7 +254,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
         }
     }, [postService.isFetchTempPost, editorRef.current]);
 
-    const onEditorForcusWhenMount = () => {
+    const onEditorFocusWhenMount = () => {
         if (postService.isFetchTempPostState()) {
             const { title, content } = postService.getTempPostContent();
             setTitle(title);
@@ -249,6 +279,18 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
                         />
                     )}
                 />
+                <Box className={'p-2 hover:bg-gray-100'}>
+                    <FormGroup>
+                        <FormControlLabel
+                            control={<Checkbox />}
+                            label="비공개"
+                            checked={rootStore.isPrivate}
+                            onChange={(_, checked) => {
+                                rootStore.isPrivate = checked;
+                            }}
+                        />
+                    </FormGroup>
+                </Box>
                 <PostSelectCategory
                     key="PostSelectCategory-grid"
                     currentCategoryId={currentCategoryId}
@@ -256,11 +298,11 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
                     categories={categories}
                 />
             </Grid>
-            <TempPostBox />
+            {/* <TempPostBox /> */}
             <Grid item xs={12} lg={12} sm={12}>
                 <PostTuiEditor
                     toolbarItems={toolbarItems}
-                    onEditorForcusWhenMount={onEditorForcusWhenMount}
+                    onEditorForcusWhenMount={onEditorFocusWhenMount}
                     ref={editorRef}
                     addImageBlobHook={addImageBlobHook}
                 />

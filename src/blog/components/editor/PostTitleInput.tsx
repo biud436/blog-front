@@ -15,7 +15,11 @@ export interface PostTitleInputProps {
 
 export function PostTitleInput({ title, setTitle }: PostTitleInputProps) {
     return (
-        <FormControl fullWidth sx={{ marginBottom: 2 }}>
+        <FormControl
+            fullWidth
+            sx={{ marginBottom: 0 }}
+            className={'p-2 hover:bg-gray-100'}
+        >
             <InputLabel>제목</InputLabel>
             <Input
                 type="text"
@@ -25,9 +29,6 @@ export function PostTitleInput({ title, setTitle }: PostTitleInputProps) {
                     setTitle(e.target.value);
                 }}
             />
-            <FormGroup>
-                <FormControlLabel control={<Checkbox />} label="나만 보기" />
-            </FormGroup>
         </FormControl>
     );
 }

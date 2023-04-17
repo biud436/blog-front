@@ -31,6 +31,7 @@ export class PostDto {
           }
         | undefined;
     images: PostImage[] | undefined;
+    isPrivate?: boolean | undefined;
 }
 
 export type PostsSearchType = 'title' | 'content';
