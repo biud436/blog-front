@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    .post-header-text {
+        @apply p-4 text-center text-gray-700 rounded-md bg-gradient-to-b from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300;
+    }
+}

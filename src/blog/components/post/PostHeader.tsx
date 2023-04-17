@@ -47,19 +47,19 @@ export function PostHeader({ post }: { post: Post }) {
                 }}
                 gap={3}
             >
-                <Typography variant="subtitle2">
-                    조회수{' '}
+                <Typography variant="subtitle2" className="post-header-text">
+                    조회수
                     <Typography sx={{ color: 'GrayText' }}>
                         {post.viewCount?.count}
                     </Typography>
                 </Typography>
-                <Typography variant="subtitle2">
+                <Typography variant="subtitle2" className="post-header-text">
                     작성자{' '}
                     <Typography sx={{ color: 'GrayText' }}>
                         {post.user?.profile?.nickname}
                     </Typography>
                 </Typography>
-                <Typography variant="subtitle2">
+                <Typography variant="subtitle2" className="post-header-text">
                     작성일{' '}
                     <Typography sx={{ color: 'GrayText' }}>
                         {DateUtil.ToDateStringBySeoul(

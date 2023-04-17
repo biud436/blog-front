@@ -12,7 +12,7 @@ const Viewer = dynamic(
     },
     {
         ssr: false,
-        loading: () => <div>로딩중....</div>,
+        loading: () => <div className="p-4">로딩중...</div>,
     },
 );
 

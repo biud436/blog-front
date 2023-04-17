@@ -216,7 +216,16 @@ export const PostsPresent = observer(() => {
                                                 {post.category?.name}
                                             </Typography>
                                         </Box>
-                                        {post.isPrivate && <LockIcon />}
+
+                                        {post.isPrivate && (
+                                            <Box
+                                                className={
+                                                    'bg-slate-500 rounded text-white p-2 hover:bg-slate-600 cursor-pointer transition duration-300 ease-in-out'
+                                                }
+                                            >
+                                                <LockIcon />
+                                            </Box>
+                                        )}
                                     </CardActions>
                                 </Card>
                             );

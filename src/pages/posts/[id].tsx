@@ -86,13 +86,8 @@ export const getServerSideProps: GetServerSideProps = async (
 
         post = res.data as Post;
 
-        console.log(res);
-
         extractThumbnail(post);
     } catch (e: any) {
-        // axios error
-        console.log(e);
-
         error = {
             message: e.response.data.message,
             status: e.response.status,
