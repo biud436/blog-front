@@ -18,11 +18,6 @@ export function MyBlogHeader({ router }: { router: NextRouter }) {
         <HeaderStyleGuard>
             <Grid
                 container
-                xs={12}
-                sm={12}
-                md={12}
-                lg={12}
-                xl={12}
                 sx={{
                     p: {
                         xs: 0,

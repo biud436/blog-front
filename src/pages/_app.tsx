@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { CssBaseline } from '@mui/material';
 import { RootProvider } from '../blog/components/common/RootProvider';
+import '../styles/globals.css';
 
 const notoSansKR = Noto_Sans_KR({
     weight: '100',
