@@ -94,7 +94,7 @@ export const PostsPresent = observer(() => {
     const goToPage = (post: PostDto) => {
         const postId = post.id;
         if (post.isPrivate) {
-            router.push(`/posts/secret/[id]`, `/posts/secret/${postId}`);
+            router.push(`/secret/[id]`, `/secret/${postId}`);
             return;
         }
         router.push(`/posts/[id]`, `/posts/${postId}`);
