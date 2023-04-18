@@ -64,6 +64,10 @@ export const getServerSideProps: GetServerSideProps = async (
     let post = {} as Post;
     let error: ServerError | null = null;
 
+    /**
+     * Extract thumbnail from post.images
+     * @param post
+     */
     const extractThumbnail = (post: Post) => {
         if (post.images && post.images.length > 0) {
             post.thumbnail = post.images[0].path;
@@ -71,7 +75,7 @@ export const getServerSideProps: GetServerSideProps = async (
     };
 
     try {
-        // 쿠키가 있는지 확인
+        // Check if cookie exists
         const hasCookie = !!context.req.headers.cookie;
 
         const { data: res } = await axios.get('/posts/' + id, {

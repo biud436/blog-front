@@ -6,7 +6,7 @@ import { SearchBuilder } from '@/blog/components/builder/SearchBuilder';
 
 import { usePostsService } from '@/hooks/services/usePostsService';
 import { postsStore } from '@/store';
-import { PostsSearchType } from '@/store/posts/posts.dto';
+import { PostDto, PostsSearchType } from '@/store/posts/posts.dto';
 
 import {
     Box,
@@ -91,7 +91,12 @@ export const PostsPresent = observer(() => {
         fetchData();
     }, [categoryService.getCurrentMenuCategoryId()]);
 
-    const goToPage = (postId: number) => {
+    const goToPage = (post: PostDto) => {
+        const postId = post.id;
+        if (post.isPrivate) {
+            router.push(`/posts/secret/[id]`, `/posts/secret/${postId}`);
+            return;
+        }
         router.push(`/posts/[id]`, `/posts/${postId}`);
     };
 
@@ -165,7 +170,7 @@ export const PostsPresent = observer(() => {
                                             image={post.images[0].path}
                                             alt={post.title}
                                             sx={mediaProp}
-                                            onClick={() => goToPage(post.id!)}
+                                            onClick={() => goToPage(post)}
                                         />
                                     ) : (
                                         <CardMedia
@@ -173,7 +178,7 @@ export const PostsPresent = observer(() => {
                                             image="https://via.placeholder.com/300x200.png?text=No+Image"
                                             alt={post.title}
                                             sx={mediaProp}
-                                            onClick={() => goToPage(post.id!)}
+                                            onClick={() => goToPage(post)}
                                         />
                                     )}
                                     <CardHeader
@@ -193,7 +198,7 @@ export const PostsPresent = observer(() => {
                                                 width: '80%',
                                             },
                                         }}
-                                        onClick={() => goToPage(post.id!)}
+                                        onClick={() => goToPage(post)}
                                     ></CardHeader>
                                     <CardActions
                                         sx={{
