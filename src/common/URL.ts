@@ -7,4 +7,5 @@ export const URL_MAP = {
     ADMIN_CATEGORY: '/manage/category',
     ADMIN_BLOG_INFO: '/manage/info',
     ADMIN_POST: '/manage/post',
+    SECRET: '/secret',
 };

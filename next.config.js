@@ -35,6 +35,11 @@ const nextConfig = withMDX({
                 destination: `${process.env.NEXT_PUBLIC_SERVER_URL}/rss`,
                 permanent: true,
             },
+            {
+                source: '/:slug(\\d{1,})',
+                destination: '/posts/:slug',
+                permanent: false,
+            },
         ];
     },
     experimental: {
