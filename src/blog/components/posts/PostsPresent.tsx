@@ -23,11 +23,10 @@ import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 
-import { DateUtil, Formatter } from '../../api/date';
-
 import { useCategoryService } from '@/hooks/services/useCategoryService';
 import { useRouter } from 'next/router';
 import { SearchComponent } from './SearchComponent';
+import { DateUtil, Formatter } from '@/blog/api/date';
 import LockIcon from '@mui/icons-material/Lock';
 
 export function PageHeader() {
@@ -115,6 +114,7 @@ export const PostsPresent = observer(() => {
                     justifyContent: 'center',
                     alignItems: 'center',
                     flexDirection: 'column',
+                    p: 2,
                 }}
             >
                 <Grid
@@ -237,7 +237,14 @@ export const PostsPresent = observer(() => {
                         })}
                 </Grid>
             </Grid>
-            <Grid item>
+            <Grid
+                item
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
                 <Pagination
                     count={postsStore.getPagination().maxPage}
                     page={postsStore.getPageNumber()}

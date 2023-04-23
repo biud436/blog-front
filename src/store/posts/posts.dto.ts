@@ -16,7 +16,7 @@ export class PostDto {
         | {
               username: string | undefined;
               profile: {
-                  nkickname: string | undefined;
+                  nickname: string | undefined;
               };
           }
         | undefined;
