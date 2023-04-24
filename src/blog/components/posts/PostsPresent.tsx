@@ -13,6 +13,7 @@ import {
     Box,
     Card,
     CardActions,
+    CardContent,
     CardHeader,
     CardMedia,
     Grid,
@@ -150,6 +151,10 @@ export const PostsPresent = observer(() => {
                                 maxHeight: 200,
                                 borderRadius: 3,
                             };
+
+                            const isValidImage =
+                                post.images && post.images.length > 0;
+
                             return (
                                 <Card
                                     sx={{
@@ -159,7 +164,7 @@ export const PostsPresent = observer(() => {
                                         },
                                         display: 'flex',
                                         justifyContent: 'center',
-                                        alignItems: 'center',
+                                        alignItems: 'flex-start',
                                         flexDirection: 'column',
                                         border: 0,
                                         minHeight: 310,
@@ -167,10 +172,10 @@ export const PostsPresent = observer(() => {
                                     key={'unique__' + post.id}
                                     elevation={0}
                                 >
-                                    {post.images && post.images.length > 0 && (
+                                    {isValidImage && (
                                         <CardMedia
                                             component="img"
-                                            image={post.images[0].path}
+                                            image={post?.images?.[0].path}
                                             alt={post.title}
                                             sx={mediaProp}
                                             onClick={() => goToPage(post)}
@@ -200,6 +205,21 @@ export const PostsPresent = observer(() => {
                                         }}
                                         onClick={() => goToPage(post)}
                                     ></CardHeader>
+                                    {!isValidImage && (
+                                        <CardContent>
+                                            {post.content && (
+                                                <Typography
+                                                    variant="subtitle2"
+                                                    color="text.secondary"
+                                                    sx={{
+                                                        overflow: 'hidden',
+                                                    }}
+                                                >
+                                                    {post.content}
+                                                </Typography>
+                                            )}
+                                        </CardContent>
+                                    )}
                                     <CardActions
                                         sx={{
                                             alignSelf: 'flex-start',
