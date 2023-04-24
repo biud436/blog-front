@@ -21,6 +21,8 @@ import { useInView } from 'framer-motion';
 import * as React from 'react';
 import { useCallback } from 'react';
 import ReactDOM from 'react-dom';
+import { TocWrapper } from './PostPresent';
+import { Box } from '@mui/material';
 
 const ViewerWrapper = styled.div`
     .post-heading {
@@ -62,6 +64,7 @@ const ViewerWrapper = styled.div`
 
     .toastui-editor-contents {
         font-size: 1.2rem;
+        font: 100 1.2rem 'Noto Sans KR', sans-serif;
 
         blockquote {
             border-left: 4px solid #1976d2;
@@ -203,6 +206,9 @@ const TuiEditorViewer = ({ content }: { content: string }) => {
                 theme="dark"
             />
             <HeadingElementWrapper />
+            <Box className="fixed transition-opacity opacity-50 left-3/4 top-1/4 z-150 hover:opacity-95">
+                <TocWrapper content={content} />
+            </Box>
         </ViewerWrapper>
     );
 };

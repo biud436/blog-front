@@ -41,7 +41,7 @@ export const MyBlogContentConsumer = observer(
         return (
             <Grid
                 container
-                spacing={1}
+                spacing={0}
                 sx={{
                     display: 'flex',
                     justifyContent: 'center',
@@ -69,6 +69,9 @@ export const MyBlogContentConsumer = observer(
                             lg: 'block',
                             xl: 'block',
                         },
+                        width: 280,
+                        height: '100%',
+                        order: 1,
                     }}
                 >
                     <List
@@ -112,8 +115,8 @@ export const MyBlogContentConsumer = observer(
                     xs={12}
                     sm={12}
                     md={12}
-                    lg={9}
-                    xl={9}
+                    lg={12}
+                    xl={12}
                     sx={{
                         color: '#000',
                         opacity: 1,
