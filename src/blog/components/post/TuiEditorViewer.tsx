@@ -1,12 +1,17 @@
+/* eslint-disable no-var */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import '@toast-ui/editor/dist/toastui-editor.css';
 
 import { Viewer, ViewerProps } from '@toast-ui/react-editor';
-import Prism from 'prismjs';
+// import Prism from 'prismjs';
+import 'prismjs';
 import 'prismjs/components/prism-clojure.js';
 import 'prismjs/components/prism-typescript.js';
 
 import 'prismjs/themes/prism.css';
+import 'prismjs/plugins/toolbar/prism-toolbar';
+import 'prismjs/plugins/toolbar/prism-toolbar.css';
+import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard';
 import 'prismjs/themes/prism-okaidia.css';
 import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
 
@@ -23,6 +28,8 @@ import { useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import { TocWrapper } from './PostPresent';
 import { Box } from '@mui/material';
+
+declare var Prism: any;
 
 const ViewerWrapper = styled.div`
     .post-heading {
@@ -69,6 +76,30 @@ const ViewerWrapper = styled.div`
         blockquote {
             border-left: 4px solid #1976d2;
         }
+    }
+
+    .copy-code {
+        position: relative;
+        display: inline-block;
+        margin: 0 5px;
+        padding: 0 5px;
+        border-radius: 3px;
+        cursor: pointer;
+        color: #fff;
+    }
+
+    .copy-code:hover {
+        background-color: #1976d2;
+    }
+
+    .copy-code::after {
+        content: 'Copy';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        line-height: 30px;
     }
 `;
 
@@ -196,7 +227,14 @@ const TuiEditorViewer = ({ content }: { content: string }) => {
             <ForwardedScrollProgressBar ref={viewerRef} />
             <Viewer
                 initialValue={content}
-                plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
+                plugins={[
+                    [
+                        codeSyntaxHighlight,
+                        {
+                            highlighter: Prism,
+                        },
+                    ],
+                ]}
                 ref={setViewerRef}
                 linkAttributes={{ target: '_blank', rel: 'noreferrer' }}
                 customHTMLRenderer={customRenderer}
