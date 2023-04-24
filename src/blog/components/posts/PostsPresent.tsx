@@ -9,6 +9,7 @@ import { postsStore } from '@/store';
 import { PostDto, PostsSearchType } from '@/store/posts/posts.dto';
 
 import {
+    Avatar,
     Box,
     Card,
     CardActions,
@@ -130,7 +131,7 @@ export const PostsPresent = observer(() => {
                             xs: '1fr',
                             sm: '1fr',
                             md: '1fr 1fr ',
-                            lg: '1fr 1fr 1fr',
+                            lg: '1fr 1fr 1fr 1fr',
                         },
                         gridTemplateRows: '1fr',
                         gap: 3,
@@ -147,6 +148,7 @@ export const PostsPresent = observer(() => {
                                 width: '100%',
                                 minHeight: 200,
                                 maxHeight: 200,
+                                borderRadius: 3,
                             };
                             return (
                                 <Card
@@ -159,23 +161,16 @@ export const PostsPresent = observer(() => {
                                         justifyContent: 'center',
                                         alignItems: 'center',
                                         flexDirection: 'column',
-                                        borderLeft: '4px solid #1976d2',
+                                        border: 0,
+                                        minHeight: 310,
                                     }}
                                     key={'unique__' + post.id}
-                                    elevation={1}
+                                    elevation={0}
                                 >
-                                    {post.images && post.images.length > 0 ? (
+                                    {post.images && post.images.length > 0 && (
                                         <CardMedia
                                             component="img"
                                             image={post.images[0].path}
-                                            alt={post.title}
-                                            sx={mediaProp}
-                                            onClick={() => goToPage(post)}
-                                        />
-                                    ) : (
-                                        <CardMedia
-                                            component="img"
-                                            image="https://via.placeholder.com/300x200.png?text=No+Image"
                                             alt={post.title}
                                             sx={mediaProp}
                                             onClick={() => goToPage(post)}
@@ -187,9 +182,14 @@ export const PostsPresent = observer(() => {
                                             post?.uploadDate!,
                                             Formatter.DATETIME,
                                         )}
+                                        titleTypographyProps={{
+                                            variant: 'h4',
+                                            align: 'left',
+                                        }}
                                         sx={{
                                             cursor: 'pointer',
-                                            color: 'primary.main',
+                                            color: 'text.primary',
+                                            fontWeight: 'bold',
                                             width: '100%',
                                             '& .MuiCardHeader-title': {
                                                 overflow: 'hidden',
@@ -205,6 +205,9 @@ export const PostsPresent = observer(() => {
                                             alignSelf: 'flex-start',
                                         }}
                                     >
+                                        <Avatar variant="rounded">
+                                            {post.user?.profile?.nickname?.[0]}
+                                        </Avatar>
                                         <Box
                                             sx={{
                                                 borderRadius: 10,
