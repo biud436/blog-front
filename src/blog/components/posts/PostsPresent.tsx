@@ -16,6 +16,7 @@ import {
     CardContent,
     CardHeader,
     CardMedia,
+    CssBaseline,
     Grid,
     Pagination,
     SxProps,
@@ -119,6 +120,7 @@ export const PostsPresent = observer(() => {
                     p: 2,
                 }}
             >
+                <CssBaseline />
                 <Grid
                     item
                     xs={12}
@@ -166,9 +168,9 @@ export const PostsPresent = observer(() => {
                                         justifyContent: 'center',
                                         alignItems: 'flex-start',
                                         flexDirection: 'column',
-                                        border: 0,
-                                        minHeight: 310,
+                                        minHeight: 280,
                                     }}
+                                    className="transition duration-300 ease-in-out transform shadow-md bg:gray-50 hover:bg-gray-100 hover:-translate-y-1 hover:scale-110"
                                     key={'unique__' + post.id}
                                     elevation={0}
                                 >
