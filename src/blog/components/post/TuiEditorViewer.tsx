@@ -67,6 +67,8 @@ const ViewerWrapper = styled.div`
         code {
             color: #c1798b;
         }
+
+        position: relative;
     }
 
     .toastui-editor-contents {
@@ -79,13 +81,16 @@ const ViewerWrapper = styled.div`
     }
 
     .copy-code {
-        position: relative;
+        position: absolute;
         display: inline-block;
         margin: 0 5px;
         padding: 0 5px;
         border-radius: 3px;
         cursor: pointer;
         color: #fff;
+        right: 0;
+        top: 0;
+        background-color: #2196f3;
     }
 
     .copy-code:hover {
@@ -93,13 +98,13 @@ const ViewerWrapper = styled.div`
     }
 
     .copy-code::after {
-        content: 'Copy';
+        content: '';
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        line-height: 30px;
+        line-height: 2rem;
     }
 `;
 
@@ -165,6 +170,47 @@ const HeadingElementWrapper = () => {
     return <>{activeComponents}</>;
 };
 
+const useCodeCopyInjector = () => {
+    useEffect(() => {
+        const preCode = Array.from<HTMLPreElement>(
+            document.querySelectorAll('pre'),
+        );
+
+        preCode.forEach(item => {
+            const copyCode = document.createElement('div');
+            copyCode.classList.add('copy-code');
+            copyCode.innerHTML = 'Copy';
+
+            copyCode.addEventListener('click', () => {
+                const textArea = document.createElement('textarea');
+                copyCode.innerHTML = '';
+                textArea.value = item.innerText;
+                document.body.appendChild(textArea);
+                textArea.select();
+
+                // document.execCommand('copy');
+                navigator.clipboard.writeText(item.innerText);
+
+                document.body.removeChild(textArea);
+
+                copyCode.innerHTML = 'Copied!';
+
+                setTimeout(() => {
+                    copyCode.innerHTML = 'Copy';
+                }, 800);
+            });
+
+            item.appendChild(copyCode);
+        });
+
+        return () => {
+            preCode.forEach(item => {
+                item.remove();
+            });
+        };
+    }, []);
+};
+
 const TuiEditorViewer = ({ content }: { content: string }) => {
     const isLoaded = useRef<boolean>(false);
     const viewerRef = useRef<Viewer | null>(null);
@@ -222,6 +268,8 @@ const TuiEditorViewer = ({ content }: { content: string }) => {
         };
     }, []);
 
+    useCodeCopyInjector();
+
     return (
         <ViewerWrapper>
             <ForwardedScrollProgressBar ref={viewerRef} />
@@ -244,6 +292,7 @@ const TuiEditorViewer = ({ content }: { content: string }) => {
                 theme="dark"
             />
             <HeadingElementWrapper />
+            {/* <CodeCopyInjector /> */}
             <Box className="fixed transition-opacity opacity-50 left-3/4 top-1/4 z-150 hover:opacity-95">
                 <TocWrapper content={content} />
             </Box>
