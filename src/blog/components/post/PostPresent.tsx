@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Post } from '@/store/post';
 import { Card, Divider, Grid, Typography, Paper, Box } from '@mui/material';
 import { PostFooter } from './PostFooter';
@@ -66,16 +67,11 @@ export function PostPresent({
                             <PostHeader post={post} />
                             <PostContent post={post} />
                         </Grid>
-                        <Divider />
-                        <Typography
-                            variant="h5"
+                        <Divider
                             sx={{
-                                marginTop: 1,
-                                cursor: 'pointer',
+                                mb: 3,
                             }}
-                        >
-                            댓글
-                        </Typography>
+                        />
                         <GithubComment />
                     </Box>
                     <PostFooter post={post} goBack={goBack} />

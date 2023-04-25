@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-var */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import '@toast-ui/editor/dist/toastui-editor.css';
@@ -78,6 +79,11 @@ const ViewerWrapper = styled.div`
 
         blockquote {
             border-left: 4px solid #1976d2;
+        }
+
+        h1 {
+            border-bottom: 1px solid #eaecef;
+            margin: 52px 0 15px;
         }
     }
 
