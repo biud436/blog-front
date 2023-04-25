@@ -89,8 +89,9 @@ const ViewerWrapper = styled.div`
         cursor: pointer;
         color: #fff;
         right: 0;
-        top: 0;
-        background-color: #2196f3;
+        top: 5px;
+        background-color: #484849;
+        font-size: 0.8rem;
     }
 
     .copy-code:hover {
@@ -179,7 +180,7 @@ const useCodeCopyInjector = () => {
         preCode.forEach(item => {
             const copyCode = document.createElement('div');
             copyCode.classList.add('copy-code');
-            copyCode.innerHTML = 'Copy';
+            copyCode.innerHTML = '복사';
 
             copyCode.addEventListener('click', () => {
                 const textArea = document.createElement('textarea');
@@ -193,10 +194,10 @@ const useCodeCopyInjector = () => {
 
                 document.body.removeChild(textArea);
 
-                copyCode.innerHTML = 'Copied!';
+                copyCode.innerHTML = '복사됨!';
 
                 setTimeout(() => {
-                    copyCode.innerHTML = 'Copy';
+                    copyCode.innerHTML = '복사';
                 }, 800);
             });
 
