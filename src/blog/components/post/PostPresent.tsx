@@ -44,9 +44,10 @@ export function PostPresent({
                 sx={{
                     display: 'flex',
                     flexDirection: 'row',
+                    height: '98vh',
                 }}
             >
-                <Grid item xs={12} sm={12} md={12} lg={12}>
+                <Grid item xs={12} sm={12} md={11} lg={11}>
                     <Box
                         sx={{
                             marginBottom: 3,
@@ -79,6 +80,13 @@ export function PostPresent({
                     </Box>
                     <PostFooter post={post} goBack={goBack} />
                 </Grid>
+                <Box
+                    sx={{
+                        display: 'inline-flex',
+                    }}
+                >
+                    <TocWrapper content={post.content} />
+                </Box>
             </Grid>
             <ToastContainer />
         </Box>

@@ -19,12 +19,6 @@ export class ThemeStore {
             },
             MuiCssBaseline: {
                 styleOverrides: {
-                    html: {
-                        background: '#f5f5f5',
-                    },
-                    body: {
-                        background: '#f5f5f5',
-                    },
                     '*::-webkit-scrollbar': {
                         width: '0.3em',
                         backgroundColor: '#fff',

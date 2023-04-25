@@ -56,7 +56,7 @@ export const MyBlogContentConsumer = observer(
                 }}
             >
                 <DrawerHeader />
-                <Grid
+                {/* <Grid
                     item
                     xs={0}
                     sm={0}
@@ -71,7 +71,7 @@ export const MyBlogContentConsumer = observer(
                         },
                         width: 280,
                         height: '100%',
-                        order: 1,
+                        order: 0,
                     }}
                 >
                     <List
@@ -109,14 +109,14 @@ export const MyBlogContentConsumer = observer(
                         />
                         <LoginGuard />
                     </List>
-                </Grid>
+                </Grid> */}
                 <Grid
                     item
                     xs={12}
                     sm={12}
                     md={12}
-                    lg={12}
-                    xl={12}
+                    lg={9}
+                    xl={9}
                     sx={{
                         color: '#000',
                         opacity: 1,

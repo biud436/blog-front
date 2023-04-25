@@ -69,6 +69,7 @@ const ViewerWrapper = styled.div`
         }
 
         position: relative;
+        border-radius: 1rem;
     }
 
     .toastui-editor-contents {
@@ -88,7 +89,7 @@ const ViewerWrapper = styled.div`
         border-radius: 3px;
         cursor: pointer;
         color: #fff;
-        right: 0;
+        right: 5px;
         top: 5px;
         background-color: #484849;
         font-size: 0.8rem;
@@ -293,10 +294,6 @@ const TuiEditorViewer = ({ content }: { content: string }) => {
                 theme="dark"
             />
             <HeadingElementWrapper />
-            {/* <CodeCopyInjector /> */}
-            <Box className="fixed transition-opacity opacity-50 left-3/4 top-1/4 z-150 hover:opacity-95">
-                <TocWrapper content={content} />
-            </Box>
         </ViewerWrapper>
     );
 };
