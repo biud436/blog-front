@@ -27,6 +27,7 @@ export const MobileHamburger = observer(
                     background: 'linear-gradient(to top, #ece9e6, #ffffff)',
                     color: 'black',
                 }}
+                className="shadow bg-gradient-to-r from-gray-100 to-gray-50"
             >
                 <Toolbar
                     sx={{

@@ -45,6 +45,23 @@ export const MobileNav = observer(
                         '& .MuiDrawer-paper': {
                             width: drawerWidth,
                             boxSizing: 'border-box',
+                            background:
+                                'linear-gradient(45deg, #1e1e1e 30%, #2b2b2b 90%)',
+                            color: theme.palette.primary.contrastText,
+
+                            '& .MuiSvgIcon-root': {
+                                color: theme.palette.primary.contrastText,
+                            },
+
+                            '& .MuiListItem-root': {
+                                '&:hover': {
+                                    backgroundColor: '#a2a2a2',
+                                },
+                            },
+
+                            '& .MuiDivider-root': {
+                                backgroundColor: '#404040',
+                            },
                         },
                     }}
                     transitionDuration={400}

@@ -69,8 +69,12 @@ export const CategoryWrapper = React.memo(
                                         backgroundColor:
                                             categoryService.currentMenuCategoryId ===
                                             category.id
-                                                ? 'rgba(0, 0, 0, 0.04)'
+                                                ? 'rgba(71, 94, 129, 0.678)'
                                                 : 'transparent',
+                                        '&:hover': {
+                                            backgroundColor:
+                                                'rgba(109, 109, 109, 0.678)',
+                                        },
                                         transition: 'background-color 0.3s',
                                     }}
                                 >

@@ -9,6 +9,7 @@ import { DrawerHeader } from '@/blog/components/atomic/DrawerHeader';
 import { CategoryDepthVO } from '@/services/CategoryService';
 import { CategoryWrapper } from '../category/CategoryWrapper';
 import { LoginGuard } from './LoginGuard';
+import { Box } from '@mui/material';
 
 export function SideMenu({
     handleDrawerClose,
