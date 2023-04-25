@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { URL_MAP } from '@/common/URL';
 import { useCategoryService } from '@/hooks/services/useCategoryService';
 import { CategoryDepthVO } from '@/services/CategoryService';
@@ -20,7 +21,6 @@ import { PostSelectCategory } from './PostSelectCategory';
 import { PostTitleInput } from './PostTitleInput';
 import * as DOMPurify from 'dompurify';
 
-// import axios from 'axios';
 import { EditPageProps } from '@/containers/PostEditorContainer';
 import { usePostService } from '@/hooks/services/usePostService';
 import { PostContent } from '@/services/PostService';
@@ -29,7 +29,6 @@ import { API_URL } from '@/blog/api/request';
 import { useMediaQuery } from 'react-responsive';
 import { useRouter } from 'next/router';
 import { PostTuiEditor } from './PostTuiEditor';
-// import { TempPostBox } from './TempPostBox';
 import { Controller, useForm } from 'react-hook-form';
 import { ImageCompressionService } from '@/services/ImageCompressionService';
 import { rootStore } from '@/store';
@@ -65,18 +64,6 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
                 ['table', 'image', 'link'],
                 ['code', 'codeblock'],
                 ['scrollSync'],
-                // [
-                //     {
-                //         name: 'youtube',
-                //         className: 'tui-youtube',
-                //         tooltip: 'Insert Youtube',
-                //         style: {
-                //             // backgroundImage: `url(${youtubeLogo})`,
-                //             backgroundSize: '25px',
-                //             color: 'red',
-                //         },
-                //     },
-                // ],
             ];
         } else {
             return [['image'], ['heading', 'bold'], ['codeblock']];
@@ -156,10 +143,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
                     throw new Error(res.message);
                 }
 
-                mutate([
-                    `${API_URL}/posts/` + postService.getId(),
-                    random.current,
-                ]);
+                mutate(['/posts', postService.getId()]);
             } else {
                 const res = await postService.writePost(payload);
 

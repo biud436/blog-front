@@ -8,14 +8,6 @@ import { Avatar, Button, Divider, Grid, Typography } from '@mui/material';
 import { toast } from 'react-toastify';
 
 export function PostHeader({ post }: { post: Post }) {
-    const copyLinkToClipboard = () => {
-        navigator.clipboard.writeText(window.location.href);
-
-        toast.info('포스트 링크가 복사되었습니다.', {
-            position: 'top-center',
-        });
-    };
-
     return (
         <>
             <Grid

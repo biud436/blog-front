@@ -108,7 +108,6 @@ export const MainLayout = observer(
                         {children}
                     </MyBlogContentConsumer>
                 </MyBlogContentContainer>
-                <MyBlogFooter />
             </Box>
         );
     },
