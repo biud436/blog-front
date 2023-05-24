@@ -1,7 +1,8 @@
 import { Grid, CircularProgress } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FAKE_CRON, useTimedEffect } from '@/hooks/useTimedEffect';
 import { useAuthorized } from '@/hooks/auth/useAuthorized';
+import { useRouter } from 'next/router';
 
 export function LoginGuardPresent() {
     useTimedEffect(() => {
@@ -40,7 +41,7 @@ export interface LoginGuardProps {
 }
 
 export const LoginGuard = ({ children }: LoginGuardProps) => {
-    const [isAuthorized] = useAuthorized();
+    const [isAuthorized, isDone] = useAuthorized();
 
-    return !isAuthorized ? <LoginGuardPresent /> : children;
+    return !isAuthorized ? <LoginGuardPresent /> : isDone && children;
 };

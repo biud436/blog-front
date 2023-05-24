@@ -115,10 +115,6 @@ export class PostServiceImpl implements IPostService {
         return this.getData().id;
     }
 
-    /**
-     * 임시 저장된 포스트를 가져와야 하는가?
-     * @returns
-     */
     isFetchTempPostState(): boolean {
         return this.isFetchTempPost;
     }
