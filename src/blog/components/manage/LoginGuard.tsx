@@ -41,7 +41,7 @@ export interface LoginGuardProps {
 }
 
 export const LoginGuard = ({ children }: LoginGuardProps) => {
-    const [isAuthorized, isDone] = useAuthorized();
+    const [isAuthorized] = useAuthorized();
 
-    return !isAuthorized ? <LoginGuardPresent /> : isDone && children;
+    return !isAuthorized ? <LoginGuardPresent /> : children;
 };

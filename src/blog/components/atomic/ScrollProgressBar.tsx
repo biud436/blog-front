@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-empty-interface */
+import React, { ReactPortal } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { useEffect } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import ReactDOM from 'react-dom';
 import { useRouter } from 'next/router';
 import { URL_MAP } from '@/common/URL';
-import React from 'react';
 
 const ProgressBarWrapper = createGlobalStyle`
     .progress-bar {
@@ -20,7 +21,11 @@ const ProgressBarWrapper = createGlobalStyle`
     }
 `;
 
-export const ScrollProgressBar = () => {
+interface ScrollProgressBarProps {
+    // empty
+}
+
+export const ScrollProgressBar: React.FC<ScrollProgressBarProps> = () => {
     const router = useRouter();
     const { scrollYProgress } = useScroll();
     const scaleX = useSpring(scrollYProgress, {
@@ -42,6 +47,7 @@ export const ScrollProgressBar = () => {
         });
     }, []);
 
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return ReactDOM.createPortal(
         <>
             {isRenderOK && <ProgressBarWrapper />}
@@ -53,9 +59,9 @@ export const ScrollProgressBar = () => {
             />
         </>,
         document.body,
-    );
+    )!;
 };
 
 export const ForwardedScrollProgressBar = React.memo(
-    React.forwardRef(ScrollProgressBar),
+    React.forwardRef((props, ref) => <ScrollProgressBar {...props} />),
 );
