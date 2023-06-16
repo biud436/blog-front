@@ -1,8 +1,8 @@
 import React from 'react';
 import { GlobalStyle } from '@/styles/global-styles';
 import type { AppProps } from 'next/app';
-import { RecoilRoot } from 'recoil';
-import { Noto_Sans_KR } from "next/font/google";
+import { RecoilRoot, RecoilEnv } from 'recoil';
+import { Noto_Sans_KR } from 'next/font/google';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { CssBaseline, ThemeProvider } from '@mui/material';
@@ -15,6 +15,8 @@ const notoSansKR = Noto_Sans_KR({
     display: 'swap',
     subsets: ['latin'],
 });
+
+RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false;
 
 export default function App({ Component, pageProps }: AppProps) {
     return (
