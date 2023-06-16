@@ -2,7 +2,7 @@ import React from 'react';
 import { GlobalStyle } from '@/styles/global-styles';
 import type { AppProps } from 'next/app';
 import { RecoilRoot } from 'recoil';
-import { Noto_Sans_KR } from '@next/font/google';
+import { Noto_Sans_KR } from "next/font/google";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { CssBaseline, ThemeProvider } from '@mui/material';
