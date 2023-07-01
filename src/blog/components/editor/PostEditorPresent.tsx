@@ -25,7 +25,6 @@ import { EditPageProps } from '@/containers/PostEditorContainer';
 import { usePostService } from '@/hooks/services/usePostService';
 import { PostContent } from '@/services/PostService';
 import { useSWRConfig } from 'swr';
-import { API_URL } from '@/blog/api/request';
 import { useMediaQuery } from 'react-responsive';
 import { useRouter } from 'next/router';
 import { PostTuiEditor } from './PostTuiEditor';
@@ -54,7 +53,6 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
         query: '(max-width: 768px)',
     });
     const { mutate } = useSWRConfig();
-    const random = useRef(Date.now());
     const toolbarItems = useMemo(() => {
         if (!matches) {
             return [
@@ -150,6 +148,8 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
                 if (!res || res.statusCode >= 400) {
                     throw new Error(res.message);
                 }
+
+                postService.refresh();
             }
 
             router.push(URL_MAP.MAIN);
@@ -202,6 +202,10 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
         if (mode === 'edit') {
             const id = parseInt(router.query.id as string, 10);
 
+            /**
+             * 새로 작성된 글을 불러오지 못하는 현상이 있다.
+             * 이는 의존성 배열에서 글이 수정되었다는 것을 감지하지 못하기 때문이다.
+             */
             postService
                 .getPost(id)
                 .then(() => {
@@ -227,7 +231,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
         }
 
         setCategories(getFlatCategories());
-    }, [editorRef]);
+    }, [editorRef, postService.getFetchCount()]);
 
     useEffect(() => {
         if (postService.isFetchTempPostState()) {

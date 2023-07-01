@@ -19,12 +19,15 @@ export function PostSelectCategory({
                 label="카테고리 선택"
                 onChange={e => setCurrentCategoryId(+e.target.value)}
             >
-                <MenuItem value={0} key="0">
+                <MenuItem value={0} key="post_select_category_0">
                     ---
                 </MenuItem>
                 {categories.map(category => {
                     return (
-                        <MenuItem value={category.id} key={category.id}>
+                        <MenuItem
+                            value={category.id}
+                            key={'post_select_category_' + category.id}
+                        >
                             {[...Array(category.depth)].map((e, index) => {
                                 return (
                                     <React.Fragment key={`${e}.${index}`}>

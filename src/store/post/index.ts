@@ -40,6 +40,7 @@ export interface PostImage {
 
 export class PostStore {
     data: Post = Object.create(null);
+    private fetchCount = 0;
 
     constructor() {
         makeAutoObservable(this);
@@ -67,5 +68,13 @@ export class PostStore {
 
     getData() {
         return this.data;
+    }
+
+    refresh() {
+        this.fetchCount++;
+    }
+
+    getFetchCount() {
+        return this.fetchCount;
     }
 }

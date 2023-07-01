@@ -75,13 +75,6 @@ export const PostTuiEditor = React.memo(
                             hooks={{
                                 addImageBlobHook,
                             }}
-                            onLoad={() => {
-                                console.log(
-                                    '%c[toast.ui] %conLoad()',
-                                    'color:red',
-                                    'color:black',
-                                );
-                            }}
                             customHTMLRenderer={{
                                 htmlBlock: {
                                     iframe(node: any) {

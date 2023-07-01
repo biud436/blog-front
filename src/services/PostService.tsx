@@ -30,6 +30,8 @@ export interface IPostService {
     getTempPostContent(): TempPostContent;
     clearTempPostContent(): void;
     isFetchTempPost: boolean;
+    refresh(): void;
+    getFetchCount(): number;
 }
 
 export interface PostContent {
@@ -174,6 +176,14 @@ export class PostServiceImpl implements IPostService {
         } finally {
             this.isLoading = false;
         }
+    }
+
+    refresh(): void {
+        this.postStore.refresh();
+    }
+
+    getFetchCount(): number {
+        return this.postStore.getFetchCount();
     }
 }
 
