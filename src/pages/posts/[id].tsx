@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import { ErrorBoundary } from '@/blog/components/error/boundary';
+import { ErrorBoundary } from '@/blog/components/error/ErrorBoundary';
 import { PostPage } from '@/blog/pages/post';
 
 import axios from 'axios';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next/types';
-import { Post } from '@/store/post';
+import { Post } from '@/models/Post';
 import useSWR, { unstable_serialize } from 'swr';
 import { ErrorComponent } from '@/containers/ErrorFoundPage';
 

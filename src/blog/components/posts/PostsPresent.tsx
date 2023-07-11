@@ -6,7 +6,8 @@ import { SearchBuilder } from '@/blog/components/builder/SearchBuilder';
 
 import { usePostsService } from '@/hooks/services/usePostsService';
 import { postsStore } from '@/store';
-import { PostDto, PostsSearchType } from '@/store/posts/posts.dto';
+import { PostsSearchType } from '@/models/PostsSearchType';
+import { PostDto } from '@/models/PostDto';
 
 import {
     Avatar,

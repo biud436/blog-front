@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Post } from '@/store/post';
+import { Post } from '@/models/Post';
 import { Card, Divider, Grid, Typography, Paper, Box } from '@mui/material';
 import { PostFooter } from './PostFooter';
 import GithubComment from './Comment';

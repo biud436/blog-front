@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React from 'react';
-import { PostDto } from '@/store/posts/posts.dto';
+import { PostDto } from '@/models/PostDto';
 import {
     Box,
     Card,

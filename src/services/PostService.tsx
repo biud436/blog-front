@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { API_URL } from '@/blog/api/request';
-import { Post, PostStore } from '@/store/post';
+import { PostStore } from '@/store/post';
+import { Post } from '@/models/Post';
 import axios from 'axios';
 import { makeAutoObservable } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -163,16 +164,16 @@ export class PostServiceImpl implements IPostService {
     }
 
     async getPost(postId: number): Promise<any> {
-        this.isLoading = true;
-
         try {
             const res = await axios.get(`${API_URL}/posts/${postId}`, {
                 withCredentials: true,
             });
 
             this.setData(res.data.data);
+
+            // Promise.resolve(res.data);
         } catch (e) {
-            // empty
+            // Promise.reject(e);
         } finally {
             this.isLoading = false;
         }

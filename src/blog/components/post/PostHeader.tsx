@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React from 'react';
 import { DateUtil, Formatter } from '@/blog/api/date';
-import { Post } from '@/store/post';
+import { Post } from '@/models/Post';
 import { Avatar, Button, Divider, Grid, Typography } from '@mui/material';
 import { toast } from 'react-toastify';
 

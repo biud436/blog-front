@@ -1,6 +1,6 @@
 import React from 'react';
 import { postsStore } from '@/store';
-import { PostDto } from '@/store/posts/posts.dto';
+import { PostDto } from '@/models/PostDto';
 import {
     SxProps,
     Table,

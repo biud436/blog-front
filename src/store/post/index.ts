@@ -1,42 +1,9 @@
 import { makeAutoObservable } from 'mobx';
 import { enableStaticRendering } from 'mobx-react-lite';
 import { makePersistable } from 'mobx-persist-store';
+import { Post } from '../../models/Post';
 
 enableStaticRendering(typeof window === 'undefined');
-
-export interface Post {
-    id: number;
-    title: string;
-    content: string;
-    uploadDate: string;
-    user: {
-        username: string;
-        profile: {
-            nickname: string;
-        };
-    };
-    category: {
-        name: string;
-    };
-    viewCount: {
-        count: number;
-    };
-    images: PostImage[];
-    thumbnail?: string;
-    previewContent?: string;
-}
-
-export interface PostImage {
-    readonly id: number;
-    readonly originalname: string;
-    readonly encoding: string;
-    readonly mimetype: string;
-    readonly destination: string;
-    readonly filename: string;
-    readonly path: string;
-    readonly size: number;
-    readonly postId: number;
-}
 
 export class PostStore {
     data: Post = Object.create(null);

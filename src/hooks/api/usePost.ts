@@ -1,4 +1,4 @@
-import { Post } from '@/store/post';
+import { Post } from '@/models/Post';
 import { useEffect, useState } from 'react';
 import usePosts from './usePosts';
 import { usePostService } from '../services/usePostService';

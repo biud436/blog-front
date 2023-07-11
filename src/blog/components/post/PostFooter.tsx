@@ -4,7 +4,7 @@ import { useAuthorized } from '@/hooks/auth/useAuthorized';
 import { usePostService } from '@/hooks/services/usePostService';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
-import { Post } from '@/store/post';
+import { Post } from '@/models/Post';
 
 export function PostFooter({
     post,

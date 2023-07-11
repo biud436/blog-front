@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     AppBar,
     Box,
@@ -17,7 +18,6 @@ import { ManageMenu } from '../blog/components/manage/ManageMenu';
 import 'react-toastify/dist/ReactToastify.css';
 import { Meta } from '@/blog/components/utils/Meta';
 import { useCallback, useState } from 'react';
-import React from 'react';
 import { useThemeStore } from '@/hooks/useThemeStore';
 
 import MenuIcon from '@mui/icons-material/Menu';
@@ -26,7 +26,6 @@ import { useMounted } from '@/hooks/useMounted';
 import { LoginGuard } from '../blog/components/manage/LoginGuard';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import { useRouter } from 'next/router';
-import { URL_MAP } from '@/common/URL';
 
 export interface ManageLayoutProps {
     children: React.ReactNode;

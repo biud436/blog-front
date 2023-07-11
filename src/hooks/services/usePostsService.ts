@@ -3,7 +3,7 @@
 import { API_URL } from '@/blog/api/request';
 import { PostsServiceContext, IPostsService } from '@/services/PostsService';
 import { ReactServiceStore } from '@/services/types/ReactServiceStore';
-import { PostsSearchType } from '@/store/posts/posts.dto';
+import { PostsSearchType } from '@/models/PostsSearchType';
 import axios from 'axios';
 import { useContext } from 'react';
 

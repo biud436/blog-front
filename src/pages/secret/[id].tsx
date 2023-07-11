@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import { ErrorBoundary } from '@/blog/components/error/boundary';
+import { ErrorBoundary } from '@/blog/components/error/ErrorBoundary';
 import { PostPage } from '@/blog/pages/post';
 import axios from 'axios';
 import useSWR from 'swr';

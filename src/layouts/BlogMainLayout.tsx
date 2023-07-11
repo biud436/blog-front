@@ -13,7 +13,6 @@ import { useRouter } from 'next/router';
 import { MyBlogHeader } from '../blog/components/header/MyBlogHeader';
 import { MobileNav } from '../blog/components/menu/MobileNav';
 import { MobileHamburger } from '../blog/components/menu/MobileHamburger';
-import { MyBlogFooter } from '../blog/components/menu/MyBlogFooter';
 import { MyBlogContentContainer } from '../blog/components/menu/MyBlogContentContainer';
 import { MyBlogContentConsumer } from '../blog/components/menu/MyBlogContentConsumer';
 import { useCategoryTree } from '@/hooks/api/useCategoryTree';

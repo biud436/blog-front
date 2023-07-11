@@ -1,4 +1,4 @@
-import { Post } from '@/store/post';
+import { Post } from '@/models/Post';
 import axios from 'axios';
 import { GetServerSidePropsContext } from 'next';
 import { getServerSideSitemap, ISitemapField } from 'next-sitemap';

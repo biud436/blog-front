@@ -1,5 +1,5 @@
 import React from 'react';
-import { Post } from '@/store/post';
+import { Post } from '@/models/Post';
 import { Grid } from '@mui/material';
 
 import dynamic from 'next/dynamic';

@@ -4,7 +4,8 @@
 import { API_URL } from '@/blog/api/request';
 import { HttpMethod, useAuth } from '@/blog/providers/auth/authProvider';
 import { postsStore } from '@/store';
-import { PostDto, PostsSearchType } from '@/store/posts/posts.dto';
+import { PostsSearchType } from '@/models/PostsSearchType';
+import { PostDto } from '@/models/PostDto';
 import axios from 'axios';
 import { makeAutoObservable } from 'mobx';
 import { observer } from 'mobx-react-lite';
