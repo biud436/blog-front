@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Drawer from '@mui/material/Drawer';
 import { Box } from '@mui/material';
-import { CategoryDepthVO } from '@/services/CategoryService';
+import { CategoryDepthVO } from '@/models/CategoryDepthVO';
 import { observer } from 'mobx-react-lite';
 import { menuStore } from '@/store/';
 import { drawerWidth } from '../menu/AppBar';

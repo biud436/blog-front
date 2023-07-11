@@ -23,7 +23,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { URL_MAP } from '@/common/URL';
 import { toJS } from 'mobx';
-import { CategoryDepthVO } from '@/services/CategoryService';
+import { CategoryDepthVO } from '@/models/CategoryDepthVO';
 import { useCategoryService } from '@/hooks/services/useCategoryService';
 import { API_URL } from '@/blog/api/request';
 import axios, { AxiosResponse } from 'axios';

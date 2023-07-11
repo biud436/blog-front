@@ -1,4 +1,9 @@
-export type User = {
+export interface User {
+    id: number;
     username: string;
-    scope: string[];
-};
+    profile: {
+        nickname: string;
+        profileImage: string | null;
+    };
+    role: string;
+}

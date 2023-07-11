@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { URL_MAP } from '@/common/URL';
 import { useCategoryService } from '@/hooks/services/useCategoryService';
-import { CategoryDepthVO } from '@/services/CategoryService';
+import { CategoryDepthVO } from '@/models/CategoryDepthVO';
 import {
     Box,
     Checkbox,

@@ -5,7 +5,7 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import { DrawerHeader } from '@/blog/components/atomic/DrawerHeader';
 import { Grid, ListItem } from '@mui/material';
-import { CategoryDepthVO } from '@/services/CategoryService';
+import { CategoryDepthVO } from '@/models/CategoryDepthVO';
 import { observer } from 'mobx-react-lite';
 import { CategoryWrapper } from '../category/CategoryWrapper';
 import { LoginGuard } from './LoginGuard';

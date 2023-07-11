@@ -8,7 +8,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { URL_MAP } from '@/common/URL';
 import { Collapse } from '@mui/material';
-import { CategoryDepthVO } from '@/services/CategoryService';
+import { CategoryDepthVO } from '@/models/CategoryDepthVO';
 import { useCategoryService } from '@/hooks/services/useCategoryService';
 import { observer } from 'mobx-react-lite';
 import { NextRouter } from 'next/router';

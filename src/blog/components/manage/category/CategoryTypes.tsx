@@ -1,5 +1,5 @@
 import { NodeModel } from '@minoru/react-dnd-treeview';
-import { CategoryDepthVO } from '@/services/CategoryService';
+import { CategoryDepthVO } from '@/models/CategoryDepthVO';
 
 export type CategoryNodeEventHandler = (id: NodeModel['id']) => void;
 export type CategoryNodeEditEventHandler = (

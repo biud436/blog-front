@@ -1,4 +1,4 @@
-import { CategoryDepthVO } from '@/services/CategoryService';
+import { CategoryDepthVO } from '@/models/CategoryDepthVO';
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import useSWR from 'swr';

@@ -1,21 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React, { createContext, ReactNode, useState } from 'react';
-
-export interface CategoryDepthVO {
-    left: number;
-    right: number;
-    name: string;
-    depth: number;
-
-    /**
-     * category id
-     */
-    id: number;
-
-    open: boolean;
-
-    children: CategoryDepthVO[];
-}
+import { CategoryDepthVO } from '../models/CategoryDepthVO';
 
 export const CategoryServiceContext = createContext<
     CategoryService | undefined

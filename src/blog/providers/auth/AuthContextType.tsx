@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { User } from '@/models/User';
+import { UserPayload } from '@/models/UserPayload';
 import { HttpMethod } from './authProvider';
 
 export interface AuthContextType {
-    user: User;
+    user: UserPayload;
     login: (
         username: string,
         password: string,

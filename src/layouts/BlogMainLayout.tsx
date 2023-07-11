@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material/styles';
 
 import CssBaseline from '@mui/material/CssBaseline';
 import { Box } from '@mui/material';
-import { CategoryDepthVO } from '@/services/CategoryService';
+import { CategoryDepthVO } from '@/models/CategoryDepthVO';
 import { useCategoryService } from '@/hooks/services/useCategoryService';
 import { observer } from 'mobx-react-lite';
 import { useMediaQuery } from 'react-responsive';

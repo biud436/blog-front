@@ -13,7 +13,7 @@ import { createContext, ReactNode, useEffect, useMemo, useState } from 'react';
 import useSWR from 'swr';
 import { IReactService, ReactServiceStore } from './types/ReactServiceStore';
 import React from 'react';
-import { BlogServerResponse } from './types/PostDtoType';
+import { BlogServerResponse } from '../models/BlogServerResponse';
 
 export type IPostsService = IReactService<PostsSearchType> & {
     getBreadcrumb: (categoryName: string) => Promise<any>;

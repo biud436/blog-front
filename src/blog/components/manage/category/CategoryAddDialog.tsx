@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import React, { useCallback, useEffect, useState } from 'react';
-import { CategoryDepthVO } from '@/services/CategoryService';
+import { CategoryDepthVO } from '@/models/CategoryDepthVO';
 import { useCategoryService } from '@/hooks/services/useCategoryService';
 import { API_URL } from '@/blog/api/request';
 import axios from 'axios';

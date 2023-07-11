@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { DrawerHeader } from '@/blog/components/atomic/DrawerHeader';
-import { CategoryDepthVO } from '@/services/CategoryService';
+import { CategoryDepthVO } from '@/models/CategoryDepthVO';
 import { CategoryWrapper } from '../category/CategoryWrapper';
 import { LoginGuard } from './LoginGuard';
 import { Box } from '@mui/material';

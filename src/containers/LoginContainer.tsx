@@ -22,7 +22,7 @@ import { observer } from 'mobx-react-lite';
 import { useThemeStore } from '@/hooks/useThemeStore';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import styled from 'styled-components';
-import { User } from '@/models/User';
+import { UserPayload } from '@/models/UserPayload';
 
 export interface LoginFormProps {
     username: string;
@@ -102,7 +102,7 @@ export const LoginContainer = observer(() => {
      * 훅 마운트 처리
      */
     useEffect(() => {
-        const currentUser = user as User;
+        const currentUser = user as UserPayload;
         if (currentUser && currentUser.username !== '') {
             toastWrapper('이미 로그인되어있습니다');
         }

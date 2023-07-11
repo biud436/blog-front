@@ -1,4 +1,4 @@
-import { CategoryDepthVO } from '@/services/CategoryService';
+import { CategoryDepthVO } from '@/models/CategoryDepthVO';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import React from 'react';
 
