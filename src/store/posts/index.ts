@@ -1,7 +1,8 @@
 import { CategoryItemId } from '@/services/CategoryService';
 import { makeAutoObservable } from 'mobx';
-import { BaseDataListDto, Paginable } from '../types/list';
-import { Searchable } from '../types/searchable';
+import { BaseDataListDto } from '../../models/BaseDataListDto';
+import { Paginable } from '../../models/Paginable';
+import { Searchable } from '../../models/Searchable';
 import { PostsSearchType } from '../../models/PostsSearchType';
 import { PostDto } from '../../models/PostDto';
 

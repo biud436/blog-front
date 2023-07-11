@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { User } from 'store/types';
+
+import { User } from '@/models/User';
 import { HttpMethod } from './authProvider';
 
 export interface AuthContextType {

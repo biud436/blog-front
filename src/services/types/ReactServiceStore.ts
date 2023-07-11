@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Paginable } from '@/store/types/list';
-import { Searchable } from '@/store/types/searchable';
+import { Paginable } from '@/models/Paginable';
+import { Searchable } from '@/models/Searchable';
 import { ReactNode } from 'react';
 
 export type ReactServiceStore<T> = Searchable<T> & Paginable;

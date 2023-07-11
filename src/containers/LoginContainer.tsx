@@ -5,8 +5,6 @@ import { useRecoilState } from 'recoil';
 import { userState } from '../store/user';
 import { useAuth } from '@/blog/providers/auth/authProvider';
 import { toast, ToastContainer } from 'react-toastify';
-import { User } from 'store/types';
-
 import { Box, Button, Stack, Typography } from '@mui/material';
 import { URL_MAP } from '@/common/URL';
 import { useRouter } from 'next/router';
@@ -24,6 +22,7 @@ import { observer } from 'mobx-react-lite';
 import { useThemeStore } from '@/hooks/useThemeStore';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import styled from 'styled-components';
+import { User } from '@/models/User';
 
 export interface LoginFormProps {
     username: string;
