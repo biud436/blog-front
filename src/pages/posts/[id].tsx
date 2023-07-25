@@ -8,6 +8,7 @@ import { GetServerSideProps, GetServerSidePropsContext } from 'next/types';
 import { Post } from '@/models/Post';
 import useSWR, { unstable_serialize } from 'swr';
 import { ErrorComponent } from '@/containers/ErrorFoundPage';
+import { CacheControl } from '@/blog/api/request';
 
 export interface ServerError {
     message: string;
@@ -86,6 +87,7 @@ export const getServerSideProps: GetServerSideProps = async (
                           Cookie: context.req.headers.cookie,
                       }
                     : {}),
+                ...CacheControl.NoCache,
             },
         });
 

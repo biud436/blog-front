@@ -58,7 +58,6 @@ export function PostPresent({
                                 md: 3,
                                 lg: 3,
                             },
-                            // borderLeft: '5px solid #1976d2',
                             width: '100%',
                         }}
                         key={post.id}

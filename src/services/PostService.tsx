@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { API_URL } from '@/blog/api/request';
+import { API_URL, CacheControl } from '@/blog/api/request';
 import { PostStore } from '@/store/post';
 import { Post } from '@/models/Post';
 import axios from 'axios';
@@ -152,7 +152,11 @@ export class PostServiceImpl implements IPostService {
     }
 
     async updatePost(postId: number, payload: PostContent): Promise<any> {
-        const res = await axios.patch(`${API_URL}/posts/${postId}`, payload);
+        const res = await axios.patch(`${API_URL}/posts/${postId}`, payload, {
+            headers: {
+                ...CacheControl.NoCache,
+            },
+        });
 
         return res.data;
     }

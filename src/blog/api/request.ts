@@ -5,6 +5,30 @@ const { publicRuntimeConfig: config } = getConfig();
 
 export const API_URL = config.backendUrl;
 
+export type HttpRawHeader = Record<string, string>;
+export interface ICacheControl {
+    NoCache: HttpRawHeader;
+    NoStore: HttpRawHeader;
+    ForceCache: HttpRawHeader;
+    Empty: HttpRawHeader;
+}
+
+export const CacheControl: ICacheControl = {
+    NoCache: {
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+    },
+    NoStore: {
+        'Cache-Control': 'no-store',
+        Pragma: 'no-cache',
+    },
+    ForceCache: {
+        'Cache-Control': 'no-cache no-store must-revalidate',
+        Pragma: 'no-cache',
+    },
+    Empty: {},
+};
+
 // 토큰 캐시
 const requestCache: { token?: string | null } = { token: null };
 
