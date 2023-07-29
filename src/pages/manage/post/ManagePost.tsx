@@ -43,6 +43,17 @@ export const ManagePost = observer(() => {
         router.back();
     };
 
+    // MOUNTED
+    useEffect(() => {
+        tempPageNumber.current = postsStore.getPageNumber();
+        postsStore.setPageNumber(1);
+
+        // UNMOUNTED
+        return () => {
+            postsStore.setPageNumber(tempPageNumber.current);
+        };
+    }, []);
+
     if (error) {
         return <MyBlogError />;
     }
@@ -61,17 +72,6 @@ export const ManagePost = observer(() => {
             </Box>
         );
     }
-
-    // MOUNTED
-    useEffect(() => {
-        tempPageNumber.current = postsStore.getPageNumber();
-        postsStore.setPageNumber(1);
-
-        // UNMOUNTED
-        return () => {
-            postsStore.setPageNumber(tempPageNumber.current);
-        };
-    }, []);
 
     return (
         <ThemeProvider theme={theme}>
