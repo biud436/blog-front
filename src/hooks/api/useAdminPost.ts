@@ -11,14 +11,13 @@ export function useAdminPost() {
     const pageNumber = postsStore.getPageNumber();
     const pageSize = postsStore.getPageSize();
 
-    const { data, isLoading, error } = useSWR<BlogServerResponse<Post>['data']>(
+    const { data, error } = useSWR<BlogServerResponse<Post>['data']>(
         `${API_URL}/api/post?pageNumber=${pageNumber}&pageSize=${pageSize}`,
         fetcher,
     );
 
     return {
         data,
-        isLoading,
         error,
     };
 }
