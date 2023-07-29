@@ -5,7 +5,9 @@ import {
     CircularProgress,
     Divider,
     Link,
+    MenuItem,
     Pagination,
+    Select,
     Stack,
     ThemeProvider,
     Typography,
@@ -18,8 +20,11 @@ import { useRouter } from 'next/router';
 import { useAdminPost } from '@/hooks/api/useAdminPost';
 import MyBlogError from '@/pages/_error';
 import { postsStore } from '@/store';
+import { SelectInputProps } from '@mui/material/Select/SelectInput';
+import Swal from 'sweetalert2';
 
 const theme = createTheme({
+    palette: {},
     components: {},
 });
 
@@ -41,6 +46,21 @@ const ManagePost = observer(() => {
 
     const goToBack = () => {
         router.back();
+    };
+
+    const handleDelete = async () => {
+        const result = await Swal.fire({
+            title: '정말로 삭제하시겠습니까?',
+            text: '삭제된 데이터는 복구할 수 없습니다.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: '삭제',
+            cancelButtonText: '취소',
+        });
+
+        if (!result.isConfirmed) {
+            return;
+        }
     };
 
     // MOUNTED
@@ -98,6 +118,9 @@ const ManagePost = observer(() => {
                             }}
                         />
                     </Stack>
+                    <Stack direction="row" justifyContent={'flex-end'}>
+                        <PageOption />
+                    </Stack>
                     <Stack direction="column" p={1} gap={1}>
                         {data?.entities.map(post => (
                             <Box
@@ -118,6 +141,7 @@ const ManagePost = observer(() => {
                                     sx={{
                                         cursor: 'pointer',
                                         textDecoration: 'none',
+                                        color: '#020202',
 
                                         '&:hover': {
                                             textDecoration: 'underline',
@@ -128,7 +152,11 @@ const ManagePost = observer(() => {
                                 </Typography>
                                 <Stack direction={'row'}>
                                     <Button variant="text">수정</Button>
-                                    <Button variant="text" color="warning">
+                                    <Button
+                                        variant="text"
+                                        color="warning"
+                                        onClick={handleDelete}
+                                    >
                                         삭제
                                     </Button>
                                 </Stack>
@@ -154,6 +182,28 @@ const ManagePost = observer(() => {
                 </Wrapper>
             </ManageLayout>
         </ThemeProvider>
+    );
+});
+
+const PageOption = observer(() => {
+    const changePageOption: SelectInputProps<number>['onChange'] = event => {
+        postsStore.setPageSize((event.target as any).value);
+    };
+
+    return (
+        <Select
+            value={postsStore.getPageSize()}
+            onChange={changePageOption}
+            size="small"
+            sx={{
+                m: 1,
+            }}
+        >
+            <MenuItem value={10}>10 페이지</MenuItem>
+            <MenuItem value={20}>20 페이지</MenuItem>
+            <MenuItem value={50}>50 페이지</MenuItem>
+            <MenuItem value={100}>100 페이지</MenuItem>
+        </Select>
     );
 });
 
