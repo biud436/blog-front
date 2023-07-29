@@ -33,6 +33,8 @@ export class PostsStore implements Searchable<PostsSearchType>, Paginable {
     isOpenModal = false;
     defaultCategory = 'content';
 
+    pageSize = 10;
+
     /**
      * 현재 카테고리 ID
      */
@@ -50,6 +52,14 @@ export class PostsStore implements Searchable<PostsSearchType>, Paginable {
 
     getPageNumber() {
         return this.list.currentPage;
+    }
+
+    setPageSize(pageSize: number) {
+        this.pageSize = pageSize;
+    }
+
+    getPageSize() {
+        return this.pageSize;
     }
 
     setPagination(pagination: BaseDataListDto) {

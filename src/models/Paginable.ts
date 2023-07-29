@@ -5,4 +5,6 @@ export interface Paginable {
     getPageNumber(): number;
     setPagination(pagination: BaseDataListDto): void;
     getPagination(): BaseDataListDto;
+    setPageSize(pageSize: number): void;
+    getPageSize(): number;
 }
