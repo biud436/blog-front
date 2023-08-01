@@ -8,7 +8,7 @@ import { GetServerSideProps, GetServerSidePropsContext } from 'next/types';
 import { Post } from '@/models/Post';
 import useSWR, { unstable_serialize } from 'swr';
 import { ErrorComponent } from '@/containers/ErrorFoundPage';
-import { CacheControl } from '@/blog/api/request';
+import { API_URL, CacheControl } from '@/blog/api/request';
 
 export interface ServerError {
     message: string;
@@ -28,11 +28,6 @@ export default function Posts({
     post: Post;
     error: ServerError;
 }) {
-    const { data: postFromSWR } = useSWR(
-        error ? null : ['/posts', post.id],
-        () => axios.get(`/posts/${post.id}`).then(res => res.data.data),
-    );
-
     if (error) {
         return (
             <ErrorComponent
@@ -46,7 +41,7 @@ export default function Posts({
         <ErrorBoundary>
             <PostPage
                 {...{
-                    post: postFromSWR || post,
+                    post: post,
                     id: String(post.id),
                     error: error,
                 }}
@@ -75,37 +70,72 @@ export const getServerSideProps: GetServerSideProps = async (
         }
     };
 
-    try {
-        // Check if cookie exists
+    /**
+     * @deprecated
+     */
+    const requestDataUsingAxios = async () => {
+        try {
+            // Check if cookie exists
+            const hasCookie = !!context.req.headers.cookie;
+
+            const { data: res } = await axios.get('/posts/' + id, {
+                withCredentials: true,
+                headers: {
+                    ...(hasCookie
+                        ? {
+                              Cookie: context.req.headers.cookie,
+                          }
+                        : {}),
+                    ...CacheControl.NoCache,
+                },
+            });
+
+            post = res.data as Post;
+
+            extractThumbnail(post);
+        } catch (e: any) {
+            error = {
+                message: e.response.data.message,
+                status: e.response.status,
+            };
+        }
+    };
+
+    const requestDataUsingFetch = async () => {
         const hasCookie = !!context.req.headers.cookie;
 
-        const { data: res } = await axios.get('/posts/' + id, {
-            withCredentials: true,
-            headers: {
-                ...(hasCookie
-                    ? {
-                          Cookie: context.req.headers.cookie,
-                      }
-                    : {}),
-                ...CacheControl.NoCache,
-            },
-        });
+        try {
+            const res = await fetch(API_URL + '/posts/' + id, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    ...CacheControl.NoCache,
+                    ...(hasCookie
+                        ? { Cookie: context.req.headers.cookie }
+                        : {}),
+                },
+            });
 
-        post = res.data as Post;
+            if (res.ok) {
+                const data = await res.json();
+                post = data.data as Post;
+                extractThumbnail(post);
+            }
+        } catch (e: any) {
+            error = {
+                message: 'Error occurred while fetching data',
+                status: 500,
+            };
+        }
+    };
 
-        extractThumbnail(post);
-    } catch (e: any) {
-        error = {
-            message: e.response.data.message,
-            status: e.response.status,
-        };
-    }
+    // await requestDataUsingAxios();
+    await requestDataUsingFetch();
 
     return {
         props: {
             post,
             error,
-            [unstable_serialize(['posts', id])]: post,
         },
     };
 };

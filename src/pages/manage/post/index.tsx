@@ -78,21 +78,6 @@ const ManagePost = observer(() => {
         return <MyBlogError />;
     }
 
-    // if (isLoading) {
-    //     return (
-    //         <Box
-    //             sx={{
-    //                 width: '100%',
-    //                 display: 'flex',
-    //                 justifyContent: 'center',
-    //                 alignItems: 'center',
-    //             }}
-    //         >
-    //             <CircularProgress />
-    //         </Box>
-    //     );
-    // }
-
     return (
         <ThemeProvider theme={theme}>
             <ManageLayout>
