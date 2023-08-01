@@ -2,11 +2,8 @@
 import React from 'react';
 import { ErrorBoundary } from '@/blog/components/error/ErrorBoundary';
 import { PostPage } from '@/blog/pages/post';
-
-import axios from 'axios';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next/types';
 import { Post } from '@/models/Post';
-import useSWR, { unstable_serialize } from 'swr';
 import { ErrorComponent } from '@/containers/ErrorFoundPage';
 import { API_URL, CacheControl } from '@/blog/api/request';
 
@@ -70,37 +67,6 @@ export const getServerSideProps: GetServerSideProps = async (
         }
     };
 
-    /**
-     * @deprecated
-     */
-    const requestDataUsingAxios = async () => {
-        try {
-            // Check if cookie exists
-            const hasCookie = !!context.req.headers.cookie;
-
-            const { data: res } = await axios.get('/posts/' + id, {
-                withCredentials: true,
-                headers: {
-                    ...(hasCookie
-                        ? {
-                              Cookie: context.req.headers.cookie,
-                          }
-                        : {}),
-                    ...CacheControl.NoCache,
-                },
-            });
-
-            post = res.data as Post;
-
-            extractThumbnail(post);
-        } catch (e: any) {
-            error = {
-                message: e.response.data.message,
-                status: e.response.status,
-            };
-        }
-    };
-
     const requestDataUsingFetch = async () => {
         const hasCookie = !!context.req.headers.cookie;
 
@@ -129,7 +95,6 @@ export const getServerSideProps: GetServerSideProps = async (
         }
     };
 
-    // await requestDataUsingAxios();
     await requestDataUsingFetch();
 
     return {
