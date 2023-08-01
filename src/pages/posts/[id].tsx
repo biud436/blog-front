@@ -21,10 +21,7 @@ export interface PostsProps {
 export default function Posts({
     post,
     error,
-}: {
-    post: Post;
-    error: ServerError;
-}) {
+}: Pick<PostsProps, 'post' | 'error'>) {
     if (error) {
         return (
             <ErrorComponent
