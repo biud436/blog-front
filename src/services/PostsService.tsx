@@ -83,8 +83,7 @@ export class PostsServiceImpl implements IPostsService {
     }
 }
 
-const fetcher = (url: string, queryParam: string) =>
-    axios.get(`${url}?${queryParam}`).then(res => res.data);
+const fetcher = (url: string) => axios.get(`${url}`).then(res => res.data);
 
 export function usePostsServiceBuilder() {
     const auth = useAuth();
@@ -118,7 +117,7 @@ export function usePostsServiceBuilder() {
      */
     const [queryParam, setQueryParam] = useState('');
     const res = useSWR<BlogServerResponse>(
-        queryParam ? [`${API_URL}/posts`, queryParam] : null,
+        `${API_URL}/posts?${queryParam ? '?' + queryParam : ''}`,
         fetcher,
         {
             fallbackData: initialListData,
