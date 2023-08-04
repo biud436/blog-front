@@ -1,8 +1,8 @@
 export class PostImage {
     id!: number;
-    originalname!: string;
     mimetype!: string;
+    originalname!: string;
     path!: string;
-    size!: number;
     postId!: number;
+    size!: number;
 }

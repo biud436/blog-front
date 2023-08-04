@@ -4,10 +4,8 @@
 import React from 'react';
 import { SearchBuilder } from '@/blog/components/builder/SearchBuilder';
 
-import { usePostsService } from '@/hooks/services/usePostsService';
 import { postsStore } from '@/store';
 import { PostsSearchType } from '@/models/PostsSearchType';
-import { PostDto } from '@/models/PostDto';
 
 import {
     Avatar,
@@ -32,21 +30,40 @@ import { useRouter } from 'next/router';
 import { SearchComponent } from './SearchComponent';
 import { DateUtil, Formatter } from '@/blog/api/date';
 import LockIcon from '@mui/icons-material/Lock';
-
-export function PageHeader() {
-    return <></>;
-}
-
-export const PageDescription = observer(() => {
-    return <></>;
-});
+import axios from 'axios';
+import useSWR, { mutate } from 'swr';
+import { BlogServerResponse } from '@/models/BlogServerResponse';
+import { PostEntity } from '@/models/PostEntity';
+import { BlogLoading } from './BlogLoading';
 
 export const SearchBox = SearchBuilder<PostsSearchType>(postsStore);
 
 export const PostsPresent = observer(() => {
-    const service = usePostsService();
     const categoryService = useCategoryService();
     const router = useRouter();
+
+    const pageNumber = postsStore.getPageNumber();
+    const categoryId = categoryService.getCurrentMenuCategoryId();
+    const searchProperty = postsStore.getSearchType();
+    const searchQuery = postsStore.getSearchQuery();
+
+    const { data, isLoading } = useSWR<BlogServerResponse<PostEntity>['data']>(
+        ['/posts/posts', pageNumber, categoryId],
+        fetcher,
+    );
+
+    function fetcher() {
+        if (postsStore.isSearchMode()) {
+            const url = `/posts/search?pageNumber=${pageNumber}&searchProperty=${searchProperty}&searchQuery=${encodeURIComponent(
+                searchQuery ?? '',
+            )}`;
+
+            return axios.get(url).then(res => res.data.data);
+        } else {
+            const url = `/posts?page=${pageNumber}&categoryId=${categoryId}`;
+            return axios.get(url).then(res => res.data.data);
+        }
+    }
 
     const fetchData = async (page?: number) => {
         try {
@@ -58,24 +75,17 @@ export const PostsPresent = observer(() => {
             postsStore.setCurrentCategoryId(
                 categoryService.getCurrentMenuCategoryId(),
             );
-
-            // 카테고리 별 포스트 조회
-            await service.fetch(
-                postsStore,
-                categoryService.getCurrentMenuCategoryId(),
-            );
         } catch (e) {
-            console.warn(e);
             toast.error('조회 결과가 없습니다');
             postsStore.setEntities([]);
         }
     };
 
-    const fetchDataBySearch = async (page?: number) => {
+    const fetchDataBySearch = async () => {
         try {
             postsStore.setSearchMode(true);
             postsStore.setPageNumber(1);
-            await fetchData(page);
+            mutate(['/posts/posts', pageNumber, categoryId]);
         } catch (e: any) {
             postsStore.setSearchType(
                 postsStore.getDefaultCategory() as PostsSearchType,
@@ -94,7 +104,7 @@ export const PostsPresent = observer(() => {
         fetchData();
     }, [categoryService.getCurrentMenuCategoryId()]);
 
-    const goToPage = (post: PostDto) => {
+    const goToPage = (post: PostEntity) => {
         const postId = post.id;
         if (post.isPrivate) {
             router.push(`/secret/[id]`, `/secret/${postId}`);
@@ -102,6 +112,10 @@ export const PostsPresent = observer(() => {
         }
         router.push(`/posts/[id]`, `/posts/${postId}`);
     };
+
+    if (isLoading) {
+        return <BlogLoading />;
+    }
 
     return (
         <Grid
@@ -145,8 +159,8 @@ export const PostsPresent = observer(() => {
                         px: 2,
                     }}
                 >
-                    {postsStore.getEntities() &&
-                        postsStore.getEntities()?.map(post => {
+                    {data?.entities &&
+                        data?.entities?.map(post => {
                             const mediaProp: SxProps = {
                                 cursor: 'pointer',
                                 width: '100%',
@@ -272,7 +286,7 @@ export const PostsPresent = observer(() => {
                 }}
             >
                 <Pagination
-                    count={postsStore.getPagination().maxPage}
+                    count={data?.pagination.maxPage}
                     page={postsStore.getPageNumber()}
                     boundaryCount={2}
                     color="primary"

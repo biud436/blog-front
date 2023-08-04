@@ -174,10 +174,8 @@ export class PostServiceImpl implements IPostService {
             });
 
             this.setData(res.data.data);
-
-            // Promise.resolve(res.data);
         } catch (e) {
-            // Promise.reject(e);
+            // empty
         } finally {
             this.isLoading = false;
         }

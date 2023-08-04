@@ -1,4 +1,5 @@
 import { Category } from './Category';
+import { PostImage } from './PostImage';
 import { User } from './User';
 
 export interface PostEntity {
@@ -10,6 +11,6 @@ export interface PostEntity {
     uploadDate: string;
     user: User;
     category: Category;
-    images: string[];
+    images: PostImage[];
     previewContent: string;
 }

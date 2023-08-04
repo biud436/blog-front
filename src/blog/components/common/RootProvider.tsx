@@ -1,7 +1,6 @@
 import React from 'react';
 import { AuthProvider } from '@/blog/providers/auth/authProvider';
 import { CategoryServiceProvider } from '@/services/CategoryService';
-import { PostServiceProvider } from '@/services/PostService';
 import { RootServiceProvider } from '@/services/RootService';
 
 export interface RootProviderProps {
@@ -15,9 +14,7 @@ export function RootProvider({ children }: RootProviderProps) {
     return (
         <AuthProvider>
             <RootServiceProvider>
-                <CategoryServiceProvider>
-                    <PostServiceProvider>{children}</PostServiceProvider>
-                </CategoryServiceProvider>
+                <CategoryServiceProvider>{children}</CategoryServiceProvider>
             </RootServiceProvider>
         </AuthProvider>
     );

@@ -1,6 +1,5 @@
 import { makeAutoObservable } from 'mobx';
 import { enableStaticRendering } from 'mobx-react-lite';
-import { makePersistable } from 'mobx-persist-store';
 import { Post } from '../../models/Post';
 
 enableStaticRendering(typeof window === 'undefined');
@@ -11,14 +10,6 @@ export class PostStore {
 
     constructor() {
         makeAutoObservable(this);
-
-        if (typeof window !== 'undefined') {
-            makePersistable(this, {
-                name: 'PostStore',
-                properties: ['data'],
-                storage: window.localStorage,
-            });
-        }
     }
 
     setPost(post: Post) {
