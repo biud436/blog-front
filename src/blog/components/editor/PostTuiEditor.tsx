@@ -2,10 +2,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Editor as EditorType } from '@toast-ui/react-editor';
+import { TuiEditorWithForwardedProps } from './TUIEditorWrapper';
 import React from 'react';
 
 import dynamic from 'next/dynamic';
-import { TuiEditorWithForwardedProps } from './TUIEditorWrapper';
 
 import Prism from 'prismjs';
 import 'prismjs/components/prism-clojure.js';
