@@ -73,15 +73,14 @@ const ViewerWrapper = styled.div`
     }
 
     .toastui-editor-contents {
-        font-size: 1.2rem;
-        font: 100 1.2rem 'Noto Sans KR', sans-serif;
+        font: 100 16px 'Noto Sans KR', sans-serif;
 
         blockquote {
             border-left: 4px solid #1976d2;
         }
 
         h1 {
-            border-bottom: 1px solid #eaecef;
+            border-bottom: 1px solid #cbced1;
             margin: 52px 0 15px;
         }
     }
