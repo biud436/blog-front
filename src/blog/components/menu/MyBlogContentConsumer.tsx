@@ -28,15 +28,7 @@ export const MyBlogContentConsumer = observer(
         ) => (event: React.KeyboardEvent | React.MouseEvent) => void;
         router;
         rootCategory: CategoryDepthVO | undefined;
-        children:
-            | string
-            | number
-            | boolean
-            | React.ReactElement<any, string | React.JSXElementConstructor<any>>
-            | React.ReactFragment
-            | React.ReactPortal
-            | null
-            | undefined;
+        children: React.ReactNode;
     }) => {
         return (
             <Grid

@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Editor as EditorType } from '@toast-ui/react-editor';
+import { Editor as EditorType } from '@/libs/tui-react-editor/';
 import { TuiEditorWithForwardedProps } from './TUIEditorWrapper';
-import React from 'react';
+import React, { ComponentClass } from 'react';
 
 import dynamic from 'next/dynamic';
 
@@ -14,7 +14,11 @@ import 'prismjs/components/prism-typescript.js';
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 import { useMediaQuery } from '@mui/material';
 
-const Editor = dynamic<TuiEditorWithForwardedProps>(
+type EditorComponent = React.ComponentType<TuiEditorWithForwardedProps>;
+const EditorRef = dynamic<TuiEditorWithForwardedProps>(
+    // () => {
+    //     return import('./TUIEditorWrapper').then(mod => mod.default);
+    // },
     async () => {
         const [mod] = await Promise.all([
             import('./TUIEditorWrapper'),
@@ -27,7 +31,7 @@ const Editor = dynamic<TuiEditorWithForwardedProps>(
         ssr: false,
         loading: () => <div>로딩중....</div>,
     },
-);
+) as ComponentClass<TuiEditorWithForwardedProps>;
 
 type PostTuiEditorProps = {
     toolbarItems: string[][] | any;
@@ -50,7 +54,7 @@ export const PostTuiEditor = React.memo(
             return (
                 <div>
                     {editorRef && (
-                        <Editor
+                        <EditorRef
                             language="ko-KR"
                             usageStatistics={false}
                             initialValue={' '} // initialValue가 undefined일 경우 첫 마운트 시, 편집, 미리보기, 마크다운, 위지윅 등의 텍스트가 표시된다 #18

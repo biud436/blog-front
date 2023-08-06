@@ -11,6 +11,7 @@ import { Meta } from '@/blog/components/utils/Meta';
 import FlexibleLoading from '@/blog/components/common/FlexibleLoading';
 import { PostEditorPageHeader } from './PostEditorPageHeader';
 import { PostEditorPageDescription } from './PostEditorPageDescription';
+import { PostServiceProvider } from '@/services/PostService';
 
 export type EditMode = 'create' | 'edit';
 export interface EditPageProps {
@@ -33,7 +34,11 @@ const PostEditorPresent = dynamic(
 );
 
 export const PostEditor = observer(({ mode }: EditPageProps) => {
-    return <PostEditorPresent mode={mode} />;
+    return (
+        <PostServiceProvider>
+            <PostEditorPresent mode={mode} />
+        </PostServiceProvider>
+    );
 });
 
 export const PostEditorContainer = observer(

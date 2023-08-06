@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useEffect, useCallback, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 
