@@ -1,7 +1,6 @@
 import { Editor } from '@/libs/tui-react-editor';
 import { EditorProps } from '@/types/EditorType';
-import React, { forwardRef } from 'react';
-// import { Editor, EditorProps } from '@toast-ui/react-editor';
+import React from 'react';
 
 export interface TuiEditorWithForwardedProps extends EditorProps {
     forwardedRef?: React.MutableRefObject<Editor>;

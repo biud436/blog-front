@@ -21,14 +21,13 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import { ForwardedScrollProgressBar } from '../atomic/ScrollProgressBar';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import styled from 'styled-components';
-import { useInView } from 'framer-motion';
 import * as React from 'react';
 import { useCallback } from 'react';
-import ReactDOM from 'react-dom';
-import { TocWrapper } from './PostPresent';
+import { TocWrapper } from '../post/PostPresent';
 import { Box } from '@mui/material';
+import { HeadingElementWrapper } from './HeadingElementWrapper';
 
 declare var Prism: any;
 
@@ -115,68 +114,6 @@ const ViewerWrapper = styled.div`
         line-height: 2rem;
     }
 `;
-
-const ForcusToc = ({
-    setActiveId,
-}: {
-    setActiveId: React.Dispatch<React.SetStateAction<string | null>>;
-}) => {
-    const ref = useRef<HTMLDivElement>(null);
-
-    const isInView = useInView(ref, {});
-
-    useEffect(() => {
-        const items = Array.from<HTMLAnchorElement>(
-            document.querySelectorAll('.toc a'),
-        );
-
-        if (ref.current?.parentElement) {
-            const { parentElement } = ref.current;
-
-            if (isInView) {
-                const targets = items.filter(item =>
-                    item.getAttribute('href')?.includes(`#${parentElement.id}`),
-                );
-
-                targets.forEach(target => {
-                    // target.classList.add('active');
-
-                    setActiveId(target.id);
-                });
-            }
-        }
-    }, [isInView]);
-
-    return (
-        <div ref={ref}>
-            <div className={isInView ? 'in-view' : ''}></div>
-        </div>
-    );
-};
-
-const HeadingElementWrapper = () => {
-    const [, setActiveId] = useState<string | null>(null);
-    const [activeComponents, setActiveComponents] = React.useState<
-        React.ReactNode[]
-    >([]);
-
-    useEffect(() => {
-        const anchorItems = Array.from<HTMLAnchorElement>(
-            document.querySelectorAll('.post-heading'),
-        );
-
-        anchorItems.forEach(item => {
-            const portal = ReactDOM.createPortal(
-                <ForcusToc setActiveId={setActiveId} />,
-                item,
-            );
-
-            setActiveComponents(prev => [...prev, portal]);
-        });
-    }, []);
-
-    return <>{activeComponents}</>;
-};
 
 const useCodeCopyInjector = () => {
     useEffect(() => {
