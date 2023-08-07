@@ -112,6 +112,22 @@ const ViewerWrapper = styled.div`
         height: 100%;
         line-height: 2rem;
     }
+
+    .toastui-editor-contents a {
+        color: #da8a27;
+
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+            text-decoration-style: wavy;
+            text-decoration-thickness: 1px;
+        }
+
+        &:active {
+            color: #b47222;
+        }
+    }
 `;
 
 const useCodeCopyInjector = () => {
