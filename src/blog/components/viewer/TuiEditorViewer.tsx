@@ -28,6 +28,7 @@ import { useCallback } from 'react';
 import { TocWrapper } from '../post/PostPresent';
 import { Box } from '@mui/material';
 import { HeadingElementWrapper } from './HeadingElementWrapper';
+import { toast } from 'react-toastify';
 
 declare var Prism: any;
 
@@ -163,12 +164,18 @@ const useCodeCopyInjector = () => {
             item.appendChild(copyCode);
         });
 
-        return () => {
-            preCode.forEach(item => {
-                item.remove();
-            });
-        };
+        // return () => {
+        //     preCode.forEach(item => {
+        //         item.remove();
+        //     });
+        // };
     }, []);
+};
+
+const CodeCopyFactory = () => {
+    useCodeCopyInjector();
+
+    return <></>;
 };
 
 const TuiEditorViewer = ({ content }: { content: string }) => {
@@ -228,7 +235,7 @@ const TuiEditorViewer = ({ content }: { content: string }) => {
         };
     }, []);
 
-    useCodeCopyInjector();
+    // useCodeCopyInjector();
 
     return (
         <ViewerWrapper>
@@ -252,6 +259,7 @@ const TuiEditorViewer = ({ content }: { content: string }) => {
                 theme="dark"
             />
             <HeadingElementWrapper />
+            <CodeCopyFactory />
         </ViewerWrapper>
     );
 };

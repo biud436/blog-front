@@ -12,7 +12,11 @@ const Viewer = dynamic(
     },
     {
         ssr: false,
-        loading: () => <div className="p-4">로딩중...</div>,
+        loading: () => (
+            <div className="flex items-center justify-center p-4 m-4 text-lg rounded-md bg-gray-50">
+                로딩중...
+            </div>
+        ),
     },
 );
 
