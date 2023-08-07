@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { PostsProps } from '@/pages/posts/[id]';
 import { Meta } from '@/blog/components/utils/Meta';
 import { GlobalStyle } from '@/styles/global-styles';
+import { PostServiceProvider } from '@/services/PostService';
 
 export const PostPage = observer(({ post, error, id: postId }: PostsProps) => {
     const router = useRouter();
@@ -31,18 +32,20 @@ export const PostPage = observer(({ post, error, id: postId }: PostsProps) => {
     };
 
     return (
-        <MainLayout name={post.title}>
-            <Meta
-                {...{
-                    title: post.title,
-                    description: post.previewContent!,
-                    url: `https://blog.biud436.com/posts/${postId}`,
-                    image: post.thumbnail,
-                    nickname: post?.user?.profile?.nickname,
-                }}
-            />
-            <GlobalStyle />
-            <PostPresent post={post} goBack={goBack} />
-        </MainLayout>
+        <PostServiceProvider>
+            <MainLayout name={post.title}>
+                <Meta
+                    {...{
+                        title: post.title,
+                        description: post.previewContent!,
+                        url: `https://blog.biud436.com/posts/${postId}`,
+                        image: post.thumbnail,
+                        nickname: post?.user?.profile?.nickname,
+                    }}
+                />
+                <GlobalStyle />
+                <PostPresent post={post} goBack={goBack} />
+            </MainLayout>
+        </PostServiceProvider>
     );
 });
