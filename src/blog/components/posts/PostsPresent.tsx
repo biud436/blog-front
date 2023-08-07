@@ -219,6 +219,7 @@ export const PostsPresent = observer(() => {
                                                 whiteSpace: 'nowrap',
                                                 width: '80%',
                                             },
+                                            userSelect: 'none',
                                         }}
                                         onClick={() => goToPage(post)}
                                     ></CardHeader>
