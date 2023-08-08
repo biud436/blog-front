@@ -24,7 +24,7 @@
         "useDefineForClassFields": true,
         "experimentalDecorators": true,
         "declaration": true,
-        "types": ["node", "react", "kakao.maps.d.ts", "webpack-env"],
+        "types": ["node", "react", "webpack-env"],
         "typeRoots": ["./src/types", "./node_modules/@types"],
         "incremental": true,
         "plugins": [
