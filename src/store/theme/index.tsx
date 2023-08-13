@@ -31,6 +31,22 @@ export class ThemeStore {
                     },
                 },
             },
+            MuiButton: {
+                styleOverrides: {
+                    containedPrimary: {
+                        border: '1px solid #D3D3D3',
+                        boxShadow: 'none',
+                        backgroundColor: '#fff',
+                        color: '#000',
+
+                        '&:hover': {
+                            boxShadow: 'none',
+                            backgroundColor: '#fff',
+                            textDecoration: 'underline',
+                        },
+                    },
+                },
+            },
         },
     });
 

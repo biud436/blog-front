@@ -71,7 +71,7 @@ export function PostPresent({
                                 mb: 3,
                             }}
                         />
-                        <GithubComment />
+                        {/* <GithubComment /> */}
                     </Box>
                     <PostFooter post={post} goBack={goBack} />
                 </Grid>
