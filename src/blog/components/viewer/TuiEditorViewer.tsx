@@ -115,7 +115,7 @@ const ViewerWrapper = styled.div`
     }
 
     .toastui-editor-contents a {
-        color: #da8a27;
+        color: #222222;
 
         text-decoration: none;
 
@@ -126,7 +126,7 @@ const ViewerWrapper = styled.div`
         }
 
         &:active {
-            color: #b47222;
+            color: #222222;
         }
     }
 `;
