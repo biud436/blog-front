@@ -36,7 +36,7 @@ WORKDIR /usr/src/app
 # 의존성 패키지 설치
 COPY . .
 
-RUN yarn install
+RUN yarn install --immutable
 
 # ENV NODE_OPTIONS --openssl-legacy-provider
 
