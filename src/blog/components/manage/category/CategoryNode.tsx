@@ -1,11 +1,11 @@
 import { Button, Grid, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { SxProps } from '@mui/material/styles';
+import { SxProps, Theme } from '@mui/material/styles';
 import { NodeModel } from '@minoru/react-dnd-treeview';
 import ArrowRight from '@mui/icons-material/ArrowRight';
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
 import React, { useCallback, useMemo, useState } from 'react';
-import { Theme } from '@mui/system';
+
 import { CategoryEditSection } from './CategoryEditSection';
 import {
     CategoryNodeEventHandler,

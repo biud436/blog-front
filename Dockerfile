@@ -29,14 +29,14 @@
 
 # CMD ["node_modules/.bin/next", "start", "-p", "8084"]
 
-FROM node:16-alpine
-RUN apk --no-cache add --virtual .builds-deps build-base python3
+FROM node:16.18-alpine
+# RUN apk --no-cache add --virtual .builds-deps build-base python3
 WORKDIR /usr/src/app
 
 # 의존성 패키지 설치
-COPY package*.json ./
-RUN yarn install
 COPY . .
+
+RUN yarn install
 
 # ENV NODE_OPTIONS --openssl-legacy-provider
 

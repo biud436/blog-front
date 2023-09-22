@@ -25,10 +25,8 @@ import { useEffect, useMemo, useRef } from 'react';
 import styled from 'styled-components';
 import * as React from 'react';
 import { useCallback } from 'react';
-import { TocWrapper } from '../post/PostPresent';
-import { Box } from '@mui/material';
 import { HeadingElementWrapper } from './HeadingElementWrapper';
-import { toast } from 'react-toastify';
+
 
 declare var Prism: any;
 

@@ -5,7 +5,7 @@ import { useRecoilState } from 'recoil';
 import { userState } from '../store/user';
 import { useAuth } from '@/blog/providers/auth/authProvider';
 import { toast, ToastContainer } from 'react-toastify';
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Box, Button, Stack, ThemeProvider, Typography } from '@mui/material';
 import { URL_MAP } from '@/common/URL';
 import { useRouter } from 'next/router';
 import { Meta } from '@/blog/components/utils/Meta';
@@ -17,7 +17,7 @@ import {
     TextFieldElement,
     useForm,
 } from 'react-hook-form-mui';
-import { ThemeProvider } from '@mui/system';
+
 import { observer } from 'mobx-react-lite';
 import { useThemeStore } from '@/hooks/useThemeStore';
 import GitHubIcon from '@mui/icons-material/GitHub';

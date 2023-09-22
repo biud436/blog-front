@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Post } from '@/models/Post';
-import { Card, Divider, Grid, Typography, Paper, Box } from '@mui/material';
+import { Divider, Grid, Paper, Box } from '@mui/material';
 import { PostFooter } from './PostFooter';
-import GithubComment from './Comment';
 import { PostContent } from './PostContent';
 import { PostHeader } from './PostHeader';
 import 'react-toastify/dist/ReactToastify.css';

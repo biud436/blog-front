@@ -25,7 +25,6 @@
         "experimentalDecorators": true,
         "declaration": true,
         "types": ["node", "react", "webpack-env"],
-        "typeRoots": ["./src/types", "./node_modules/@types"],
         "incremental": true,
         "plugins": [
             {

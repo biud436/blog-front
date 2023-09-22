@@ -1,6 +1,8 @@
 import { createTheme } from '@mui/material';
-import { DefaultTheme, ThemeProviderProps } from '@mui/system';
+import { ThemeProviderProps } from '@mui/material/styles/ThemeProvider';
+
 import { makeAutoObservable } from 'mobx';
+import { DefaultTheme } from 'styled-components';
 
 export type ThemeProps = ThemeProviderProps<DefaultTheme>['theme'];
 
