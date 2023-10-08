@@ -14,6 +14,12 @@ Next.js로 만든 개인 잡담 블로그입니다. 실제로 사용하기 위�
 -   Styled-Components
 -   SWR
 
+## 구조
+
+<p align="cetner">
+<img src="https://user-images.githubusercontent.com/13586185/273450938-a7b59064-3e50-4951-a07a-452335ead3d5.png" />
+</p>
+
 ### 투두리스트
 
 블로그는 최소한의 기능만 탑재하고 있습니다.
