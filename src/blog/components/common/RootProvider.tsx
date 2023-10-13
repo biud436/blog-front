@@ -7,9 +7,6 @@ export interface RootProviderProps {
     children: React.ReactNode;
 }
 
-/**
- * TODO: RootService를 생성하면 깊이를 줄일 수 있다.
- */
 export function RootProvider({ children }: RootProviderProps) {
     return (
         <AuthProvider>

@@ -7,11 +7,11 @@ import { NavigateFunction } from 'react-router';
 import AddIcon from '@mui/icons-material/Add';
 import { URL_MAP } from '@/common/URL';
 
-export function MenuPostWriteButton({
-    navigate,
-}: {
+interface MenuPostWriteButtonProps {
     navigate: NavigateFunction;
-}) {
+}
+
+export function MenuPostWriteButton({ navigate }: MenuPostWriteButtonProps) {
     return (
         <ListItem
             key={'post_write_editor'}

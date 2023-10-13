@@ -2,15 +2,17 @@ import { CategoryDepthVO } from '@/models/CategoryDepthVO';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import React from 'react';
 
+interface PostSelectCategoryProps {
+    currentCategoryId: number;
+    setCurrentCategoryId: React.Dispatch<React.SetStateAction<number>>;
+    categories: CategoryDepthVO[];
+}
+
 export function PostSelectCategory({
     currentCategoryId,
     setCurrentCategoryId,
     categories,
-}: {
-    currentCategoryId: number;
-    setCurrentCategoryId: React.Dispatch<React.SetStateAction<number>>;
-    categories: CategoryDepthVO[];
-}) {
+}: PostSelectCategoryProps) {
     return (
         <FormControl fullWidth sx={{ marginBottom: 2 }}>
             <InputLabel>카테고리 선택</InputLabel>

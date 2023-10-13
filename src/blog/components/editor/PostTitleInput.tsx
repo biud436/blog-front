@@ -1,11 +1,4 @@
-import {
-    Checkbox,
-    FormControl,
-    FormControlLabel,
-    FormGroup,
-    Input,
-    InputLabel,
-} from '@mui/material';
+import { FormControl, Input, InputLabel } from '@mui/material';
 import React from 'react';
 
 export interface PostTitleInputProps {

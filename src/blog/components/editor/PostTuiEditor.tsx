@@ -14,11 +14,7 @@ import 'prismjs/components/prism-typescript.js';
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 import { useMediaQuery } from '@mui/material';
 
-type EditorComponent = React.ComponentType<TuiEditorWithForwardedProps>;
 const EditorRef = dynamic<TuiEditorWithForwardedProps>(
-    // () => {
-    //     return import('./TUIEditorWrapper').then(mod => mod.default);
-    // },
     async () => {
         const [mod] = await Promise.all([
             import('./TUIEditorWrapper'),

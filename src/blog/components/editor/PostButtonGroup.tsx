@@ -2,15 +2,17 @@ import { EditPageProps } from '@/containers/PostEditorContainer';
 import { Button, Grid } from '@mui/material';
 import React, { useMemo } from 'react';
 
+interface PostButtonGroupProps {
+    mode: EditPageProps['mode'];
+    handleWrite: () => Promise<void>;
+    handleCancel: () => void;
+}
+
 export function PostButtonGroup({
     mode,
     handleWrite,
     handleCancel,
-}: {
-    mode: EditPageProps['mode'];
-    handleWrite: () => Promise<void>;
-    handleCancel: () => void;
-}) {
+}: PostButtonGroupProps) {
     const submitButtonName = useMemo(() => {
         return mode === 'edit' ? '수정' : '작성';
     }, [mode]);
