@@ -3,8 +3,6 @@
 import { auth } from '@/blog/api/request';
 import * as React from 'react';
 
-import { useCookies, CookiesProvider } from 'react-cookie';
-
 import { useRecoilState } from 'recoil';
 import { userState } from 'store/user';
 import { toast } from 'react-toastify';
@@ -22,7 +20,6 @@ export const AuthContext = React.createContext<AuthContextType>(null!);
 export const AuthProvider = observer(
     ({ children }: { children: React.ReactNode }) => {
         const [user, setUser] = useRecoilState(userState);
-        const [, setCookie, removeCookie] = useCookies(['username']);
 
         /**
          * 로그인 요청
@@ -69,7 +66,6 @@ export const AuthProvider = observer(
                 ];
                 if (acceptedStatusCode.includes(res!.statusCode)) {
                     toast.dismiss();
-                    setCookie('username', username);
 
                     toast.info('정보를 확인하고 있습니다...', {
                         isLoading: true,
@@ -109,7 +105,6 @@ export const AuthProvider = observer(
                 // 로그인 상태 제거
                 localStorage.removeItem('isLoggedIn');
 
-                removeCookie('username');
                 setUser({
                     username: '',
                     scope: [],
@@ -189,11 +184,9 @@ export const AuthProvider = observer(
         const value = { user, login, logout, refreshAuth, requestData };
 
         return (
-            <CookiesProvider>
-                <AuthContext.Provider value={value}>
-                    {children}
-                </AuthContext.Provider>
-            </CookiesProvider>
+            <AuthContext.Provider value={value}>
+                {children}
+            </AuthContext.Provider>
         );
     },
 );
