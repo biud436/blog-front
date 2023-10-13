@@ -42,11 +42,6 @@ const nextConfig = withMDX({
             },
         ];
     },
-    experimental: {
-        fontLoaders: [
-            { loader: '@next/font/google', options: { subsets: ['latin'] } },
-        ],
-    },
     publicRuntimeConfig: {
         backendUrl: process.env.NEXT_PUBLIC_SERVER_URL,
     },

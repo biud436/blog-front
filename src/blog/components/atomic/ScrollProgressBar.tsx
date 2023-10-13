@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-empty-interface */
-import React, { ReactPortal } from 'react';
+import React from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { useEffect } from 'react';
 import { createGlobalStyle } from 'styled-components';
@@ -14,7 +15,6 @@ const ProgressBarWrapper = createGlobalStyle`
         left: 0;
         right: 0;
         height: 5px;
-        /* background: #66aaff; */
         background: #ff0000;
         transform-origin: 0%;
         z-index: 9999;
@@ -63,5 +63,5 @@ export const ScrollProgressBar: React.FC<ScrollProgressBarProps> = () => {
 };
 
 export const ForwardedScrollProgressBar = React.memo(
-    React.forwardRef((props, ref) => <ScrollProgressBar {...props} />),
+    React.forwardRef((props, _ref) => <ScrollProgressBar {...props} />),
 );
