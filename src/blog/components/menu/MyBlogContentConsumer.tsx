@@ -1,14 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
-import { ListItemText } from '@mui/material';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
 import { DrawerHeader } from '@/blog/components/atomic/DrawerHeader';
-import { Grid, ListItem } from '@mui/material';
+import { Grid } from '@mui/material';
 import { CategoryDepthVO } from '@/models/CategoryDepthVO';
 import { observer } from 'mobx-react-lite';
-import { CategoryWrapper } from '../category/CategoryWrapper';
-import { LoginGuard } from './LoginGuard';
 
 export const MyBlogContentConsumer = observer(
     ({
@@ -48,60 +44,6 @@ export const MyBlogContentConsumer = observer(
                 }}
             >
                 <DrawerHeader />
-                {/* <Grid
-                    item
-                    xs={0}
-                    sm={0}
-                    md={0}
-                    sx={{
-                        display: {
-                            xs: 'none',
-                            sm: 'none',
-                            md: 'none',
-                            lg: 'block',
-                            xl: 'block',
-                        },
-                        width: 280,
-                        height: '100%',
-                        order: 0,
-                    }}
-                >
-                    <List
-                        component="nav"
-                        className="p-4 border border-gray-200 rounded-md shadow"
-                    >
-                        <ListItem
-                            sx={{
-                                borderLeft: '3px solid #1976d2',
-                            }}
-                        >
-                            <ListItemText
-                                primary="카테고리"
-                                sx={{ fontWeight: 'bold' }}
-                            >
-                                <Typography
-                                    variant="h6"
-                                    sx={{
-                                        fontWeight: 'bold',
-                                        color: 'black',
-                                    }}
-                                >
-                                    카테고리
-                                </Typography>
-                            </ListItemText>
-                        </ListItem>
-                        <CategoryWrapper
-                            {...{
-                                categoryList,
-                                setCategoryList,
-                                toggleDrawer,
-                                router,
-                                rootCategory,
-                            }}
-                        />
-                        <LoginGuard />
-                    </List>
-                </Grid> */}
                 <Grid
                     item
                     xs={12}
