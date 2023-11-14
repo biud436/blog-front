@@ -27,7 +27,7 @@ export namespace DateUtil {
         iso8601: string,
         formatter: DateFormatter[DateFormatterKeyMap],
     ): string {
-        return dayjs(iso8601).add(9, 'hour').format(formatter);
+        return dayjs(iso8601).format(formatter);
     }
 
     /**
