@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import moment from 'moment-timezone';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.extend(relativeTime);
 
 export const Formatter = {
     /**
@@ -15,33 +22,12 @@ export const Formatter = {
 export type DateFormatter = typeof Formatter;
 export type DateFormatterKeyMap = keyof DateFormatter;
 
-/**
- * 현재 사용중인 라이브러리는 모먼트이지만, 모먼트는 deprecated 되었으므로
- * 추후 날짜 라이브러리를 다른 라이브러리로 변환하기 쉽게 하기 위해 유틸로 분리하는 디커플링 패턴을 사용하였습니다.
- */
 export namespace DateUtil {
-    /**
-     * iso8601 형식의 문자열을 원하는 날짜 문자열 타입으로 포맷팅합니다.
-     */
-    export function toDateString(
-        iso8601: string,
-        formatter: DateFormatter[DateFormatterKeyMap],
-    ): string {
-        return moment(iso8601).format(formatter);
-    }
-
-    export function ToDateStringByTimezone(
-        iso8601: string,
-        formatter: DateFormatter[DateFormatterKeyMap],
-    ): string {
-        return moment(iso8601).tz('UTC').add(1, 'hour').format(formatter);
-    }
-
     export function ToDateStringBySeoul(
         iso8601: string,
         formatter: DateFormatter[DateFormatterKeyMap],
     ): string {
-        return moment(iso8601).tz('UTC').add(9, 'hour').format(formatter);
+        return dayjs(iso8601).add(9, 'hour').format(formatter);
     }
 
     /**
@@ -55,7 +41,7 @@ export namespace DateUtil {
         iso8601: string,
         formatter: DateFormatter[DateFormatterKeyMap],
     ): string {
-        const dt = moment(iso8601).add(9, 'hour').format(formatter);
+        const dt = dayjs(iso8601).add(9, 'hour').format(formatter);
         return Intl.DateTimeFormat('ko-KR', {
             year: 'numeric',
             month: '2-digit',
@@ -75,6 +61,6 @@ export namespace DateUtil {
     export function now(
         formatter: DateFormatter[DateFormatterKeyMap] = Formatter.DATETIME,
     ): string {
-        return moment().format(formatter);
+        return dayjs().format(formatter);
     }
 }

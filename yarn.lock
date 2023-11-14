@@ -2903,6 +2903,7 @@ __metadata:
     cross-env: 7.0.3
     css-loader: ^6.7.3
     dart-sass: ^1.25.0
+    dayjs: ^1.11.10
     dompurify: ^2.4.0
     eslint: ^8.36.0
     eslint-config-prettier: 8.3.0
@@ -2920,8 +2921,6 @@ __metadata:
     mobx-persist-store: ^1.1.2
     mobx-react: ^7.5.2
     mobx-react-lite: ^3.4.0
-    moment: ^2.29.3
-    moment-timezone: ^0.5.34
     next: 13.5.4
     next-mdx-remote: ^4.2.0
     next-sitemap: ^3.1.32
@@ -3938,6 +3937,13 @@ __metadata:
   bin:
     dart-sass: sass.js
   checksum: 913701d78d247a58c239fcc1f94555305ecc8058b346be034ed866e224277e808e7c6fb4be5edb55888385f13e8523e9e467aed081923bfffcce693d863c843c
+  languageName: node
+  linkType: hard
+
+"dayjs@npm:^1.11.10":
+  version: 1.11.10
+  resolution: "dayjs@npm:1.11.10"
+  checksum: a6b5a3813b8884f5cd557e2e6b7fa569f4c5d0c97aca9558e38534af4f2d60daafd3ff8c2000fed3435cfcec9e805bcebd99f90130c6d1c5ef524084ced588c4
   languageName: node
   linkType: hard
 
@@ -8191,16 +8197,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"moment-timezone@npm:^0.5.34":
-  version: 0.5.34
-  resolution: "moment-timezone@npm:0.5.34"
-  dependencies:
-    moment: "npm:>= 2.9.0"
-  checksum: 12a1d3d52e4ba509cf1fa36bbda59d898a08fa80ab35f6c358747e93aec1f07e617cec647eaf2e8acf5f9132e581d4704d34a9edffa9a80c5cd04bf23b277595
-  languageName: node
-  linkType: hard
-
-"moment@npm:*, moment@npm:>= 2.9.0, moment@npm:^2.29.3":
+"moment@npm:*":
   version: 2.29.4
   resolution: "moment@npm:2.29.4"
   checksum: 0ec3f9c2bcba38dc2451b1daed5daded747f17610b92427bebe1d08d48d8b7bdd8d9197500b072d14e326dd0ccf3e326b9e3d07c5895d3d49e39b6803b76e80e

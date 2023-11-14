@@ -31,9 +31,6 @@ export namespace AxiosManager {
                 withCredentials: true,
             });
 
-            // axiosInstance.defaults.headers.common[
-            //     'Authorization'
-            // ] = `Bearer ${AUTH_TOKEN}`;
             isReady = true;
         }
 
@@ -42,9 +39,7 @@ export namespace AxiosManager {
 
     export function setAccessToken({ token }: { token: string }) {
         if (axiosInstance) {
-            // axiosInstance.defaults.headers.common[
-            //     'Authorization'
-            // ] = `Bearer ${token}`;
+            // empty
         }
     }
 

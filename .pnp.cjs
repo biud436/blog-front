@@ -70,6 +70,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["cross-env", "npm:7.0.3"],\
             ["css-loader", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:6.7.3"],\
             ["dart-sass", "npm:1.25.0"],\
+            ["dayjs", "npm:1.11.10"],\
             ["dompurify", "npm:2.4.0"],\
             ["eslint", "npm:8.36.0"],\
             ["eslint-config-prettier", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:8.3.0"],\
@@ -87,8 +88,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mobx-persist-store", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:1.1.2"],\
             ["mobx-react", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:7.5.2"],\
             ["mobx-react-lite", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:3.4.0"],\
-            ["moment", "npm:2.29.4"],\
-            ["moment-timezone", "npm:0.5.34"],\
             ["next", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:13.5.4"],\
             ["next-mdx-remote", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:4.2.0"],\
             ["next-sitemap", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:3.1.32"],\
@@ -464,7 +463,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@date-io/dayjs", "virtual:05c0139524defbc94416c4fe737e7c74317175287d85607c843257f9b48027d5722a392ffa78db026d71af30d9f8cb6c5bf2874727a862678a9c92090257938c#npm:2.16.0"],\
             ["@date-io/core", "npm:2.16.0"],\
             ["@types/dayjs", null],\
-            ["dayjs", null]\
+            ["dayjs", "npm:1.11.10"]\
           ],\
           "packagePeers": [\
             "@types/dayjs",\
@@ -510,7 +509,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@date-io/moment", "virtual:05c0139524defbc94416c4fe737e7c74317175287d85607c843257f9b48027d5722a392ffa78db026d71af30d9f8cb6c5bf2874727a862678a9c92090257938c#npm:2.16.1"],\
             ["@date-io/core", "npm:2.16.0"],\
             ["@types/moment", "npm:2.13.0"],\
-            ["moment", "npm:2.29.4"]\
+            ["moment", null]\
           ],\
           "packagePeers": [\
             "@types/moment",\
@@ -1598,9 +1597,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react-transition-group", "npm:4.4.5"],\
             ["clsx", "npm:1.2.1"],\
             ["date-fns", null],\
-            ["dayjs", null],\
+            ["dayjs", "npm:1.11.10"],\
             ["luxon", null],\
-            ["moment", "npm:2.29.4"],\
+            ["moment", null],\
             ["prop-types", "npm:15.8.1"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:18.2.0"],\
@@ -3811,6 +3810,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["cross-env", "npm:7.0.3"],\
             ["css-loader", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:6.7.3"],\
             ["dart-sass", "npm:1.25.0"],\
+            ["dayjs", "npm:1.11.10"],\
             ["dompurify", "npm:2.4.0"],\
             ["eslint", "npm:8.36.0"],\
             ["eslint-config-prettier", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:8.3.0"],\
@@ -3828,8 +3828,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mobx-persist-store", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:1.1.2"],\
             ["mobx-react", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:7.5.2"],\
             ["mobx-react-lite", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:3.4.0"],\
-            ["moment", "npm:2.29.4"],\
-            ["moment-timezone", "npm:0.5.34"],\
             ["next", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:13.5.4"],\
             ["next-mdx-remote", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:4.2.0"],\
             ["next-sitemap", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:3.1.32"],\
@@ -4947,6 +4945,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["dart-sass", "npm:1.25.0"],\
             ["chokidar", "npm:3.5.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["dayjs", [\
+        ["npm:1.11.10", {\
+          "packageLocation": "./.yarn/cache/dayjs-npm-1.11.10-2b4382efc1-a6b5a3813b.zip/node_modules/dayjs/",\
+          "packageDependencies": [\
+            ["dayjs", "npm:1.11.10"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -9803,16 +9810,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         ["npm:2.29.4", {\
           "packageLocation": "./.yarn/cache/moment-npm-2.29.4-902943305d-0ec3f9c2bc.zip/node_modules/moment/",\
           "packageDependencies": [\
-            ["moment", "npm:2.29.4"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["moment-timezone", [\
-        ["npm:0.5.34", {\
-          "packageLocation": "./.yarn/cache/moment-timezone-npm-0.5.34-e4fe2d01f6-12a1d3d52e.zip/node_modules/moment-timezone/",\
-          "packageDependencies": [\
-            ["moment-timezone", "npm:0.5.34"],\
             ["moment", "npm:2.29.4"]\
           ],\
           "linkType": "HARD"\
