@@ -50,6 +50,10 @@ export async function generateMetadata(
                 headers: {
                     ...CacheControl.NoCache,
                 },
+                cache: 'no-cache',
+                next: {
+                    tags: ['post'],
+                },
             });
 
             if (res.ok) {
@@ -108,6 +112,10 @@ async function getPost(id: string) {
                 // },
                 headers: {
                     ...CacheControl.NoCache,
+                },
+                cache: 'no-cache',
+                next: {
+                    tags: ['post'],
                 },
             });
 
