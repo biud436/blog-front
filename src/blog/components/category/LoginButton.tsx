@@ -5,14 +5,18 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { URL_MAP } from '@/common/URL';
-import { NextRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
-export function LoginButton({ router }: { router: NextRouter }) {
+export function LoginButton() {
+    const router = useRouter();
+
     return (
         <ListItem
             key={'login'}
             disablePadding
-            onClick={() => router.push(URL_MAP.LOGIN)}
+            onClick={() => {
+                router.push('/auth');
+            }}
         >
             <ListItemButton>
                 <ListItemIcon>

@@ -5,8 +5,9 @@ import { motion, useScroll, useSpring } from 'framer-motion';
 import { useEffect } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import ReactDOM from 'react-dom';
-import { useRouter } from 'next/router';
+
 import { URL_MAP } from '@/common/URL';
+import { useRouter } from 'next/navigation';
 
 const ProgressBarWrapper = createGlobalStyle`
     .progress-bar {
@@ -35,9 +36,9 @@ export const ScrollProgressBar: React.FC<ScrollProgressBarProps> = () => {
     });
     const [isRenderOK, setIsRenderOK] = React.useState(false);
 
-    if (router.pathname === URL_MAP.MAIN) {
-        return null;
-    }
+    // if (router.pathname === URL_MAP.MAIN) {
+    //     return null;
+    // }
 
     useEffect(() => {
         scrollYProgress.onChange(() => {

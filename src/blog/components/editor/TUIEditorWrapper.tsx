@@ -1,4 +1,4 @@
-import { Editor } from '@/libs/tui-react-editor';
+import { Editor } from '@/lib/tui-react-editor';
 import { EditorProps } from '@/types/EditorType';
 import React from 'react';
 

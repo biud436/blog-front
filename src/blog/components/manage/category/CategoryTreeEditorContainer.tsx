@@ -20,7 +20,6 @@ import {
 } from '@minoru/react-dnd-treeview';
 import AddIcon from '@mui/icons-material/Add';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import { URL_MAP } from '@/common/URL';
 import { toJS } from 'mobx';
 import { CategoryDepthVO } from '@/models/CategoryDepthVO';
@@ -41,6 +40,7 @@ import { DragPreview } from './DragPreview';
 import { CategoryEditorHeader } from './CategoryEditorHeader';
 import { CategoryNode } from './CategoryNode';
 import { ServerResponse } from '@/types/ServerResponse';
+import { useRouter } from 'next/navigation';
 
 const theme = createTheme({
     components: {

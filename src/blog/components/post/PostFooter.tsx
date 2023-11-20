@@ -3,8 +3,8 @@ import { Button, Grid } from '@mui/material';
 import { useAuthorized } from '@/hooks/auth/useAuthorized';
 import { usePostService } from '@/hooks/services/usePostService';
 import { toast } from 'react-toastify';
-import { useRouter } from 'next/router';
 import { Post } from '@/models/Post';
+import { useRouter } from 'next/navigation';
 
 export function PostFooter({
     post,
@@ -33,9 +33,7 @@ export function PostFooter({
 
     const handleEditPost = () => {
         const id = post.id;
-        router.push(`/edit?mode=edit&id=${id}`, undefined, {
-            shallow: true,
-        });
+        router.push(`/edit2?mode=edit&id=${id}`);
     };
 
     return (

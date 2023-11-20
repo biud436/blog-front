@@ -1,3 +1,5 @@
+'use client';
+
 import Box from '@mui/material/Box';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

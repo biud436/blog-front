@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { MainLayout } from '@/layouts/BlogMainLayout';
 import { observer } from 'mobx-react-lite';

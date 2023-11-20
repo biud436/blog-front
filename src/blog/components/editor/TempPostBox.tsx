@@ -1,3 +1,5 @@
+'use client';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Grid, Typography, SxProps, Modal, Box } from '@mui/material';
 import axios from 'axios';

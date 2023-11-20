@@ -4,9 +4,9 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { useRouter } from 'next/router';
 import { URL_MAP } from '@/common/URL';
 import { useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 
 export function ManageButton() {
     const router = useRouter();

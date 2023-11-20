@@ -25,7 +25,7 @@ import IconButton from '@mui/material/IconButton';
 import { useMounted } from '@/hooks/useMounted';
 import { LoginGuard } from '../blog/components/manage/LoginGuard';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 export interface ManageLayoutProps {
     children: React.ReactNode;

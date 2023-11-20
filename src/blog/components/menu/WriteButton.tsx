@@ -2,8 +2,8 @@ import React, { memo } from 'react';
 import Typography from '@mui/material/Typography';
 import { URL_MAP } from '@/common/URL';
 import { Button } from '@mui/material';
-import { useRouter } from 'next/router';
 import CreateIcon from '@mui/icons-material/Create';
+import { useRouter } from 'next/navigation';
 
 export const WriteButton = memo(() => {
     const router = useRouter();

@@ -1,3 +1,5 @@
+'use client';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { URL_MAP } from '@/common/URL';
 import { useCategoryService } from '@/hooks/services/useCategoryService';
@@ -26,12 +28,12 @@ import { usePostService } from '@/hooks/services/usePostService';
 import { PostContent } from '@/services/PostService';
 import { useSWRConfig } from 'swr';
 import { useMediaQuery } from 'react-responsive';
-import { useRouter } from 'next/router';
 import { PostTuiEditor } from './PostTuiEditor';
 import { Controller, useForm } from 'react-hook-form';
 import { ImageCompressionService } from '@/services/ImageCompressionService';
 import { rootStore } from '@/store';
 import uploadS3 from '@/blog/api/uploadS3';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const EPOCH_EDITOR_TIME = 2000;
 
@@ -44,6 +46,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
 
     const title = watch('title');
     const router = useRouter();
+    const searchParams = useSearchParams();
     const [categories, setCategories] = useState<CategoryDepthVO[]>([]);
     const [currentCategoryId, setCurrentCategoryId] = useState(1);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -200,7 +203,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
 
     useEffect(() => {
         if (mode === 'edit') {
-            const id = parseInt(router.query.id as string, 10);
+            const id = parseInt(searchParams?.get('id') as string, 10);
 
             /**
              * 새로 작성된 글을 불러오지 못하는 현상이 있다.
