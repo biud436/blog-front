@@ -78,7 +78,7 @@ export async function generateMetadata(
     };
 }
 
-export async function getPost(id: string) {
+async function getPost(id: string) {
     const headersList = headers();
     const cookieStore = cookies();
     const cookie = headersList.getSetCookie();
