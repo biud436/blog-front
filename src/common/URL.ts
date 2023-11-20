@@ -1,7 +1,7 @@
 export const URL_MAP = {
     MAIN: '/',
     LOGIN: '/login',
-    POST_EDIT: '/edit',
+    POST_EDIT: '/edit2',
     POSTS: '/post',
     MANAGE: '/manage',
     ADMIN_CATEGORY: '/manage/category',
