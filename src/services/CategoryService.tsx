@@ -1,3 +1,5 @@
+'use client';
+
 import { observer } from 'mobx-react-lite';
 import React, { createContext, ReactNode, useState } from 'react';
 import { CategoryDepthVO } from '../models/CategoryDepthVO';

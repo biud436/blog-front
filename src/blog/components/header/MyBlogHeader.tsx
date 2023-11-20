@@ -12,10 +12,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 import { HeaderIconButton } from './HeaderIconButton';
 import { menuStore } from '@/store';
+import { useRouter } from 'next/navigation';
 
 const HeaderStyleGuard = styled.div``;
 
-export function MyBlogHeader({ router }: { router: NextRouter }) {
+export function MyBlogHeader() {
+    const router = useRouter();
+
     return (
         <HeaderStyleGuard>
             <Grid

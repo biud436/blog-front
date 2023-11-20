@@ -1,15 +1,16 @@
+'use client';
+
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useAuth } from '@/blog/providers/auth/authProvider';
 import { LoginButton } from '../category/LoginButton';
 import { LogoutButton } from '../category/LogoutButton';
 import { RequestHandler } from '../../api/axios';
-import { useRouter } from 'next/router';
 import { ManageButton } from '@/blog/components/category/ManageButton';
 
 export function LoginGuard() {
     const auth = useAuth();
-    const router = useRouter();
+
     const [, setIsLoggedIn] = React.useState(false);
     const [isAuthorized, setIsAuthorized] = React.useState(false);
 
@@ -49,7 +50,7 @@ export function LoginGuard() {
                 </>
             ) : (
                 <>
-                    <LoginButton router={router} />
+                    <LoginButton />
                 </>
             )}
         </>

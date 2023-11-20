@@ -26,7 +26,6 @@ import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 import { useCategoryService } from '@/hooks/services/useCategoryService';
-import { useRouter } from 'next/router';
 import { SearchComponent } from './SearchComponent';
 import { DateUtil, Formatter } from '@/blog/api/date';
 import LockIcon from '@mui/icons-material/Lock';
@@ -35,6 +34,7 @@ import useSWR, { mutate } from 'swr';
 import { BlogServerResponse } from '@/models/BlogServerResponse';
 import { PostEntity } from '@/models/PostEntity';
 import { BlogLoading } from './BlogLoading';
+import { useRouter } from 'next/navigation';
 
 export const SearchBox = SearchBuilder<PostsSearchType>(postsStore);
 
@@ -107,10 +107,12 @@ export const PostsPresent = observer(() => {
     const goToPage = (post: PostEntity) => {
         const postId = post.id;
         if (post.isPrivate) {
-            router.push(`/secret/[id]`, `/secret/${postId}`);
+            // router.push(`/secret/[id]`, `/secret/${postId}`);
+            router.push(`/secret/${postId}`);
             return;
         }
-        router.push(`/posts/[id]`, `/posts/${postId}`);
+        // router.push(`/posts/[id]`, `/posts/${postId}`);
+        router.push(`/posts/${postId}`);
     };
 
     if (isLoading) {

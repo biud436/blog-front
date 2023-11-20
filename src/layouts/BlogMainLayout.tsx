@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { useEffect, useCallback, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
@@ -9,13 +11,13 @@ import { useCategoryService } from '@/hooks/services/useCategoryService';
 import { observer } from 'mobx-react-lite';
 import { useMediaQuery } from 'react-responsive';
 import { menuStore } from '@/store/';
-import { useRouter } from 'next/router';
 import { MyBlogHeader } from '../blog/components/header/MyBlogHeader';
 import { MobileNav } from '../blog/components/menu/MobileNav';
 import { MobileHamburger } from '../blog/components/menu/MobileHamburger';
 import { MyBlogContentContainer } from '../blog/components/menu/MyBlogContentContainer';
 import { MyBlogContentConsumer } from '../blog/components/menu/MyBlogContentConsumer';
 import { useCategoryTree } from '@/hooks/api/useCategoryTree';
+import { useRouter } from 'next/navigation';
 
 export const MainLayout = observer(
     ({ name, children }: { name: string; children: React.ReactNode }) => {
@@ -94,7 +96,7 @@ export const MainLayout = observer(
                     }}
                 />
                 <MyBlogContentContainer>
-                    <MyBlogHeader router={router} />
+                    <MyBlogHeader />
                     <MyBlogContentConsumer
                         {...{
                             categoryList,

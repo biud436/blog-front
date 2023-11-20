@@ -1,15 +1,22 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+'use client';
+
 import { MainLayout } from '@/layouts/BlogMainLayout';
 import { URL_MAP } from '@/common/URL';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { PostPresent } from '../../components/post/PostPresent';
-import { useRouter } from 'next/router';
-import { PostsProps } from '@/pages/posts/[id]';
 import { Meta } from '@/blog/components/utils/Meta';
 import { GlobalStyle } from '@/styles/global-styles';
 import { PostServiceProvider } from '@/services/PostService';
+import { useRouter } from 'next/navigation';
+
+export interface PostsProps {
+    post: any;
+    error: any;
+    id: string;
+}
 
 export const PostPage = observer(({ post, error, id: postId }: PostsProps) => {
     const router = useRouter();

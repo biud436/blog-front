@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { Post } from '@/models/Post';
 import { Grid } from '@mui/material';
@@ -22,10 +23,8 @@ const Viewer = dynamic(
 
 export function PostContent({ post }: { post: Post }) {
     return (
-        <>
-            <Grid item xs={12}>
-                <Viewer content={post.content} />
-            </Grid>
-        </>
+        <Grid item xs={12}>
+            <Viewer content={post.content} />
+        </Grid>
     );
 }

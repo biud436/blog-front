@@ -1,3 +1,5 @@
+'use client';
+
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
 import { useEffect } from 'react';
@@ -7,7 +9,6 @@ import { useAuth } from '@/blog/providers/auth/authProvider';
 import { toast, ToastContainer } from 'react-toastify';
 import { Box, Button, Stack, ThemeProvider, Typography } from '@mui/material';
 import { URL_MAP } from '@/common/URL';
-import { useRouter } from 'next/router';
 import { Meta } from '@/blog/components/utils/Meta';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -23,6 +24,7 @@ import { useThemeStore } from '@/hooks/useThemeStore';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import styled from 'styled-components';
 import { UserPayload } from '@/models/UserPayload';
+import { useRouter } from 'next/navigation';
 
 export interface LoginFormProps {
     username: string;

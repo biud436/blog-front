@@ -11,15 +11,10 @@ const withMDX = require('@next/mdx')({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = withMDX({
-    reactStrictMode: true,
+    // reactStrictMode: true,
     swcMinify: true,
     async redirects() {
         return [
-            {
-                source: '/login',
-                destination: '/',
-                permanent: true,
-            },
             {
                 source: '/edit',
                 destination: '/',
@@ -42,9 +37,9 @@ const nextConfig = withMDX({
             },
         ];
     },
-    publicRuntimeConfig: {
-        backendUrl: process.env.NEXT_PUBLIC_SERVER_URL,
-    },
+    // publicRuntimeConfig: {
+    //     backendUrl: process.env.NEXT_PUBLIC_SERVER_URL,
+    // },
     crossOrigin: 'anonymous',
     output: 'standalone',
     pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],

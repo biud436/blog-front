@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Editor as EditorType } from '@/libs/tui-react-editor/';
+import { Editor as EditorType } from '@/lib/tui-react-editor';
 import { TuiEditorWithForwardedProps } from './TUIEditorWrapper';
 import React, { ComponentClass } from 'react';
 

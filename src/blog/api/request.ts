@@ -1,9 +1,9 @@
 import { IRequestHandler } from '@/types/IRequest';
-import getConfig from 'next/config';
+// import getConfig from 'next/config';
 
-const { publicRuntimeConfig: config } = getConfig();
+// const { publicRuntimeConfig: config } = getConfig();
 
-export const API_URL = config.backendUrl;
+export const API_URL = process.env.NEXT_PUBLIC_SERVER_URL;
 
 export type HttpRawHeader = Record<string, string>;
 export interface ICacheControl {
