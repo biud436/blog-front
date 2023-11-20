@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 'use client';
 
@@ -38,21 +40,5 @@ export const PostPage = observer(({ post, error, id: postId }: PostsProps) => {
         }
     };
 
-    return (
-        <PostServiceProvider>
-            <MainLayout name={post.title}>
-                <Meta
-                    {...{
-                        title: post.title,
-                        description: post.previewContent!,
-                        url: `https://blog.biud436.com/posts/${postId}`,
-                        image: post.thumbnail,
-                        nickname: post?.user?.profile?.nickname,
-                    }}
-                />
-                <GlobalStyle />
-                <PostPresent post={post} goBack={goBack} />
-            </MainLayout>
-        </PostServiceProvider>
-    );
+    return <PostPresent post={post} goBack={goBack} />;
 });

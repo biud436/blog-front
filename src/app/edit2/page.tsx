@@ -1,10 +1,12 @@
+'use client';
+
 import React from 'react';
 import { PostEditorContainer } from '@/containers/PostEditorContainer';
-import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 
 export default function Editor() {
-    const router = useRouter();
-    const { mode } = router.query;
+    const searchParams = useSearchParams();
+    const mode = searchParams?.get('mode');
 
     return <PostEditorContainer editorMode={mode as string} />;
 }

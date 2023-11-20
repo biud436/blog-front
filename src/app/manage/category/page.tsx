@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { CategoryTreeEditorContainer } from '@/blog/components/manage/category/CategoryTreeEditorContainer';
 import { ManageLayout } from '@/layouts/ManageLayout';

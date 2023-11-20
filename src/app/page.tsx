@@ -1,11 +1,11 @@
-'use client';
-
 import React from 'react';
 import { PostsPage } from '@/blog/pages/posts';
-import { observer } from 'mobx-react-lite';
 
-const MyMain = observer(() => {
+export const metadata = {
+    title: '어진석의 블로그',
+    description: '블로그',
+};
+
+export default function MyMain() {
     return <PostsPage />;
-});
-
-export default MyMain;
+}

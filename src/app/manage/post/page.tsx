@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useRef } from 'react';
 import {
     Box,
@@ -16,12 +18,11 @@ import {
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { ManageLayout } from '@/layouts/ManageLayout';
-import { useRouter } from 'next/router';
 import { useAdminPost } from '@/hooks/api/useAdminPost';
-import MyBlogError from '@/pages/_error';
 import { postsStore } from '@/store';
 import { SelectInputProps } from '@mui/material/Select/SelectInput';
 import Swal from 'sweetalert2';
+import { notFound, useRouter } from 'next/navigation';
 
 const theme = createTheme({
     palette: {},
@@ -75,7 +76,7 @@ const ManagePost = observer(() => {
     }, []);
 
     if (error) {
-        return <MyBlogError />;
+        return notFound();
     }
 
     return (
