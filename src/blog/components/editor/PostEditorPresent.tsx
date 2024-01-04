@@ -34,7 +34,6 @@ import { ImageCompressionService } from '@/services/ImageCompressionService';
 import { rootStore } from '@/store';
 import uploadS3 from '@/blog/api/uploadS3';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { revalidateTag } from 'next/cache';
 
 const EPOCH_EDITOR_TIME = 2000;
 
@@ -290,7 +289,6 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
                     categories={categories}
                 />
             </Grid>
-            {/* <TempPostBox /> */}
             <Grid item xs={12} lg={12} sm={12}>
                 <PostTuiEditor
                     toolbarItems={toolbarItems}
