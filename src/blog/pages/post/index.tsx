@@ -9,7 +9,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { PostPresent } from '../../components/post/PostPresent';
-import { Meta } from '@/blog/components/utils/Meta';
+import { Meta } from '@/blog/components/common/utils/Meta';
 import { GlobalStyle } from '@/styles/global-styles';
 import { PostServiceProvider } from '@/services/PostService';
 import { useRouter } from 'next/navigation';

@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite';
 import { PostsContainer } from '../../../containers/PostsContainer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Meta } from '@/blog/components/utils/Meta';
+import { Meta } from '@/blog/components/common/utils/Meta';
 import { GlobalStyle } from '@/styles/global-styles';
 
 export const PostsPage = observer(() => {

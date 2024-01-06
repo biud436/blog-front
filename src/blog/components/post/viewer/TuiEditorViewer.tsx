@@ -20,13 +20,12 @@ import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
 import '@toast-ui/editor/dist/i18n/ko-kr';
-import { ForwardedScrollProgressBar } from '../atomic/ScrollProgressBar';
+import { ForwardedScrollProgressBar } from '../../common/atomic/ScrollProgressBar';
 import { useEffect, useMemo, useRef } from 'react';
 import styled from 'styled-components';
 import * as React from 'react';
 import { useCallback } from 'react';
 import { HeadingElementWrapper } from './HeadingElementWrapper';
-
 
 declare var Prism: any;
 

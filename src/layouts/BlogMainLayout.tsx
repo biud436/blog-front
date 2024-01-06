@@ -11,11 +11,11 @@ import { useCategoryService } from '@/hooks/services/useCategoryService';
 import { observer } from 'mobx-react-lite';
 import { useMediaQuery } from 'react-responsive';
 import { menuStore } from '@/store/';
-import { MyBlogHeader } from '../blog/components/header/MyBlogHeader';
-import { MobileNav } from '../blog/components/menu/MobileNav';
-import { MobileHamburger } from '../blog/components/menu/MobileHamburger';
-import { MyBlogContentContainer } from '../blog/components/menu/MyBlogContentContainer';
-import { MyBlogContentConsumer } from '../blog/components/menu/MyBlogContentConsumer';
+import { MyBlogHeader } from '../blog/components/common/header/MyBlogHeader';
+import { MobileNav } from '../blog/components/common/menu/MobileNav';
+import { MobileHamburger } from '../blog/components/common/menu/MobileHamburger';
+import { MyBlogContentContainer } from '../blog/components/common/menu/MyBlogContentContainer';
+import { MyBlogContentConsumer } from '../blog/components/common/menu/MyBlogContentConsumer';
 import { useCategoryTree } from '@/hooks/api/useCategoryTree';
 import { useRouter } from 'next/navigation';
 

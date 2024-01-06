@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import { SearchBuilder } from '@/blog/components/builder/SearchBuilder';
+import { SearchBuilder } from '@/blog/components/common/builder/SearchBuilder';
 
 import { postsStore } from '@/store';
 import { PostsSearchType } from '@/models/PostsSearchType';
@@ -107,11 +107,9 @@ export const PostsPresent = observer(() => {
     const goToPage = (post: PostEntity) => {
         const postId = post.id;
         if (post.isPrivate) {
-            // router.push(`/secret/[id]`, `/secret/${postId}`);
             router.push(`/secret/${postId}`);
             return;
         }
-        // router.push(`/posts/[id]`, `/posts/${postId}`);
         router.push(`/posts/${postId}`);
     };
 

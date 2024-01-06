@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic';
 
 const Viewer = dynamic(
     async () => {
-        const [mod] = await Promise.all([import('../viewer/TuiEditorViewer')]);
+        const [mod] = await Promise.all([import('./viewer/TuiEditorViewer')]);
 
         return mod.default;
     },

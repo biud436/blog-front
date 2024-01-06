@@ -16,7 +16,7 @@ import { ToastContainer } from 'react-toastify';
 
 import { ManageMenu } from '../blog/components/manage/ManageMenu';
 import 'react-toastify/dist/ReactToastify.css';
-import { Meta } from '@/blog/components/utils/Meta';
+import { Meta } from '@/blog/components/common/utils/Meta';
 import { useCallback, useState } from 'react';
 import { useThemeStore } from '@/hooks/useThemeStore';
 

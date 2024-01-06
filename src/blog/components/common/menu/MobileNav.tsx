@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 import { CategoryDepthVO } from '@/models/CategoryDepthVO';
 import { observer } from 'mobx-react-lite';
 import { menuStore } from '@/store/';
-import { drawerWidth } from '../menu/AppBar';
+import { drawerWidth } from './AppBar';
 import { SideMenu } from './SideMenu';
 
 export const MobileNav = observer(

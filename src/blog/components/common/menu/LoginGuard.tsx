@@ -5,8 +5,8 @@ import { useEffect } from 'react';
 import { useAuth } from '@/blog/providers/auth/authProvider';
 import { LoginButton } from '../category/LoginButton';
 import { LogoutButton } from '../category/LogoutButton';
-import { RequestHandler } from '../../api/axios';
-import { ManageButton } from '@/blog/components/category/ManageButton';
+import { RequestHandler } from '../../../api/axios';
+import { ManageButton } from '@/blog/components/common/category/ManageButton';
 
 export function LoginGuard() {
     const auth = useAuth();

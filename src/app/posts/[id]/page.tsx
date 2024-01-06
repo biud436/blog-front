@@ -5,7 +5,7 @@ import React from 'react';
 import { cookies, headers } from 'next/headers';
 import { API_URL, CacheControl } from '@/blog/api/request';
 import { Post } from '@/models/Post';
-import { ErrorBoundary } from '@/blog/components/error/ErrorBoundary';
+import { ErrorBoundary } from '@/blog/components/common/error/ErrorBoundary';
 import { PostPage } from '@/blog/pages/post';
 import { Metadata, ResolvingMetadata } from 'next';
 
