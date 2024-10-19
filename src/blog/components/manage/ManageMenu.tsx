@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Divider, Drawer, List, SxProps, Theme } from '@mui/material';
+import { Box, Drawer, List, SxProps, Theme } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { BrandLogo } from './BrandLogo';
 import { CategoryManageButton } from './category/CategoryManageButton';

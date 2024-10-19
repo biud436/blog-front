@@ -9,53 +9,57 @@ import { DrawerHeader } from '@/blog/components/common/atomic/DrawerHeader';
 import { CategoryDepthVO } from '@/models/CategoryDepthVO';
 import { CategoryWrapper } from '../category/CategoryWrapper';
 import { LoginGuard } from './LoginGuard';
-import { Box } from '@mui/material';
+import { useAuthorized } from '@/hooks/server/useAuthorized';
+
+interface SideMenuProps {
+  handleDrawerClose: () => void;
+  theme: any;
+  categoryList: CategoryDepthVO[];
+  setCategoryList: React.Dispatch<React.SetStateAction<CategoryDepthVO[]>>;
+  toggleDrawer: (
+    open: boolean,
+  ) => (event: React.KeyboardEvent | React.MouseEvent) => void;
+  router: any;
+  rootCategory: CategoryDepthVO | undefined;
+}
 
 export function SideMenu({
-    handleDrawerClose,
-    theme,
-    categoryList,
-    setCategoryList,
-    toggleDrawer,
-    router,
-    rootCategory,
-}: {
-    handleDrawerClose: () => void;
-    theme: any;
-    categoryList: CategoryDepthVO[];
-    setCategoryList: React.Dispatch<React.SetStateAction<CategoryDepthVO[]>>;
-    toggleDrawer: (
-        open: boolean,
-    ) => (event: React.KeyboardEvent | React.MouseEvent) => void;
-    router: any;
-    rootCategory: CategoryDepthVO | undefined;
-}) {
-    return (
-        <>
-            <DrawerHeader>
-                <IconButton onClick={handleDrawerClose}>
-                    {theme.direction === 'ltr' ? (
-                        <ChevronLeftIcon />
-                    ) : (
-                        <ChevronRightIcon />
-                    )}
-                </IconButton>
-            </DrawerHeader>
-            <Divider />
-            <List component="nav">
-                <CategoryWrapper
-                    {...{
-                        categoryList,
-                        setCategoryList,
-                        toggleDrawer,
-                        router,
-                        rootCategory,
-                    }}
-                />
-                <Divider />
-                <LoginGuard />
-            </List>
-            <Divider />
-        </>
-    );
+  handleDrawerClose,
+  theme,
+  categoryList,
+  setCategoryList,
+  toggleDrawer,
+  router,
+  rootCategory,
+}: SideMenuProps) {
+  const { isAuthorized } = useAuthorized();
+
+  return (
+    <>
+      <DrawerHeader>
+        <IconButton onClick={handleDrawerClose}>
+          {theme.direction === 'ltr' ? (
+            <ChevronLeftIcon />
+          ) : (
+            <ChevronRightIcon />
+          )}
+        </IconButton>
+      </DrawerHeader>
+      <Divider />
+      <List component="nav">
+        <CategoryWrapper
+          {...{
+            categoryList,
+            setCategoryList,
+            toggleDrawer,
+            router,
+            rootCategory,
+          }}
+        />
+        <Divider />
+        <LoginGuard isAuthorized={isAuthorized} />
+      </List>
+      <Divider />
+    </>
+  );
 }

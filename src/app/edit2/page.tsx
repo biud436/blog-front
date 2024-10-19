@@ -1,12 +1,28 @@
 'use client';
 
-import React from 'react';
-import { PostEditorContainer } from '@/containers/PostEditorContainer';
-import { useSearchParams } from 'next/navigation';
+import React, { Suspense } from 'react';
+import { CircularProgress, Stack } from '@mui/material';
+import { EditorContainer } from '../../blog/components/post/editor/EditorContainer';
 
 export default function Editor() {
-    const searchParams = useSearchParams();
-    const mode = searchParams?.get('mode');
-
-    return <PostEditorContainer editorMode={mode as string} />;
+    return (
+        <Suspense
+            fallback={
+                <Stack
+                    direction={'column'}
+                    sx={{
+                        width: '100%',
+                        height: '100%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                >
+                    <CircularProgress />
+                </Stack>
+            }
+        >
+            <EditorContainer />
+        </Suspense>
+    );
 }
