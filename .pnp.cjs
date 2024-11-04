@@ -118,7 +118,8 @@ const RAW_RUNTIME_STATE =
           ["typescript", "patch:typescript@npm%3A5.2.2#optional!builtin<compat/typescript>::version=5.2.2&hash=f3b441"],\
           ["uuid", "npm:8.3.2"],\
           ["web-vitals", "npm:2.1.2"],\
-          ["zod", "npm:3.23.8"]\
+          ["zod", "npm:3.23.8"],\
+          ["zustand", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:5.0.1"]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -3711,7 +3712,8 @@ const RAW_RUNTIME_STATE =
           ["typescript", "patch:typescript@npm%3A5.2.2#optional!builtin<compat/typescript>::version=5.2.2&hash=f3b441"],\
           ["uuid", "npm:8.3.2"],\
           ["web-vitals", "npm:2.1.2"],\
-          ["zod", "npm:3.23.8"]\
+          ["zod", "npm:3.23.8"],\
+          ["zustand", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:5.0.1"]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -14716,6 +14718,36 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/zod-npm-3.23.8-11c49c85b5-846fd73e1a.zip/node_modules/zod/",\
         "packageDependencies": [\
           ["zod", "npm:3.23.8"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["zustand", [\
+      ["npm:5.0.1", {\
+        "packageLocation": "./.yarn/cache/zustand-npm-5.0.1-bbf1cd61e6-9ee5b24832.zip/node_modules/zustand/",\
+        "packageDependencies": [\
+          ["zustand", "npm:5.0.1"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:5.0.1", {\
+        "packageLocation": "./.yarn/__virtual__/zustand-virtual-bcb72e8aef/0/cache/zustand-npm-5.0.1-bbf1cd61e6-9ee5b24832.zip/node_modules/zustand/",\
+        "packageDependencies": [\
+          ["zustand", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:5.0.1"],\
+          ["@types/immer", null],\
+          ["@types/react", "npm:18.2.18"],\
+          ["@types/use-sync-external-store", null],\
+          ["immer", null],\
+          ["react", "npm:18.2.0"],\
+          ["use-sync-external-store", null]\
+        ],\
+        "packagePeers": [\
+          "@types/immer",\
+          "@types/react",\
+          "@types/use-sync-external-store",\
+          "immer",\
+          "react",\
+          "use-sync-external-store"\
         ],\
         "linkType": "HARD"\
       }]\
