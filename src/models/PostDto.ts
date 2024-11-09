@@ -1,22 +1,25 @@
+import { z } from 'zod';
 import { PostImage } from './PostImage';
 
-export class PostDto {
-    id!: number;
-    title!: string;
-    content!: string;
-    uploadDate!: string;
-    user!: {
-        username: string;
-        profile: {
-            nickname: string;
-        };
-    };
-    category!: {
-        name: string;
-    };
-    viewCount!: {
-        count: number;
-    };
-    images!: PostImage[];
-    isPrivate?: boolean | undefined;
-}
+export const PostDtoSchema = z.object({
+  id: z.number(),
+  title: z.string(),
+  content: z.string(),
+  uploadDate: z.string(),
+  user: z.object({
+    username: z.string(),
+    profile: z.object({
+      nickname: z.string(),
+    }),
+  }),
+  category: z.object({
+    name: z.string(),
+  }),
+  viewCount: z.object({
+    count: z.number(),
+  }),
+  images: z.array(z.custom<PostImage>()),
+  isPrivate: z.boolean().optional(),
+});
+
+export type PostDto = z.infer<typeof PostDtoSchema>;

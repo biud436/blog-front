@@ -1,23 +1,26 @@
-import { IPostImage } from './IPostImage';
+import { z } from 'zod';
+import { IPostImageSchema } from './IPostImage';
 
-export interface Post {
-    id: number;
-    title: string;
-    content: string;
-    uploadDate: string;
-    user: {
-        username: string;
-        profile: {
-            nickname: string;
-        };
-    };
-    category: {
-        name: string;
-    };
-    viewCount: {
-        count: number;
-    };
-    images: IPostImage[];
-    thumbnail?: string;
-    previewContent?: string;
-}
+export const PostSchema = z.object({
+  id: z.number(),
+  title: z.string(),
+  content: z.string(),
+  uploadDate: z.string(),
+  user: z.object({
+    username: z.string(),
+    profile: z.object({
+      nickname: z.string(),
+    }),
+  }),
+  category: z.object({
+    name: z.string(),
+  }),
+  viewCount: z.object({
+    count: z.number(),
+  }),
+  images: z.array(IPostImageSchema),
+  thumbnail: z.string().optional(),
+  previewContent: z.string().optional(),
+});
+
+export type Post = z.infer<typeof PostSchema>;

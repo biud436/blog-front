@@ -1,11 +1,15 @@
-export interface IPostImage {
-    readonly id: number;
-    readonly originalname: string;
-    readonly encoding: string;
-    readonly mimetype: string;
-    readonly destination: string;
-    readonly filename: string;
-    readonly path: string;
-    readonly size: number;
-    readonly postId: number;
-}
+import { z } from 'zod';
+
+export const IPostImageSchema = z.object({
+  id: z.number(),
+  originalname: z.string(),
+  encoding: z.string(),
+  mimetype: z.string(),
+  destination: z.string(),
+  filename: z.string(),
+  path: z.string(),
+  size: z.number(),
+  postId: z.number(),
+});
+
+export type IPostImage = z.infer<typeof IPostImageSchema>;

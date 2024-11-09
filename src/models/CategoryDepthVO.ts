@@ -1,15 +1,15 @@
-export interface CategoryDepthVO {
-    left: number;
-    right: number;
-    name: string;
-    depth: number;
+import { z } from 'zod';
 
-    /**
-     * category id
-     */
-    id: number;
+export const CategoryDepthVOSchema = z.lazy(() =>
+  z.object({
+    left: z.number(),
+    right: z.number(),
+    name: z.string(),
+    depth: z.number(),
+    id: z.number(),
+    open: z.boolean(),
+    children: z.array(CategoryDepthVOSchema),
+  }),
+);
 
-    open: boolean;
-
-    children: CategoryDepthVO[];
-}
+export type CategoryDepthVO = z.infer<typeof CategoryDepthVOSchema>;
