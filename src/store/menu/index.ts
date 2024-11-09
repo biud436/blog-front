@@ -1,34 +1,27 @@
-import { makeAutoObservable } from 'mobx';
-import { makePersistable } from 'mobx-persist-store';
+import { create } from 'zustand';
 
-export class MenuStore {
-    isOpen = false;
+interface MenuState {
+  isOpen: boolean;
 
-    constructor() {
-        makeAutoObservable(this);
-
-        if (typeof window !== 'undefined') {
-            makePersistable(this, {
-                name: 'MenuStore',
-                properties: ['isOpen'],
-                storage: window.localStorage,
-            });
-        }
-    }
-
-    toggle() {
-        this.isOpen = !this.isOpen;
-    }
-
-    close() {
-        this.isOpen = false;
-    }
-
-    open() {
-        this.isOpen = true;
-    }
-
-    setOpen(isOpen: boolean) {
-        this.isOpen = isOpen;
-    }
+  toogle: () => void;
+  close: () => void;
+  open: () => void;
+  setOpen: (isOpen: boolean) => void;
 }
+
+export const useMenuStore = create<MenuState>()((set, get) => ({
+  isOpen: false,
+
+  toogle: () => {
+    set({ isOpen: !get().isOpen });
+  },
+  close: () => {
+    set({ isOpen: false });
+  },
+  open: () => {
+    set({ isOpen: true });
+  },
+  setOpen: (isOpen: boolean) => {
+    set({ isOpen });
+  },
+}));

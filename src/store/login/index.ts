@@ -1,12 +1,15 @@
-import { makeAutoObservable } from 'mobx';
+import { create } from 'zustand';
 
-export class LoginDataStore {
-    username = '';
-    passowrd = '';
-    showPasssword = false;
-    loggedIn = true;
-
-    constructor() {
-        makeAutoObservable(this);
-    }
+interface LoginDataState {
+  username: string;
+  password: string;
+  showPassword: boolean;
+  loggedIn: boolean;
 }
+
+export const useLoginDataStore = create<LoginDataState>(() => ({
+  username: '',
+  password: '',
+  showPassword: false,
+  loggedIn: false,
+}));

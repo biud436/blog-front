@@ -1,141 +1,140 @@
+import { create } from 'zustand';
 import { CategoryItemId } from '@/services/CategoryService';
-import { makeAutoObservable } from 'mobx';
 import { BaseDataListDto } from '../../models/BaseDataListDto';
+import { PostDto } from '../../models/PostDto';
+import { PostsSearchType } from '../../models/PostsSearchType';
 import { Paginable } from '../../models/Paginable';
 import { Searchable } from '../../models/Searchable';
-import { PostsSearchType } from '../../models/PostsSearchType';
-import { PostDto } from '../../models/PostDto';
 
-export class PostsStore implements Searchable<PostsSearchType>, Paginable {
-    list: BaseDataListDto = {
-        currentPage: 1,
-        totalCount: 0,
-        maxPage: 0,
-        currentBlock: 1,
-        maxBlock: 0,
-    };
+interface PostsState extends Searchable<PostsSearchType>, Paginable {
+  // State
+  list: BaseDataListDto;
+  entities: PostDto[] | undefined;
+  search: {
+    type: PostsSearchType | undefined;
+    query: string | undefined;
+  };
+  categories: Record<string, string> | undefined;
+  modalEntity: PostDto | undefined;
+  isOpenModal: boolean;
+  defaultCategory: string;
+  pageSize: number;
+  currentCategoryId: CategoryItemId;
+  _isSearchMode: boolean;
 
-    entities: PostDto[] | undefined;
-    search: {
-        type: PostsSearchType | undefined;
-        query: string | undefined;
-    } = {
+  // Actions
+  setPageNumber: (pageNumber: number) => void;
+  getPageNumber: () => number;
+  setPageSize: (pageSize: number) => void;
+  getPageSize: () => number;
+  setPagination: (pagination: BaseDataListDto) => void;
+  getPagination: () => BaseDataListDto;
+  setEntities: (entities: PostDto[]) => void;
+  getEntities: () => PostDto[] | undefined;
+  setSearchType: (searchType: PostsSearchType) => void;
+  setSearchQuery: (searchQuery: string) => void;
+  getSearchType: () => PostsSearchType | undefined;
+  getSearchQuery: () => string | undefined;
+  clearSearch: () => void;
+  setSearchMode: (isSearchMode: boolean) => void;
+  isSearchMode: () => boolean;
+  setOpenModal: (isOpenModal: boolean) => void;
+  setModalEntity: (modalEntity: PostDto) => void;
+  getModalEntity: () => PostDto | undefined;
+  getSearchCategories: () => Record<string, string> | undefined;
+  getDefaultCategory: () => string;
+  setCurrentCategoryId: (categoryId: CategoryItemId) => void;
+  getCurrentCategoryId: () => CategoryItemId;
+}
+
+const usePostsStore = create<PostsState>((set, get) => ({
+  // Initial State
+  list: {
+    currentPage: 1,
+    totalCount: 0,
+    maxPage: 0,
+    currentBlock: 1,
+    maxBlock: 0,
+  },
+  entities: undefined,
+  search: {
+    type: 'content',
+    query: '',
+  },
+  categories: {
+    content: '내용',
+    title: '제목',
+  },
+  modalEntity: undefined,
+  isOpenModal: false,
+  defaultCategory: 'content',
+  pageSize: 10,
+  currentCategoryId: 1,
+  _isSearchMode: false,
+
+  // Actions
+  setPageNumber: pageNumber =>
+    set(state => ({
+      list: { ...state.list, currentPage: pageNumber },
+    })),
+
+  getPageNumber: () => get().list.currentPage,
+
+  setPageSize: pageSize => set({ pageSize }),
+
+  getPageSize: () => get().pageSize,
+
+  setPagination: pagination => set({ list: pagination }),
+
+  getPagination: () => get().list,
+
+  setEntities: entities => set({ entities }),
+
+  getEntities: () => get().entities,
+
+  setSearchType: searchType =>
+    set(state => ({
+      search: { ...state.search, type: searchType },
+    })),
+
+  setSearchQuery: searchQuery =>
+    set(state => ({
+      search: { ...state.search, query: searchQuery },
+    })),
+
+  getSearchType: () => get().search.type,
+
+  getSearchQuery: () => get().search.query,
+
+  clearSearch: () =>
+    set({
+      search: {
         type: 'content',
         query: '',
-    };
+      },
+    }),
 
-    categories: Record<string, string> | undefined = {
-        content: '내용',
-        title: '제목',
-    };
-    modalEntity: PostDto | undefined;
+  setSearchMode: isSearchMode => set({ _isSearchMode: isSearchMode }),
 
-    isOpenModal = false;
-    defaultCategory = 'content';
+  isSearchMode: () => get()._isSearchMode,
 
-    pageSize = 10;
+  setOpenModal: isOpenModal =>
+    set(state => ({
+      isOpenModal,
+      modalEntity: !isOpenModal ? undefined : state.modalEntity,
+    })),
 
-    /**
-     * 현재 카테고리 ID
-     */
-    currentCategoryId: CategoryItemId = 1;
+  setModalEntity: modalEntity => set({ modalEntity }),
 
-    private _isSearchMode = false;
+  getModalEntity: () => get().modalEntity,
 
-    constructor() {
-        makeAutoObservable(this);
-    }
+  getSearchCategories: () => get().categories,
 
-    setPageNumber(pageNumber: number) {
-        this.list.currentPage = pageNumber;
-    }
+  getDefaultCategory: () => get().defaultCategory,
 
-    getPageNumber() {
-        return this.list.currentPage;
-    }
+  setCurrentCategoryId: categoryId => set({ currentCategoryId: categoryId }),
 
-    setPageSize(pageSize: number) {
-        this.pageSize = pageSize;
-    }
+  getCurrentCategoryId: () => get().currentCategoryId,
+}));
 
-    getPageSize() {
-        return this.pageSize;
-    }
-
-    setPagination(pagination: BaseDataListDto) {
-        this.list = pagination;
-    }
-
-    getPagination() {
-        return this.list;
-    }
-
-    setEntities(entities: PostDto[]) {
-        this.entities = entities;
-    }
-
-    getEntities() {
-        return this.entities;
-    }
-
-    setSearchType(searchType: PostsSearchType): void {
-        this.search.type = searchType;
-    }
-
-    setSearchQuery(searchQuery: string): void {
-        this.search.query = searchQuery;
-    }
-
-    getSearchType() {
-        return this.search.type;
-    }
-
-    getSearchQuery() {
-        return this.search.query;
-    }
-
-    clearSearch(): void {
-        this.search.type = 'content';
-        this.search.query = '';
-    }
-
-    setSearchMode(isSearchMode: boolean): void {
-        this._isSearchMode = isSearchMode;
-    }
-
-    isSearchMode(): boolean {
-        return this._isSearchMode;
-    }
-
-    setOpenModal(isOpenModal: boolean) {
-        this.isOpenModal = isOpenModal;
-
-        if (!isOpenModal) {
-            this.modalEntity = undefined;
-        }
-    }
-
-    setModalEntity(modalEntity: PostDto) {
-        this.modalEntity = modalEntity;
-    }
-
-    getModalEntity() {
-        return this.modalEntity;
-    }
-
-    getSearchCategories(): Record<string, string> | undefined {
-        return this.categories;
-    }
-
-    getDefaultCategory(): string {
-        return this.defaultCategory;
-    }
-
-    setCurrentCategoryId(categoryId: CategoryItemId) {
-        this.currentCategoryId = categoryId;
-    }
-
-    getCurrentCategoryId() {
-        return this.currentCategoryId;
-    }
-}
+export default usePostsStore;
