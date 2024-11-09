@@ -4,28 +4,28 @@ import React from 'react';
 import { CategoryModel } from './CategoryTypes';
 
 const styleEx: SxProps = {
-    display: 'flex',
-    alignItems: 'center',
-    mb: 1,
-    background: 'rgba(0, 0, 0, 0.02)',
-    boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.1)',
+  display: 'flex',
+  alignItems: 'center',
+  mb: 1,
+  background: 'rgba(0, 0, 0, 0.02)',
+  boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.1)',
 };
 
 export function DragPreview({
-    monitorProps,
+  monitorProps,
 }: {
-    monitorProps: DragLayerMonitorProps<CategoryModel>;
+  monitorProps: DragLayerMonitorProps<CategoryModel>;
 }) {
-    return (
-        <Grid container sx={styleEx}>
-            <Button
-                variant="text"
-                sx={{
-                    color: 'text.secondary',
-                }}
-            >
-                {monitorProps.item.text}
-            </Button>
-        </Grid>
-    );
+  return (
+    <Grid container sx={styleEx}>
+      <Button
+        variant="text"
+        sx={{
+          color: 'text.secondary',
+        }}
+      >
+        {monitorProps.item.text}
+      </Button>
+    </Grid>
+  );
 }

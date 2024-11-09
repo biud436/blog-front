@@ -3,37 +3,37 @@ import { CategoryDepthVO } from '@/models/CategoryDepthVO';
 
 export type CategoryNodeEventHandler = (id: NodeModel['id']) => void;
 export type CategoryNodeEditEventHandler = (
-    id: NodeModel['id'],
-    newCategoryName: string,
+  id: NodeModel['id'],
+  newCategoryName: string,
 ) => void;
 export type CategoryModel = {
-    id: string;
+  id: string;
 };
 export interface FreeNodeModel
-    extends NodeModel<Pick<CategoryDepthVO, 'depth'>> {
-    id: number;
-    parent: number;
+  extends NodeModel<Pick<CategoryDepthVO, 'depth'>> {
+  id: number;
+  parent: number;
 }
 export interface AddNodeFormProps {
-    categoryName: string;
-    rootNodeName: string;
+  categoryName: string;
+  rootNodeName: string;
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type CategoryTreeModel = FreeNodeModel[] | any;
 export type CategoryResultTuple = [
-    CategoryDepthVO,
-    CategoryDepthVO | null,
-    number,
+  CategoryDepthVO,
+  CategoryDepthVO | null,
+  number,
 ];
 
 export interface MoveCategoryDto {
-    /**
-     * 기존 카테고리의 ID (PK)
-     */
-    prevCategoryId?: number;
+  /**
+   * 기존 카테고리의 ID (PK)
+   */
+  prevCategoryId?: number;
 
-    /**
-     * 이동할 곳의 부모 카테고리의 ID (PK)
-     */
-    newCategoryParentId: number;
+  /**
+   * 이동할 곳의 부모 카테고리의 ID (PK)
+   */
+  newCategoryParentId: number;
 }

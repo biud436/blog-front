@@ -8,22 +8,22 @@ import AddIcon from '@mui/icons-material/Add';
 import { URL_MAP } from '@/common/URL';
 
 interface MenuPostWriteButtonProps {
-    navigate: NavigateFunction;
+  navigate: NavigateFunction;
 }
 
 export function MenuPostWriteButton({ navigate }: MenuPostWriteButtonProps) {
-    return (
-        <ListItem
-            key={'post_write_editor'}
-            disablePadding
-            onClick={() => navigate(URL_MAP.POST_EDIT)}
-        >
-            <ListItemButton>
-                <ListItemIcon>
-                    <AddIcon />
-                </ListItemIcon>
-                <ListItemText primary={'글쓰기'} />
-            </ListItemButton>
-        </ListItem>
-    );
+  return (
+    <ListItem
+      key={'post_write_editor'}
+      disablePadding
+      onClick={() => navigate(URL_MAP.POST_EDIT)}
+    >
+      <ListItemButton>
+        <ListItemIcon>
+          <AddIcon />
+        </ListItemIcon>
+        <ListItemText primary={'글쓰기'} />
+      </ListItemButton>
+    </ListItem>
+  );
 }

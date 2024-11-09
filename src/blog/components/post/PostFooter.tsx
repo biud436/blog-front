@@ -1,34 +1,22 @@
 import React from 'react';
 import { Button, Grid } from '@mui/material';
-import { usePostService } from '@/hooks/services/usePostService';
-import { toast } from 'react-toastify';
 import { Post } from '@/models/Post';
 import { useRouter } from 'next/navigation';
 import { useAuthorized } from '@/hooks/server/useAuthorized';
+import { useDeletePost } from '@/hooks/api/useDeletePost';
 
-export function PostFooter({
-  post,
-  goBack,
-}: {
+interface PostFooterProps {
   post: Post;
   goBack: () => void;
-}) {
+}
+
+export function PostFooter({ post, goBack }: PostFooterProps) {
   const router = useRouter();
   const { isAuthorized } = useAuthorized();
-  const postService = usePostService();
+  const { deletePost } = useDeletePost();
 
-  const handleDeletePost = async () => {
-    const currentPostId = post.id;
-
-    if (confirm('정말 삭제하시겠습니까?')) {
-      const res = await postService.deletePost(currentPostId);
-
-      if (res.result === 'success') {
-        router.push('/');
-      } else {
-        toast.error('삭제에 실패했습니다.');
-      }
-    }
+  const handleDeletePost = () => {
+    deletePost.mutate(post.id);
   };
 
   const handleEditPost = () => {

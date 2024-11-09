@@ -11,8 +11,9 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import { RootProvider } from '@/blog/components/common/RootProvider';
 import { ToastContainer } from 'react-toastify';
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import useThemeStore from '@/store/theme';
+import QueryProvider from '@/providers/QueryProvider';
+import { AlertModal } from '@/blog/components/common/AlertModal';
 
 const notoSansKR = Noto_Sans_KR({
   weight: '100',
@@ -20,37 +21,27 @@ const notoSansKR = Noto_Sans_KR({
   subsets: ['latin'],
 });
 
-export default function RootLayout({
-  children,
-}: {
+interface RootLayoutProps {
   children: React.ReactNode;
-}) {
-  const mainTheme = useThemeStore(state => state.getMain());
+}
 
-  const [queryClient] = React.useState(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: {
-            staleTime: 1000 * 60,
-          },
-        },
-      }),
-  );
+export default function RootLayout({ children }: RootLayoutProps) {
+  const mainTheme = useThemeStore(state => state.getMain());
 
   return (
     <html lang="en" className={notoSansKR.className}>
       <body>
-        <QueryClientProvider client={queryClient}>
+        <QueryProvider>
           <StyledJsxRegistry>
             <ThemeProvider theme={mainTheme}>
               <CssBaseline />
               <GlobalStyle />
               <RootProvider>{children}</RootProvider>
+              <AlertModal />
             </ThemeProvider>
             <ToastContainer />
           </StyledJsxRegistry>
-        </QueryClientProvider>
+        </QueryProvider>
       </body>
     </html>
   );

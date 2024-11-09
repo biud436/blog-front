@@ -1205,6 +1205,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-devtools@npm:5.59.20":
+  version: 5.59.20
+  resolution: "@tanstack/query-devtools@npm:5.59.20"
+  checksum: 10/0bb2995337d78910c7677f780af42cd4285b39d618cd7876e24ec16243783d4cfe9e4d067d210d5337aefaad0a21928c5e4cb30fb4c08a09521625fcfe9c14d4
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query-devtools@npm:^5.59.20":
+  version: 5.59.20
+  resolution: "@tanstack/react-query-devtools@npm:5.59.20"
+  dependencies:
+    "@tanstack/query-devtools": "npm:5.59.20"
+  peerDependencies:
+    "@tanstack/react-query": ^5.59.20
+    react: ^18 || ^19
+  checksum: 10/71cf2fa81ce1d7a7e35acd9f45a4c398272f69e8ab962c5fcf686b8bf5144ca8e8702049bad452186963b4b820703c19ba9372149fd56ec95fef5390c5d7346c
+  languageName: node
+  linkType: hard
+
 "@tanstack/react-query@npm:^5.59.20":
   version: 5.59.20
   resolution: "@tanstack/react-query@npm:5.59.20"
@@ -2743,6 +2762,7 @@ __metadata:
     "@mui/x-date-pickers": "npm:^5.0.13"
     "@next/mdx": "npm:^13.5.4"
     "@tanstack/react-query": "npm:^5.59.20"
+    "@tanstack/react-query-devtools": "npm:^5.59.20"
     "@testing-library/jest-dom": "npm:^5.17.0"
     "@testing-library/react": "npm:^14.0.0"
     "@toast-ui/editor": "npm:^3.2.2"

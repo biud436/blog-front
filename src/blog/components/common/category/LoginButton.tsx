@@ -7,22 +7,22 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useRouter } from 'next/navigation';
 
 export function LoginButton() {
-    const router = useRouter();
+  const router = useRouter();
 
-    return (
-        <ListItem
-            key={'login'}
-            disablePadding
-            onClick={() => {
-                router.push('/auth');
-            }}
-        >
-            <ListItemButton>
-                <ListItemIcon>
-                    <LogoutIcon />
-                </ListItemIcon>
-                <ListItemText primary={'로그인'} />
-            </ListItemButton>
-        </ListItem>
-    );
+  return (
+    <ListItem
+      key={'login'}
+      disablePadding
+      onClick={() => {
+        router.push('/auth');
+      }}
+    >
+      <ListItemButton>
+        <ListItemIcon>
+          <LogoutIcon />
+        </ListItemIcon>
+        <ListItemText primary={'로그인'} />
+      </ListItemButton>
+    </ListItem>
+  );
 }

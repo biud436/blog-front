@@ -9,20 +9,20 @@ import { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 
 export function ManageButton() {
-    const router = useRouter();
+  const router = useRouter();
 
-    const handleClick = useCallback(() => {
-        router.push(URL_MAP.MANAGE);
-    }, [router]);
+  const handleClick = useCallback(() => {
+    router.push(URL_MAP.MANAGE);
+  }, [router]);
 
-    return (
-        <ListItem key={'goToManagePage'} disablePadding>
-            <ListItemButton onClick={handleClick}>
-                <ListItemIcon>
-                    <SettingsIcon />
-                </ListItemIcon>
-                <ListItemText primary="관리자" />
-            </ListItemButton>
-        </ListItem>
-    );
+  return (
+    <ListItem key={'goToManagePage'} disablePadding>
+      <ListItemButton onClick={handleClick}>
+        <ListItemIcon>
+          <SettingsIcon />
+        </ListItemIcon>
+        <ListItemText primary="관리자" />
+      </ListItemButton>
+    </ListItem>
+  );
 }
