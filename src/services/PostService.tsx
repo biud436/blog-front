@@ -1,209 +1,117 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { API_URL, CacheControl } from '@/blog/api/request';
-import { PostStore } from '@/store/post';
+import { create } from 'zustand';
 import { Post } from '@/models/Post';
-import axios from 'axios';
-import { makeAutoObservable } from 'mobx';
-import { observer } from 'mobx-react-lite';
-import React, { createContext, ReactNode, useState } from 'react';
 
-export interface IPostService {
-    isSamePost(postId: number): boolean;
-    isLoadingState(): boolean;
-    isErrorState(): boolean;
-    getErrorMessage(): string;
-    setData(data: Post): void;
-    getData(): Post;
-    getNickname(): string;
-    getTitle(): string;
-    getContent(): string;
-    getCount(): number;
-    getId(): number;
-    writePost: (payload: PostContent) => Promise<any>;
-    updatePost: (postId: number, payload: PostContent) => Promise<any>;
-    deletePost(postId: number): Promise<any>;
-    getPost(postId: number): Promise<any>;
-    isFetchTempPostState(): boolean;
-    fetchTempPostState(): void;
-    flushTempPostState(): void;
-    setTempPostContent(content: TempPostContent): void;
-    getTempPostContent(): TempPostContent;
-    clearTempPostContent(): void;
-    isFetchTempPost: boolean;
-    refresh(): void;
-    getFetchCount(): number;
-}
+// State interface
+interface PostServiceState {
+  // State
+  data: Post;
+  isError: boolean;
+  isLoading: boolean;
+  errorMessage: string;
+  isFetchTempPost: boolean;
+  tempPostContent: TempPostContent;
+  fetchCount: number;
 
-export interface PostContent {
-    title: string;
-    content: string;
-    categoryId: number;
+  // Actions
+  isSamePost: (postId: number) => boolean;
+  isLoadingState: () => boolean;
+  isErrorState: () => boolean;
+  getErrorMessage: () => string;
+  setData: (data: Post) => void;
+  getData: () => Post;
+  getNickname: () => string;
+  getTitle: () => string;
+  getContent: () => string;
+  getCount: () => number;
+  getId: () => number;
+  isFetchTempPostState: () => boolean;
+  fetchTempPostState: () => void;
+  flushTempPostState: () => void;
+  setTempPostContent: (content: TempPostContent) => void;
+  getTempPostContent: () => TempPostContent;
+  clearTempPostContent: () => void;
+  refresh: () => void;
+  getFetchCount: () => number;
+  setError: (isError: boolean) => void;
+  setErrorMessage: (message: string) => void;
+  setLoading: (isLoading: boolean) => void;
 }
 
 export interface TempPostContent {
-    title: string;
-    content: string;
+  title: string;
+  content: string;
 }
 
 export interface IServerResponse {
-    message: string;
-    statusCode: number;
-    result: 'success' | 'failure';
-    data: Post | Record<string, any>;
+  message: string;
+  statusCode: number;
+  result: 'success' | 'failure';
+  data: Post | Record<string, any>;
 }
 
-export const PostContext = createContext<IPostService>(null!);
+const usePostService = create<PostServiceState>((set, get) => ({
+  // Initial state
+  data: Object.create(null),
+  isError: false,
+  isLoading: false,
+  errorMessage: '',
+  isFetchTempPost: false,
+  tempPostContent: {
+    content: '',
+    title: '',
+  },
+  fetchCount: 0,
 
-/**
- * 이 서비스는 Mobx(상태 관리)로 정의되어있습니다.
- */
-export class PostServiceImpl implements IPostService {
-    postStore: PostStore = new PostStore();
-    isError = false;
-    isLoading = false;
-    errorMessage = '';
+  // Actions
+  isSamePost: postId => get().data.id === postId,
 
-    isFetchTempPost = false;
-    tempPostContent: TempPostContent = {
+  isLoadingState: () => get().isLoading,
+
+  isErrorState: () => get().isError,
+
+  getErrorMessage: () => get().errorMessage,
+
+  setData: data => set({ data }),
+
+  getData: () => get().data,
+
+  getNickname: () => get().data?.user?.profile?.nickname ?? '',
+
+  getTitle: () => get().data?.title ?? '',
+
+  getContent: () => get().data?.content ?? '',
+
+  getCount: () => get().data?.viewCount?.count ?? 0,
+
+  getId: () => get().data.id,
+
+  isFetchTempPostState: () => get().isFetchTempPost,
+
+  fetchTempPostState: () => set({ isFetchTempPost: true }),
+
+  flushTempPostState: () => set({ isFetchTempPost: false }),
+
+  setTempPostContent: content => set({ tempPostContent: content }),
+
+  getTempPostContent: () => get().tempPostContent,
+
+  clearTempPostContent: () =>
+    set({
+      tempPostContent: {
         content: '',
         title: '',
-    };
+      },
+    }),
 
-    constructor() {
-        makeAutoObservable(this);
-    }
+  refresh: () => set(state => ({ fetchCount: state.fetchCount + 1 })),
 
-    isSamePost(postId: number): boolean {
-        return this.getData().id === postId;
-    }
+  getFetchCount: () => get().fetchCount,
 
-    isLoadingState(): boolean {
-        return this.isLoading;
-    }
+  // Helper actions
+  setError: isError => set({ isError }),
+  setErrorMessage: message => set({ errorMessage: message }),
+  setLoading: isLoading => set({ isLoading }),
+}));
 
-    isErrorState(): boolean {
-        return this.isError;
-    }
-
-    getErrorMessage(): string {
-        return this.errorMessage;
-    }
-
-    setData(data: Post): void {
-        this.postStore.setData(data);
-    }
-
-    getData(): Post {
-        return this.postStore.getData();
-    }
-
-    getNickname(): string {
-        return this.getData()?.user?.profile?.nickname ?? '';
-    }
-
-    getTitle(): string {
-        return this.getData()?.title ?? '';
-    }
-
-    getContent(): string {
-        return this.getData()?.content ?? '';
-    }
-
-    getCount(): number {
-        return this.getData().viewCount.count ?? 0;
-    }
-
-    getId(): number {
-        return this.getData().id;
-    }
-
-    isFetchTempPostState(): boolean {
-        return this.isFetchTempPost;
-    }
-
-    fetchTempPostState(): void {
-        this.isFetchTempPost = true;
-    }
-
-    flushTempPostState(): void {
-        this.isFetchTempPost = false;
-    }
-
-    getTempPostContent(): TempPostContent {
-        return this.tempPostContent;
-    }
-
-    setTempPostContent(content: TempPostContent): void {
-        this.tempPostContent = content;
-    }
-
-    clearTempPostContent(): void {
-        this.tempPostContent = {
-            content: '',
-            title: '',
-        };
-    }
-
-    async writePost(payload: PostContent): Promise<any> {
-        const res = await axios.post(`${API_URL}/posts`, payload);
-
-        return res.data;
-    }
-
-    async updatePost(postId: number, payload: PostContent): Promise<any> {
-        const res = await axios.patch(`${API_URL}/posts/${postId}`, payload, {
-            headers: {
-                ...CacheControl.NoCache,
-            },
-        });
-
-        return res.data;
-    }
-
-    async deletePost(postId: number): Promise<any> {
-        const res = await axios.delete(`${API_URL}/posts/${postId}`);
-
-        return res.data;
-    }
-
-    async getPost(postId: number): Promise<any> {
-        try {
-            const res = await axios.get(`${API_URL}/posts/${postId}`, {
-                withCredentials: true,
-            });
-
-            this.setData(res.data.data);
-        } catch (e) {
-            // empty
-        } finally {
-            this.isLoading = false;
-        }
-    }
-
-    refresh(): void {
-        this.postStore.refresh();
-    }
-
-    getFetchCount(): number {
-        return this.postStore.getFetchCount();
-    }
-}
-
-export function usePostServiceBuilder() {
-    const [postService] = useState(() => new PostServiceImpl());
-
-    return postService;
-}
-
-export const PostServiceProvider = observer(
-    ({ children }: { children: ReactNode }) => {
-        const postService = usePostServiceBuilder();
-
-        return (
-            <PostContext.Provider value={postService}>
-                {children}
-            </PostContext.Provider>
-        );
-    },
-);
+export default usePostService;

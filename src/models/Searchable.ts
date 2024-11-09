@@ -1,4 +1,4 @@
-export interface Searchable<T> {
+export interface Searchable<T extends string> {
   setSearchType(searchType: T): void;
   setSearchQuery(searchQuery: string): void;
   getSearchType(): string | undefined;

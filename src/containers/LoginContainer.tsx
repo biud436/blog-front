@@ -17,7 +17,6 @@ import {
 } from 'react-hook-form-mui';
 
 import { observer } from 'mobx-react-lite';
-import { useThemeStore } from '@/hooks/useThemeStore';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import styled from 'styled-components';
 import { UserPayload } from '@/models/UserPayload';
@@ -25,6 +24,7 @@ import { useRouter } from 'next/navigation';
 import z from 'zod';
 import { useLogin } from '@/hooks/server/useLogin';
 import { userStore } from '@/store/user/UserStore';
+import useThemeStore from '@/store/theme';
 
 export interface LoginFormProps {
   username: string;
@@ -40,7 +40,7 @@ const RedText = styled.span`
  * 로그인 페이지 메인
  */
 export const LoginContainer = observer(() => {
-  const theme = useThemeStore('login');
+  const theme = useThemeStore(state => state.getLogin());
   const formContext = useForm<LoginFormProps>({
     defaultValues: {
       username: '',
