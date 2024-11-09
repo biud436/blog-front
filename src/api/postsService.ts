@@ -1,6 +1,10 @@
 import instance from '@/blog/api/axios-new';
-import { CacheControl } from '@/blog/api/request';
+import { API_URL, CacheControl } from '@/blog/api/request';
 import { PostContent } from '@/models/PostContent';
+import axios from 'axios';
+
+axios.defaults.baseURL = API_URL;
+axios.defaults.withCredentials = true;
 
 interface UpdatePostProps {
   postId: number;
@@ -29,7 +33,7 @@ export const postsService = {
   },
 
   async getPost(postId: number) {
-    const res = await instance.get(`/posts/${postId}`, {
+    const res = await axios.get(`/posts/${postId}`, {
       withCredentials: true,
     });
 
