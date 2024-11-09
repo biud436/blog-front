@@ -2,24 +2,24 @@
 import axios from 'axios';
 
 export type AuthSwrType = {
-    METHODS: 'GET' | 'POST' | 'PATCH' | 'DELETE';
+  METHODS: 'GET' | 'POST' | 'PATCH' | 'DELETE';
 };
 export type HttpMethod = AuthSwrType['METHODS'];
 
 export const fetcher = url =>
-    axios.get(url).then(res => {
-        const result = res.data.result;
+  axios.get(url).then(res => {
+    const result = res.data.result;
 
-        if (result !== 'success') {
-            const error = {
-                message: res.data.message,
-                status: res.status,
-            };
-            throw error;
-        }
+    if (result !== 'success') {
+      const error = {
+        message: res.data.message,
+        status: res.status,
+      };
+      throw error;
+    }
 
-        return res.data;
-    });
+    return res.data;
+  });
 
 /**
  * 인증 처리를 위한 SWR
@@ -29,21 +29,21 @@ export const fetcher = url =>
  * @returns
  */
 export const fetcherWithAuth = (
-    url: string,
-    method: HttpMethod,
-    accessToken: string,
-    data?: Record<string, any> | undefined,
+  url: string,
+  method: HttpMethod,
+  accessToken: string,
+  data?: Record<string, any> | undefined,
 ) => {
-    if (method === 'GET' && data) {
-        throw new Error('GET method cannot have a body content');
-    }
+  if (method === 'GET' && data) {
+    throw new Error('GET method cannot have a body content');
+  }
 
-    return axios.request({
-        url,
-        method,
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-        data,
-    });
+  return axios.request({
+    url,
+    method,
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    data,
+  });
 };

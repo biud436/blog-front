@@ -39,4 +39,10 @@ export const postsService = {
 
     return res.data?.data;
   },
+
+  async getCategories() {
+    const res = await axios.get('/posts/categories');
+
+    return res.data.data;
+  },
 };
