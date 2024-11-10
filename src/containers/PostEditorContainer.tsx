@@ -10,7 +10,6 @@ import { Meta } from '@/blog/components/common/utils/Meta';
 import FlexibleLoading from '@/blog/components/common/FlexibleLoading';
 import { PostEditorPageHeader } from './PostEditorPageHeader';
 import { PostEditorPageDescription } from './PostEditorPageDescription';
-import { PostServiceProvider } from '@/services/PostService';
 import { useAuthorized } from '@/hooks/server/useAuthorized';
 
 export type EditMode = 'create' | 'edit';

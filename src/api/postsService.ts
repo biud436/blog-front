@@ -6,7 +6,7 @@ import axios from 'axios';
 axios.defaults.baseURL = API_URL;
 axios.defaults.withCredentials = true;
 
-interface UpdatePostProps {
+export interface UpdatePostProps {
   postId: number;
   payload: PostContent;
 }
