@@ -4,25 +4,25 @@ import ReactDOM from 'react-dom';
 import { ForcusToc } from './ForcusToc';
 
 export const HeadingElementWrapper = () => {
-    const [, setActiveId] = useState<string | null>(null);
-    const [activeComponents, setActiveComponents] = React.useState<
-        React.ReactNode[]
-    >([]);
+  const [, setActiveId] = useState<string | null>(null);
+  const [activeComponents, setActiveComponents] = React.useState<
+    React.ReactNode[]
+  >([]);
 
-    useEffect(() => {
-        const anchorItems = Array.from<HTMLAnchorElement>(
-            document.querySelectorAll('.post-heading'),
-        );
+  useEffect(() => {
+    const anchorItems = Array.from<HTMLAnchorElement>(
+      document.querySelectorAll('.post-heading'),
+    );
 
-        anchorItems.forEach(item => {
-            const portal = ReactDOM.createPortal(
-                <ForcusToc setActiveId={setActiveId} />,
-                item,
-            );
+    anchorItems.forEach(item => {
+      const portal = ReactDOM.createPortal(
+        <ForcusToc setActiveId={setActiveId} />,
+        item,
+      );
 
-            setActiveComponents(prev => [...prev, portal]);
-        });
-    }, []);
+      setActiveComponents(prev => [...prev, portal]);
+    });
+  }, []);
 
-    return <>{activeComponents}</>;
+  return <>{activeComponents}</>;
 };
