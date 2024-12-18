@@ -20,30 +20,3 @@ export const fetcher = url =>
 
     return res.data;
   });
-
-/**
- * 인증 처리를 위한 SWR
- * @param method
- * @param url
- * @param data
- * @returns
- */
-export const fetcherWithAuth = (
-  url: string,
-  method: HttpMethod,
-  accessToken: string,
-  data?: Record<string, any> | undefined,
-) => {
-  if (method === 'GET' && data) {
-    throw new Error('GET method cannot have a body content');
-  }
-
-  return axios.request({
-    url,
-    method,
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-    data,
-  });
-};
