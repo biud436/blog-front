@@ -1,8 +1,10 @@
+"use client";
+
 import { postsService } from '@/api/postsService';
 import { handleAxiosError } from '@/lib/errorInterceptor';
 import { useModalStore } from '@/store/modal/ModalStore';
 import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 /**
  * 게시글 삭제 훅

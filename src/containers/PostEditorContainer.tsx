@@ -34,9 +34,7 @@ const PostEditorPresent = dynamic(
 
 export const PostEditor = observer(({ mode }: EditPageProps) => {
   return (
-    <PostServiceProvider>
       <PostEditorPresent mode={mode} />
-    </PostServiceProvider>
   );
 });
 
