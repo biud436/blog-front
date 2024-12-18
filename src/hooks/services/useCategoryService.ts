@@ -1,17 +1,5 @@
-import {
-  CategoryService,
-  CategoryServiceContext,
-} from '@/services/CategoryService';
-import { useContext } from 'react';
+import { CategoryState, useCategoryStore } from '@/store/category';
 
-export function useCategoryService(): CategoryService {
-  const service = useContext(CategoryServiceContext);
-
-  if (service === undefined) {
-    throw new Error(
-      'useCategoryService must be used within a CategoryServiceProvider',
-    );
-  }
-
-  return service;
+export function useCategoryService(): CategoryState {
+  return useCategoryStore();
 }

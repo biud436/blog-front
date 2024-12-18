@@ -1,75 +1,27 @@
 import { UserPayload } from '@/models/UserPayload';
 import { PaletteMode } from '@mui/material';
-import { makeAutoObservable } from 'mobx';
+import { create } from 'zustand';
 
-export class UserStore {
-  user: Partial<UserPayload> = {};
-
-  isAuthorized = false;
-  isDone = false;
-
-  loginTheme: PaletteMode = 'light';
-
-  constructor() {
-    makeAutoObservable(this);
-  }
-
-  /**
-   * 사용자를 설정합니다.
-   */
-  setUser(user: Partial<UserPayload>) {
-    this.user = user;
-  }
-
-  /**
-   * 인증된 사용자를 가져옵니다.
-   */
-  getUser() {
-    return this.user;
-  }
-
-  /**
-   * 인증된 정보를 제거합니다.
-   */
-  clearUser() {
-    this.user = {};
-  }
-
-  /**
-   * 인증 여부를 설정합니다.
-   */
-  setIsAuthorized(isAuthorized: boolean) {
-    this.isAuthorized = isAuthorized;
-  }
-
-  /**
-   * 인증 함수 실행 여부를 설정합니다.
-   */
-  setIsDone(isDone: boolean) {
-    this.isDone = isDone;
-  }
-
-  /**
-   * 인증 여부를 가져옵니다.
-   */
-  getIsAuthorized() {
-    return this.isAuthorized;
-  }
-
-  /**
-   * 인증 함수 실행 여부를 가져옵니다.
-   */
-  getIsDone() {
-    return this.isDone;
-  }
-
-  setLoginTheme(mode: PaletteMode) {
-    this.loginTheme = mode;
-  }
-
-  getLoginTheme() {
-    return this.loginTheme;
-  }
+interface UserState {
+  user: Partial<UserPayload>;
+  isAuthorized: boolean;
+  isDone: boolean;
+  loginTheme: PaletteMode;
+  setUser: (user: Partial<UserPayload>) => void;
+  clearUser: () => void;
+  setIsAuthorized: (isAuthorized: boolean) => void;
+  setIsDone: (isDone: boolean) => void;
+  setLoginTheme: (mode: PaletteMode) => void;
 }
 
-export const userStore = new UserStore();
+export const useUserStore = create<UserState>((set) => ({
+  user: {},
+  isAuthorized: false,
+  isDone: false,
+  loginTheme: 'light',
+  setUser: (user) => set({ user }),
+  clearUser: () => set({ user: {} }),
+  setIsAuthorized: (isAuthorized) => set({ isAuthorized }),
+  setIsDone: (isDone) => set({ isDone }),
+  setLoginTheme: (mode) => set({ loginTheme: mode }),
+}));

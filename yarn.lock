@@ -2804,7 +2804,7 @@ __metadata:
     react: ^18.2.0
     react-dnd: ^16.0.1
     react-dom: ^18.2.0
-    react-hook-form: ^7.42.0
+    react-hook-form: ^7.54.1
     react-hook-form-mui: ^5.12.3
     react-is: ^18.2.0
     react-responsive: ^9.0.0
@@ -9552,12 +9552,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hook-form@npm:^7.42.0":
-  version: 7.42.0
-  resolution: "react-hook-form@npm:7.42.0"
+"react-hook-form@npm:^7.54.1":
+  version: 7.54.1
+  resolution: "react-hook-form@npm:7.54.1"
   peerDependencies:
-    react: ^16.8.0 || ^17 || ^18
-  checksum: 597e687671bf133c3c0bfb4b48afd59c1ac6c0ad3fcfb9db505f737d535d6fb1f2a1691296e79bed5f837124fde8eae1fe748f38a2553f2fe20ff170fe5b7e86
+    react: ^16.8.0 || ^17 || ^18 || ^19
+  checksum: a612479ca0e084d64eadc0197fe1a34c3bdb0b6a30f2646d73b5a93aa85793d1950476aa2dd2911713e18c6bd13b1641d3ccf846033aefc652cf973d2d842f87
   languageName: node
   linkType: hard
 

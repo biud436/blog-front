@@ -1,14 +1,11 @@
 'use client';
 
 import React from 'react';
-// import type { Metadata } from 'next';
 import StyledJsxRegistry from '../lib/registry';
-// These styles apply to every route in the application
 import './globals.css';
 import { Noto_Sans_KR } from 'next/font/google';
 import { GlobalStyle } from '@/styles/global-styles';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import { RootProvider } from '@/components/common/RootProvider';
 import { ToastContainer } from 'react-toastify';
 
 import useThemeStore from '@/store/theme';
@@ -36,7 +33,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <ThemeProvider theme={mainTheme}>
               <CssBaseline />
               <GlobalStyle />
-              <RootProvider>{children}</RootProvider>
+              {children}
               <AlertModal />
             </ThemeProvider>
             <ToastContainer />

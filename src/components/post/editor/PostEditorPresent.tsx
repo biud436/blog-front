@@ -29,7 +29,6 @@ import { useMediaQuery } from 'react-responsive';
 import { PostTuiEditor } from './PostTuiEditor';
 import { Controller, useForm } from 'react-hook-form';
 import { ImageCompressionService } from '@/services/ImageCompressionService';
-import { rootStore } from '@/store';
 import uploadS3 from '@/api/uploadS3';
 import { useRouter, useSearchParams } from 'next/navigation';
 import usePostService from '@/services/PostService';
@@ -37,6 +36,7 @@ import { PostContent } from '@/models/PostContent';
 import { useGetPost } from '@/hooks/api/useGetPost';
 import { useUpdatePost } from '@/hooks/api/useUpdatePost';
 import { useWritePost } from '@/hooks/api/useWritePost';
+import { useRootStore } from '@/store';
 
 const EPOCH_EDITOR_TIME = 2000;
 
@@ -46,6 +46,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
       title: '',
     },
   });
+  const rootStore = useRootStore();
 
   const title = watch('title');
   const router = useRouter();
@@ -280,7 +281,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
               label="비공개"
               checked={rootStore.isPrivate}
               onChange={(_, checked) => {
-                rootStore.isPrivate = checked;
+                rootStore.setIsPrivate(checked);
               }}
             />
           </FormGroup>

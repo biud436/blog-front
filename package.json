@@ -63,7 +63,7 @@
         "react": "^18.2.0",
         "react-dnd": "^16.0.1",
         "react-dom": "^18.2.0",
-        "react-hook-form": "^7.42.0",
+        "react-hook-form": "^7.54.1",
         "react-hook-form-mui": "^5.12.3",
         "react-is": "^18.2.0",
         "react-responsive": "^9.0.0",

@@ -1,11 +1,11 @@
-import { makeAutoObservable } from 'mobx';
+import {create} from 'zustand';
 
-export class RootStore {
-  isPrivate = false;
-
-  constructor() {
-    makeAutoObservable(this);
-  }
+interface RootState {
+  isPrivate: boolean;
+  setIsPrivate: (isPrivate: boolean) => void;
 }
 
-export const rootStore = new RootStore();
+export const useRootStore = create<RootState>((set) => ({
+  isPrivate: false,
+  setIsPrivate: (isPrivate) => set({ isPrivate }),
+}));

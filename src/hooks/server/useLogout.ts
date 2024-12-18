@@ -1,16 +1,17 @@
 import { useMutation } from '@tanstack/react-query';
 import { authService } from '../../api/authService';
 import { URL_MAP } from '../../common/URL';
-import { userStore } from '@/store/user/UserStore';
+import { useUserStore } from '@/store/user/UserStore';
 import { useRouter } from 'next/navigation';
 
 export function useLogout() {
   const router = useRouter();
+  const clearUser = useUserStore((state) => state.clearUser);
 
   const logout = useMutation({
     mutationFn: authService.logout,
     onSuccess: () => {
-      userStore.clearUser();
+      clearUser();
 
       setTimeout(() => {
         router.replace(URL_MAP.MAIN);

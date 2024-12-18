@@ -1,17 +1,18 @@
 import { useEffect, useMemo } from 'react';
 import { useProfile } from './useProfile';
-import { userStore } from '@/store/user/UserStore';
+import { useUserStore } from '@/store/user/UserStore';
 
 export function useAuthorized() {
   const { profile } = useProfile();
+  const isAuthorized = useUserStore((state) => state.isAuthorized);
 
   const memoizedIsAuthorized = useMemo(() => {
-    return userStore.getIsAuthorized();
-  }, [userStore.isAuthorized]);
+    return isAuthorized;
+  }, [isAuthorized]);
 
   useEffect(() => {
     profile.mutate(void 0);
-  }, [userStore.isAuthorized]);
+  }, [isAuthorized]);
 
   return {
     isAuthorized: memoizedIsAuthorized,

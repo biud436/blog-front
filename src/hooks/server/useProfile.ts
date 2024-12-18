@@ -1,9 +1,13 @@
 import { useMutation } from '@tanstack/react-query';
 import { authService } from '../../api/authService';
 import { toast } from 'react-toastify';
-import { userStore } from '@/store/user/UserStore';
+import { useUserStore } from '@/store/user/UserStore';
 
 export function useProfile() {
+  const setUser = useUserStore((state) => state.setUser);
+  const setIsAuthorized = useUserStore((state) => state.setIsAuthorized);
+  const setIsDone = useUserStore((state) => state.setIsDone);
+
   const profile = useMutation({
     mutationFn: authService.getProfile,
     onMutate: () => {
@@ -12,18 +16,18 @@ export function useProfile() {
         isLoading: true,
         position: 'top-center',
       });
-      userStore.setIsDone(false);
+      setIsDone(false);
     },
-    onSuccess: profile => {
-      userStore.setUser(profile);
-      userStore.setIsAuthorized(true);
+    onSuccess: (profile) => {
+      setUser(profile);
+      setIsAuthorized(true);
     },
     onError: () => {
-      userStore.setIsAuthorized(false);
+      setIsAuthorized(false);
     },
     onSettled: () => {
       toast.dismiss();
-      userStore.setIsDone(true);
+      setIsDone(true);
     },
   });
 

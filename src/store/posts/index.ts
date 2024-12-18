@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { CategoryItemId } from '@/services/CategoryService';
+import { CategoryItemId } from '@/store/category/CategoryItemId';
 import { BaseDataListDto } from '../../models/BaseDataListDto';
 import { PostDto } from '../../models/PostDto';
 import { PostsSearchType } from '../../models/PostsSearchType';
