@@ -28,7 +28,7 @@ import { useSWRConfig } from 'swr';
 import { useMediaQuery } from 'react-responsive';
 import { PostTuiEditor } from './PostTuiEditor';
 import { Controller, useForm } from 'react-hook-form';
-import { ImageCompressionService } from '@/services/ImageCompressionService';
+import { ImageCompressionUtils } from '@/lib/ImageCompressionService';
 import uploadS3 from '@/api/uploadS3';
 import { useRouter, useSearchParams } from 'next/navigation';
 import usePostService from '@/store/post/PostService';
@@ -89,7 +89,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
    * @param callback
    */
   const addImageBlobHook = (blob, callback) => {
-    ImageCompressionService.compress(blob, ImageCompressionService.options)
+    ImageCompressionUtils.compress(blob, ImageCompressionUtils.options)
       .then(compressedFile => {
         const formData = new FormData();
         formData.append('files', compressedFile);

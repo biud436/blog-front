@@ -28,7 +28,7 @@ interface Options {
     signal?: AbortSignal;
 }
 
-export const ImageCompressionService = {
+export const ImageCompressionUtils = {
     options: {
         maxSizeMB: 2,
         maxWidthOrHeight: 1920,
