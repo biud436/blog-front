@@ -5,7 +5,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { URL_MAP } from '@/common/URL';
 import Cottage from '@mui/icons-material/Cottage';
 

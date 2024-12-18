@@ -23,7 +23,6 @@ import { UserPayload } from '@/models/UserPayload';
 import { useRouter } from 'next/navigation';
 import z from 'zod';
 import { useLogin } from '@/hooks/server/useLogin';
-import { userStore } from '@/store/user/UserStore';
 import useThemeStore from '@/store/theme';
 
 export interface LoginFormProps {
