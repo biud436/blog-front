@@ -12,7 +12,7 @@ import { RootProvider } from '@/components/common/RootProvider';
 import { ToastContainer } from 'react-toastify';
 
 import useThemeStore from '@/store/theme';
-import QueryProvider from '@/providers/QueryProvider';
+import QueryProvider from '@/lib/QueryProvider';
 import { AlertModal } from '@/components/common/AlertModal';
 
 const notoSansKR = Noto_Sans_KR({
