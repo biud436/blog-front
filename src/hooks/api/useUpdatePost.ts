@@ -1,6 +1,6 @@
 import { postsService } from '@/api/postsService';
 import { handleAxiosError } from '@/lib/errorInterceptor';
-import usePostService from '@/services/PostService';
+import usePostService from '@/store/post/PostService';
 import { useMutation } from '@tanstack/react-query';
 
 export function useUpdatePost() {

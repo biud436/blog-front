@@ -31,7 +31,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { ImageCompressionService } from '@/services/ImageCompressionService';
 import uploadS3 from '@/api/uploadS3';
 import { useRouter, useSearchParams } from 'next/navigation';
-import usePostService from '@/services/PostService';
+import usePostService from '@/store/post/PostService';
 import { PostContent } from '@/models/PostContent';
 import { useGetPost } from '@/hooks/api/useGetPost';
 import { useUpdatePost } from '@/hooks/api/useUpdatePost';
