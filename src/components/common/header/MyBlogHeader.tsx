@@ -4,8 +4,8 @@ import { URL_MAP } from '@/common/URL';
 import { Box, Button, Grid } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import RssFeedIcon from '@mui/icons-material/RssFeed';
-import MetaCommonConfig from '@/blog/components/common/utils/meta-config.json';
-import { WriteButton } from '@/blog/components/common/menu/WriteButton';
+import MetaCommonConfig from '@/components/common/utils/meta-config.json';
+import { WriteButton } from '@/components/common/menu/WriteButton';
 import styled from 'styled-components';
 import MenuIcon from '@mui/icons-material/Menu';
 

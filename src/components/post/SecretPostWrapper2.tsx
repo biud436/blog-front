@@ -1,10 +1,10 @@
 'use client';
 
 import React from 'react';
-import { PostPage } from '@/blog/components/pages/post';
+import { PostPage } from '@/components/pages/post';
 import axios from 'axios';
 import useSWR from 'swr';
-import { ErrorComponent } from '@/containers/ErrorFoundPage';
+import { ErrorComponent } from '@/components/pages/ErrorFoundPage';
 
 const fetcher = (url: string) =>
   axios

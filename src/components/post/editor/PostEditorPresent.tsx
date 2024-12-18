@@ -23,7 +23,7 @@ import { PostSelectCategory } from './PostSelectCategory';
 import { PostTitleInput } from './PostTitleInput';
 import * as DOMPurify from 'dompurify';
 
-import { EditPageProps } from '@/containers/PostEditorContainer';
+import { EditPageProps } from '@/components/pages/PostEditorContainer';
 import { useSWRConfig } from 'swr';
 import { useMediaQuery } from 'react-responsive';
 import { PostTuiEditor } from './PostTuiEditor';

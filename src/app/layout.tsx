@@ -8,12 +8,12 @@ import './globals.css';
 import { Noto_Sans_KR } from 'next/font/google';
 import { GlobalStyle } from '@/styles/global-styles';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import { RootProvider } from '@/blog/components/common/RootProvider';
+import { RootProvider } from '@/components/common/RootProvider';
 import { ToastContainer } from 'react-toastify';
 
 import useThemeStore from '@/store/theme';
 import QueryProvider from '@/providers/QueryProvider';
-import { AlertModal } from '@/blog/components/common/AlertModal';
+import { AlertModal } from '@/components/common/AlertModal';
 
 const notoSansKR = Noto_Sans_KR({
   weight: '100',

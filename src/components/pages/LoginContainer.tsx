@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import { Box, Button, Stack, ThemeProvider, Typography } from '@mui/material';
 import { URL_MAP } from '@/common/URL';
-import { Meta } from '@/blog/components/common/utils/Meta';
+import { Meta } from '@/components/common/utils/Meta';
 import 'react-toastify/dist/ReactToastify.css';
 
 import {

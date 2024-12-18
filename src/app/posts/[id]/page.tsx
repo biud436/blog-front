@@ -5,8 +5,8 @@ import React from 'react';
 import { cookies, headers } from 'next/headers';
 import { API_URL, CacheControl } from '@/lib/request';
 import { Post } from '@/models/Post';
-import { ErrorBoundary } from '@/blog/components/common/error/ErrorBoundary';
-import { PostPage } from '@/blog/components/pages/post';
+import { ErrorBoundary } from '@/components/common/error/ErrorBoundary';
+import { PostPage } from '@/components/pages/post';
 import { Metadata, ResolvingMetadata } from 'next';
 
 type Props = {

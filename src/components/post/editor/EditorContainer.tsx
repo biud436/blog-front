@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { PostEditorContainer } from '@/containers/PostEditorContainer';
+import { PostEditorContainer } from '@/components/pages/PostEditorContainer';
 import { useSearchParams } from 'next/navigation';
 
 export function EditorContainer() {

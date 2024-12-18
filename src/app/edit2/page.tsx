@@ -2,7 +2,7 @@
 
 import React, { Suspense } from 'react';
 import { CircularProgress, Stack } from '@mui/material';
-import { EditorContainer } from '../../blog/components/post/editor/EditorContainer';
+import { EditorContainer } from '../../components/post/editor/EditorContainer';
 
 export default function Editor() {
     return (

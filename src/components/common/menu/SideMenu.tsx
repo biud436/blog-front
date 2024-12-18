@@ -5,7 +5,7 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { DrawerHeader } from '@/blog/components/common/atomic/DrawerHeader';
+import { DrawerHeader } from '@/components/common/atomic/DrawerHeader';
 import { CategoryDepthVO } from '@/models/CategoryDepthVO';
 import { CategoryWrapper } from '../category/CategoryWrapper';
 import { LoginGuard } from './LoginGuard';

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import SecretPostWrapper from '@/blog/components/post/SecretPostWrapper2';
+import SecretPostWrapper from '@/components/post/SecretPostWrapper2';
 import React from 'react';
 
 export interface SecretPostProps {

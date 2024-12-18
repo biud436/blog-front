@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import { Button, Box, Grid } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import NextLink from 'next/link';
-import MetaCommonConfig from '@/blog/components/common/utils/meta-config.json';
+import MetaCommonConfig from '@/components/common/utils/meta-config.json';
 
 export const MyBlogFooter = observer(() => (
   <Grid container spacing={2} sx={{}}>

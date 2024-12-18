@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
-import { DrawerHeader } from '@/blog/components/common/atomic/DrawerHeader';
+import { DrawerHeader } from '@/components/common/atomic/DrawerHeader';
 import { Grid } from '@mui/material';
 import { CategoryDepthVO } from '@/models/CategoryDepthVO';
 import { observer } from 'mobx-react-lite';

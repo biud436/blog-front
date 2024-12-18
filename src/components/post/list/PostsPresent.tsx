@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import { SearchBuilder } from '@/blog/components/common/builder/SearchBuilder';
+import { SearchBuilder } from '@/components/common/builder/SearchBuilder';
 import { PostsSearchType } from '@/models/PostsSearchType';
 
 import {

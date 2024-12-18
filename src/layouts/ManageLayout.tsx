@@ -14,15 +14,15 @@ import {
 import { observer } from 'mobx-react-lite';
 import { ToastContainer } from 'react-toastify';
 
-import { ManageMenu } from '../blog/components/manage/ManageMenu';
+import { ManageMenu } from '../components/manage/ManageMenu';
 import 'react-toastify/dist/ReactToastify.css';
-import { Meta } from '@/blog/components/common/utils/Meta';
+import { Meta } from '@/components/common/utils/Meta';
 import { useCallback, useState } from 'react';
 
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import { useMounted } from '@/hooks/useMounted';
-import { LoginGuard } from '../blog/components/manage/LoginGuard';
+import { LoginGuard } from '../components/manage/LoginGuard';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import { useRouter } from 'next/navigation';
 import useThemeStore from '@/store/theme';

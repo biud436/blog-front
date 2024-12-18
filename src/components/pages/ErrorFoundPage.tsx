@@ -2,7 +2,7 @@ import React from 'react';
 import { MainLayout } from '@/layouts/BlogMainLayout';
 import { Alert } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { Meta } from '@/blog/components/common/utils/Meta';
+import { Meta } from '@/components/common/utils/Meta';
 
 interface ErrorComponentProps {
     message: string;

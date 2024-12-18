@@ -6,8 +6,8 @@ import { useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Meta } from '@/blog/components/common/utils/Meta';
-import FlexibleLoading from '@/blog/components/common/FlexibleLoading';
+import { Meta } from '@/components/common/utils/Meta';
+import FlexibleLoading from '@/components/common/FlexibleLoading';
 import { PostEditorPageHeader } from './PostEditorPageHeader';
 import { PostEditorPageDescription } from './PostEditorPageDescription';
 import { useAuthorized } from '@/hooks/server/useAuthorized';
@@ -21,7 +21,7 @@ export interface EditPageProps {
 const PostEditorPresent = dynamic(
   async () => {
     const [mod] = await Promise.all([
-      import('../blog/components/post/editor/PostEditorPresent'),
+      import('../post/editor/PostEditorPresent'),
     ]);
 
     return mod.PostEditorPresent;

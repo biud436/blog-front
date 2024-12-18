@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { LoginButton } from '../category/LoginButton';
 import { LogoutButton } from '../category/LogoutButton';
-import { ManageButton } from '@/blog/components/common/category/ManageButton';
+import { ManageButton } from '@/components/common/category/ManageButton';
 import { useGetProfile } from '@/hooks/server/useGetProfile';
 
 interface LoginGuardProps {

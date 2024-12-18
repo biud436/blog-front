@@ -1,5 +1,5 @@
 import React from 'react';
-import { PostsPage } from '@/blog/components/pages/posts';
+import { PostsPage } from '@/components/pages/posts';
 
 export const metadata = {
     title: '어진석의 블로그',
