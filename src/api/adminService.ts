@@ -1,4 +1,4 @@
-import instance from '@/blog/api/axios-new';
+import instance from '@/lib/axios-new';
 
 interface GetCategoryTreeProps {
   isBeautify?: boolean;

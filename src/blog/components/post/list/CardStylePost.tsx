@@ -10,7 +10,7 @@ import {
   CardMedia,
   Typography,
 } from '@mui/material';
-import { DateUtil, Formatter } from '../../../api/date';
+import { DateUtil, Formatter } from '../../../../lib/date';
 import LockIcon from '@mui/icons-material/Lock';
 
 export interface CardStylePostProps {

@@ -1,4 +1,4 @@
-import { RequestHandler } from '@/blog/api/axios';
+import { RequestHandler } from '@/lib/axios';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 

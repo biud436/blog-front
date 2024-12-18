@@ -1,5 +1,5 @@
-import instance from '@/blog/api/axios-new';
-import { API_URL, CacheControl } from '@/blog/api/request';
+import instance from '@/lib/axios-new';
+import { API_URL, CacheControl } from '@/lib/request';
 import { PostContent } from '@/models/PostContent';
 import axios from 'axios';
 

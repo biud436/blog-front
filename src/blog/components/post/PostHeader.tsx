@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React from 'react';
-import { DateUtil, Formatter } from '@/blog/api/date';
+import { DateUtil, Formatter } from '@/lib/date';
 import { Post } from '@/models/Post';
 import { Avatar, Button, Divider, Grid, Typography } from '@mui/material';
 import { toast } from 'react-toastify';

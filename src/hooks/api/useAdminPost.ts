@@ -1,4 +1,4 @@
-import { API_URL } from '@/blog/api/request';
+import { API_URL } from '@/lib/request';
 import { BlogServerResponse } from '@/models/BlogServerResponse';
 import { Post } from '@/models/Post';
 import usePostsStore from '@/store/posts';

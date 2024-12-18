@@ -1,4 +1,4 @@
-import instance from '@/blog/api/axios-new';
+import instance from '@/lib/axios-new';
 import { LoginDto } from '@/models/LoginDto';
 import { LoginResponse } from '@/models/LoginResponse';
 import { ServerResponse } from '@/types/ServerResponse';

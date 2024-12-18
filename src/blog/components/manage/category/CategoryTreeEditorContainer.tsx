@@ -24,7 +24,7 @@ import { URL_MAP } from '@/common/URL';
 import { toJS } from 'mobx';
 import { CategoryDepthVO } from '@/models/CategoryDepthVO';
 import { useCategoryService } from '@/hooks/services/useCategoryService';
-import { API_URL } from '@/blog/api/request';
+import { API_URL } from '@/lib/request';
 import axios, { AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 import { CategoryAddDialog } from './CategoryAddDialog';

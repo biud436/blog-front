@@ -25,7 +25,7 @@ import { toast } from 'react-toastify';
 
 import { useCategoryService } from '@/hooks/services/useCategoryService';
 import { SearchComponent } from './SearchComponent';
-import { DateUtil, Formatter } from '@/blog/api/date';
+import { DateUtil, Formatter } from '@/lib/date';
 import LockIcon from '@mui/icons-material/Lock';
 import axios from 'axios';
 import useSWR, { mutate } from 'swr';

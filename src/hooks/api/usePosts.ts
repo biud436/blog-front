@@ -1,4 +1,4 @@
-import { API_URL } from '@/blog/api/request';
+import { API_URL } from '@/lib/request';
 import { useRef } from 'react';
 import useSWR from 'swr';
 import { fetcher } from '../useSWRUtility';

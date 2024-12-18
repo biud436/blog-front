@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { PostPage } from '@/blog/pages/post';
+import { PostPage } from '@/blog/components/pages/post';
 import axios from 'axios';
 import useSWR from 'swr';
 import { ErrorComponent } from '@/containers/ErrorFoundPage';

@@ -30,7 +30,7 @@ import { PostTuiEditor } from './PostTuiEditor';
 import { Controller, useForm } from 'react-hook-form';
 import { ImageCompressionService } from '@/services/ImageCompressionService';
 import { rootStore } from '@/store';
-import uploadS3 from '@/blog/api/uploadS3';
+import uploadS3 from '@/api/uploadS3';
 import { useRouter, useSearchParams } from 'next/navigation';
 import usePostService from '@/services/PostService';
 import { PostContent } from '@/models/PostContent';

@@ -13,7 +13,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useCallback, useEffect, useState } from 'react';
 import { CategoryDepthVO } from '@/models/CategoryDepthVO';
 import { useCategoryService } from '@/hooks/services/useCategoryService';
-import { API_URL } from '@/blog/api/request';
+import { API_URL } from '@/lib/request';
 import axios from 'axios';
 import { AddNodeFormProps } from './CategoryTypes';
 

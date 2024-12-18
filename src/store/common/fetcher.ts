@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { API_URL } from '@/blog/api/request';
+import { API_URL } from '@/lib/request';
 import axios, { AxiosInstance } from 'axios';
 import { toast } from 'react-toastify';
 
