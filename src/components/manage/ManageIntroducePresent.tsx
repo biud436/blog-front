@@ -1,5 +1,11 @@
 import React, { useMemo } from 'react';
-import { Button, Grid, Stack, Container, SxProps } from '@mui/material';
+import {
+  Button,
+  Grid2 as Grid,
+  Stack,
+  Container,
+  SxProps,
+} from '@mui/material';
 import Link from 'next/link';
 import { URL_MAP } from '@/common/URL';
 import SpeakerNotesIcon from '@mui/icons-material/SpeakerNotes';
@@ -25,7 +31,7 @@ export const ManageIntroducePresent = () => {
         }}
       >
         <Grid container>
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12 }}>
             <Stack direction={'column'} spacing={0} gap={2} m={0} p={0}>
               <Button
                 startIcon={<CategoryIcon />}

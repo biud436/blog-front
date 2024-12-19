@@ -1,4 +1,4 @@
-import { Button, Grid, Input } from '@mui/material';
+import { Button, Grid2 as Grid, Input } from '@mui/material';
 import React from 'react';
 
 export function CategoryEditSection({
@@ -16,9 +16,8 @@ export function CategoryEditSection({
 }) {
   return (
     <Grid
-      item
       gap={2}
-      xs={12}
+      size={{ xs: 12 }}
       sx={{
         display: 'flex',
 

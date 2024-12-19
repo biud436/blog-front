@@ -9,7 +9,7 @@ import {
   Checkbox,
   FormControlLabel,
   FormGroup,
-  Grid,
+  Grid2 as Grid,
 } from '@mui/material';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
@@ -260,7 +260,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
 
   return (
     <Grid container>
-      <Grid item xs={12} lg={12} md={12}>
+      <Grid size={{ xs: 12, lg: 12, md: 12 }}>
         <Controller
           name="title"
           control={control}
@@ -293,7 +293,13 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
           categories={categories}
         />
       </Grid>
-      <Grid item xs={12} lg={12} sm={12}>
+      <Grid
+        size={{
+          xs: 12,
+          sm: 12,
+          lg: 12,
+        }}
+      >
         <PostTuiEditor
           toolbarItems={toolbarItems}
           onEditorForcusWhenMount={onEditorFocusWhenMount}

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import { URL_MAP } from '@/common/URL';
-import { Box, Button, Grid } from '@mui/material';
+import { Box, Button, Grid2 as Grid } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import RssFeedIcon from '@mui/icons-material/RssFeed';
 import MetaCommonConfig from '@/components/common/utils/meta-config.json';
@@ -43,7 +43,6 @@ export function MyBlogHeader() {
         }}
       >
         <Grid
-          item
           flexGrow={0.1}
           sx={{
             display: {
@@ -86,7 +85,6 @@ export function MyBlogHeader() {
           </Typography>
         </Grid>
         <Grid
-          item
           sx={{
             display: {
               xs: 'none',

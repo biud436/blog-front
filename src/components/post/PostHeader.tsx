@@ -6,15 +6,13 @@
 import React from 'react';
 import { DateUtil, Formatter } from '@/lib/date';
 import { Post } from '@/models/Post';
-import { Avatar, Button, Divider, Grid, Typography } from '@mui/material';
-import { toast } from 'react-toastify';
+import { Avatar, Divider, Grid2 as Grid, Typography } from '@mui/material';
 
 export function PostHeader({ post }: { post: Post }) {
   return (
     <>
       <Grid
-        item
-        xs={12}
+        size={{ xs: 12 }}
         justifyContent="flex-start"
         sx={{
           display: 'flex',
@@ -30,8 +28,7 @@ export function PostHeader({ post }: { post: Post }) {
       </Grid>
 
       <Grid
-        item
-        xs={12}
+        size={{ xs: 12 }}
         display="flex"
         justifyContent="flex-start"
         alignItems={'center'}
@@ -58,7 +55,7 @@ export function PostHeader({ post }: { post: Post }) {
           {DateUtil.ToDateStringBySeoul(post?.uploadDate!, Formatter.DATETIME)}
         </Typography>
       </Grid>
-      <Grid item xs={12}>
+      <Grid size={{ xs: 12 }}>
         <Divider />
       </Grid>
     </>

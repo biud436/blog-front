@@ -8,7 +8,7 @@ import { URL_MAP } from '@/common/URL';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { PostPresent } from '../../post/PostPresent';
+import { PostContainer } from '../../post/PostContainer';
 import { useRouter } from 'next/navigation';
 
 export interface PostsProps {
@@ -37,5 +37,5 @@ export const PostPage = observer(({ post, error, id: postId }: PostsProps) => {
     }
   };
 
-  return <PostPresent post={post} goBack={goBack} />;
+  return <PostContainer post={post} goBack={goBack} />;
 });

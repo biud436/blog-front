@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
 import { DrawerHeader } from '@/components/common/atomic/DrawerHeader';
-import { Grid } from '@mui/material';
+import { Grid2 as Grid } from '@mui/material';
 import { CategoryDepthVO } from '@/models/CategoryDepthVO';
 import { observer } from 'mobx-react-lite';
 
@@ -45,12 +45,13 @@ export const MyBlogContentConsumer = observer(
       >
         <DrawerHeader />
         <Grid
-          item
-          xs={12}
-          sm={12}
-          md={12}
-          lg={9}
-          xl={9}
+          size={{
+            xs: 12,
+            sm: 12,
+            md: 12,
+            lg: 9,
+            xl: 9,
+          }}
           sx={{
             color: '#000',
             opacity: 1,

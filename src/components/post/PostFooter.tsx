@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Grid } from '@mui/material';
+import { Button, Grid2 as Grid } from '@mui/material';
 import { Post } from '@/models/Post';
 import { useRouter } from 'next/navigation';
 import { useAuthorized } from '@/hooks/server/useAuthorized';
@@ -32,7 +32,7 @@ export function PostFooter({ post, goBack }: PostFooterProps) {
       alignItems="center"
       justifyContent={'space-between'}
     >
-      <Grid item xs={8}>
+      <Grid size={{ xs: 8 }}>
         <Button variant="contained" color="primary" onClick={() => goBack()}>
           이전
         </Button>
@@ -40,8 +40,7 @@ export function PostFooter({ post, goBack }: PostFooterProps) {
       {isAuthorized && (
         <Grid container spacing={0}>
           <Grid
-            item
-            xs={12}
+            size={{ xs: 12 }}
             gap={2}
             sx={{
               display: 'flex',

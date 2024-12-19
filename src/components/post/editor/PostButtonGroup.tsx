@@ -1,5 +1,5 @@
 import { EditPageProps } from '@/components/pages/PostEditorContainer';
-import { Button, Grid } from '@mui/material';
+import { Button, Grid2 as Grid } from '@mui/material';
 import React, { useMemo } from 'react';
 
 interface PostButtonGroupProps {
@@ -18,7 +18,7 @@ export function PostButtonGroup({
   }, [mode]);
 
   return (
-    <Grid item sx={{ display: 'flex', gap: 2 }}>
+    <Grid sx={{ display: 'flex', gap: 2 }}>
       <Button
         variant="contained"
         color="primary"

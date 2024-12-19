@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { Post } from '@/models/Post';
-import { Grid } from '@mui/material';
+import { Grid2 as Grid } from '@mui/material';
 
 import dynamic from 'next/dynamic';
 
@@ -23,7 +23,7 @@ const Viewer = dynamic(
 
 export function PostContent({ post }: { post: Post }) {
   return (
-    <Grid item xs={12}>
+    <Grid size={{ xs: 12 }}>
       <Viewer content={post.content} />
     </Grid>
   );

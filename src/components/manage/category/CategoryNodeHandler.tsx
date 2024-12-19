@@ -1,4 +1,4 @@
-import { Button, Grid } from '@mui/material';
+import { Button, Grid2 as Grid } from '@mui/material';
 import { NodeModel } from '@minoru/react-dnd-treeview';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -18,8 +18,7 @@ export function CategoryNodeHandler({
 }: CategoryNodeHandlerProps): JSX.Element {
   return (
     <Grid
-      item
-      xs={1}
+      size={{ xs: 1 }}
       justifyContent="flex-end"
       display="flex"
       alignItems="center"

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Paper, Alert } from '@mui/material';
+import { Grid2 as Grid, Paper, Alert } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { MainLayout } from '@/layouts/BlogMainLayout';
 import { useEffect, useRef } from 'react';
@@ -33,9 +33,7 @@ const PostEditorPresent = dynamic(
 );
 
 export const PostEditor = observer(({ mode }: EditPageProps) => {
-  return (
-      <PostEditorPresent mode={mode} />
-  );
+  return <PostEditorPresent mode={mode} />;
 });
 
 export const PostEditorContainer = observer(
@@ -55,7 +53,7 @@ export const PostEditorContainer = observer(
             alignItems: 'center',
           }}
         >
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12 }}>
             <Alert variant="filled" severity="error">
               로그인이 필요한 서비스입니다
             </Alert>

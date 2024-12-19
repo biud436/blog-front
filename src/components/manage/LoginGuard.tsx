@@ -1,4 +1,4 @@
-import { Grid, CircularProgress } from '@mui/material';
+import { Grid2 as Grid, CircularProgress } from '@mui/material';
 import React from 'react';
 import { FAKE_CRON, useTimedEffect } from '@/hooks/useTimedEffect';
 import { useAuthorized } from '@/hooks/auth/useAuthorized';
@@ -19,8 +19,7 @@ export function LoginGuardPresent() {
       }}
     >
       <Grid
-        item
-        xs={6}
+        size={{ xs: 6 }}
         sx={{
           display: 'flex',
           flexDirection: 'column',

@@ -2,7 +2,7 @@ import {
   Button,
   ThemeProvider,
   CssBaseline,
-  Grid,
+  Grid2 as Grid,
   Box,
   Typography,
 } from '@mui/material';
@@ -328,8 +328,7 @@ export const CategoryTreeEditorContainer = observer(() => {
         <DndProvider backend={MultiBackend} options={getBackendOptions()}>
           <Grid container spacing={2}>
             <Grid
-              item
-              xs={12}
+              size={{ xs: 12 }}
               sx={{
                 mb: 2,
               }}
@@ -347,8 +346,7 @@ export const CategoryTreeEditorContainer = observer(() => {
               </Button>
             </Grid>
             <Grid
-              item
-              xs={12}
+              size={{ xs: 12 }}
               sx={{
                 p: 2,
                 m: 1,

@@ -5,7 +5,7 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  Grid,
+  Grid2 as Grid,
   Box,
   Modal,
 } from '@mui/material';
@@ -77,7 +77,7 @@ export const CategoryAddDialog = observer(
           }}
         >
           <Grid container spacing={4}>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <TextField
                 label="카테고리명"
                 variant="outlined"
@@ -88,7 +88,7 @@ export const CategoryAddDialog = observer(
                 onChange={e => setCategoryName(e.target.value)}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <FormControl
                 fullWidth
                 sx={{
@@ -117,8 +117,7 @@ export const CategoryAddDialog = observer(
               </FormControl>
             </Grid>
             <Grid
-              item
-              xs={12}
+              size={{ xs: 12 }}
               gap={2}
               sx={{
                 display: 'flex',

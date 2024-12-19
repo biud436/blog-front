@@ -5,7 +5,7 @@ import { Searchable } from '@/models/Searchable';
 import {
   Button,
   FormControl,
-  Grid,
+  Grid2 as Grid,
   InputLabel,
   MenuItem,
   Select,
@@ -41,16 +41,25 @@ export function SearchBuilder<T extends string>(
           gap={3}
         >
           <Grid
-            item
-            xs={2}
+            size={{
+              xs: 2,
+              md: 3,
+            }}
             sx={{
               width: '100%',
               '@media (max-width: 600px)': {
                 display: 'none',
               },
+              display: 'flex',
+              flexDirection: 'row',
             }}
           >
-            <FormControl sx={{ m: 1, width: '100%' }}>
+            <FormControl
+              sx={{
+                m: 1,
+                width: '100%',
+              }}
+            >
               <InputLabel id="search-option-label">검색 옵션</InputLabel>
               <Select
                 labelId="search-option-label"
@@ -72,7 +81,7 @@ export function SearchBuilder<T extends string>(
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={2} sx={{ width: '100%' }}>
+          <Grid size={{ xs: 2, md: 5 }} sx={{ width: '100%' }}>
             <FormControl sx={{ m: 1, width: '100%' }}>
               <TextField
                 label="검색 내용"
@@ -89,7 +98,7 @@ export function SearchBuilder<T extends string>(
               />
             </FormControl>
           </Grid>
-          <Grid item xs={1} sx={{ width: '100%' }}>
+          <Grid size={{ xs: 1, md: 2 }} sx={{ width: '100%' }}>
             <Button
               variant="contained"
               color="primary"

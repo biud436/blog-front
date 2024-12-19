@@ -1,4 +1,4 @@
-import { Button, Grid, Typography } from '@mui/material';
+import { Button, Grid2 as Grid, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { SxProps, Theme } from '@mui/material/styles';
 import { NodeModel } from '@minoru/react-dnd-treeview';
@@ -80,7 +80,7 @@ export const CategoryNode = observer(
       return (
         <Grid container spacing={0} sx={categoryNodeProp}>
           {!editMode && (
-            <Grid item pl={depth * 2} xs={11} onClick={handleToggle}>
+            <Grid pl={depth * 2} size={{ xs: 11 }} onClick={handleToggle}>
               <Button
                 variant="text"
                 sx={{
@@ -115,7 +115,7 @@ export const CategoryNode = observer(
     return (
       <Grid container spacing={0} sx={categoryNodeProp}>
         {!editMode && (
-          <Grid item xs={11}>
+          <Grid size={{ xs: 11 }}>
             <Typography
               sx={{
                 m: 1,

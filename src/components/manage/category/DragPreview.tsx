@@ -1,4 +1,4 @@
-import { Button, Grid, SxProps } from '@mui/material';
+import { Button, Grid2 as Grid, SxProps } from '@mui/material';
 import { DragLayerMonitorProps } from '@minoru/react-dnd-treeview';
 import React from 'react';
 import { CategoryModel } from './CategoryTypes';

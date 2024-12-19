@@ -14,7 +14,7 @@ import {
   CardHeader,
   CardMedia,
   CssBaseline,
-  Grid,
+  Grid2 as Grid,
   Pagination,
   SxProps,
   Typography,
@@ -124,6 +124,7 @@ export const PostsPresent = observer(() => {
       justifyContent="center"
       alignItems="center"
       spacing={2}
+      flexDirection={'column'}
     >
       <Grid
         container
@@ -137,12 +138,13 @@ export const PostsPresent = observer(() => {
       >
         <CssBaseline />
         <Grid
-          item
-          xs={12}
-          sm={12}
-          md={12}
-          lg={12}
-          xl={12}
+          size={{
+            xs: 12,
+            sm: 12,
+            md: 12,
+            lg: 12,
+            xl: 12,
+          }}
           sx={{
             display: 'grid',
             gridTemplateColumns: {
@@ -274,7 +276,6 @@ export const PostsPresent = observer(() => {
         </Grid>
       </Grid>
       <Grid
-        item
         sx={{
           display: 'flex',
           justifyContent: 'center',
