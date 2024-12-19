@@ -2,7 +2,6 @@
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
-import { useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import { Box, Button, Stack, ThemeProvider, Typography } from '@mui/material';
 import { URL_MAP } from '@/common/URL';
@@ -19,7 +18,6 @@ import {
 import { observer } from 'mobx-react-lite';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import styled from 'styled-components';
-import { UserPayload } from '@/models/UserPayload';
 import { useRouter } from 'next/navigation';
 import z from 'zod';
 import { useLogin } from '@/hooks/server/useLogin';
