@@ -66,6 +66,7 @@ export function SearchBuilder<T extends string>(
                 id="search-option"
                 value={store.getSearchType() ?? store.getDefaultCategory()!}
                 label="검색 옵션"
+                size="small"
                 onChange={(e: SelectChangeEvent) => {
                   store.setSearchType(e.target.value as any);
                 }}
@@ -86,6 +87,7 @@ export function SearchBuilder<T extends string>(
               <TextField
                 label="검색 내용"
                 value={store.getSearchQuery() ?? ''}
+                size="small"
                 onChange={e => {
                   const { value } = e.target;
 
