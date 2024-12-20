@@ -35,7 +35,18 @@ export const CategoryWrapper = React.memo(
       rootCategory,
     }: CategoryWrapperProps) => {
       const categoryService = useCategoryService();
-      // const { category: categoryService } = useRootService();
+
+      const onClick = (isNotEmpty: boolean, category: CategoryDepthVO) => {
+        if (isNotEmpty) {
+          setCategoryList([...categoryList]);
+        }
+
+        categoryService.setCurrentMenuCategoryId(
+          rootCategory === category ? null : category.id,
+        );
+        toggleDrawer(false);
+        router.push(URL_MAP.MAIN);
+      };
 
       /**
        * 카테고리 리스트를 동적으로 생성합니다.
@@ -52,17 +63,7 @@ export const CategoryWrapper = React.memo(
             return (
               <React.Fragment key={key}>
                 <ListItemButton
-                  onClick={() => {
-                    if (isNotEmpty) {
-                      setCategoryList([...categoryList]);
-                    }
-
-                    categoryService.setCurrentMenuCategoryId(
-                      rootCategory === category ? null : category.id,
-                    );
-                    toggleDrawer(false);
-                    router.push(URL_MAP.MAIN);
-                  }}
+                  onClick={() => onClick(isNotEmpty, category)}
                   onKeyDown={toggleDrawer(false)}
                   sx={{
                     pl: category.depth * 2,
