@@ -2606,7 +2606,7 @@ __metadata:
     serve: "npm:13.0.2"
     styled-components: "npm:^6.1.13"
     stylelint: "npm:14.2.0"
-    sweetalert2: "npm:^11.7.20"
+    sweetalert2: "npm:^11.15.2"
     swr: "npm:^2.2.0"
     tailwindcss: "npm:^3.3.1"
     ts-node: "npm:^10.8.0"
@@ -11042,10 +11042,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sweetalert2@npm:^11.7.20":
-  version: 11.7.20
-  resolution: "sweetalert2@npm:11.7.20"
-  checksum: 10/74fd896227c22bf3694be077ca87b083939a021639a5cc34624407e6ded1f8bd0dd91b1b3fb81da39194a71f2b25197dcf14238c5f244159c7668661cdacfaac
+"sweetalert2@npm:^11.15.2":
+  version: 11.15.2
+  resolution: "sweetalert2@npm:11.15.2"
+  checksum: 10/f6d430934828b6b2beceda77a5dc535ab7b84db0be5a723da8bf5157ef8f80b8a8ca8b2c1afc3699f240b001feaeb5790ce98847dbb4bad97ab776232389e077
   languageName: node
   linkType: hard
 

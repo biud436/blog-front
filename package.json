@@ -78,7 +78,7 @@
         "serve": "13.0.2",
         "styled-components": "^6.1.13",
         "stylelint": "14.2.0",
-        "sweetalert2": "^11.7.20",
+        "sweetalert2": "^11.15.2",
         "swr": "^2.2.0",
         "typescript": "^5.2.2",
         "uuid": "^8.3.2",

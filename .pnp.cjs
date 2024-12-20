@@ -112,7 +112,7 @@ const RAW_RUNTIME_STATE =
           ["serve", "npm:13.0.2"],\
           ["styled-components", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:6.1.13"],\
           ["stylelint", "npm:14.2.0"],\
-          ["sweetalert2", "npm:11.7.20"],\
+          ["sweetalert2", "npm:11.15.2"],\
           ["swr", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:2.2.0"],\
           ["tailwindcss", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:3.3.1"],\
           ["ts-node", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:10.9.1"],\
@@ -3440,7 +3440,7 @@ const RAW_RUNTIME_STATE =
           ["serve", "npm:13.0.2"],\
           ["styled-components", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:6.1.13"],\
           ["stylelint", "npm:14.2.0"],\
-          ["sweetalert2", "npm:11.7.20"],\
+          ["sweetalert2", "npm:11.15.2"],\
           ["swr", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:2.2.0"],\
           ["tailwindcss", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:3.3.1"],\
           ["ts-node", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:10.9.1"],\
@@ -13141,10 +13141,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["sweetalert2", [\
-      ["npm:11.7.20", {\
-        "packageLocation": "./.yarn/cache/sweetalert2-npm-11.7.20-fcca163042-74fd896227.zip/node_modules/sweetalert2/",\
+      ["npm:11.15.2", {\
+        "packageLocation": "./.yarn/cache/sweetalert2-npm-11.15.2-3ae31bfad4-f6d4309348.zip/node_modules/sweetalert2/",\
         "packageDependencies": [\
-          ["sweetalert2", "npm:11.7.20"]\
+          ["sweetalert2", "npm:11.15.2"]\
         ],\
         "linkType": "HARD"\
       }]\
