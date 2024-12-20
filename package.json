@@ -44,7 +44,7 @@
         "eslint-config-prettier": "8.3.0",
         "eslint-plugin-prettier": "4.0.0",
         "eslint-plugin-react-hooks": "4.3.0",
-        "framer-motion": "^10.16.4",
+        "framer-motion": "^11.15.0",
         "inquirer": "7.3.3",
         "inquirer-directory": "2.2.0",
         "lint-staged": "12.1.7",
