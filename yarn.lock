@@ -58,7 +58,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.18.9
   resolution: "@babel/runtime@npm:7.18.9"
   dependencies:
@@ -1226,22 +1226,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/history@npm:*":
-  version: 5.0.0
-  resolution: "@types/history@npm:5.0.0"
-  dependencies:
-    history: "npm:*"
-  checksum: 10/53d35a7b3b7425dd1bac33ea024e3446eb9b8b1a390fef9bedb9428a6cfe84d9716d69c74364068dfca082abbbc5d5d126c5472ee5507150c4f55127422b5462
-  languageName: node
-  linkType: hard
-
-"@types/history@npm:^4.7.11":
-  version: 4.7.11
-  resolution: "@types/history@npm:4.7.11"
-  checksum: 10/1da529a3485f3015daf794effa3185493bf7dd2551c26932389c614f5a0aab76ab97645897d1eef9c74ead216a3848fcaa019f165bbd6e4b71da6eff164b4c68
-  languageName: node
-  linkType: hard
-
 "@types/hoist-non-react-statics@npm:*":
   version: 3.3.1
   resolution: "@types/hoist-non-react-statics@npm:3.3.1"
@@ -1466,27 +1450,6 @@ __metadata:
   dependencies:
     "@types/react": "npm:*"
   checksum: 10/b44c3262efa2c68fa6fe2beb9ef86170b18305469461a3f97aa14943cc033cb21a26944f718bdb6434eea6e8f7fcba251c4f45b65b897a3fcf751b5a6003cf82
-  languageName: node
-  linkType: hard
-
-"@types/react-router-dom@npm:5.3.2":
-  version: 5.3.2
-  resolution: "@types/react-router-dom@npm:5.3.2"
-  dependencies:
-    "@types/history": "npm:*"
-    "@types/react": "npm:*"
-    "@types/react-router": "npm:*"
-  checksum: 10/90f052dc5a43a77edaf41d2afa781c8ed2164cd7922b3cdf5daae446b02a2f279382425e6efc338260782c0a24d25a6101e3658acb41c8a053695968a351ea96
-  languageName: node
-  linkType: hard
-
-"@types/react-router@npm:*":
-  version: 5.1.18
-  resolution: "@types/react-router@npm:5.1.18"
-  dependencies:
-    "@types/history": "npm:^4.7.11"
-    "@types/react": "npm:*"
-  checksum: 10/54472723c1a092938d4754c5915c36a57be373658e90b62089ce3816a533aacde9a96f85b63f190e70d824e91d8d13199abe854d49c65534722ae1122fd111cf
   languageName: node
   linkType: hard
 
@@ -2546,7 +2509,6 @@ __metadata:
     "@types/react": "npm:^18.2.4"
     "@types/react-dom": "npm:^18.2.7"
     "@types/react-is": "npm:^18"
-    "@types/react-router-dom": "npm:5.3.2"
     "@types/react-test-renderer": "npm:17.0.1"
     "@types/rimraf": "npm:3.0.2"
     "@types/shelljs": "npm:0.8.11"
@@ -2595,8 +2557,6 @@ __metadata:
     react-hook-form-mui: "npm:^5.12.3"
     react-is: "npm:^18.2.0"
     react-responsive: "npm:^9.0.0"
-    react-router: "npm:^6.3.0"
-    react-router-dom: "npm:^6.3.0"
     react-syntax-highlighter: "npm:^15.5.0"
     react-toastify: "npm:^9.1.3"
     react-toc: "npm:^3.1.0"
@@ -5462,15 +5422,6 @@ __metadata:
   version: 10.7.3
   resolution: "highlight.js@npm:10.7.3"
   checksum: 10/db8d10a541936b058e221dbde77869664b2b45bca75d660aa98065be2cd29f3924755fbc7348213f17fd931aefb6e6597448ba6fe82afba6d8313747a91983ee
-  languageName: node
-  linkType: hard
-
-"history@npm:*, history@npm:^5.2.0":
-  version: 5.3.0
-  resolution: "history@npm:5.3.0"
-  dependencies:
-    "@babel/runtime": "npm:^7.7.6"
-  checksum: 10/52ba685b842ca6438ff11ef459951eb13d413ae715866a8dc5f7c3b1ea0cdeb8db6aabf7254551b85f56abc205e6e2d7e1d5afb36b711b401cdaff4f2cf187e9
   languageName: node
   linkType: hard
 
@@ -9414,30 +9365,6 @@ __metadata:
   peerDependencies:
     react: ">=16.8.0"
   checksum: 10/f97023afaf559db7368f19918dd55c63870a3dc8c324a95867897f2df30af09ec0586f5f531112570cae56ce0385b5310af240eb06472ee3ed5905ddf9a1ef29
-  languageName: node
-  linkType: hard
-
-"react-router-dom@npm:^6.3.0":
-  version: 6.3.0
-  resolution: "react-router-dom@npm:6.3.0"
-  dependencies:
-    history: "npm:^5.2.0"
-    react-router: "npm:6.3.0"
-  peerDependencies:
-    react: ">=16.8"
-    react-dom: ">=16.8"
-  checksum: 10/84fe5cd522f9faaff931fc78498b73af54bee66483a67def53090ae493544129c632510d3a87d24ada2e9f56cd72ae61bbb1ba71090863dfd04f06e697685757
-  languageName: node
-  linkType: hard
-
-"react-router@npm:6.3.0, react-router@npm:^6.3.0":
-  version: 6.3.0
-  resolution: "react-router@npm:6.3.0"
-  dependencies:
-    history: "npm:^5.2.0"
-  peerDependencies:
-    react: ">=16.8"
-  checksum: 10/eadb572d1d8192e19e9b74248a965af7bbb0ee24428c4cd3e7894146cd1f5a82823c22f52c7969badc5276271084078eb1c35aa19689f099316e05534da3a3db
   languageName: node
   linkType: hard
 
