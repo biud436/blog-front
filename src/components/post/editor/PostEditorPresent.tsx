@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { URL_MAP } from '@/common/URL';
 import { useCategoryService } from '@/hooks/services/useCategoryService';
 import { CategoryDepthVO } from '@/models/CategoryDepthVO';
@@ -14,29 +14,25 @@ import {
 import '@toast-ui/editor/dist/toastui-editor.css';
 
 import { observer } from 'mobx-react-lite';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { toJS } from 'mobx';
 import React from 'react';
 import { toast } from 'react-toastify';
 import { PostButtonGroup } from './PostButtonGroup';
 import { PostSelectCategory } from './PostSelectCategory';
 import { PostTitleInput } from './PostTitleInput';
-import * as DOMPurify from 'dompurify';
 
 import { EditPageProps } from '@/components/pages/PostEditorContainer';
-import { useSWRConfig } from 'swr';
-import { useMediaQuery } from 'react-responsive';
 import { PostTuiEditor } from './PostTuiEditor';
 import { Controller, useForm } from 'react-hook-form';
-import { ImageCompressionUtils } from '@/lib/ImageCompressionService';
-import uploadS3 from '@/api/uploadS3';
 import { useRouter, useSearchParams } from 'next/navigation';
 import usePostService from '@/store/post/PostService';
-import { PostContent } from '@/models/PostContent';
 import { useGetPost } from '@/hooks/api/useGetPost';
-import { useUpdatePost } from '@/hooks/api/useUpdatePost';
-import { useWritePost } from '@/hooks/api/useWritePost';
 import { useRootStore } from '@/store';
+import { useToolbarItems } from '@/hooks/useToolbarItems';
+import { MyBlogEditorType, MyBlogEditor } from './types/PostEditorType';
+import { useAddImageBlob } from '@/hooks/api/useAddImageBlob';
+import { usePostWrite } from '@/hooks/api/usePostWrite';
 
 const EPOCH_EDITOR_TIME = 2000;
 
@@ -47,128 +43,26 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
     },
   });
   const rootStore = useRootStore();
-
-  const title = watch('title');
   const router = useRouter();
   const searchParams = useSearchParams();
   const [categories, setCategories] = useState<CategoryDepthVO[]>([]);
   const [currentCategoryId, setCurrentCategoryId] = useState(1);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const editorRef = useRef<any>(null);
+  const editorRef = useRef<MyBlogEditor>(null);
   const postService = usePostService();
-  const matches = useMediaQuery({
-    query: '(max-width: 768px)',
-  });
-  const { mutate } = useSWRConfig();
-  const toolbarItems = useMemo(() => {
-    if (!matches) {
-      return [
-        ['heading', 'bold', 'italic', 'strike'],
-        ['hr', 'quote'],
-        ['ul', 'ol', 'task', 'indent', 'outdent'],
-        ['table', 'image', 'link'],
-        ['code', 'codeblock'],
-        ['scrollSync'],
-      ];
-    } else {
-      return [['image'], ['heading', 'bold'], ['codeblock']];
-    }
-  }, [matches]) as any;
+  const toolbarItems = useToolbarItems();
 
   // Use Hooks
   const { getPost } = useGetPost();
-  const { updatePost } = useUpdatePost();
-  const { writePost } = useWritePost();
 
   const categoryService = useCategoryService();
+  const { addImageBlobHook } = useAddImageBlob(mode);
 
-  /**
-   * 이미지 업로드 시, 훅을 통해 서버에 업로드 요청을 보낸다.
-   *
-   * @param blob
-   * @param callback
-   */
-  const addImageBlobHook = (blob, callback) => {
-    ImageCompressionUtils.compress(blob, ImageCompressionUtils.options)
-      .then(compressedFile => {
-        const formData = new FormData();
-        formData.append('files', compressedFile);
-        formData.append(
-          'postId',
-          mode === 'edit' ? postService.getId() + '' : '0',
-        );
-
-        uploadS3(formData)
-          .then(res => {
-            const { data } = res.data;
-
-            callback(data.location, data.originalName);
-          })
-          .catch(() => {
-            toast.error('이미지 업로드에 실패하였습니다.');
-          });
-      })
-      .catch(() => {
-        toast.error('이미지 압축에 실패했습니다.');
-      });
-
-    return false;
-  };
-
-  /**
-   * 글 작성 및 수정 이벤트
-   */
-  const handleWrite = useCallback(async () => {
-    const title_ = watch('title');
-
-    if (!title_) {
-      toast.error('제목을 입력해주세요.');
-      return;
-    }
-
-    const content = editorRef.current?.getInstance().getMarkdown();
-
-    if (!content) {
-      toast.error('내용을 입력해주세요.');
-      return;
-    }
-
-    const payload = {
-      title: title_,
-      // TUI Editor에서 내부에서 DOMPurify를 사용하고 있어서,
-      // XSS 공격을 기본적으로 방어하지만 다른 에디터 변경 가능성을 열어두기 위해 추가
-      content: DOMPurify.sanitize(content),
-      categoryId: currentCategoryId,
-      isPrivate: rootStore.isPrivate,
-    } as PostContent;
-
-    try {
-      if (mode === 'edit') {
-        await updatePost.mutateAsync(
-          {
-            postId: postService.getId(),
-            payload,
-          },
-          {
-            onSuccess: async () => {
-              mutate(['/posts', postService.getId()]);
-            },
-          },
-        );
-      } else {
-        await writePost.mutateAsync(payload, {
-          onSuccess: () => {
-            postService.refresh();
-          },
-        });
-      }
-
-      router.push(URL_MAP.MAIN);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (e: any) {
-      toast.error(e.message);
-    }
-  }, [editorRef, title, currentCategoryId, mode, rootStore.isPrivate]);
+  const { handleWrite } = usePostWrite(
+    mode,
+    editorRef,
+    watch,
+    currentCategoryId,
+  );
 
   /**
    * 글 작성 취소
@@ -303,7 +197,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
         <PostTuiEditor
           toolbarItems={toolbarItems}
           onEditorForcusWhenMount={onEditorFocusWhenMount}
-          ref={editorRef}
+          ref={editorRef as MyBlogEditorType}
           addImageBlobHook={addImageBlobHook}
         />
       </Grid>
