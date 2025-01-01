@@ -2,19 +2,15 @@
 
 import React from 'react';
 import { PostPage } from '@/components/pages/post';
-import axios from 'axios';
-import useSWR from 'swr';
 import { ErrorComponent } from '@/components/pages/ErrorFoundPage';
+import { useSecretPost } from '@/hooks/api/useSecretPost';
 
-const fetcher = (url: string) =>
-  axios
-    .get(url, {
-      withCredentials: true,
-    })
-    .then(res => res.data.data);
+type SecretPostWrapperProps = {
+  id: number;
+};
 
-export default function SecretPostWrapper({ id }: { id: number }) {
-  const { data: post, error } = useSWR(id ? `/posts/${id}` : null, fetcher);
+export default function SecretPostWrapper({ id }: SecretPostWrapperProps) {
+  const { data: post, error } = useSecretPost(id);
 
   if (error) {
     return <ErrorComponent message="비공개 포스트입니다" statusCode={403} />;

@@ -21,7 +21,11 @@ const Viewer = dynamic(
   },
 );
 
-export function PostContent({ post }: { post: Post }) {
+export type PostContentProps = {
+  post: Post;
+};
+
+export function PostContent({ post }: PostContentProps) {
   return (
     <Grid size={{ xs: 12 }}>
       <Viewer content={post.content} />

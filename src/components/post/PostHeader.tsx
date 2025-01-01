@@ -8,7 +8,11 @@ import { DateUtil, Formatter } from '@/lib/date';
 import { Post } from '@/models/Post';
 import { Avatar, Divider, Grid2 as Grid, Typography } from '@mui/material';
 
-export function PostHeader({ post }: { post: Post }) {
+export type PostHeaderProps = {
+  post: Post;
+};
+
+export function PostHeader({ post }: PostHeaderProps) {
   return (
     <>
       <Grid
