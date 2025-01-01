@@ -9,10 +9,10 @@ Next.js로 만든 개인 잡담 블로그입니다. 실제로 사용하기 위�
 -   Typescript
 -   Next.js
 -   Material-UI
--   Mobx
--   Recoil
+-   Zustand
 -   Styled-Components
--   SWR
+-   Tanstack Query
+-   Zod
 
 ## 구조
 
@@ -41,58 +41,9 @@ Next.js로 만든 개인 잡담 블로그입니다. 실제로 사용하기 위�
 -   [x] RSS 피드 구현
 -   [x] OAuth 2.0 로그인 지원 (깃허브)
 
-## 폴더 구조
-
-폴더 구조는 크게, `app`, `blog`, `common`, `hooks`, `layouts`, `pages`, `services`, `store`, `styles`, `types`, `utils`로 구성되어 있습니다.
-
--   `app`에는 `next.js` 13 버전에서 사용하는 레이아웃, 페이지 등의 파일이 위치합니다.
--   `blog/components`에는 공통 컴포넌트가 위치합니다.
--   `blog/api`에는 axios와 fetch에 대한 추상화 레이어가 존재합니다.
--   `hooks`에는 커스텀 훅이 있습니다.
--   `services`에는 API 서버와 통신하는 로직이 있습니다.
--   `layouts`에는 공통 레이아웃 파일이 있습니다.
--   `store`에서는 상태 관리 로직을 관리합니다.
-
-```txt
-├── _contents
-├── app
-├── blog
-│   ├── api
-│   ├── common
-│   ├── components
-│   ├── pages
-│   └── providers
-├── common
-├── hooks
-│   └── api
-├── layouts
-├── pages
-│   ├── career
-│   ├── edit
-│   ├── login
-│   ├── manage
-│   ├── posts
-│   └── profile
-├── services
-│   └── types
-├── store
-│   ├── common
-│   ├── github
-│   ├── login
-│   ├── menu
-│   ├── post
-│   ├── posts
-│   ├── types
-│   └── user
-├── styles
-│   └── __tests__
-├── types
-└── utils
-```
-
 # 설치 및 실행 방법
 
-전반적인 Node.js LTS v16 이상의 개발 환경이 구축되어있어야 합니다. 서버 실행 관련 명령어는 `package.json`에서 참조하실 수 있는데, `yarn next:dev` 명령으로 실행할 수 있습니다.
+전반적인 Node.js LTS v22 이상의 개발 환경이 구축되어있어야 합니다. 서버 실행 관련 명령어는 `package.json`에서 참조하실 수 있는데, `yarn next:dev` 명령으로 실행할 수 있습니다.
 
 자세한 내용은 [설치 방법](https://github.com/biud436/blog-front/blob/main/README.en.md#installation) 문서를 참고하십시오.
 
