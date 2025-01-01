@@ -27,13 +27,12 @@ import { useCategoryService } from '@/hooks/services/useCategoryService';
 import { SearchComponent } from './SearchComponent';
 import { DateUtil, Formatter } from '@/lib/date';
 import LockIcon from '@mui/icons-material/Lock';
-import axios from 'axios';
-import useSWR, { mutate } from 'swr';
-import { BlogServerResponse } from '@/models/BlogServerResponse';
+import { mutate } from 'swr';
 import { PostEntity } from '@/models/PostEntity';
 import { BlogLoading } from './BlogLoading';
 import { useRouter } from 'next/navigation';
 import usePostsStore from '@/store/posts';
+import { usePosts } from '@/hooks/api/usePosts';
 
 export const SearchBox = SearchBuilder<PostsSearchType>(usePostsStore);
 
@@ -44,26 +43,27 @@ export const PostsPresent = observer(() => {
   const postsStore = usePostsStore();
   const pageNumber = postsStore.getPageNumber();
   const categoryId = categoryService.getCurrentMenuCategoryId();
-  const searchProperty = postsStore.getSearchType();
-  const searchQuery = postsStore.getSearchQuery();
+  // const searchProperty = postsStore.getSearchType();
+  // const searchQuery = postsStore.getSearchQuery();
 
-  const { data, isLoading } = useSWR<BlogServerResponse<PostEntity>['data']>(
-    ['/posts/posts', pageNumber, categoryId],
-    fetcher,
-  );
+  const { data, isLoading } = usePosts();
+  // const { data, isLoading } = useSWR<BlogServerResponse<PostEntity>['data']>(
+  //   ['/posts/posts', pageNumber, categoryId],
+  //   fetcher,
+  // );
 
-  function fetcher() {
-    if (postsStore.isSearchMode()) {
-      const url = `/posts/search?pageNumber=${pageNumber}&searchProperty=${searchProperty}&searchQuery=${encodeURIComponent(
-        searchQuery ?? '',
-      )}`;
+  // function fetcher() {
+  //   if (postsStore.isSearchMode()) {
+  //     const url = `/posts/search?pageNumber=${pageNumber}&searchProperty=${searchProperty}&searchQuery=${encodeURIComponent(
+  //       searchQuery ?? '',
+  //     )}`;
 
-      return axios.get(url).then(res => res.data.data);
-    } else {
-      const url = `/posts?page=${pageNumber}&categoryId=${categoryId}`;
-      return axios.get(url).then(res => res.data.data);
-    }
-  }
+  //     return axios.get(url).then(res => res.data.data);
+  //   } else {
+  //     const url = `/posts?page=${pageNumber}&categoryId=${categoryId}`;
+  //     return axios.get(url).then(res => res.data.data);
+  //   }
+  // }
 
   const fetchData = async (page?: number) => {
     try {

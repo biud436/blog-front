@@ -1,6 +1,8 @@
 import instance from '@/lib/axios-new';
 import { API_URL, CacheControl } from '@/lib/request';
+import { BlogServerResponse } from '@/models/BlogServerResponse';
 import { PostContent } from '@/models/PostContent';
+import { PostEntity } from '@/models/PostEntity';
 import axios from 'axios';
 
 axios.defaults.baseURL = API_URL;
@@ -12,15 +14,15 @@ export interface UpdatePostProps {
 }
 export interface PostsSearchType {
   pageNumber: number;
-  searchProperty: string;
-  searchQuery: string;
+  searchProperty: string | undefined;
+  searchQuery: string | undefined;
 }
 export interface GetPostsDto {
   pageNumber: number;
-  categoryId?: number;
-  pageSize?: number;
-  searchProperty?: 'title' | 'content';
-  searchQuery?: string;
+  categoryId?: number | undefined | null;
+  // pageSize?: number;
+  // searchProperty?: 'title' | 'content';
+  // searchQuery?: string;
 }
 
 export const postsService = {
@@ -65,7 +67,7 @@ export const postsService = {
     pageNumber,
     searchProperty,
     searchQuery,
-  }: PostsSearchType) {
+  }: PostsSearchType): Promise<BlogServerResponse<PostEntity>['data']> {
     const res = await axios.get(
       `/posts/search?pageNumber=${pageNumber}&searchProperty=${searchProperty}&searchQuery=${encodeURIComponent(
         searchQuery ?? '',
@@ -81,12 +83,9 @@ export const postsService = {
   async getPosts({
     pageNumber,
     categoryId,
-    pageSize,
-    searchProperty,
-    searchQuery,
-  }: GetPostsDto) {
+  }: GetPostsDto): Promise<BlogServerResponse<PostEntity>['data']> {
     const res = await axios.get(
-      `/posts?page=${pageNumber}&categoryId=${categoryId}&pageSize=${pageSize}&searchProperty=${searchProperty}&searchQuery=${searchQuery}`,
+      `/posts?page=${pageNumber}&categoryId=${categoryId}`,
     );
 
     return res.data.data;
