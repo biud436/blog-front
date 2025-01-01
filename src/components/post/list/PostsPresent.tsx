@@ -43,27 +43,8 @@ export const PostsPresent = observer(() => {
   const postsStore = usePostsStore();
   const pageNumber = postsStore.getPageNumber();
   const categoryId = categoryService.getCurrentMenuCategoryId();
-  // const searchProperty = postsStore.getSearchType();
-  // const searchQuery = postsStore.getSearchQuery();
 
   const { data, isLoading } = usePosts();
-  // const { data, isLoading } = useSWR<BlogServerResponse<PostEntity>['data']>(
-  //   ['/posts/posts', pageNumber, categoryId],
-  //   fetcher,
-  // );
-
-  // function fetcher() {
-  //   if (postsStore.isSearchMode()) {
-  //     const url = `/posts/search?pageNumber=${pageNumber}&searchProperty=${searchProperty}&searchQuery=${encodeURIComponent(
-  //       searchQuery ?? '',
-  //     )}`;
-
-  //     return axios.get(url).then(res => res.data.data);
-  //   } else {
-  //     const url = `/posts?page=${pageNumber}&categoryId=${categoryId}`;
-  //     return axios.get(url).then(res => res.data.data);
-  //   }
-  // }
 
   const fetchData = async (page?: number) => {
     try {
