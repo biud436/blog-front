@@ -21,6 +21,17 @@ const PostContentTocDynamic = dynamic(
   },
 );
 
+export type PostContainerProps = {
+  /**
+   * 포스트 데이터
+   */
+  post: Post;
+  /**
+   * 뒤로가기
+   */
+  goBack: () => void;
+};
+
 export function TocWrapper({ content }: { content: string }) {
   return (
     <Paper>
@@ -29,13 +40,7 @@ export function TocWrapper({ content }: { content: string }) {
   );
 }
 
-export function PostContainer({
-  post,
-  goBack,
-}: {
-  post: Post;
-  goBack: () => void;
-}) {
+export function PostContainer({ post, goBack }: PostContainerProps) {
   return (
     <Box>
       <Grid

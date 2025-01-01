@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { CategoryDepthVO } from '@/models/CategoryDepthVO';
 import { CategoryItemId } from '@/store/category/CategoryItemId';
 import { create } from 'zustand';
@@ -20,7 +21,7 @@ export const useCategoryStore = create<CategoryState>((set, get) => ({
 
     // Actions
     setCategories: (categories: CategoryDepthVO[]) => {
-        set((state) => ({
+        set((_state) => ({
             categories,
             isReady: true
         }));
