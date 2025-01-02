@@ -6,6 +6,9 @@ import { mutate } from 'swr';
 import { useQueryClient } from '@tanstack/react-query';
 import { PostsSearchType } from '@/models/PostsSearchType';
 
+/**
+ * 검색 결과를 불러오는 훅
+ */
 export function useFetchDataBySearch() {
   const categoryService = useCategoryService();
   const postsStore = usePostsStore();
