@@ -1,7 +1,7 @@
 import React from 'react';
 import { CircularProgress, Stack, Typography } from '@mui/material';
 
-export function BlogLoading(): React.JSX.Element {
+export function BlogLoading() {
   return (
     <Stack
       direction={'column'}

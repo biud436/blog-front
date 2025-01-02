@@ -22,7 +22,7 @@ export function CardStylePost({
   post,
   mediaProp,
   goToPage,
-}: CardStylePostProps): JSX.Element {
+}: CardStylePostProps) {
   return (
     <Card
       sx={{

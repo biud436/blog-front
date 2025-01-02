@@ -19,63 +19,30 @@ import {
   SxProps,
   Typography,
 } from '@mui/material';
-import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
-import { toast } from 'react-toastify';
-
 import { useCategoryService } from '@/hooks/services/useCategoryService';
 import { SearchComponent } from './SearchComponent';
 import { DateUtil, Formatter } from '@/lib/date';
 import LockIcon from '@mui/icons-material/Lock';
-import { mutate } from 'swr';
 import { PostEntity } from '@/models/PostEntity';
 import { BlogLoading } from './BlogLoading';
 import { useRouter } from 'next/navigation';
 import usePostsStore from '@/store/posts';
 import { usePosts } from '@/hooks/api/usePosts';
+import { useFetchDataBySearch } from '@/hooks/api/useFetchDataBySearch';
+import { useFetchData } from '@/hooks/api/useFetchData';
 
 export const SearchBox = SearchBuilder<PostsSearchType>(usePostsStore);
 
-export const PostsPresent = observer(() => {
+export const PostsPresent = () => {
   const categoryService = useCategoryService();
   const router = useRouter();
 
   const postsStore = usePostsStore();
-  const pageNumber = postsStore.getPageNumber();
-  const categoryId = categoryService.getCurrentMenuCategoryId();
 
   const { data, isLoading } = usePosts();
-
-  const fetchData = async (page?: number) => {
-    try {
-      if (page) {
-        postsStore.setPageNumber(page);
-      }
-
-      // 카테고리 설정
-      postsStore.setCurrentCategoryId(
-        categoryService.getCurrentMenuCategoryId(),
-      );
-    } catch (e) {
-      toast.error('조회 결과가 없습니다');
-      postsStore.setEntities([]);
-    }
-  };
-
-  const fetchDataBySearch = async () => {
-    try {
-      postsStore.setSearchMode(true);
-      postsStore.setPageNumber(1);
-      mutate(['/posts/posts', pageNumber, categoryId]);
-    } catch (e: any) {
-      postsStore.setSearchType(
-        postsStore.getDefaultCategory() as PostsSearchType,
-      );
-      postsStore.setSearchQuery('');
-
-      toast.error(e.message);
-    }
-  };
+  const { fetchData } = useFetchData();
+  const { fetchDataBySearch } = useFetchDataBySearch();
 
   const handlePage = (event: React.ChangeEvent<unknown>, page: number) => {
     fetchData(page);
@@ -280,4 +247,4 @@ export const PostsPresent = observer(() => {
       <SearchComponent fetchDataBySearch={fetchDataBySearch} />
     </Grid>
   );
-});
+};
