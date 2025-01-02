@@ -13,9 +13,7 @@ import {
 } from '@mui/material';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
-import { observer } from 'mobx-react-lite';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { toJS } from 'mobx';
 import React from 'react';
 import { toast } from 'react-toastify';
 import { PostButtonGroup } from './PostButtonGroup';
@@ -36,7 +34,7 @@ import { usePostWrite } from '@/hooks/api/usePostWrite';
 
 const EPOCH_EDITOR_TIME = 2000;
 
-export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
+export const PostEditorPresent = ({ mode }: EditPageProps) => {
   const { control, watch, setValue } = useForm<{ title: string }>({
     defaultValues: {
       title: '',
@@ -86,7 +84,7 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
    * 카테고리를 플랫하게 만들어서 반환한다.
    */
   const getFlatCategories = useCallback(() => {
-    const raw = toJS(categoryService.getCategories());
+    const raw = categoryService.getCategories();
     const flatCategories: CategoryDepthVO[] = [];
 
     const makeFlatCategories = (_categories: CategoryDepthVO[]) => {
@@ -210,4 +208,4 @@ export const PostEditorPresent = observer(({ mode }: EditPageProps) => {
       </Grid>
     </Grid>
   );
-});
+};

@@ -1,14 +1,13 @@
 'use client';
 
 import Box from '@mui/material/Box';
-import { observer } from 'mobx-react-lite';
 import React from 'react';
 
 interface CenterFlexBoxProps {
   children: React.ReactNode[];
 }
 
-export const CenterFlexBox = observer(({ children }: CenterFlexBoxProps) => {
+export const CenterFlexBox = ({ children }: CenterFlexBoxProps) => {
   return (
     <Box
       sx={{
@@ -25,4 +24,4 @@ export const CenterFlexBox = observer(({ children }: CenterFlexBoxProps) => {
       {children}
     </Box>
   );
-});
+};

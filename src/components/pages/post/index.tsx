@@ -5,7 +5,6 @@
 
 import { MainLayout } from '@/layouts/BlogMainLayout';
 import { URL_MAP } from '@/common/URL';
-import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { PostContainer } from '../../post/PostContainer';
@@ -17,7 +16,7 @@ export interface PostsProps {
   id: string;
 }
 
-export const PostPage = observer(({ post, error, id: postId }: PostsProps) => {
+export const PostPage = ({ post, error, id: postId }: PostsProps) => {
   const router = useRouter();
 
   useEffect(() => {
@@ -38,4 +37,4 @@ export const PostPage = observer(({ post, error, id: postId }: PostsProps) => {
   };
 
   return <PostContainer post={post} goBack={goBack} />;
-});
+};

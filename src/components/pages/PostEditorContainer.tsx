@@ -1,6 +1,5 @@
 import React from 'react';
 import { Grid2 as Grid, Paper, Alert } from '@mui/material';
-import { observer } from 'mobx-react-lite';
 import { MainLayout } from '@/layouts/BlogMainLayout';
 import { useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
@@ -32,63 +31,61 @@ const PostEditorPresent = dynamic(
   },
 );
 
-export const PostEditor = observer(({ mode }: EditPageProps) => {
+export const PostEditor = ({ mode }: EditPageProps) => {
   return <PostEditorPresent mode={mode} />;
-});
+};
 
-export const PostEditorContainer = observer(
-  ({ editorMode }: { editorMode: string }) => {
-    const { isAuthorized } = useAuthorized();
+export const PostEditorContainer = ({ editorMode }: { editorMode: string }) => {
+  const { isAuthorized } = useAuthorized();
 
-    // useState로 할 경우, 렌더링이 두 번 일어나면서 버그가 발생합니다.
-    const mode = useRef<EditPageProps['mode']>('create');
+  // useState로 할 경우, 렌더링이 두 번 일어나면서 버그가 발생합니다.
+  const mode = useRef<EditPageProps['mode']>('create');
 
-    const LoginGuard = ({ children }: { children: JSX.Element }) => {
-      return !isAuthorized ? (
-        <Grid
-          container
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Grid size={{ xs: 12 }}>
-            <Alert variant="filled" severity="error">
-              로그인이 필요한 서비스입니다
-            </Alert>
-          </Grid>
+  const LoginGuard = ({ children }: { children: JSX.Element }) => {
+    return !isAuthorized ? (
+      <Grid
+        container
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Grid size={{ xs: 12 }}>
+          <Alert variant="filled" severity="error">
+            로그인이 필요한 서비스입니다
+          </Alert>
         </Grid>
-      ) : (
-        children
-      );
-    };
-
-    useEffect(() => {
-      if (editorMode === 'edit') {
-        mode.current = 'edit';
-      }
-    }, []);
-
-    return (
-      <MainLayout name="포스트 에디터">
-        <Meta
-          {...{
-            title: '포스트 에디터',
-            description: '포스트를 작성하거나 수정합니다',
-          }}
-        />
-        <Paper sx={{ padding: 2 }} key="editor">
-          <LoginGuard>
-            <Grid container gap={3}>
-              <PostEditorPageHeader mode={mode.current} />
-              <PostEditorPageDescription mode={mode.current} />
-              <PostEditor mode={mode.current} />
-            </Grid>
-          </LoginGuard>
-          <ToastContainer />
-        </Paper>
-      </MainLayout>
+      </Grid>
+    ) : (
+      children
     );
-  },
-);
+  };
+
+  useEffect(() => {
+    if (editorMode === 'edit') {
+      mode.current = 'edit';
+    }
+  }, []);
+
+  return (
+    <MainLayout name="포스트 에디터">
+      <Meta
+        {...{
+          title: '포스트 에디터',
+          description: '포스트를 작성하거나 수정합니다',
+        }}
+      />
+      <Paper sx={{ padding: 2 }} key="editor">
+        <LoginGuard>
+          <Grid container gap={3}>
+            <PostEditorPageHeader mode={mode.current} />
+            <PostEditorPageDescription mode={mode.current} />
+            <PostEditor mode={mode.current} />
+          </Grid>
+        </LoginGuard>
+        <ToastContainer />
+      </Paper>
+    </MainLayout>
+  );
+};

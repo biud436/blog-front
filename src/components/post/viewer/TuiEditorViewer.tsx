@@ -160,12 +160,6 @@ const useCodeCopyInjector = () => {
 
       item.appendChild(copyCode);
     });
-
-    // return () => {
-    //     preCode.forEach(item => {
-    //         item.remove();
-    //     });
-    // };
   }, []);
 };
 

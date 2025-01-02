@@ -16,8 +16,6 @@ import {
   createTheme,
   styled,
 } from '@mui/material';
-import { observer } from 'mobx-react-lite';
-import { ManageLayout } from '@/layouts/ManageLayout';
 import { useAdminPost } from '@/hooks/api/useAdminPost';
 import { SelectInputProps } from '@mui/material/Select/SelectInput';
 import Swal from 'sweetalert2';
@@ -36,7 +34,7 @@ const Wrapper = styled(Box)`
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
 `;
 
-const ManagePost = observer(() => {
+const ManagePost = () => {
   const router = useRouter();
   const { data, error } = useAdminPost();
   const tempPageNumber = useRef(1);
@@ -82,90 +80,88 @@ const ManagePost = observer(() => {
 
   return (
     <ThemeProvider theme={theme}>
-      <ManageLayout>
-        <Wrapper>
-          <Stack gap={1} direction={'column'}>
+      <Wrapper>
+        <Stack gap={1} direction={'column'}>
+          <Box
+            justifyContent={'flex-start'}
+            gap={2}
+            display={'flex'}
+            flexDirection={'column'}
+            alignItems={'flex-start'}
+          >
+            <Typography variant="h4">게시물 관리</Typography>
+            <Button variant="text" onClick={goToBack}>
+              뒤로가기
+            </Button>
+          </Box>
+          <Divider
+            variant="middle"
+            sx={{
+              backgroundColor: 'rgba(0, 0, 0, 0.12) !important',
+            }}
+          />
+        </Stack>
+        <Stack direction="row" justifyContent={'flex-end'}>
+          <PageOption />
+        </Stack>
+        <Stack direction="column" p={1} gap={1}>
+          {data?.entities.map(post => (
             <Box
-              justifyContent={'flex-start'}
-              gap={2}
-              display={'flex'}
-              flexDirection={'column'}
-              alignItems={'flex-start'}
-            >
-              <Typography variant="h4">게시물 관리</Typography>
-              <Button variant="text" onClick={goToBack}>
-                뒤로가기
-              </Button>
-            </Box>
-            <Divider
-              variant="middle"
+              key={post.id + 'ADMIN_POST_' + post.title}
               sx={{
-                backgroundColor: 'rgba(0, 0, 0, 0.12) !important',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                gap: 1,
               }}
-            />
-          </Stack>
-          <Stack direction="row" justifyContent={'flex-end'}>
-            <PageOption />
-          </Stack>
-          <Stack direction="column" p={1} gap={1}>
-            {data?.entities.map(post => (
-              <Box
-                key={post.id + 'ADMIN_POST_' + post.title}
+            >
+              <Typography
+                variant="body2"
+                component={Link}
+                onClick={() => router.push(`/posts/${post.id}`)}
                 sx={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  gap: 1,
+                  cursor: 'pointer',
+                  textDecoration: 'none',
+                  color: '#020202',
+
+                  '&:hover': {
+                    textDecoration: 'underline',
+                  },
                 }}
               >
-                <Typography
-                  variant="body2"
-                  component={Link}
-                  onClick={() => router.push(`/posts/${post.id}`)}
-                  sx={{
-                    cursor: 'pointer',
-                    textDecoration: 'none',
-                    color: '#020202',
-
-                    '&:hover': {
-                      textDecoration: 'underline',
-                    },
-                  }}
-                >
-                  [{post.id}] - {post.title}
-                </Typography>
-                <Stack direction={'row'}>
-                  <Button variant="text">수정</Button>
-                  <Button variant="text" color="warning" onClick={handleDelete}>
-                    삭제
-                  </Button>
-                </Stack>
-              </Box>
-            ))}
-          </Stack>
-          <Stack
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            direction="row"
-            p={1}
-            gap={1}
-          >
-            <Pagination
-              count={data?.pagination.maxPage}
-              page={postsStore.getPageNumber()}
-              onChange={handleChange}
-            />
-          </Stack>
-        </Wrapper>
-      </ManageLayout>
+                [{post.id}] - {post.title}
+              </Typography>
+              <Stack direction={'row'}>
+                <Button variant="text">수정</Button>
+                <Button variant="text" color="warning" onClick={handleDelete}>
+                  삭제
+                </Button>
+              </Stack>
+            </Box>
+          ))}
+        </Stack>
+        <Stack
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          direction="row"
+          p={1}
+          gap={1}
+        >
+          <Pagination
+            count={data?.pagination.maxPage}
+            page={postsStore.getPageNumber()}
+            onChange={handleChange}
+          />
+        </Stack>
+      </Wrapper>
     </ThemeProvider>
   );
-});
+};
 
-const PageOption = observer(() => {
+const PageOption = () => {
   const postsStore = usePostsStore();
   const changePageOption: SelectInputProps<number>['onChange'] = event => {
     postsStore.setPageSize((event.target as any).value);
@@ -186,6 +182,6 @@ const PageOption = observer(() => {
       <MenuItem value={100}>100 페이지</MenuItem>
     </Select>
   );
-});
+};
 
 export default ManagePost;

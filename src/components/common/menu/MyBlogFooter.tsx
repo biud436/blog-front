@@ -1,11 +1,10 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import { Button, Box, Grid2 as Grid } from '@mui/material';
-import { observer } from 'mobx-react-lite';
 import NextLink from 'next/link';
 import MetaCommonConfig from '@/components/common/utils/meta-config.json';
 
-export const MyBlogFooter = observer(() => (
+export const MyBlogFooter = () => (
   <Grid container spacing={2} sx={{}}>
     <Grid size={{ xs: 12 }}>
       <Box
@@ -31,4 +30,4 @@ export const MyBlogFooter = observer(() => (
       </Box>
     </Grid>
   </Grid>
-));
+);

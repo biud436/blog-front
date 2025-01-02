@@ -80,10 +80,6 @@ const RAW_RUNTIME_STATE =
           ["inquirer-directory", "npm:2.2.0"],\
           ["lint-staged", "npm:12.1.7"],\
           ["marked-react", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:1.3.0"],\
-          ["mobx", "npm:6.6.1"],\
-          ["mobx-persist-store", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:1.1.2"],\
-          ["mobx-react", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:7.5.2"],\
-          ["mobx-react-lite", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:3.4.0"],\
           ["next", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:14.2.15"],\
           ["next-mdx-remote", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:4.2.0"],\
           ["next-sitemap", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:3.1.32"],\
@@ -3331,10 +3327,6 @@ const RAW_RUNTIME_STATE =
           ["inquirer-directory", "npm:2.2.0"],\
           ["lint-staged", "npm:12.1.7"],\
           ["marked-react", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:1.3.0"],\
-          ["mobx", "npm:6.6.1"],\
-          ["mobx-persist-store", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:1.1.2"],\
-          ["mobx-react", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:7.5.2"],\
-          ["mobx-react-lite", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:3.4.0"],\
           ["next", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:14.2.15"],\
           ["next-mdx-remote", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:4.2.0"],\
           ["next-sitemap", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:3.1.32"],\
@@ -9031,106 +9023,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/mkdirp-npm-1.0.4-37f6ef56b9-d71b8dcd4b.zip/node_modules/mkdirp/",\
         "packageDependencies": [\
           ["mkdirp", "npm:1.0.4"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["mobx", [\
-      ["npm:6.6.1", {\
-        "packageLocation": "./.yarn/cache/mobx-npm-6.6.1-5529d198b9-128ae65d1c.zip/node_modules/mobx/",\
-        "packageDependencies": [\
-          ["mobx", "npm:6.6.1"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["mobx-persist-store", [\
-      ["npm:1.1.2", {\
-        "packageLocation": "./.yarn/cache/mobx-persist-store-npm-1.1.2-ea6b35dc69-e82b2b2ee4.zip/node_modules/mobx-persist-store/",\
-        "packageDependencies": [\
-          ["mobx-persist-store", "npm:1.1.2"]\
-        ],\
-        "linkType": "SOFT"\
-      }],\
-      ["virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:1.1.2", {\
-        "packageLocation": "./.yarn/__virtual__/mobx-persist-store-virtual-abd4e543df/0/cache/mobx-persist-store-npm-1.1.2-ea6b35dc69-e82b2b2ee4.zip/node_modules/mobx-persist-store/",\
-        "packageDependencies": [\
-          ["mobx-persist-store", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:1.1.2"],\
-          ["@types/mobx", null],\
-          ["mobx", "npm:6.6.1"]\
-        ],\
-        "packagePeers": [\
-          "@types/mobx",\
-          "mobx"\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["mobx-react", [\
-      ["npm:7.5.2", {\
-        "packageLocation": "./.yarn/cache/mobx-react-npm-7.5.2-2b4d82afcb-2d99f2459c.zip/node_modules/mobx-react/",\
-        "packageDependencies": [\
-          ["mobx-react", "npm:7.5.2"]\
-        ],\
-        "linkType": "SOFT"\
-      }],\
-      ["virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:7.5.2", {\
-        "packageLocation": "./.yarn/__virtual__/mobx-react-virtual-c6bf99fc32/0/cache/mobx-react-npm-7.5.2-2b4d82afcb-2d99f2459c.zip/node_modules/mobx-react/",\
-        "packageDependencies": [\
-          ["mobx-react", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:7.5.2"],\
-          ["@types/mobx", null],\
-          ["@types/react", "npm:18.2.18"],\
-          ["@types/react-dom", "npm:18.2.7"],\
-          ["@types/react-native", null],\
-          ["mobx", "npm:6.6.1"],\
-          ["mobx-react-lite", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:3.4.0"],\
-          ["react", "npm:18.2.0"],\
-          ["react-dom", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:18.2.0"],\
-          ["react-native", null]\
-        ],\
-        "packagePeers": [\
-          "@types/mobx",\
-          "@types/react-dom",\
-          "@types/react-native",\
-          "@types/react",\
-          "mobx",\
-          "react-dom",\
-          "react-native",\
-          "react"\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["mobx-react-lite", [\
-      ["npm:3.4.0", {\
-        "packageLocation": "./.yarn/cache/mobx-react-lite-npm-3.4.0-26d039ddfd-222d87647a.zip/node_modules/mobx-react-lite/",\
-        "packageDependencies": [\
-          ["mobx-react-lite", "npm:3.4.0"]\
-        ],\
-        "linkType": "SOFT"\
-      }],\
-      ["virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:3.4.0", {\
-        "packageLocation": "./.yarn/__virtual__/mobx-react-lite-virtual-1534c833c6/0/cache/mobx-react-lite-npm-3.4.0-26d039ddfd-222d87647a.zip/node_modules/mobx-react-lite/",\
-        "packageDependencies": [\
-          ["mobx-react-lite", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:3.4.0"],\
-          ["@types/mobx", null],\
-          ["@types/react", "npm:18.2.18"],\
-          ["@types/react-dom", "npm:18.2.7"],\
-          ["@types/react-native", null],\
-          ["mobx", "npm:6.6.1"],\
-          ["react", "npm:18.2.0"],\
-          ["react-dom", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:18.2.0"],\
-          ["react-native", null]\
-        ],\
-        "packagePeers": [\
-          "@types/mobx",\
-          "@types/react-dom",\
-          "@types/react-native",\
-          "@types/react",\
-          "mobx",\
-          "react-dom",\
-          "react-native",\
-          "react"\
         ],\
         "linkType": "HARD"\
       }]\

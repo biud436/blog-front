@@ -43,10 +43,6 @@ export async function generateMetadata(
       const res = await fetch(API_URL + '/posts/' + id, {
         method: 'GET',
         credentials: 'include',
-        // headers: {
-        //     ...CacheControl.NoCache,
-        //     ...(hasCookie ? { Cookie: cookie } : {}),
-        // },
         headers: {
           ...CacheControl.NoCache,
         },

@@ -2,11 +2,13 @@ import { Button, Grid2 as Grid, Typography } from '@mui/material';
 import ReturnIcon from '@mui/icons-material/KeyboardBackspace';
 import React from 'react';
 
+export type CategoryEditorHeaderProps = {
+  returnToManagePage: () => void;
+};
+
 export function CategoryEditorHeader({
   returnToManagePage,
-}: {
-  returnToManagePage: () => void;
-}) {
+}: CategoryEditorHeaderProps) {
   return (
     <Grid container spacing={0} marginBottom={2} gap={2}>
       <Grid size={{ xs: 12 }}>

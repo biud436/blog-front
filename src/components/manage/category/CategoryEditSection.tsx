@@ -1,19 +1,21 @@
 import { Button, Grid2 as Grid, Input } from '@mui/material';
 import React from 'react';
 
-export function CategoryEditSection({
-  categoryName,
-  onChangeInput,
-  setEditMode,
-  handleSubmit,
-}: {
+export type CategoryEditSectionProps = {
   categoryName: string;
   onChangeInput: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
   setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
   handleSubmit: () => void;
-}) {
+};
+
+export function CategoryEditSection({
+  categoryName,
+  onChangeInput,
+  setEditMode,
+  handleSubmit,
+}: CategoryEditSectionProps) {
   return (
     <Grid
       gap={2}

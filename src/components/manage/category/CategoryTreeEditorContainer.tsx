@@ -6,7 +6,6 @@ import {
   Box,
   Typography,
 } from '@mui/material';
-import { observer } from 'mobx-react-lite';
 import { createTheme } from '@mui/material/styles';
 import { DndProvider } from 'react-dnd';
 import {
@@ -21,7 +20,6 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 import React, { useCallback, useEffect, useState } from 'react';
 import { URL_MAP } from '@/common/URL';
-import { toJS } from 'mobx';
 import { CategoryDepthVO } from '@/models/CategoryDepthVO';
 import { useCategoryService } from '@/hooks/services/useCategoryService';
 import { API_URL } from '@/lib/request';
@@ -41,6 +39,7 @@ import { CategoryEditorHeader } from './CategoryEditorHeader';
 import { CategoryNode } from './CategoryNode';
 import { ServerResponse } from '@/types/ServerResponse';
 import { useRouter } from 'next/navigation';
+import { Meta } from '@/components/common/utils/Meta';
 
 const theme = createTheme({
   components: {
@@ -71,7 +70,7 @@ const theme = createTheme({
   },
 });
 
-export const CategoryTreeEditorContainer = observer(() => {
+export const CategoryTreeEditorContainer = () => {
   const router = useRouter();
   const [open, setOpen] = useState<boolean>(false);
   const categoryService = useCategoryService();
@@ -95,7 +94,7 @@ export const CategoryTreeEditorContainer = observer(() => {
    * 카테고리를 획득합니다.
    */
   const getFlatCategories = useCallback(() => {
-    const raw = toJS(categoryService.getCategories());
+    const raw = categoryService.getCategories();
     let resultData: CategoryResultTuple[] = [];
     const nodeItems: NodeModel[] = [];
 
@@ -318,6 +317,7 @@ export const CategoryTreeEditorContainer = observer(() => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <CategoryEditorHeader {...{ returnToManagePage }} />
+      <Meta title="카테고리 편집" description="카테고리를 편집합니다." />
 
       <CategoryAddDialog open={open} onClose={handleClose} />
       <Box
@@ -378,4 +378,4 @@ export const CategoryTreeEditorContainer = observer(() => {
       </Box>
     </ThemeProvider>
   );
-});
+};

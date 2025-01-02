@@ -11,7 +11,6 @@ import {
   Container,
   Button,
 } from '@mui/material';
-import { observer } from 'mobx-react-lite';
 import { ToastContainer } from 'react-toastify';
 
 import { ManageMenu } from '../components/manage/ManageMenu';
@@ -87,7 +86,7 @@ export function useAppBarProps(drawerWidth: number) {
   return theme;
 }
 
-export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
+export const ManageLayout = ({ children }: ManageLayoutProps) => {
   const isMounted = useMounted();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const theme = useThemeStore(state => state.getManage());
@@ -205,4 +204,4 @@ export const ManageLayout = observer(({ children }: ManageLayoutProps) => {
       </LoginGuard>
     </ThemeProvider>
   );
-});
+};

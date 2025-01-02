@@ -15,7 +15,6 @@ import {
   useForm,
 } from 'react-hook-form-mui';
 
-import { observer } from 'mobx-react-lite';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import styled from 'styled-components';
 import { useRouter } from 'next/navigation';
@@ -36,7 +35,7 @@ const RedText = styled.span`
 /**
  * 로그인 페이지 메인
  */
-export const LoginContainer = observer(() => {
+export const LoginContainer = () => {
   const theme = useThemeStore(state => state.getLogin());
   const formContext = useForm<LoginFormProps>({
     defaultValues: {
@@ -93,18 +92,6 @@ export const LoginContainer = observer(() => {
     const { username, password } = data;
 
     return await handleLogin(username, password);
-  };
-
-  /**
-   * 알림창 표시
-   */
-  const toastWrapper = (
-    message: '아이디를 입력해주세요' | '비밀번호를 입력해주세요' | string,
-  ) => {
-    toast(message, {
-      position: 'top-right',
-      containerId: '#login-page',
-    });
   };
 
   return (
@@ -194,4 +181,4 @@ export const LoginContainer = observer(() => {
       </FormContainer>
     </ThemeProvider>
   );
-});
+};

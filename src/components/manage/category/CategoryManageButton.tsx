@@ -1,5 +1,4 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
 import {
   ListItem,
   ListItemButton,
@@ -10,7 +9,7 @@ import { useRouter } from 'next/navigation';
 import { URL_MAP } from '@/common/URL';
 import Category from '@mui/icons-material/Category';
 
-export const CategoryManageButton = observer(() => {
+export const CategoryManageButton = () => {
   const router = useRouter();
 
   const handleClick = () => {
@@ -27,4 +26,4 @@ export const CategoryManageButton = observer(() => {
       </ListItemButton>
     </ListItem>
   );
-});
+};

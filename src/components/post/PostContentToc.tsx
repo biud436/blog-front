@@ -1,7 +1,6 @@
 'use client';
 
 import { Divider, Paper, Typography } from '@mui/material';
-import { observer } from 'mobx-react-lite';
 import Toc from 'react-toc';
 import React from 'react';
 
@@ -9,7 +8,7 @@ export interface PostContentTocProps {
   content: string;
 }
 
-export const PostContentToc = observer(({ content }: PostContentTocProps) => {
+export const PostContentToc = ({ content }: PostContentTocProps) => {
   return (
     <div className="tocWrapper">
       <Paper sx={{ padding: 1, borderLeft: '3px solid #1976d2' }}>
@@ -26,4 +25,4 @@ export const PostContentToc = observer(({ content }: PostContentTocProps) => {
       </Paper>
     </div>
   );
-});
+};

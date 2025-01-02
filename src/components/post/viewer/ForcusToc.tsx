@@ -2,11 +2,11 @@ import { useEffect, useRef } from 'react';
 import { useInView } from 'framer-motion';
 import * as React from 'react';
 
-export const ForcusToc = ({
-  setActiveId,
-}: {
+export type ForcusTocProps = {
   setActiveId: React.Dispatch<React.SetStateAction<string | null>>;
-}) => {
+};
+
+export const ForcusToc = ({ setActiveId }: ForcusTocProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const isInView = useInView(ref, {});
@@ -25,7 +25,6 @@ export const ForcusToc = ({
         );
 
         targets.forEach(target => {
-          // target.classList.add('active');
           setActiveId(target.id);
         });
       }

@@ -1,5 +1,4 @@
 import { Button, Grid2 as Grid, Typography } from '@mui/material';
-import { observer } from 'mobx-react-lite';
 import { SxProps, Theme } from '@mui/material/styles';
 import { NodeModel } from '@minoru/react-dnd-treeview';
 import ArrowRight from '@mui/icons-material/ArrowRight';
@@ -24,109 +23,77 @@ export interface CategoryNodeProps<T> {
   onEdit: CategoryNodeEditEventHandler;
 }
 
-export const CategoryNode = observer(
-  ({
-    node,
-    depth,
-    isOpen,
-    onToggle,
-    onDelete,
-    onEdit,
-  }: CategoryNodeProps<CategoryModel>) => {
-    const [categoryName, setCategoryName] = useState(node.text);
-    const [editMode, setEditMode] = useState(false);
-    const categoryNodeProp: SxProps<Theme> = useMemo(() => {
-      return {
-        m: 1,
-        ml: depth * 1.2,
-        p: 1,
-        boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.1)',
-        borderRadius: 1,
-        borderLeft: '3px solid #1976d2',
+export const CategoryNode = ({
+  node,
+  depth,
+  isOpen,
+  onToggle,
+  onDelete,
+  onEdit,
+}: CategoryNodeProps<CategoryModel>) => {
+  const [categoryName, setCategoryName] = useState(node.text);
+  const [editMode, setEditMode] = useState(false);
+  const categoryNodeProp: SxProps<Theme> = useMemo(() => {
+    return {
+      m: 1,
+      ml: depth * 1.2,
+      p: 1,
+      boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.1)',
+      borderRadius: 1,
+      borderLeft: '3px solid #1976d2',
 
-        '&:hover': {
-          background: 'rgba(0, 0, 0, 0.04)',
-          cursor: 'move',
-        },
-      };
-    }, [depth]);
-    const handleToggle = useCallback(
-      (e: React.MouseEvent) => {
-        e.preventDefault();
-        onToggle(node.id);
+      '&:hover': {
+        background: 'rgba(0, 0, 0, 0.04)',
+        cursor: 'move',
       },
-      [node.id, onToggle],
-    );
-
-    const emitOnEdit = useCallback(() => {
-      setEditMode(true);
-    }, [onEdit]);
-
-    const handleSubmit = useCallback(() => {
-      setEditMode(false);
-      onEdit(node.id, categoryName);
-    }, [node.id, categoryName]);
-
-    const onChangeInput = (
-      e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    ) => {
-      setCategoryName(e.target.value);
     };
+  }, [depth]);
+  const handleToggle = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      onToggle(node.id);
+    },
+    [node.id, onToggle],
+  );
 
-    /**
-     * 카테고리에 children이 있으면 펼쳐지는 클릭 핸들러를 장착한다.
-     */
-    if (node.droppable) {
-      return (
-        <Grid container spacing={0} sx={categoryNodeProp}>
-          {!editMode && (
-            <Grid pl={depth * 2} size={{ xs: 11 }} onClick={handleToggle}>
-              <Button
-                variant="text"
-                sx={{
-                  color: 'text.secondary',
-                  '&:hover': {
-                    color: 'text.primary',
-                  },
-                }}
-                startIcon={isOpen ? <ArrowDropDown /> : <ArrowRight />}
-              >
-                {node.text}
-              </Button>
-            </Grid>
-          )}
+  const emitOnEdit = useCallback(() => {
+    setEditMode(true);
+  }, [onEdit]);
 
-          {editMode ? (
-            <CategoryEditSection
-              {...{
-                categoryName,
-                onChangeInput,
-                setEditMode,
-                handleSubmit,
-              }}
-            />
-          ) : (
-            <CategoryNodeHandler {...{ emitOnEdit, node, onDelete }} />
-          )}
-        </Grid>
-      );
-    }
+  const handleSubmit = useCallback(() => {
+    setEditMode(false);
+    onEdit(node.id, categoryName);
+  }, [node.id, categoryName]);
 
+  const onChangeInput = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setCategoryName(e.target.value);
+  };
+
+  /**
+   * 카테고리에 children이 있으면 펼쳐지는 클릭 핸들러를 장착한다.
+   */
+  if (node.droppable) {
     return (
       <Grid container spacing={0} sx={categoryNodeProp}>
         {!editMode && (
-          <Grid size={{ xs: 11 }}>
-            <Typography
+          <Grid pl={depth * 2} size={{ xs: 11 }} onClick={handleToggle}>
+            <Button
+              variant="text"
               sx={{
-                m: 1,
                 color: 'text.secondary',
+                '&:hover': {
+                  color: 'text.primary',
+                },
               }}
-              variant="body2"
+              startIcon={isOpen ? <ArrowDropDown /> : <ArrowRight />}
             >
               {node.text}
-            </Typography>
+            </Button>
           </Grid>
         )}
+
         {editMode ? (
           <CategoryEditSection
             {...{
@@ -141,5 +108,35 @@ export const CategoryNode = observer(
         )}
       </Grid>
     );
-  },
-);
+  }
+
+  return (
+    <Grid container spacing={0} sx={categoryNodeProp}>
+      {!editMode && (
+        <Grid size={{ xs: 11 }}>
+          <Typography
+            sx={{
+              m: 1,
+              color: 'text.secondary',
+            }}
+            variant="body2"
+          >
+            {node.text}
+          </Typography>
+        </Grid>
+      )}
+      {editMode ? (
+        <CategoryEditSection
+          {...{
+            categoryName,
+            onChangeInput,
+            setEditMode,
+            handleSubmit,
+          }}
+        />
+      ) : (
+        <CategoryNodeHandler {...{ emitOnEdit, node, onDelete }} />
+      )}
+    </Grid>
+  );
+};

@@ -23,46 +23,41 @@ const ProgressBarWrapper = createGlobalStyle`
 `;
 
 interface ScrollProgressBarProps {
-    // empty
+  // empty
 }
 
 export const ScrollProgressBar: React.FC<ScrollProgressBarProps> = () => {
-    const router = useRouter();
-    const { scrollYProgress } = useScroll();
-    const scaleX = useSpring(scrollYProgress, {
-        stiffness: 100,
-        damping: 30,
-        restDelta: 0.001,
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+  const [isRenderOK, setIsRenderOK] = React.useState(false);
+
+  useEffect(() => {
+    scrollYProgress.onChange(() => {
+      if (window.scrollY > 0) {
+        setIsRenderOK(true);
+      }
     });
-    const [isRenderOK, setIsRenderOK] = React.useState(false);
+  }, []);
 
-    // if (router.pathname === URL_MAP.MAIN) {
-    //     return null;
-    // }
-
-    useEffect(() => {
-        scrollYProgress.onChange(() => {
-            if (window.scrollY > 0) {
-                setIsRenderOK(true);
-            }
-        });
-    }, []);
-
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return ReactDOM.createPortal(
-        <>
-            {isRenderOK && <ProgressBarWrapper />}
-            <motion.div
-                className="progress-bar"
-                style={{ scaleX }}
-                initial="hidden"
-                animate="show"
-            />
-        </>,
-        document.body,
-    )!;
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  return ReactDOM.createPortal(
+    <>
+      {isRenderOK && <ProgressBarWrapper />}
+      <motion.div
+        className="progress-bar"
+        style={{ scaleX }}
+        initial="hidden"
+        animate="show"
+      />
+    </>,
+    document.body,
+  )!;
 };
 
 export const ForwardedScrollProgressBar = React.memo(
-    React.forwardRef((props, _ref) => <ScrollProgressBar {...props} />),
+  React.forwardRef((props, _ref) => <ScrollProgressBar {...props} />),
 );
