@@ -2520,7 +2520,7 @@ __metadata:
     react-dnd: "npm:^16.0.1"
     react-dom: "npm:^18.2.0"
     react-hook-form: "npm:^7.54.2"
-    react-hook-form-mui: "npm:^7.4.1"
+    react-hook-form-mui: "npm:^7.5.0"
     react-is: "npm:^18.2.0"
     react-responsive: "npm:^9.0.0"
     react-syntax-highlighter: "npm:^15.5.0"
@@ -9130,21 +9130,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hook-form-mui@npm:^7.4.1":
-  version: 7.4.1
-  resolution: "react-hook-form-mui@npm:7.4.1"
+"react-hook-form-mui@npm:^7.5.0":
+  version: 7.5.0
+  resolution: "react-hook-form-mui@npm:7.5.0"
   peerDependencies:
     "@mui/icons-material": ">= 5.x <7"
     "@mui/material": ">= 5.x <7"
     "@mui/x-date-pickers": ">=7.17.0 <8"
-    react: ">=17 <19"
+    react: ">=17 <20"
     react-hook-form: ">=7.33.1"
   peerDependenciesMeta:
     "@mui/icons-material":
       optional: true
     "@mui/x-date-pickers":
       optional: true
-  checksum: 10/fd3fc41da8aeb7c3f2b8ea06650416bf9e164bf6f73938cf3513fb4e6420c13ddf78b2c27e7b33c1408204108c2ffba6aa5110c98d36ad4334220bc8c66adf5e
+  checksum: 10/e4a28f1013566c6af940e884e64c8087653fb36d9bd0415ab1c6b3e301beb299fa3950e135e9166e1f0a1b44ca445343833cfcb81b7b01e87b9baf58bc9c9af9
   languageName: node
   linkType: hard
 
