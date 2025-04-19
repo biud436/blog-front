@@ -1,5 +1,6 @@
 import { postsService } from '@/api/postsService';
 import { handleAxiosError } from '@/lib/errorInterceptor';
+import usePostService from '@/store/post/PostService';
 import { useMutation } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
 
@@ -9,10 +10,14 @@ import { useSearchParams } from 'next/navigation';
 export function useGetPost() {
   const searchParams = useSearchParams();
   const id = parseInt(searchParams?.get('id') as string, 10);
+  const postService = usePostService();
 
   const getPost = useMutation({
     mutationKey: ['/posts', id],
     mutationFn: postsService.getPost,
+    onSuccess: res => {
+      postService.setData(res);
+    },
     onError: error => {
       handleAxiosError(error);
     },

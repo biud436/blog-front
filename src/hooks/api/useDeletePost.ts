@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { postsService } from '@/api/postsService';
 import { handleAxiosError } from '@/lib/errorInterceptor';

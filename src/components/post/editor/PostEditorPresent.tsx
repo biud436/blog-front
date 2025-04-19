@@ -80,6 +80,10 @@ export const PostEditorPresent = ({ mode }: EditPageProps) => {
     });
   };
 
+  const setMarkdown = (markdown: string) => {
+    editorRef.current?.getInstance().setMarkdown(markdown);
+  };
+
   /**
    * 카테고리를 플랫하게 만들어서 반환한다.
    */
@@ -109,9 +113,7 @@ export const PostEditorPresent = ({ mode }: EditPageProps) => {
         onSuccess: () => {
           const fetchData = () => {
             setTitle(postService.getTitle());
-            editorRef.current
-              ?.getInstance()
-              .setMarkdown(postService.getContent());
+            setMarkdown(postService.getContent());
           };
 
           if (!editorRef.current) {

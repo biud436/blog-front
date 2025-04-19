@@ -1,6 +1,7 @@
 import instance from '@/lib/axios-new';
 import { API_URL, CacheControl } from '@/lib/request';
 import { BlogServerResponse } from '@/models/BlogServerResponse';
+import { Post } from '@/models/Post';
 import { PostContent } from '@/models/PostContent';
 import { PostEntity } from '@/models/PostEntity';
 import axios from 'axios';
@@ -46,7 +47,7 @@ export const postsService = {
     return res.data;
   },
 
-  async getPost(postId: number) {
+  async getPost(postId: number): Promise<Post> {
     const res = await axios.get(`/posts/${postId}`, {
       withCredentials: true,
     });
