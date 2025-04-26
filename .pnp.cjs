@@ -112,7 +112,7 @@ const RAW_RUNTIME_STATE =
           ["uuid", "npm:8.3.2"],\
           ["web-vitals", "npm:2.1.2"],\
           ["zod", "npm:3.24.1"],\
-          ["zustand", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:5.0.2"]\
+          ["zustand", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:5.0.3"]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -3359,7 +3359,7 @@ const RAW_RUNTIME_STATE =
           ["uuid", "npm:8.3.2"],\
           ["web-vitals", "npm:2.1.2"],\
           ["zod", "npm:3.24.1"],\
-          ["zustand", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:5.0.2"]\
+          ["zustand", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:5.0.3"]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -13909,17 +13909,17 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["zustand", [\
-      ["npm:5.0.2", {\
-        "packageLocation": "./.yarn/cache/zustand-npm-5.0.2-35adcdc9f7-9fb60796b9.zip/node_modules/zustand/",\
+      ["npm:5.0.3", {\
+        "packageLocation": "./.yarn/cache/zustand-npm-5.0.3-6b60927ae4-35728fdaa6.zip/node_modules/zustand/",\
         "packageDependencies": [\
-          ["zustand", "npm:5.0.2"]\
+          ["zustand", "npm:5.0.3"]\
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:5.0.2", {\
-        "packageLocation": "./.yarn/__virtual__/zustand-virtual-a7d2080530/0/cache/zustand-npm-5.0.2-35adcdc9f7-9fb60796b9.zip/node_modules/zustand/",\
+      ["virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:5.0.3", {\
+        "packageLocation": "./.yarn/__virtual__/zustand-virtual-65d6ecc18b/0/cache/zustand-npm-5.0.3-6b60927ae4-35728fdaa6.zip/node_modules/zustand/",\
         "packageDependencies": [\
-          ["zustand", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:5.0.2"],\
+          ["zustand", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:5.0.3"],\
           ["@types/immer", null],\
           ["@types/react", "npm:18.2.18"],\
           ["@types/use-sync-external-store", null],\
