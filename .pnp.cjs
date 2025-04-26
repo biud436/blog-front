@@ -111,7 +111,7 @@ const RAW_RUNTIME_STATE =
           ["typescript", "patch:typescript@npm%3A5.2.2#optional!builtin<compat/typescript>::version=5.2.2&hash=f3b441"],\
           ["uuid", "npm:8.3.2"],\
           ["web-vitals", "npm:2.1.2"],\
-          ["zod", "npm:3.24.1"],\
+          ["zod", "npm:3.24.3"],\
           ["zustand", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:5.0.3"]\
         ],\
         "linkType": "SOFT"\
@@ -3358,7 +3358,7 @@ const RAW_RUNTIME_STATE =
           ["typescript", "patch:typescript@npm%3A5.2.2#optional!builtin<compat/typescript>::version=5.2.2&hash=f3b441"],\
           ["uuid", "npm:8.3.2"],\
           ["web-vitals", "npm:2.1.2"],\
-          ["zod", "npm:3.24.1"],\
+          ["zod", "npm:3.24.3"],\
           ["zustand", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:5.0.3"]\
         ],\
         "linkType": "SOFT"\
@@ -13900,10 +13900,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["zod", [\
-      ["npm:3.24.1", {\
-        "packageLocation": "./.yarn/cache/zod-npm-3.24.1-62ba4e84b3-54e2595649.zip/node_modules/zod/",\
+      ["npm:3.24.3", {\
+        "packageLocation": "./.yarn/cache/zod-npm-3.24.3-464710625e-1b15db625c.zip/node_modules/zod/",\
         "packageDependencies": [\
-          ["zod", "npm:3.24.1"]\
+          ["zod", "npm:3.24.3"]\
         ],\
         "linkType": "HARD"\
       }]\
