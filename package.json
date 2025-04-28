@@ -68,7 +68,7 @@
         "rimraf": "3.0.2",
         "sass": "^1.56.0",
         "serve": "13.0.2",
-        "styled-components": "^6.1.13",
+        "styled-components": "^6.1.17",
         "stylelint": "14.2.0",
         "sweetalert2": "^11.15.2",
         "swr": "^2.2.0",
