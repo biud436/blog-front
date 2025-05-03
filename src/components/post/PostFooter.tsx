@@ -31,6 +31,8 @@ export function PostFooter({ post, goBack }: PostFooterProps) {
       direction="row"
       alignItems="center"
       justifyContent={'space-between'}
+      mt={2}
+      mb={4}
     >
       <Grid size={{ xs: 8 }}>
         <Button variant="contained" color="primary" onClick={() => goBack()}>

@@ -14,7 +14,7 @@ const Viewer = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="flex items-center justify-center p-4 m-4 text-lg rounded-md bg-gray-50">
+      <div className="flex items-center justify-center p-5 m-5 text-lg bg-gray-100 rounded-md">
         로딩중...
       </div>
     ),

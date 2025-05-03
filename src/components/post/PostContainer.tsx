@@ -9,18 +9,6 @@ import { ToastContainer } from 'react-toastify';
 import React from 'react';
 import dynamic from 'next/dynamic';
 
-const PostContentTocDynamic = dynamic(
-  async () => {
-    const [m] = await Promise.all([import('./PostContentToc')]);
-
-    return m.PostContentToc;
-  },
-  {
-    ssr: false,
-    loading: () => <div>Loading...</div>,
-  },
-);
-
 export type PostContainerProps = {
   /**
    * 포스트 데이터
@@ -32,13 +20,21 @@ export type PostContainerProps = {
   goBack: () => void;
 };
 
-export function TocWrapper({ content }: { content: string }) {
-  return (
-    <Paper>
-      <PostContentTocDynamic content={content} />
-    </Paper>
-  );
-}
+const DisqusThread = dynamic(
+  async () => {
+    const [mod] = await Promise.all([import('./PostComment')]);
+
+    return mod.default;
+  },
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex items-center justify-center p-5 m-5 text-lg bg-gray-100 rounded-md">
+        로딩중...
+      </div>
+    ),
+  },
+);
 
 export function PostContainer({ post, goBack }: PostContainerProps) {
   return (
@@ -77,21 +73,15 @@ export function PostContainer({ post, goBack }: PostContainerProps) {
               <PostHeader post={post} />
               <PostContent post={post} />
             </Grid>
-            <Divider
-              sx={{
-                mb: 3,
-              }}
-            />
           </Box>
+          <DisqusThread
+            identifier={post.id.toString()}
+            url={`https://blog.biud436.com/posts/${post.id}`}
+            title={post.title}
+          />
+
           <PostFooter post={post} goBack={goBack} />
         </Grid>
-        <Box
-          sx={{
-            display: 'inline-flex',
-          }}
-        >
-          <TocWrapper content={post.content} />
-        </Box>
       </Grid>
       <ToastContainer />
     </Box>

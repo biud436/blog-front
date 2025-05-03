@@ -1405,7 +1405,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prop-types@npm:^15.7.14":
+"@types/prop-types@npm:^15, @types/prop-types@npm:^15.7.14":
   version: 15.7.14
   resolution: "@types/prop-types@npm:15.7.14"
   checksum: 10/d0c5407b9ccc3dd5fae0ccf9b1007e7622ba5e6f1c18399b4f24dff33619d469da4b9fa918a374f19dc0d9fe6a013362aab0b844b606cfc10676efba3f5f736d
@@ -2476,6 +2476,7 @@ __metadata:
     "@types/jest": "npm:^29.5.3"
     "@types/node": "npm:^20.6.3"
     "@types/prismjs": "npm:^1"
+    "@types/prop-types": "npm:^15"
     "@types/react": "npm:^18.2.4"
     "@types/react-dom": "npm:^18.2.7"
     "@types/react-is": "npm:^18"
@@ -2496,6 +2497,7 @@ __metadata:
     css-loader: "npm:^6.7.3"
     dart-sass: "npm:^1.25.0"
     dayjs: "npm:^1.11.10"
+    disqus-react: "npm:^1.1.6"
     dompurify: "npm:^2.4.0"
     eslint: "npm:^8.36.0"
     eslint-config-prettier: "npm:8.3.0"
@@ -2515,6 +2517,7 @@ __metadata:
     postcss: "npm:^8.4.22"
     prettier: "npm:^2.6.2"
     prismjs: "npm:^1.29.0"
+    prop-types: "npm:^15.8.1"
     prosemirror-transform: "npm:^1.10.2"
     react: "npm:^18.2.0"
     react-dnd: "npm:^16.0.1"
@@ -3718,6 +3721,16 @@ __metadata:
   dependencies:
     path-type: "npm:^4.0.0"
   checksum: 10/fa05e18324510d7283f55862f3161c6759a3f2f8dbce491a2fc14c8324c498286c54282c1f0e933cb930da8419b30679389499b919122952a4f8592362ef4615
+  languageName: node
+  linkType: hard
+
+"disqus-react@npm:^1.1.6":
+  version: 1.1.6
+  resolution: "disqus-react@npm:1.1.6"
+  peerDependencies:
+    react: ^15.6.1 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^15.6.1 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10/2375f4a1628e19d2af0c1525e50aaab15395d77f9122d954f0760db58bbabee2ff7eaa8e5a3b27f07ed23d23973ea01858a53b4bc1a98b55f7cb55695086c9c7
   languageName: node
   linkType: hard
 

@@ -126,6 +126,11 @@ const ViewerWrapper = styled.div`
       color: #222222;
     }
   }
+
+  .toastui-editor-contents p {
+    color: #222222;
+    font-size: 1.2rem;
+  }
 `;
 
 const useCodeCopyInjector = () => {
@@ -146,7 +151,6 @@ const useCodeCopyInjector = () => {
         document.body.appendChild(textArea);
         textArea.select();
 
-        // document.execCommand('copy');
         navigator.clipboard.writeText(item.innerText);
 
         document.body.removeChild(textArea);
@@ -225,8 +229,6 @@ const TuiEditorViewer = ({ content }: { content: string }) => {
       },
     };
   }, []);
-
-  // useCodeCopyInjector();
 
   return (
     <ViewerWrapper>
