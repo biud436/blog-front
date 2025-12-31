@@ -50,7 +50,7 @@
     "inquirer-directory": "2.2.0",
     "lint-staged": "12.1.7",
     "marked-react": "^1.3.0",
-    "next": "^14.2.15",
+    "next": "14.2.35",
     "next-mdx-remote": "^4.2.0",
     "node-plop": "0.26.2",
     "plop": "2.7.4",
