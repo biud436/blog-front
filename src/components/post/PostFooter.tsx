@@ -27,35 +27,86 @@ export function PostFooter({ post, goBack }: PostFooterProps) {
   return (
     <Grid
       container
-      spacing={0}
+      spacing={2}
       direction="row"
       alignItems="center"
-      justifyContent={'space-between'}
-      mt={2}
-      mb={4}
+      justifyContent={isAuthorized ? 'space-between' : 'flex-start'}
+      sx={{
+        paddingTop: '32px',
+        borderTop: '1px solid #e6e6e6',
+      }}
     >
-      <Grid size={{ xs: 8 }}>
-        <Button variant="contained" color="primary" onClick={() => goBack()}>
-          이전
+      {/* Back button - Medium style: minimal design */}
+      <Grid>
+        <Button
+          onClick={() => goBack()}
+          sx={{
+            color: '#242424',
+            fontSize: '16px',
+            fontWeight: 500,
+            textTransform: 'none',
+            padding: '8px 16px',
+            border: '1px solid #242424',
+            borderRadius: '24px',
+            transition: 'all 0.2s ease',
+            '&:hover': {
+              backgroundColor: '#242424',
+              color: '#ffffff',
+            },
+          }}
+        >
+          ← 이전
         </Button>
       </Grid>
+
+      {/* Admin controls - only visible to authorized users */}
       {isAuthorized && (
-        <Grid container spacing={0}>
-          <Grid
-            size={{ xs: 12 }}
-            gap={2}
+        <Grid
+          sx={{
+            display: 'flex',
+            gap: 2,
+          }}
+        >
+          <Button
+            onClick={handleEditPost}
             sx={{
-              display: 'flex',
-              justifyContent: 'end',
+              color: '#6B6B6B',
+              fontSize: '16px',
+              fontWeight: 500,
+              textTransform: 'none',
+              padding: '8px 16px',
+              border: '1px solid #e6e6e6',
+              borderRadius: '24px',
+              transition: 'all 0.2s ease',
+              '&:hover': {
+                backgroundColor: '#f7f7f7',
+                borderColor: '#242424',
+                color: '#242424',
+              },
             }}
           >
-            <Button variant="outlined" color="warning" onClick={handleEditPost}>
-              수정
-            </Button>
-            <Button variant="outlined" color="error" onClick={handleDeletePost}>
-              삭제
-            </Button>
-          </Grid>
+            수정
+          </Button>
+          <Button
+            onClick={handleDeletePost}
+            sx={{
+              color: '#6B6B6B',
+              fontSize: '16px',
+              fontWeight: 500,
+              textTransform: 'none',
+              padding: '8px 16px',
+              border: '1px solid #e6e6e6',
+              borderRadius: '24px',
+              transition: 'all 0.2s ease',
+              '&:hover': {
+                backgroundColor: '#ff4444',
+                borderColor: '#ff4444',
+                color: '#ffffff',
+              },
+            }}
+          >
+            삭제
+          </Button>
         </Grid>
       )}
     </Grid>

@@ -38,51 +38,83 @@ const DisqusThread = dynamic(
 
 export function PostContainer({ post, goBack }: PostContainerProps) {
   return (
-    <Box>
-      <Grid
-        container
-        spacing={2}
+    <Box
+      sx={{
+        backgroundColor: '#ffffff',
+        minHeight: '100vh',
+      }}
+    >
+      {/* Main article container - Medium style: centered with max-width */}
+      <Box
+        component="article"
         sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          height: '98vh',
+          maxWidth: '1080px',
+          margin: '0 auto',
+          width: '100%',
         }}
       >
-        <Grid
-          size={{
-            xs: 12,
-            sm: 12,
-            md: 11,
-            lg: 11,
+        {/* Header */}
+        <PostHeader post={post} />
+
+        {/* Content */}
+        <Box
+          sx={{
+            paddingBottom: {
+              xs: '48px',
+              md: '64px',
+            },
           }}
         >
-          <Box
-            sx={{
-              marginBottom: 3,
-              padding: {
-                xs: 2,
-                sm: 2,
-                md: 3,
-                lg: 3,
-              },
-              width: '100%',
-            }}
-            key={post.id}
-          >
-            <Grid container gap={2}>
-              <PostHeader post={post} />
-              <PostContent post={post} />
-            </Grid>
-          </Box>
+          <PostContent post={post} />
+        </Box>
+
+        {/* Divider before comments */}
+        <Divider
+          sx={{
+            maxWidth: '680px',
+            margin: {
+              xs: '48px 24px',
+              sm: '56px 32px',
+              md: '64px auto',
+            },
+            borderColor: '#e6e6e6',
+          }}
+        />
+
+        {/* Comments section */}
+        <Box
+          sx={{
+            maxWidth: '680px',
+            margin: '0 auto',
+            padding: {
+              xs: '0 24px 48px',
+              sm: '0 32px 56px',
+              md: '0 0 64px',
+            },
+          }}
+        >
           <DisqusThread
             identifier={post.id.toString()}
             url={`https://blog.biud436.com/posts/${post.id}`}
             title={post.title}
           />
+        </Box>
 
+        {/* Footer */}
+        <Box
+          sx={{
+            maxWidth: '680px',
+            margin: '0 auto',
+            padding: {
+              xs: '0 24px 48px',
+              sm: '0 32px 56px',
+              md: '0 0 64px',
+            },
+          }}
+        >
           <PostFooter post={post} goBack={goBack} />
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
       <ToastContainer />
     </Box>
   );

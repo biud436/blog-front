@@ -33,62 +33,73 @@ export function PostHeader({ post }: PostHeaderProps) {
   return (
     <Stack
       sx={{
-        background: 'linear-gradient(to left, #ffffff, #f0f0f0)',
         width: '100%',
+        maxWidth: '680px',
+        margin: '0 auto',
         padding: {
-          xs: 2,
-          sm: 2,
-          md: 3,
-          lg: 3,
+          xs: '48px 24px 32px',
+          sm: '56px 32px 40px',
+          md: '64px 0 48px',
         },
-        borderRadius: 2,
-        border: '1px solid #e0e0e0',
       }}
     >
-      <Grid
-        size={{ xs: 12 }}
-        justifyContent={{
-          md: 'space-between',
-        }}
+      {/* Title - Medium style: large serif font */}
+      <Typography
+        variant="h1"
         sx={{
-          display: 'flex',
-          mb: 1,
+          fontSize: {
+            xs: '32px',
+            sm: '40px',
+            md: '48px',
+          },
+          fontWeight: 700,
+          lineHeight: 1.2,
+          letterSpacing: '-0.02em',
+          color: '#242424',
+          marginBottom: '16px',
+          fontFamily: 'Georgia, Cambria, "Times New Roman", Times, serif',
+        }}
+      >
+        {post.title}
+      </Typography>
+
+      {/* Meta information - author and date */}
+      <Stack
+        direction="row"
+        alignItems="center"
+        gap={2}
+        sx={{
+          marginTop: '24px',
+          paddingBottom: '32px',
+          borderBottom: '1px solid #e6e6e6',
         }}
       >
         <Typography
-          variant="h4"
-          sx={{ color: 'text.primary', fontWeight: 'bold' }}
+          sx={{
+            fontSize: '16px',
+            color: '#242424',
+            fontWeight: 500,
+          }}
         >
-          {post.title}
-        </Typography>
-      </Grid>
-      <Grid
-        size={{ xs: 12 }}
-        display="flex"
-        justifyContent="flex-start"
-        alignItems={'center'}
-        flexDirection={{
-          xs: 'column',
-          sm: 'column',
-          md: 'column',
-          lg: 'row',
-        }}
-        flexShrink={{
-          xs: 0,
-          sm: 0,
-          md: 0,
-          lg: 1,
-        }}
-        mb={0}
-        gap={3}
-      >
-        <Typography sx={{ color: 'GrayText', fontWeight: 'bold' }} variant="h6">
           {post.user?.profile?.nickname}
         </Typography>
-        <Typography sx={{ color: 'GrayText' }}>
+        <Typography
+          sx={{
+            fontSize: '14px',
+            color: '#6B6B6B',
+          }}
+        >
+          ·
+        </Typography>
+        <Typography
+          sx={{
+            fontSize: '14px',
+            color: '#6B6B6B',
+          }}
+        >
           {DateUtil.ToDateStringBySeoul(post?.uploadDate!, Formatter.DATETIME)}
         </Typography>
-      </Grid>
+      </Stack>
     </Stack>
   );
 }
