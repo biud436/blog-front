@@ -15,7 +15,7 @@ export function CategoryNodeHandler({
   emitOnEdit,
   node,
   onDelete,
-}: CategoryNodeHandlerProps): JSX.Element {
+}: CategoryNodeHandlerProps): React.ReactElement {
   return (
     <Grid
       size={{ xs: 1 }}

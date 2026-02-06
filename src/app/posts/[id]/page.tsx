@@ -10,8 +10,8 @@ import { PostPage } from '@/components/pages/post';
 import { Metadata, ResolvingMetadata } from 'next';
 
 type Props = {
-  params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export async function generateMetadata(
@@ -19,9 +19,9 @@ export async function generateMetadata(
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
   // read route params
-  const id = params.id;
+  const { id } = await params;
 
-  const headersList = headers();
+  const headersList = await headers();
   const cookie = headersList.getSetCookie();
   let post = {} as Post;
   let error: any | null = null;
@@ -79,8 +79,8 @@ export async function generateMetadata(
 }
 
 async function getPost(id: string) {
-  const headersList = headers();
-  const cookieStore = cookies();
+  const headersList = await headers();
+  const cookieStore = await cookies();
   const cookie = headersList.getSetCookie();
   let post = {} as Post;
   let error: any | null = null;
@@ -133,7 +133,8 @@ async function getPost(id: string) {
 }
 
 export default async function PostsPage({ params }: Props) {
-  const { post, error } = await getPost(params.id);
+  const { id } = await params;
+  const { post, error } = await getPost(id);
 
   if (error) {
     return <div>{error}</div>;

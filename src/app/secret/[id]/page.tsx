@@ -2,7 +2,7 @@
 'use client';
 
 import SecretPostWrapper from '@/components/post/SecretPostWrapper2';
-import React from 'react';
+import React, { use } from 'react';
 
 export interface SecretPostProps {
     id: number;
@@ -11,9 +11,10 @@ export interface SecretPostProps {
 export default function SecretPost({
     params,
 }: {
-    params: {
+    params: Promise<{
         id: string;
-    };
+    }>;
 }) {
-    return <SecretPostWrapper id={Number(params.id)} />;
+    const { id } = use(params);
+    return <SecretPostWrapper id={Number(id)} />;
 }

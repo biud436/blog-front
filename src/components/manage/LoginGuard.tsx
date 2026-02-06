@@ -35,7 +35,7 @@ export function LoginGuardPresent() {
 }
 
 export interface LoginGuardProps {
-  children: JSX.Element;
+  children: React.ReactElement;
 }
 
 export const LoginGuard = ({ children }: LoginGuardProps) => {

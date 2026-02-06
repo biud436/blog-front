@@ -12,7 +12,7 @@ export function useTimedEffect(
   effect: IntervalCallbackFC,
   milliseconds: number,
 ) {
-  const timeRef = useRef<any>();
+  const timeRef = useRef<any>(undefined);
 
   useEffect(() => {
     timeRef.current = setTimeout(effect, milliseconds);

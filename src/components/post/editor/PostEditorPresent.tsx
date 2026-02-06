@@ -45,7 +45,7 @@ export const PostEditorPresent = ({ mode }: EditPageProps) => {
   const searchParams = useSearchParams();
   const [categories, setCategories] = useState<CategoryDepthVO[]>([]);
   const [currentCategoryId, setCurrentCategoryId] = useState(1);
-  const editorRef = useRef<MyBlogEditor>(null);
+  const editorRef = useRef<MyBlogEditor>(null!);
   const postService = usePostService();
   const toolbarItems = useToolbarItems();
 

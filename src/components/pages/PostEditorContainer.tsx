@@ -41,7 +41,7 @@ export const PostEditorContainer = ({ editorMode }: { editorMode: string }) => {
   // useState로 할 경우, 렌더링이 두 번 일어나면서 버그가 발생합니다.
   const mode = useRef<EditPageProps['mode']>('create');
 
-  const LoginGuard = ({ children }: { children: JSX.Element }) => {
+  const LoginGuard = ({ children }: { children: React.ReactElement }) => {
     return !isAuthorized ? (
       <Grid
         container

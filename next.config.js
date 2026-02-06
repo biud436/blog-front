@@ -12,7 +12,6 @@ const withMDX = require('@next/mdx')({
 /** @type {import('next').NextConfig} */
 const nextConfig = withMDX({
     // reactStrictMode: true,
-    swcMinify: true,
     async redirects() {
         return [
             {

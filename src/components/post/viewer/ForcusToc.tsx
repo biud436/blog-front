@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useInView } from 'framer-motion';
+import { useInView } from 'motion/react';
 import * as React from 'react';
 
 export type ForcusTocProps = {
