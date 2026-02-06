@@ -33,7 +33,7 @@ const useThemeStore = create<ThemeState>((set, get) => ({
             backgroundColor: '#fff',
           },
           '*::-webkit-scrollbar-track': {
-            '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0)',
+            WebkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0)',
           },
           '*::-webkit-scrollbar-thumb': {
             backgroundColor: '#0A68B4',
