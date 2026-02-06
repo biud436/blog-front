@@ -101,7 +101,7 @@ const RAW_RUNTIME_STATE =
           ["react-is", "npm:18.2.0"],\
           ["react-responsive", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:9.0.0"],\
           ["react-syntax-highlighter", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:15.5.0"],\
-          ["react-toastify", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:9.1.3"],\
+          ["react-toastify", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:11.0.5"],\
           ["react-toc", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:3.1.0"],\
           ["rimraf", "npm:3.0.2"],\
           ["sass", "npm:1.56.0"],\
@@ -3529,7 +3529,7 @@ const RAW_RUNTIME_STATE =
           ["react-is", "npm:18.2.0"],\
           ["react-responsive", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:9.0.0"],\
           ["react-syntax-highlighter", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:15.5.0"],\
-          ["react-toastify", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:9.1.3"],\
+          ["react-toastify", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:11.0.5"],\
           ["react-toc", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:3.1.0"],\
           ["rimraf", "npm:3.0.2"],\
           ["sass", "npm:1.56.0"],\
@@ -4135,13 +4135,6 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["clsx", [\
-      ["npm:1.2.1", {\
-        "packageLocation": "./.yarn/cache/clsx-npm-1.2.1-77792dc182-5ded6f61f1.zip/node_modules/clsx/",\
-        "packageDependencies": [\
-          ["clsx", "npm:1.2.1"]\
-        ],\
-        "linkType": "HARD"\
-      }],\
       ["npm:2.1.1", {\
         "packageLocation": "./.yarn/cache/clsx-npm-2.1.1-96125b98be-cdfb57fa6c.zip/node_modules/clsx/",\
         "packageDependencies": [\
@@ -11151,20 +11144,20 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["react-toastify", [\
-      ["npm:9.1.3", {\
-        "packageLocation": "./.yarn/cache/react-toastify-npm-9.1.3-2f82dd0b41-12667aa10e.zip/node_modules/react-toastify/",\
+      ["npm:11.0.5", {\
+        "packageLocation": "./.yarn/cache/react-toastify-npm-11.0.5-6e5a4fd835-c27197c2bc.zip/node_modules/react-toastify/",\
         "packageDependencies": [\
-          ["react-toastify", "npm:9.1.3"]\
+          ["react-toastify", "npm:11.0.5"]\
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:9.1.3", {\
-        "packageLocation": "./.yarn/__virtual__/react-toastify-virtual-0812368ed0/0/cache/react-toastify-npm-9.1.3-2f82dd0b41-12667aa10e.zip/node_modules/react-toastify/",\
+      ["virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:11.0.5", {\
+        "packageLocation": "./.yarn/__virtual__/react-toastify-virtual-92f68c2d7a/0/cache/react-toastify-npm-11.0.5-6e5a4fd835-c27197c2bc.zip/node_modules/react-toastify/",\
         "packageDependencies": [\
-          ["react-toastify", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:9.1.3"],\
+          ["react-toastify", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:11.0.5"],\
           ["@types/react", "npm:19.2.13"],\
           ["@types/react-dom", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:19.2.3"],\
-          ["clsx", "npm:1.2.1"],\
+          ["clsx", "npm:2.1.1"],\
           ["react", "npm:19.2.4"],\
           ["react-dom", "virtual:fddea4c784c1a31f2059813ca23b60ec6ac16cba175123cdccb9d802cd319a73f2526f829fda33a98f5f5d0f08ca10dbe49a3aea29e325df95eb0c92868473c6#npm:19.2.4"]\
         ],\
