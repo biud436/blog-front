@@ -6,17 +6,13 @@ import { SearchBuilder } from '@/components/common/builder/SearchBuilder';
 import { PostsSearchType } from '@/models/PostsSearchType';
 
 import {
-  Avatar,
   Box,
   Card,
-  CardActions,
   CardContent,
-  CardHeader,
   CardMedia,
   CssBaseline,
   Grid2 as Grid,
   Pagination,
-  SxProps,
   Typography,
 } from '@mui/material';
 import { useEffect } from 'react';
@@ -44,7 +40,7 @@ export const PostsPresent = () => {
   const { fetchData } = useFetchData();
   const { fetchDataBySearch } = useFetchDataBySearch();
 
-  const handlePage = (event: React.ChangeEvent<unknown>, page: number) => {
+  const handlePage = (_event: React.ChangeEvent<unknown>, page: number) => {
     fetchData(page);
   };
 
@@ -66,185 +62,296 @@ export const PostsPresent = () => {
   }
 
   return (
-    <Grid
-      sx={{ flexGrow: 1 }}
-      container
-      justifyContent="center"
-      alignItems="center"
-      spacing={2}
-      flexDirection={'column'}
+    <Box
+      sx={{
+        minHeight: '100vh',
+        py: 6,
+      }}
     >
-      <Grid
-        container
+      <CssBaseline />
+
+      {/* Header Section */}
+      <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'column',
-          p: 2,
+          maxWidth: '1400px',
+          margin: '0 auto',
+          px: { xs: 2, sm: 3, md: 4 },
+          mb: 6,
         }}
       >
-        <CssBaseline />
-        <Grid
-          size={{
-            xs: 12,
-            sm: 12,
-            md: 12,
-            lg: 12,
-            xl: 12,
-          }}
+        <Typography
+          variant="h2"
           sx={{
-            display: 'grid',
-            gridTemplateColumns: {
-              xs: '1fr',
-              sm: '1fr',
-              md: '1fr 1fr ',
-              lg: '1fr 1fr 1fr 1fr',
-            },
-            gridTemplateRows: '1fr',
-            gap: 3,
-            flexDirection: 'column',
-            marginTop: 2,
-            width: '100%',
-            px: 2,
+            fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+            fontWeight: 800,
+            color: '#1a1a1a',
+            mb: 2,
+            letterSpacing: '-0.02em',
+          }}
+        >
+          최근 포스트
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            fontSize: { xs: '1rem', sm: '1.125rem' },
+            color: '#666',
+            fontWeight: 400,
+          }}
+        >
+          개발과 기술에 대한 이야기
+        </Typography>
+      </Box>
+
+      {/* Posts Grid */}
+      <Box
+        sx={{
+          maxWidth: '1400px',
+          margin: '0 auto',
+          px: { xs: 2, sm: 3, md: 4 },
+        }}
+      >
+        <Grid
+          container
+          spacing={{ xs: 3, sm: 4, md: 5 }}
+          sx={{
+            mb: 6,
           }}
         >
           {data?.entities &&
             data?.entities?.map(post => {
-              const mediaProp: SxProps = {
-                cursor: 'pointer',
-                width: '100%',
-                minHeight: 200,
-                maxHeight: 200,
-                borderRadius: 3,
-              };
-
               const isValidImage = post.images && post.images.length > 0;
 
+              // Check if post is new (within last 5 days)
+              const uploadDate = new Date(post.uploadDate!);
+              const now = new Date();
+              const diffTime = Math.abs(now.getTime() - uploadDate.getTime());
+              const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+              const isNewPost = diffDays <= 5;
+
               return (
-                <Card
-                  sx={{
-                    marginBottom: 1,
-                    '&:hover': {
-                      backgroundColor: '#f5f5f5',
-                    },
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'flex-start',
-                    flexDirection: 'column',
-                    minHeight: 280,
-                  }}
-                  className="transition duration-300 ease-in-out transform shadow-md bg:gray-50 hover:bg-gray-100 hover:-translate-y-1 hover:scale-110"
+                <Grid
                   key={'unique__' + post.id}
-                  elevation={0}
+                  size={{
+                    xs: 12,
+                    sm: 6,
+                    md: 6,
+                    lg: 4,
+                  }}
                 >
-                  {isValidImage && (
-                    <CardMedia
-                      component="img"
-                      image={post?.images?.[0].path}
-                      alt={post.title}
-                      sx={mediaProp}
-                      onClick={() => goToPage(post)}
-                    />
-                  )}
-                  <CardHeader
-                    title={post.title}
-                    subheader={DateUtil.ToDateStringBySeoul(
-                      post?.uploadDate!,
-                      Formatter.DATETIME,
-                    )}
-                    titleTypographyProps={{
-                      variant: 'h4',
-                      align: 'left',
-                    }}
-                    sx={{
-                      cursor: 'pointer',
-                      color: 'text.primary',
-                      fontWeight: 'bold',
-                      width: '100%',
-                      '& .MuiCardHeader-title': {
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                        width: '80%',
-                      },
-                      userSelect: 'none',
-                    }}
+                  <Card
                     onClick={() => goToPage(post)}
-                  ></CardHeader>
-                  {!isValidImage && (
-                    <CardContent>
+                    sx={{
+                      height: '100%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                      backgroundColor: '#fff',
+                      borderRadius: '12px',
+                      overflow: 'hidden',
+                      border: '1px solid #e5e5e5',
+                      '&:hover': {
+                        transform: 'translateY(-4px)',
+                        border: '1px solid #999',
+                        '& .post-image': {
+                          transform: 'scale(1.05)',
+                        },
+                      },
+                    }}
+                    elevation={0}
+                  >
+                    {/* Image Section */}
+                    {isValidImage && (
+                      <Box
+                        sx={{
+                          position: 'relative',
+                          width: '100%',
+                          paddingTop: '45%', // Reduced aspect ratio for shorter images
+                          overflow: 'hidden',
+                          backgroundColor: '#f5f5f5',
+                        }}
+                      >
+                        <CardMedia
+                          component="img"
+                          image={post?.images?.[0].path}
+                          alt={post.title}
+                          className="post-image"
+                          sx={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                          }}
+                        />
+                        {post.isPrivate && (
+                          <Box
+                            sx={{
+                              position: 'absolute',
+                              top: 16,
+                              right: 16,
+                              backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                              borderRadius: '8px',
+                              padding: '8px 12px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 0.5,
+                            }}
+                          >
+                            <LockIcon sx={{ fontSize: 18, color: '#fff' }} />
+                          </Box>
+                        )}
+                      </Box>
+                    )}
+
+                    {/* Content Section */}
+                    <CardContent
+                      sx={{
+                        flex: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 2,
+                        p: { xs: 3, sm: 4 },
+                        position: 'relative',
+                      }}
+                    >
+                      {/* NEW Badge - Top Right */}
+                      {isNewPost && (
+                        <Box
+                          sx={{
+                            position: 'absolute',
+                            top: 16,
+                            right: 16,
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            px: 1.5,
+                            py: 0.5,
+                            borderRadius: '6px',
+                            backgroundColor: '#ff4757',
+                            fontSize: '0.75rem',
+                            fontWeight: 700,
+                            color: '#fff',
+                            letterSpacing: '0.5px',
+                          }}
+                        >
+                          NEW
+                        </Box>
+                      )}
+
+                      {/* Title */}
+                      <Typography
+                        variant="h3"
+                        sx={{
+                          fontSize: { xs: '1.25rem', sm: '1.5rem' },
+                          fontWeight: 700,
+                          lineHeight: 1.3,
+                          color: '#1a1a1a',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          display: '-webkit-box',
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: 'vertical',
+                          letterSpacing: '-0.01em',
+                          pr: isNewPost ? 6 : 0,
+                        }}
+                      >
+                        {post.title}
+                      </Typography>
+
+                      {/* Content Preview */}
                       {post.content && (
                         <Typography
-                          variant="subtitle2"
-                          color="text.secondary"
+                          variant="body2"
                           sx={{
+                            color: '#666',
+                            fontSize: '0.9375rem',
+                            lineHeight: 1.6,
                             overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            display: '-webkit-box',
+                            WebkitLineClamp: isValidImage ? 2 : 4,
+                            WebkitBoxOrient: 'vertical',
+                            mb: 'auto',
                           }}
                         >
                           {post.content}
                         </Typography>
                       )}
-                    </CardContent>
-                  )}
-                  <CardActions
-                    sx={{
-                      alignSelf: 'flex-start',
-                    }}
-                  >
-                    <Avatar variant="rounded">
-                      {post.user?.profile?.nickname?.[0]}
-                    </Avatar>
-                    <Box
-                      sx={{
-                        borderRadius: 10,
-                        background: theme => theme.palette.text.secondary,
-                        color: theme => theme.palette.primary.contrastText,
-                        p: 1,
-                      }}
-                    >
-                      <Typography variant="subtitle2">
-                        {post.category?.name}
-                      </Typography>
-                    </Box>
 
-                    {post.isPrivate && (
-                      <Box
-                        className={
-                          'bg-slate-500 rounded text-white p-2 hover:bg-slate-600 cursor-pointer transition duration-300 ease-in-out'
-                        }
+                      {/* Date at bottom */}
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: '#999',
+                          fontSize: '0.8125rem',
+                          mt: 'auto',
+                          pt: 1,
+                        }}
                       >
-                        <LockIcon />
-                      </Box>
-                    )}
-                  </CardActions>
-                </Card>
+                        {DateUtil.ToDateStringBySeoul(
+                          post?.uploadDate!,
+                          Formatter.DATETIME,
+                        )}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
               );
             })}
         </Grid>
-      </Grid>
-      <Grid
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Pagination
-          count={data?.pagination.maxPage}
-          page={postsStore.getPageNumber()}
-          boundaryCount={2}
-          color="primary"
-          size="large"
-          sx={{ margin: 2 }}
-          showFirstButton
-          showLastButton
-          onChange={(e, p) => {
-            handlePage(e, p);
+
+        {/* Pagination */}
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            py: 4,
           }}
-        />
-      </Grid>
-      <SearchComponent fetchDataBySearch={fetchDataBySearch} />
-    </Grid>
+        >
+          <Pagination
+            count={data?.pagination.maxPage}
+            page={postsStore.getPageNumber()}
+            boundaryCount={2}
+            color="primary"
+            size="medium"
+            sx={{
+              '& .MuiPaginationItem-root': {
+                fontSize: '0.875rem',
+                fontWeight: 500,
+                borderRadius: '6px',
+                minWidth: '32px',
+                height: '32px',
+                border: '1px solid #e5e5e5',
+                color: '#666',
+                '&:hover': {
+                  backgroundColor: '#f5f5f5',
+                  border: '1px solid #999',
+                },
+                '&.Mui-selected': {
+                  backgroundColor: '#1a1a1a',
+                  color: '#fff',
+                  border: '1px solid #1a1a1a',
+                  '&:hover': {
+                    backgroundColor: '#333',
+                    border: '1px solid #333',
+                  },
+                },
+              },
+            }}
+            showFirstButton
+            showLastButton
+            onChange={(e, p) => {
+              handlePage(e, p);
+            }}
+          />
+        </Box>
+
+        {/* Search Component */}
+        <SearchComponent fetchDataBySearch={fetchDataBySearch} />
+      </Box>
+    </Box>
   );
 };

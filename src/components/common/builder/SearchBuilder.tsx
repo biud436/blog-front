@@ -59,13 +59,19 @@ export function SearchBuilder<T extends string>(
               width: '100%',
             }}
           >
-            <InputLabel id="search-option-label">검색 옵션</InputLabel>
+            <InputLabel
+              id="search-option-label"
+              sx={{ fontSize: '0.875rem' }}
+            >
+              검색 옵션
+            </InputLabel>
             <Select
               labelId="search-option-label"
               id="search-option"
               value={store.getSearchType() ?? store.getDefaultCategory()!}
               label="검색 옵션"
               size="small"
+              sx={{ fontSize: '0.875rem' }}
               onChange={(e: SelectChangeEvent) => {
                 store.setSearchType(e.target.value as any);
               }}
@@ -87,6 +93,12 @@ export function SearchBuilder<T extends string>(
               label="검색 내용"
               value={store.getSearchQuery() ?? ''}
               size="small"
+              InputLabelProps={{
+                sx: { fontSize: '0.875rem' },
+              }}
+              inputProps={{
+                sx: { fontSize: '0.875rem' },
+              }}
               onChange={e => {
                 const { value } = e.target;
 
