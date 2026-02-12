@@ -34,12 +34,12 @@ export function PostHeader({ post }: PostHeaderProps) {
     <Stack
       sx={{
         width: '100%',
-        maxWidth: '680px',
+        maxWidth: '860px',
         margin: '0 auto',
         padding: {
-          xs: '48px 24px 32px',
-          sm: '56px 32px 40px',
-          md: '64px 0 48px',
+          xs: '40px 20px 28px',
+          sm: '48px 28px 36px',
+          md: '56px 0 40px',
         },
       }}
     >
@@ -53,11 +53,14 @@ export function PostHeader({ post }: PostHeaderProps) {
             md: '48px',
           },
           fontWeight: 700,
-          lineHeight: 1.2,
+          lineHeight: 1.25,
           letterSpacing: '-0.02em',
-          color: '#242424',
+          color: '#1a1a1a',
           marginBottom: '16px',
-          fontFamily: 'Georgia, Cambria, "Times New Roman", Times, serif',
+          fontFamily:
+            '-apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+          WebkitFontSmoothing: 'antialiased',
+          MozOsxFontSmoothing: 'grayscale',
         }}
       >
         {post.title}

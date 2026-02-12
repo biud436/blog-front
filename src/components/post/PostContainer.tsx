@@ -71,11 +71,11 @@ export function PostContainer({ post, goBack }: PostContainerProps) {
         {/* Divider before comments */}
         <Divider
           sx={{
-            maxWidth: '680px',
+            maxWidth: '860px',
             margin: {
-              xs: '48px 24px',
-              sm: '56px 32px',
-              md: '64px auto',
+              xs: '40px 20px',
+              sm: '48px 28px',
+              md: '56px auto',
             },
             borderColor: '#e6e6e6',
           }}
@@ -84,12 +84,12 @@ export function PostContainer({ post, goBack }: PostContainerProps) {
         {/* Comments section */}
         <Box
           sx={{
-            maxWidth: '680px',
+            maxWidth: '860px',
             margin: '0 auto',
             padding: {
-              xs: '0 24px 48px',
-              sm: '0 32px 56px',
-              md: '0 0 64px',
+              xs: '0 20px 40px',
+              sm: '0 28px 48px',
+              md: '0 0 56px',
             },
           }}
         >
@@ -103,12 +103,12 @@ export function PostContainer({ post, goBack }: PostContainerProps) {
         {/* Footer */}
         <Box
           sx={{
-            maxWidth: '680px',
+            maxWidth: '860px',
             margin: '0 auto',
             padding: {
-              xs: '0 24px 48px',
-              sm: '0 32px 56px',
-              md: '0 0 64px',
+              xs: '0 20px 40px',
+              sm: '0 28px 48px',
+              md: '0 0 56px',
             },
           }}
         >
