@@ -10,6 +10,18 @@ interface PostFooterProps {
   goBack: () => void;
 }
 
+/* ── Design Tokens ────────────────────────────────────── */
+const tokens = {
+  ink: '#1c1917',
+  inkSecondary: '#57534e',
+  inkTertiary: '#a8a29e',
+  accent: '#c2410c',
+  accentSoft: '#fff7ed',
+  border: 'rgba(28, 25, 23, 0.06)',
+  borderHover: 'rgba(28, 25, 23, 0.12)',
+  surface: '#ffffff',
+};
+
 export function PostFooter({ post, goBack }: PostFooterProps) {
   const router = useRouter();
   const { isAuthorized } = useAuthorized();
@@ -32,26 +44,27 @@ export function PostFooter({ post, goBack }: PostFooterProps) {
       alignItems="center"
       justifyContent={isAuthorized ? 'space-between' : 'flex-start'}
       sx={{
-        paddingTop: '32px',
-        borderTop: '1px solid #e6e6e6',
+        paddingTop: '24px',
+        borderTop: `1px solid ${tokens.border}`,
       }}
     >
-      {/* Back button - Medium style: minimal design */}
+      {/* Back button */}
       <Grid>
         <Button
           onClick={() => goBack()}
           sx={{
-            color: '#242424',
-            fontSize: '16px',
+            color: tokens.ink,
+            fontSize: '0.875rem',
             fontWeight: 500,
             textTransform: 'none',
-            padding: '8px 16px',
-            border: '1px solid #242424',
-            borderRadius: '24px',
+            padding: '8px 20px',
+            border: `1px solid ${tokens.borderHover}`,
+            borderRadius: '8px',
             transition: 'all 0.2s ease',
             '&:hover': {
-              backgroundColor: '#242424',
-              color: '#ffffff',
+              backgroundColor: tokens.ink,
+              borderColor: tokens.ink,
+              color: tokens.surface,
             },
           }}
         >
@@ -59,29 +72,29 @@ export function PostFooter({ post, goBack }: PostFooterProps) {
         </Button>
       </Grid>
 
-      {/* Admin controls - only visible to authorized users */}
+      {/* Admin controls */}
       {isAuthorized && (
         <Grid
           sx={{
             display: 'flex',
-            gap: 2,
+            gap: 1.5,
           }}
         >
           <Button
             onClick={handleEditPost}
             sx={{
-              color: '#6B6B6B',
-              fontSize: '16px',
+              color: tokens.inkSecondary,
+              fontSize: '0.875rem',
               fontWeight: 500,
               textTransform: 'none',
-              padding: '8px 16px',
-              border: '1px solid #e6e6e6',
-              borderRadius: '24px',
+              padding: '8px 20px',
+              border: `1px solid ${tokens.borderHover}`,
+              borderRadius: '8px',
               transition: 'all 0.2s ease',
               '&:hover': {
-                backgroundColor: '#f7f7f7',
-                borderColor: '#242424',
-                color: '#242424',
+                backgroundColor: tokens.accentSoft,
+                borderColor: tokens.accent,
+                color: tokens.accent,
               },
             }}
           >
@@ -90,18 +103,18 @@ export function PostFooter({ post, goBack }: PostFooterProps) {
           <Button
             onClick={handleDeletePost}
             sx={{
-              color: '#6B6B6B',
-              fontSize: '16px',
+              color: tokens.inkTertiary,
+              fontSize: '0.875rem',
               fontWeight: 500,
               textTransform: 'none',
-              padding: '8px 16px',
-              border: '1px solid #e6e6e6',
-              borderRadius: '24px',
+              padding: '8px 20px',
+              border: `1px solid ${tokens.borderHover}`,
+              borderRadius: '8px',
               transition: 'all 0.2s ease',
               '&:hover': {
-                backgroundColor: '#ff4444',
-                borderColor: '#ff4444',
-                color: '#ffffff',
+                backgroundColor: '#fef2f2',
+                borderColor: '#ef4444',
+                color: '#ef4444',
               },
             }}
           >

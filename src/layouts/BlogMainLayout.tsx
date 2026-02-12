@@ -81,7 +81,7 @@ export const MainLayout = ({
     <Box
       sx={{
         width: '100%',
-        background: 'white',
+        background: '#fafaf9',
       }}
     >
       <CssBaseline />

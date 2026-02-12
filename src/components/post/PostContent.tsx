@@ -25,22 +25,31 @@ export type PostContentProps = {
   post: Post;
 };
 
+/* ── Design Tokens ────────────────────────────────────── */
+const tokens = {
+  ink: '#1c1917',
+  inkSecondary: '#57534e',
+  inkTertiary: '#a8a29e',
+  accent: '#c2410c',
+  accentSoft: '#fff7ed',
+  border: 'rgba(28, 25, 23, 0.06)',
+  parchment: '#fafaf9',
+};
+
 export function PostContent({ post }: PostContentProps) {
   return (
     <Grid
       size={{ xs: 12 }}
       sx={{
-        maxWidth: '860px',
-        margin: '0 auto',
         padding: {
           xs: '0 20px',
           sm: '0 28px',
-          md: '0',
+          md: '0 48px',
         },
         '& .toastui-editor-contents': {
-          fontSize: '17px',
-          lineHeight: '1.75',
-          color: '#1a1a1a',
+          fontSize: '1.0625rem',
+          lineHeight: '1.8',
+          color: tokens.ink,
           fontFamily:
             '-apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
           WebkitFontSmoothing: 'antialiased',
@@ -51,93 +60,154 @@ export function PostContent({ post }: PostContentProps) {
 
           // Paragraph spacing
           '& p': {
-            marginBottom: '24px',
-            fontSize: '17px',
-            lineHeight: '1.75',
-            letterSpacing: '-0.004em',
+            marginBottom: '1.5em',
+            fontSize: '1.0625rem',
+            lineHeight: '1.8',
+            letterSpacing: '-0.006em',
+            color: tokens.ink,
           },
 
           // Headings
           '& h1, & h2, & h3': {
             fontWeight: 700,
-            lineHeight: 1.35,
-            marginTop: '40px',
-            marginBottom: '12px',
-            color: '#1a1a1a',
-            letterSpacing: '-0.02em',
+            lineHeight: 1.3,
+            marginTop: '2.5em',
+            marginBottom: '0.75em',
+            color: tokens.ink,
+            letterSpacing: '-0.025em',
           },
 
           '& h1': {
-            fontSize: '30px',
+            fontSize: '1.875rem',
           },
 
           '& h2': {
-            fontSize: '24px',
+            fontSize: '1.5rem',
+            paddingBottom: '0.5em',
+            borderBottom: `1px solid ${tokens.border}`,
           },
 
           '& h3': {
-            fontSize: '20px',
+            fontSize: '1.25rem',
           },
 
           // Links
           '& a': {
-            color: '#0969da',
+            color: tokens.accent,
             textDecoration: 'none',
-            transition: 'color 0.15s ease',
+            fontWeight: 500,
+            borderBottom: `1px solid transparent`,
+            transition: 'border-color 0.2s ease, color 0.2s ease',
 
             '&:hover': {
-              textDecoration: 'underline',
-              color: '#0550ae',
+              borderBottomColor: tokens.accent,
+              color: '#9a3412',
             },
           },
 
           // Blockquotes
           '& blockquote': {
-            borderLeft: '4px solid #d0d7de',
+            borderLeft: `3px solid ${tokens.accent}`,
             paddingLeft: '20px',
             marginLeft: 0,
             marginRight: 0,
+            marginBottom: '1.5em',
             fontStyle: 'normal',
-            color: '#57606a',
+            color: tokens.inkSecondary,
+            backgroundColor: tokens.accentSoft,
+            borderRadius: '0 8px 8px 0',
+            padding: '16px 20px',
           },
 
           // Code blocks
           '& pre': {
-            backgroundColor: '#f6f8fa',
-            borderRadius: '6px',
-            padding: '16px',
-            marginBottom: '24px',
+            backgroundColor: '#1c1917',
+            borderRadius: '12px',
+            padding: '20px 24px',
+            marginBottom: '1.5em',
             overflow: 'auto',
-            border: '1px solid #d0d7de',
+            border: 'none',
+            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)',
+
+            '& code': {
+              backgroundColor: 'transparent',
+              color: '#e7e5e4',
+              padding: 0,
+              fontSize: '0.875rem',
+              lineHeight: '1.7',
+            },
           },
 
           // Inline code
           '& code': {
-            backgroundColor: '#eff1f3',
-            padding: '2px 6px',
-            borderRadius: '4px',
-            fontSize: '14.5px',
+            backgroundColor: tokens.accentSoft,
+            color: tokens.accent,
+            padding: '2px 8px',
+            borderRadius: '6px',
+            fontSize: '0.875rem',
+            fontWeight: 500,
             fontFamily:
               '"SF Mono", "Fira Code", Menlo, Monaco, "Courier New", monospace',
           },
 
           // Lists
           '& ul, & ol': {
-            marginBottom: '24px',
+            marginBottom: '1.5em',
             paddingLeft: '24px',
           },
 
           '& li': {
-            marginBottom: '6px',
-            lineHeight: '1.75',
+            marginBottom: '8px',
+            lineHeight: '1.8',
+            color: tokens.ink,
+
+            '&::marker': {
+              color: tokens.inkTertiary,
+            },
           },
 
           // Images
           '& img': {
             maxWidth: '100%',
             height: 'auto',
-            margin: '24px 0',
-            borderRadius: '6px',
+            margin: '2em 0',
+            borderRadius: '12px',
+            boxShadow:
+              '0 2px 8px rgba(28,25,23,0.06), 0 4px 16px rgba(28,25,23,0.04)',
+          },
+
+          // Horizontal rule
+          '& hr': {
+            border: 'none',
+            borderTop: `1px solid ${tokens.border}`,
+            margin: '2.5em 0',
+          },
+
+          // Tables
+          '& table': {
+            borderCollapse: 'collapse',
+            width: '100%',
+            marginBottom: '1.5em',
+            fontSize: '0.9375rem',
+
+            '& th': {
+              backgroundColor: tokens.parchment,
+              fontWeight: 600,
+              color: tokens.ink,
+              padding: '12px 16px',
+              borderBottom: `2px solid rgba(28,25,23,0.1)`,
+              textAlign: 'left',
+            },
+
+            '& td': {
+              padding: '10px 16px',
+              borderBottom: `1px solid ${tokens.border}`,
+              color: tokens.inkSecondary,
+            },
+
+            '& tr:hover td': {
+              backgroundColor: tokens.accentSoft,
+            },
           },
         },
       }}

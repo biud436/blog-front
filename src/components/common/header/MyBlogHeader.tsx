@@ -31,7 +31,7 @@ export function MyBlogHeader() {
           display: 'flex',
           justifyContent: 'center',
           gap: 5,
-          borderBottom: '1px solid #D8DEE4',
+          borderBottom: '1px solid rgba(28, 25, 23, 0.08)',
           mb: 5,
           mt: {
             xs: 10,
@@ -65,20 +65,18 @@ export function MyBlogHeader() {
               mr: 2,
               display: { xs: 'none', md: 'flex' },
               fontWeight: 700,
-              letterSpacing: '.2rem',
-              color: 'inherit',
+              letterSpacing: '-0.01em',
+              color: '#1c1917',
               textDecoration: 'none',
               cursor: 'pointer',
-              transition: 'all .3s ease-in-out',
+              transition: 'color 0.2s ease',
               '&:hover': {
-                color: 'primary.main',
-                letterSpacing: '.4rem',
-                transform: 'scale(1.1)',
+                color: '#c2410c',
               },
               alignItems: 'center',
 
-              borderLeft: '3px solid #1976d2',
-              pl: 1,
+              borderLeft: '2.5px solid #c2410c',
+              pl: 1.5,
             }}
           >
             {MetaCommonConfig.site_name}

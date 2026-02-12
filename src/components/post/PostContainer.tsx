@@ -36,21 +36,46 @@ const DisqusThread = dynamic(
   },
 );
 
+/* ── Design Tokens (shared with PostsPresent) ────────── */
+const tokens = {
+  ink: '#1c1917',
+  inkSecondary: '#57534e',
+  inkTertiary: '#a8a29e',
+  inkMuted: '#d6d3d1',
+  parchment: '#fafaf9',
+  surface: '#ffffff',
+  accent: '#c2410c',
+  accentSoft: '#fff7ed',
+  border: 'rgba(28, 25, 23, 0.06)',
+  borderHover: 'rgba(28, 25, 23, 0.12)',
+};
+
+export { tokens as postTokens };
+
 export function PostContainer({ post, goBack }: PostContainerProps) {
   return (
     <Box
       sx={{
-        backgroundColor: '#ffffff',
+        backgroundColor: tokens.parchment,
         minHeight: '100vh',
       }}
     >
-      {/* Main article container - Medium style: centered with max-width */}
+      {/* Article surface card */}
       <Box
         component="article"
         sx={{
-          maxWidth: '1080px',
+          maxWidth: '860px',
           margin: '0 auto',
           width: '100%',
+          backgroundColor: tokens.surface,
+          borderRadius: { xs: 0, md: '16px' },
+          boxShadow: {
+            xs: 'none',
+            md: '0 1px 3px rgba(28,25,23,0.04), 0 4px 16px rgba(28,25,23,0.06)',
+          },
+          mt: { xs: 0, md: 4 },
+          mb: { xs: 0, md: 6 },
+          overflow: 'hidden',
         }}
       >
         {/* Header */}
@@ -71,25 +96,22 @@ export function PostContainer({ post, goBack }: PostContainerProps) {
         {/* Divider before comments */}
         <Divider
           sx={{
-            maxWidth: '860px',
             margin: {
-              xs: '40px 20px',
-              sm: '48px 28px',
-              md: '56px auto',
+              xs: '24px 20px',
+              sm: '32px 28px',
+              md: '40px 48px',
             },
-            borderColor: '#e6e6e6',
+            borderColor: tokens.border,
           }}
         />
 
         {/* Comments section */}
         <Box
           sx={{
-            maxWidth: '860px',
-            margin: '0 auto',
             padding: {
               xs: '0 20px 40px',
               sm: '0 28px 48px',
-              md: '0 0 56px',
+              md: '0 48px 56px',
             },
           }}
         >
@@ -103,12 +125,10 @@ export function PostContainer({ post, goBack }: PostContainerProps) {
         {/* Footer */}
         <Box
           sx={{
-            maxWidth: '860px',
-            margin: '0 auto',
             padding: {
               xs: '0 20px 40px',
               sm: '0 28px 48px',
-              md: '0 0 56px',
+              md: '0 48px 56px',
             },
           }}
         >

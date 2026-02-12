@@ -6,7 +6,7 @@
 import React from 'react';
 import { DateUtil, Formatter } from '@/lib/date';
 import { Post } from '@/models/Post';
-import { Grid2 as Grid, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import dynamic from 'next/dynamic';
 
 export type PostHeaderProps = {
@@ -29,33 +29,57 @@ const CommentCount = dynamic(
   },
 );
 
+/* ── Design Tokens ────────────────────────────────────── */
+const tokens = {
+  ink: '#1c1917',
+  inkSecondary: '#57534e',
+  inkTertiary: '#a8a29e',
+  accent: '#c2410c',
+  accentSoft: '#fff7ed',
+  border: 'rgba(28, 25, 23, 0.06)',
+};
+
 export function PostHeader({ post }: PostHeaderProps) {
   return (
     <Stack
       sx={{
         width: '100%',
-        maxWidth: '860px',
-        margin: '0 auto',
         padding: {
           xs: '40px 20px 28px',
           sm: '48px 28px 36px',
-          md: '56px 0 40px',
+          md: '56px 48px 40px',
         },
       }}
     >
-      {/* Title - Medium style: large serif font */}
+      {/* Category badge */}
+      {post.category && (
+        <Typography
+          sx={{
+            fontSize: '0.75rem',
+            fontWeight: 600,
+            letterSpacing: '0.04em',
+            textTransform: 'uppercase',
+            color: tokens.accent,
+            mb: 2,
+          }}
+        >
+          {post.category.name}
+        </Typography>
+      )}
+
+      {/* Title */}
       <Typography
         variant="h1"
         sx={{
           fontSize: {
-            xs: '32px',
-            sm: '40px',
-            md: '48px',
+            xs: '1.75rem',
+            sm: '2.25rem',
+            md: '2.75rem',
           },
-          fontWeight: 700,
-          lineHeight: 1.25,
-          letterSpacing: '-0.02em',
-          color: '#1a1a1a',
+          fontWeight: 750,
+          lineHeight: 1.2,
+          letterSpacing: '-0.03em',
+          color: tokens.ink,
           marginBottom: '16px',
           fontFamily:
             '-apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
@@ -66,21 +90,39 @@ export function PostHeader({ post }: PostHeaderProps) {
         {post.title}
       </Typography>
 
-      {/* Meta information - author and date */}
+      {/* Meta information */}
       <Stack
         direction="row"
         alignItems="center"
-        gap={2}
+        gap={1.5}
         sx={{
-          marginTop: '24px',
-          paddingBottom: '32px',
-          borderBottom: '1px solid #e6e6e6',
+          marginTop: '20px',
+          paddingBottom: '28px',
+          borderBottom: `1px solid ${tokens.border}`,
         }}
       >
+        {/* Author avatar circle */}
+        <Box
+          sx={{
+            width: 32,
+            height: 32,
+            borderRadius: '50%',
+            backgroundColor: tokens.accentSoft,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '0.8125rem',
+            fontWeight: 600,
+            color: tokens.accent,
+            flexShrink: 0,
+          }}
+        >
+          {post.user?.profile?.nickname?.charAt(0) ?? 'U'}
+        </Box>
         <Typography
           sx={{
-            fontSize: '16px',
-            color: '#242424',
+            fontSize: '0.875rem',
+            color: tokens.ink,
             fontWeight: 500,
           }}
         >
@@ -88,16 +130,17 @@ export function PostHeader({ post }: PostHeaderProps) {
         </Typography>
         <Typography
           sx={{
-            fontSize: '14px',
-            color: '#6B6B6B',
+            fontSize: '0.875rem',
+            color: tokens.inkTertiary,
           }}
         >
           ·
         </Typography>
         <Typography
           sx={{
-            fontSize: '14px',
-            color: '#6B6B6B',
+            fontSize: '0.875rem',
+            color: tokens.inkTertiary,
+            fontFeatureSettings: '"tnum"',
           }}
         >
           {DateUtil.ToDateStringBySeoul(post?.uploadDate!, Formatter.DATETIME)}
