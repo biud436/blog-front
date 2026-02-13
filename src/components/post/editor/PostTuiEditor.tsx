@@ -63,7 +63,7 @@ export const PostTuiEditor = React.memo(
               css={{
                 width: '100%',
               }}
-              height="600px"
+              height="640px"
               toolbarItems={toolbarItems}
               plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
               forwardedRef={editorRef as React.MutableRefObject<EditorType>}
