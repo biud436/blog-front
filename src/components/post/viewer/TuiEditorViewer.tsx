@@ -41,7 +41,7 @@ const ViewerWrapper = styled.div`
     font-size: 1.5rem;
 
     text-decoration: none;
-    border-left: 4px solid #1976d2;
+    border-left: 3px solid #c2410c;
     margin: 14px 0;
     padding: 0 16px;
   }
@@ -74,11 +74,11 @@ const ViewerWrapper = styled.div`
     font: 100 16px 'Noto Sans KR', sans-serif;
 
     blockquote {
-      border-left: 4px solid #1976d2;
+      border-left: 3px solid #c2410c;
     }
 
     h1 {
-      border-bottom: 1px solid #cbced1;
+      border-bottom: 1px solid rgba(28, 25, 23, 0.06);
       margin: 52px 0 15px;
     }
   }
@@ -98,7 +98,7 @@ const ViewerWrapper = styled.div`
   }
 
   .copy-code:hover {
-    background-color: #1976d2;
+    background-color: #c2410c;
   }
 
   .copy-code::after {
