@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Post } from '@/models/Post';
-import { Divider, Grid2 as Grid, Paper, Box } from '@mui/material';
+import {
+  Divider,
+  Grid2 as Grid,
+  Paper,
+  Box,
+  Theme,
+  SxProps,
+} from '@mui/material';
 import { PostFooter } from './PostFooter';
 import { PostContent } from './PostContent';
 import { PostHeader } from './PostHeader';
@@ -52,6 +59,21 @@ const tokens = {
 
 export { tokens as postTokens };
 
+const articleCardSx: SxProps<Theme> = {
+  maxWidth: '860px',
+  margin: '0 auto',
+  width: '100%',
+  backgroundColor: tokens.surface,
+  borderRadius: { xs: 0, md: '16px' },
+  boxShadow: {
+    xs: 'none',
+    md: '0 1px 3px rgba(28,25,23,0.04), 0 4px 16px rgba(28,25,23,0.06)',
+  },
+  mt: { xs: 0, md: 4 },
+  mb: { xs: 0, md: 6 },
+  overflow: 'hidden',
+} as const;
+
 export function PostContainer({ post, goBack }: PostContainerProps) {
   return (
     <Box
@@ -61,23 +83,7 @@ export function PostContainer({ post, goBack }: PostContainerProps) {
       }}
     >
       {/* Article surface card */}
-      <Box
-        component="article"
-        sx={{
-          maxWidth: '860px',
-          margin: '0 auto',
-          width: '100%',
-          backgroundColor: tokens.surface,
-          borderRadius: { xs: 0, md: '16px' },
-          boxShadow: {
-            xs: 'none',
-            md: '0 1px 3px rgba(28,25,23,0.04), 0 4px 16px rgba(28,25,23,0.06)',
-          },
-          mt: { xs: 0, md: 4 },
-          mb: { xs: 0, md: 6 },
-          overflow: 'hidden',
-        }}
-      >
+      <Box component="article" sx={articleCardSx}>
         {/* Header */}
         <PostHeader post={post} />
 
