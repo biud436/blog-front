@@ -74,53 +74,53 @@ const articleCardSx: SxProps<Theme> = {
   overflow: 'hidden',
 } as const;
 
+const pageBackgroundSx: SxProps<Theme> = {
+  backgroundColor: tokens.parchment,
+  minHeight: '100vh',
+} as const;
+
+const contentWrapperSx: SxProps<Theme> = {
+  paddingBottom: {
+    xs: '48px',
+    md: '64px',
+  },
+} as const;
+
+const commentDividerSx: SxProps<Theme> = {
+  margin: {
+    xs: '24px 20px',
+    sm: '32px 28px',
+    md: '40px 48px',
+  },
+  borderColor: tokens.border,
+} as const;
+
+const sectionPaddingSx: SxProps<Theme> = {
+  padding: {
+    xs: '0 20px 40px',
+    sm: '0 28px 48px',
+    md: '0 48px 56px',
+  },
+} as const;
+
 export function PostContainer({ post, goBack }: PostContainerProps) {
   return (
-    <Box
-      sx={{
-        backgroundColor: tokens.parchment,
-        minHeight: '100vh',
-      }}
-    >
+    <Box sx={pageBackgroundSx}>
       {/* Article surface card */}
       <Box component="article" sx={articleCardSx}>
         {/* Header */}
         <PostHeader post={post} />
 
         {/* Content */}
-        <Box
-          sx={{
-            paddingBottom: {
-              xs: '48px',
-              md: '64px',
-            },
-          }}
-        >
+        <Box sx={contentWrapperSx}>
           <PostContent post={post} />
         </Box>
 
         {/* Divider before comments */}
-        <Divider
-          sx={{
-            margin: {
-              xs: '24px 20px',
-              sm: '32px 28px',
-              md: '40px 48px',
-            },
-            borderColor: tokens.border,
-          }}
-        />
+        <Divider sx={commentDividerSx} />
 
         {/* Comments section */}
-        <Box
-          sx={{
-            padding: {
-              xs: '0 20px 40px',
-              sm: '0 28px 48px',
-              md: '0 48px 56px',
-            },
-          }}
-        >
+        <Box sx={sectionPaddingSx}>
           <DisqusThread
             identifier={post.id.toString()}
             url={`https://blog.biud436.com/posts/${post.id}`}
@@ -129,15 +129,7 @@ export function PostContainer({ post, goBack }: PostContainerProps) {
         </Box>
 
         {/* Footer */}
-        <Box
-          sx={{
-            padding: {
-              xs: '0 20px 40px',
-              sm: '0 28px 48px',
-              md: '0 48px 56px',
-            },
-          }}
-        >
+        <Box sx={sectionPaddingSx}>
           <PostFooter post={post} goBack={goBack} />
         </Box>
       </Box>
