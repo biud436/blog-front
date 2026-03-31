@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, Alert } from '@mui/material';
 import { MainLayout } from '@/layouts/BlogMainLayout';
-import { useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -56,14 +55,7 @@ export const PostEditor = ({ mode }: EditPageProps) => {
 export const PostEditorContainer = ({ editorMode }: { editorMode: string }) => {
   const { isAuthorized } = useAuthorized();
 
-  // useState로 할 경우, 렌더링이 두 번 일어나면서 버그가 발생합니다.
-  const mode = useRef<EditPageProps['mode']>('create');
-
-  useEffect(() => {
-    if (editorMode === 'edit') {
-      mode.current = 'edit';
-    }
-  }, []);
+  const mode: EditPageProps['mode'] = editorMode === 'edit' ? 'edit' : 'create';
 
   return (
     <MainLayout name="포스트 에디터">
@@ -114,9 +106,9 @@ export const PostEditorContainer = ({ editorMode }: { editorMode: string }) => {
             </Box>
           ) : (
             <Box>
-              <PostEditorPageHeader mode={mode.current} />
-              <PostEditorPageDescription mode={mode.current} />
-              <PostEditor mode={mode.current} />
+              <PostEditorPageHeader mode={mode} />
+              <PostEditorPageDescription mode={mode} />
+              <PostEditor mode={mode} />
             </Box>
           )}
         </Box>
