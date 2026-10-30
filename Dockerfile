@@ -1,4 +1,4 @@
-FROM node:22.10.0-alpine
+FROM node:22.23.4-alpine
 # RUN apk --no-cache add --virtual .builds-deps build-base python3
 WORKDIR /usr/src/app
 
