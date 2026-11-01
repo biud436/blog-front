@@ -107,6 +107,46 @@ html[data-blog-theme='dark']:has(.b-root) {
   }
 }
 
+/* 키보드 사용자를 위한 "본문으로 건너뛰기" — 포커스될 때만 보입니다. */
+.b-skip {
+  position: fixed;
+  top: 10px;
+  left: 12px;
+  z-index: 1500;
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: var(--b-text);
+  color: var(--b-bg);
+  font: 600 0.88rem/1 var(--b-font);
+  text-decoration: none;
+  transform: translateY(-160%);
+  transition: transform 0.15s;
+}
+
+.b-skip:focus-visible {
+  transform: none;
+}
+
+main#main:focus {
+  outline: none;
+}
+
+/* 제목은 줄 길이를 고르게, 본문은 마지막 줄에 한 단어만 남지 않게 */
+.b-post-title,
+.b-feature__title,
+.b-card__title,
+.b-compact__title,
+.b-intro__title,
+.b-root .b-prose .toastui-editor-contents :is(h1, h2, h3) {
+  text-wrap: balance;
+}
+
+.b-root .b-prose .toastui-editor-contents p,
+.b-card__excerpt,
+.b-feature__excerpt {
+  text-wrap: pretty;
+}
+
 .b-sr-only {
   position: absolute;
   width: 1px;

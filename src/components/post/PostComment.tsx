@@ -2,7 +2,8 @@
 'use client';
 
 import { DiscussionEmbed } from 'disqus-react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useBlogThemeAttribute } from '@/components/blog/useBlogTheme';
 
 interface DisqusProps {
   identifier: string;
@@ -10,28 +11,9 @@ interface DisqusProps {
   title: string;
 }
 
-/** 현재 블로그 테마(라이트/다크). Disqus는 로드 시점의 글자색으로 테마를 정하므로 바뀌면 다시 불러옵니다. */
-function useBlogThemeAttribute() {
-  const [theme, setTheme] = useState<string | null>(null);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    const read = () =>
-      setTheme(root.getAttribute('data-blog-theme') ?? 'light');
-    read();
-    const observer = new MutationObserver(read);
-    observer.observe(root, {
-      attributes: true,
-      attributeFilter: ['data-blog-theme'],
-    });
-    return () => observer.disconnect();
-  }, []);
-
-  return theme;
-}
-
 const DisqusThread = ({ identifier, url, title }: DisqusProps) => {
   const elementRef = useRef<HTMLDivElement>(null);
+  // Disqus는 로드 시점의 글자색으로 테마를 정하므로, 테마가 바뀌면 다시 불러옵니다.
   const theme = useBlogThemeAttribute();
 
   useEffect(() => {
