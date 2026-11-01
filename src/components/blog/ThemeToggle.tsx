@@ -1,21 +1,31 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import LightModeIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeIcon from '@mui/icons-material/DarkModeOutlined';
-import { THEME_STORAGE_KEY } from './theme';
+import { applyStoredTheme, THEME_STORAGE_KEY } from './theme';
+import { BlogTheme, useBlogThemeAttribute } from './useBlogTheme';
 
-type BlogTheme = 'light' | 'dark';
+const readStored = (): string | null => {
+  try {
+    return localStorage.getItem(THEME_STORAGE_KEY);
+  } catch {
+    return null;
+  }
+};
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<BlogTheme>('light');
+  const theme = useBlogThemeAttribute() ?? 'light';
 
+  // 직접 고른 적이 없으면 OS 설정이 바뀔 때 바로 따라갑니다.
   useEffect(() => {
-    setTheme(
-      document.documentElement.getAttribute('data-blog-theme') === 'dark'
-        ? 'dark'
-        : 'light',
-    );
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+    const onChange = () => {
+      const stored = readStored();
+      if (stored !== 'light' && stored !== 'dark') applyStoredTheme();
+    };
+    media.addEventListener('change', onChange);
+    return () => media.removeEventListener('change', onChange);
   }, []);
 
   const toggle = () => {
@@ -26,7 +36,6 @@ export function ThemeToggle() {
     } catch {
       // 저장소를 쓸 수 없는 환경에서는 현재 세션에만 적용합니다.
     }
-    setTheme(next);
   };
 
   const label = theme === 'dark' ? '라이트 모드로 전환' : '다크 모드로 전환';

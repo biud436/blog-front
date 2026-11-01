@@ -45,10 +45,15 @@ export const MainLayout = ({
       <CssBaseline />
       <MotionConfig reducedMotion="user">
         <div className="b-root">
+          <a className="b-skip" href="#main">
+            본문으로 건너뛰기
+          </a>
           <BlogHeader showThemeToggle={!lightOnly} />
           <MobileNav categoryList={categories ?? []} />
           <CommandPalette />
-          <main>{children}</main>
+          <main id="main" tabIndex={-1}>
+            {children}
+          </main>
           <BlogFooter />
           <BackToTop />
         </div>
