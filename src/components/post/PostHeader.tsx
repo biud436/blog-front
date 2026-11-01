@@ -1,151 +1,82 @@
 'use client';
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React from 'react';
+import Link from 'next/link';
+import { motion } from 'motion/react';
+import ChevronRightIcon from '@mui/icons-material/ChevronRightRounded';
+import ScheduleIcon from '@mui/icons-material/ScheduleRounded';
+import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
 import { DateUtil, Formatter } from '@/lib/date';
 import { Post } from '@/models/Post';
-import { Box, Stack, Typography } from '@mui/material';
-import dynamic from 'next/dynamic';
+import { formatDate, readingMinutes } from '@/components/blog/utils';
 
 export type PostHeaderProps = {
   post: Post;
 };
 
-const CommentCount = dynamic(
-  async () => {
-    const [mod] = await Promise.all([import('./PostCommentCount')]);
-
-    return mod.default;
-  },
-  {
-    ssr: false,
-    loading: () => (
-      <div className="flex items-center justify-center p-5 m-5 text-lg bg-gray-100 rounded-md">
-        로딩중...
-      </div>
-    ),
-  },
-);
-
-/* ── Design Tokens ────────────────────────────────────── */
-const tokens = {
-  ink: '#1c1917',
-  inkSecondary: '#57534e',
-  inkTertiary: '#a8a29e',
-  accent: '#c2410c',
-  accentSoft: '#fff7ed',
-  border: 'rgba(28, 25, 23, 0.06)',
-};
+const ease = [0.22, 1, 0.36, 1] as const;
 
 export function PostHeader({ post }: PostHeaderProps) {
+  const category = post.category?.name;
+  const nickname = post.user?.profile?.nickname ?? '';
+  const views = post.viewCount?.count;
+
   return (
-    <Stack
-      sx={{
-        width: '100%',
-        padding: {
-          xs: '40px 20px 28px',
-          sm: '48px 28px 36px',
-          md: '56px 48px 40px',
-        },
-      }}
+    <motion.header
+      className="b-post-head"
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease }}
     >
-      {/* Category badge */}
-      {post.category && (
-        <Typography
-          sx={{
-            fontSize: '0.75rem',
-            fontWeight: 600,
-            letterSpacing: '0.04em',
-            textTransform: 'uppercase',
-            color: tokens.accent,
-            mb: 2,
-          }}
-        >
-          {post.category.name}
-        </Typography>
-      )}
+      <nav className="b-crumbs" aria-label="경로">
+        <Link href="/">홈</Link>
+        {category && (
+          <>
+            <ChevronRightIcon aria-hidden="true" />
+            <span>{category}</span>
+          </>
+        )}
+      </nav>
 
-      {/* Title */}
-      <Typography
-        variant="h1"
-        sx={{
-          fontSize: {
-            xs: '1.75rem',
-            sm: '2.25rem',
-            md: '2.75rem',
-          },
-          fontWeight: 750,
-          lineHeight: 1.2,
-          letterSpacing: '-0.03em',
-          color: tokens.ink,
-          marginBottom: '16px',
-          fontFamily:
-            '-apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
-          WebkitFontSmoothing: 'antialiased',
-          MozOsxFontSmoothing: 'grayscale',
-        }}
-      >
-        {post.title}
-      </Typography>
+      {category && <span className="b-post-cat">{category}</span>}
 
-      {/* Meta information */}
-      <Stack
-        direction="row"
-        alignItems="center"
-        gap={1.5}
-        sx={{
-          marginTop: '20px',
-          paddingBottom: '28px',
-          borderBottom: `1px solid ${tokens.border}`,
-        }}
-      >
-        {/* Author avatar circle */}
-        <Box
-          sx={{
-            width: 32,
-            height: 32,
-            borderRadius: '50%',
-            backgroundColor: tokens.accentSoft,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '0.8125rem',
-            fontWeight: 600,
-            color: tokens.accent,
-            flexShrink: 0,
-          }}
-        >
-          {post.user?.profile?.nickname?.charAt(0) ?? 'U'}
-        </Box>
-        <Typography
-          sx={{
-            fontSize: '0.875rem',
-            color: tokens.ink,
-            fontWeight: 500,
-          }}
-        >
-          {post.user?.profile?.nickname}
-        </Typography>
-        <Typography
-          sx={{
-            fontSize: '0.875rem',
-            color: tokens.inkTertiary,
-          }}
-        >
-          ·
-        </Typography>
-        <Typography
-          sx={{
-            fontSize: '0.875rem',
-            color: tokens.inkTertiary,
-            fontFeatureSettings: '"tnum"',
-          }}
-        >
-          {DateUtil.ToDateStringBySeoul(post?.uploadDate!, Formatter.DATETIME)}
-        </Typography>
-      </Stack>
-    </Stack>
+      <h1 className="b-post-title">{post.title}</h1>
+
+      <div className="b-post-meta">
+        <div className="b-author">
+          {nickname && (
+            <span className="b-avatar" aria-hidden="true">
+              {nickname.charAt(0)}
+            </span>
+          )}
+          <div>
+            <b>{nickname}</b>
+            {post.uploadDate && (
+              <small>
+                <time
+                  dateTime={post.uploadDate}
+                  title={DateUtil.ToDateStringBySeoul(
+                    post.uploadDate,
+                    Formatter.DATETIME,
+                  )}
+                >
+                  {formatDate(post.uploadDate)}
+                </time>
+              </small>
+            )}
+          </div>
+        </div>
+        <div className="b-post-stats">
+          <span>
+            <ScheduleIcon /> {readingMinutes(post.content)}분 분량
+          </span>
+          {typeof views === 'number' && (
+            <span>
+              <VisibilityIcon /> {views.toLocaleString('ko-KR')}
+            </span>
+          )}
+        </div>
+      </div>
+    </motion.header>
   );
 }

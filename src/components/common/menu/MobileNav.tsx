@@ -1,89 +1,53 @@
 import * as React from 'react';
 import Drawer from '@mui/material/Drawer';
-import { Box } from '@mui/material';
 import { CategoryDepthVO } from '@/models/CategoryDepthVO';
-import { drawerWidth } from './AppBar';
 import { SideMenu } from './SideMenu';
 import { useMenuStore } from '@/store/menu';
 
 interface MobileNavProps {
-  toggleDrawer: (
-    open: boolean,
-  ) => (event: React.KeyboardEvent | React.MouseEvent) => void;
-  handleDrawerClose: () => void;
-  theme;
   categoryList: CategoryDepthVO[];
-  setCategoryList: React.Dispatch<React.SetStateAction<CategoryDepthVO[]>>;
-  router;
-  rootCategory: CategoryDepthVO | undefined;
-  anchorEl: HTMLElement | null;
 }
 
-export const MobileNav = ({
-  toggleDrawer,
-  handleDrawerClose,
-  theme,
-  categoryList,
-  setCategoryList,
-  router,
-  rootCategory,
-}: MobileNavProps) => {
-  const menuStore = useMenuStore();
+/** 오른쪽에서 열리는 카테고리/계정 메뉴 */
+export const MobileNav = ({ categoryList }: MobileNavProps) => {
+  const isOpen = useMenuStore(state => state.isOpen);
+  const close = useMenuStore(state => state.close);
 
   return (
-    <Box onKeyDown={toggleDrawer(false)} onClick={toggleDrawer(false)}>
-      <Drawer
-        sx={{
-          width: {
-            xs: drawerWidth,
-            sm: drawerWidth,
-            md: 0,
-            lg: 0,
-            xl: 0,
-          },
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: drawerWidth,
-            boxSizing: 'border-box',
-            background: 'linear-gradient(45deg, #1e1e1e 30%, #2b2b2b 90%)',
-            color: theme.palette.primary.contrastText,
-
-            '& .MuiSvgIcon-root': {
-              color: theme.palette.primary.contrastText,
-            },
-
-            '& .MuiListItem-root': {
-              '&:hover': {
-                backgroundColor: '#a2a2a2',
-              },
-            },
-
-            '& .MuiDivider-root': {
-              backgroundColor: '#404040',
+    <Drawer
+      anchor="right"
+      open={isOpen}
+      onClose={close}
+      id="drawer-menu"
+      PaperProps={{
+        className: 'b-portal',
+        sx: {
+          width: 320,
+          maxWidth: '88vw',
+          color: 'var(--b-text)',
+          backgroundColor: 'var(--b-surface)',
+          borderLeft: '1px solid var(--b-border)',
+          boxShadow: 'var(--b-shadow-lg)',
+          '& .MuiListItemButton-root': {
+            borderRadius: '10px',
+            color: 'var(--b-text-2)',
+            '&:hover': {
+              color: 'var(--b-text)',
+              backgroundColor: 'var(--b-subtle)',
             },
           },
-        }}
-        transitionDuration={400}
-        SlideProps={{
-          translate: 'yes',
-          appear: true,
-        }}
-        anchor="left"
-        open={menuStore.isOpen}
-        id="drawer-menu"
-      >
-        <SideMenu
-          {...{
-            handleDrawerClose,
-            theme,
-            categoryList,
-            setCategoryList,
-            toggleDrawer,
-            router,
-            rootCategory,
-          }}
-        />
-      </Drawer>
-    </Box>
+          '& .MuiListItemIcon-root': { color: 'var(--b-text-3)', minWidth: 36 },
+          '& .MuiListItemText-primary': {
+            fontFamily: 'var(--b-font)',
+            fontSize: '0.95rem',
+          },
+        },
+      }}
+      slotProps={{
+        backdrop: { sx: { backgroundColor: 'rgba(10, 10, 12, 0.32)' } },
+      }}
+    >
+      <SideMenu categoryList={categoryList} />
+    </Drawer>
   );
 };

@@ -58,7 +58,7 @@ export const PostEditorContainer = ({ editorMode }: { editorMode: string }) => {
   const mode: EditPageProps['mode'] = editorMode === 'edit' ? 'edit' : 'create';
 
   return (
-    <MainLayout name="포스트 에디터">
+    <MainLayout name="포스트 에디터" lightOnly>
       <Meta
         {...{
           title: '포스트 에디터',

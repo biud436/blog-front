@@ -1,117 +1,58 @@
 'use client';
 
-import React from 'react';
-import { useEffect, useCallback, useState } from 'react';
-import { useTheme } from '@mui/material/styles';
-
+import React, { useEffect, useLayoutEffect } from 'react';
+import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { Box } from '@mui/material';
-import { CategoryDepthVO } from '@/models/CategoryDepthVO';
+import { MotionConfig } from 'motion/react';
 import { useCategoryService } from '@/hooks/services/useCategoryService';
-import { useMediaQuery } from 'react-responsive';
-import { MyBlogHeader } from '../components/common/header/MyBlogHeader';
-import { MobileNav } from '../components/common/menu/MobileNav';
-import { MobileHamburger } from '../components/common/menu/MobileHamburger';
-import { MyBlogContentContainer } from '../components/common/menu/MyBlogContentContainer';
-import { MyBlogContentConsumer } from '../components/common/menu/MyBlogContentConsumer';
 import { useCategoryTree } from '@/hooks/api/useCategoryTree';
-import { useRouter } from 'next/navigation';
-import { useMenuStore } from '@/store/menu';
+import useThemeStore from '@/store/theme';
+import { MobileNav } from '../components/common/menu/MobileNav';
+import { BlogHeader } from '@/components/blog/BlogHeader';
+import { BlogFooter } from '@/components/blog/BlogFooter';
+import { BackToTop } from '@/components/blog/BackToTop';
+import { CommandPalette } from '@/components/blog/CommandPalette';
+import { applyStoredTheme } from '@/components/blog/theme';
 
 export const MainLayout = ({
-  name,
   children,
+  lightOnly = false,
 }: {
-  name: string;
+  /** @deprecated 이전 헤더에서 쓰던 제목. 더 이상 표시하지 않습니다. */
+  name?: string;
+  /** 다크 모드를 지원하지 않는 화면(에디터)에서 라이트 테마로 고정합니다. */
+  lightOnly?: boolean;
   children: React.ReactNode;
 }) => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const router = useRouter();
-  const matches = useMediaQuery({
-    query: '(max-width: 768px)',
-  });
-  const theme = useTheme();
-  const [categoryList, setCategoryList] = useState<CategoryDepthVO[]>([]);
-  const [rootCategory, setRootCategory] = useState<CategoryDepthVO>();
+  const blogTheme = useThemeStore(state => state.getBlog());
   const categoryService = useCategoryService();
-  const { categories, error: isCategoryError } = useCategoryTree();
-  const menuStore = useMenuStore();
+  const { categories } = useCategoryTree();
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleDrawerOpen = useCallback(() => {
-    menuStore.open();
-  }, []);
-
-  const toggleDrawer = useCallback(
-    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-      const keyboardEvent = event as React.KeyboardEvent;
-      const isPressedTabOrShift =
-        event.type === 'keydown' &&
-        (keyboardEvent.key === 'Tab' || keyboardEvent.key === 'Shift');
-
-      if (isPressedTabOrShift) {
-        event.preventDefault();
-      }
-
-      menuStore.setOpen(open);
-    },
-    [menuStore.isOpen],
-  );
-
-  const initCategories = () => {
-    if (!categories) {
-      return;
-    }
-
-    setCategoryList(categories);
-    categoryService.setCategories(categories);
-    setRootCategory(categories[0]);
-
-    return categories;
-  };
+  useLayoutEffect(() => {
+    if (!lightOnly) return;
+    document.documentElement.setAttribute('data-blog-theme', 'light');
+    return () => applyStoredTheme();
+  }, [lightOnly]);
 
   useEffect(() => {
-    initCategories();
-  }, [matches, categories, isCategoryError]);
+    if (categories) {
+      categoryService.setCategories(categories);
+    }
+  }, [categories]);
 
   return (
-    <Box
-      sx={{
-        width: '100%',
-        background: '#fafaf9',
-      }}
-    >
+    <ThemeProvider theme={blogTheme}>
       <CssBaseline />
-      <MobileHamburger {...{ handleDrawerOpen, router, name }} />
-      <MobileNav
-        {...{
-          toggleDrawer,
-          handleDrawerClose: handleClose,
-          theme,
-          categoryList,
-          setCategoryList,
-          router,
-          rootCategory,
-          anchorEl,
-        }}
-      />
-      <MyBlogContentContainer>
-        <MyBlogHeader />
-        <MyBlogContentConsumer
-          {...{
-            categoryList,
-            setCategoryList,
-            toggleDrawer,
-            router,
-            rootCategory,
-          }}
-        >
-          {children}
-        </MyBlogContentConsumer>
-      </MyBlogContentContainer>
-    </Box>
+      <MotionConfig reducedMotion="user">
+        <div className="b-root">
+          <BlogHeader showThemeToggle={!lightOnly} />
+          <MobileNav categoryList={categories ?? []} />
+          <CommandPalette />
+          <main>{children}</main>
+          <BlogFooter />
+          <BackToTop />
+        </div>
+      </MotionConfig>
+    </ThemeProvider>
   );
 };
