@@ -6,6 +6,8 @@ interface ThemeState {
   mainTheme: Theme;
   loginTheme: Theme;
   manageTheme: Theme;
+  blogTheme: Theme;
+  getBlog: () => Theme;
   getLogin: () => Theme;
   getManage: () => Theme;
   getMain: () => Theme;
@@ -16,7 +18,7 @@ const useThemeStore = create<ThemeState>((set, get) => ({
   // Main Theme
   mainTheme: createTheme({
     typography: {
-      fontFamily: 'Noto Sans KR, sans-serif',
+      fontFamily: 'var(--font-sans), "Noto Sans KR", sans-serif',
     },
     components: {
       MuiCard: {
@@ -145,7 +147,41 @@ const useThemeStore = create<ThemeState>((set, get) => ({
     },
   }),
 
+  // Blog Theme (목록/본문/로그인 화면). 색상은 CSS 변수(--b-*)로 라이트/다크를 전환합니다.
+  blogTheme: createTheme({
+    palette: {
+      mode: 'light',
+      primary: { main: '#131316', contrastText: '#ffffff' },
+      secondary: { main: '#ea580c' },
+    },
+    shape: { borderRadius: 12 },
+    typography: {
+      fontFamily:
+        '"Pretendard Variable", Pretendard, var(--font-sans), -apple-system, BlinkMacSystemFont, "Noto Sans KR", sans-serif',
+      button: { textTransform: 'none', fontWeight: 600 },
+    },
+    components: {
+      MuiCssBaseline: {
+        styleOverrides: {
+          body: { backgroundColor: 'var(--b-bg)', color: 'var(--b-text)' },
+          '*::-webkit-scrollbar': {
+            width: '10px',
+            height: '10px',
+            backgroundColor: 'transparent',
+          },
+          '*::-webkit-scrollbar-thumb': {
+            backgroundColor: 'var(--b-border-strong)',
+            borderRadius: '10px',
+            border: '3px solid var(--b-bg)',
+          },
+        },
+      },
+      MuiPaper: { styleOverrides: { root: { backgroundImage: 'none' } } },
+    },
+  }),
+
   // Getter methods
+  getBlog: () => get().blogTheme,
   getLogin: () => get().loginTheme,
   getManage: () => get().manageTheme,
   getMain: () => get().mainTheme,

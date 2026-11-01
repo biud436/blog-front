@@ -1,174 +1,80 @@
-# Design System — blog-front
+# Design System — blog-front (reader)
 
 ## Direction
 
-**Personality:** Warmth & Craft
-**Foundation:** Warm stone (stone palette)
-**Depth:** Surface card with subtle layered shadow, borders-only internally
-**Feel:** 글쓰기에 몰입할 수 있는 따뜻하고 차분한 환경. 잉크와 양피지의 메타포.
+**Personality:** 콘텐츠 우선의 정돈된 기술 블로그
+**Foundation:** 따뜻한 오프화이트 / 다크 차콜 + 오렌지 포인트
+**Depth:** 테두리와 아주 옅은 그림자. 블러(backdrop-filter)·글로우·무한 애니메이션은 쓰지 않음
+**Feel:** 읽기 편한 타이포그래피, 절제된 모션, 빠른 렌더링
+
+구현: `src/styles/blog.css` (모든 클래스 `b-` 접두사), 컴포넌트 `src/components/blog/*`.
+에디터(`/edit2`)와 관리(`/manage`) 화면은 기존 디자인을 유지하며, 에디터는 항상 라이트 테마로 고정합니다.
 
 ---
 
-## Tokens
+## Tokens (CSS 변수)
 
-### Colors
+라이트 값은 `:root`, 다크 값은 `html[data-blog-theme='dark']`에 정의합니다.
 
-```
---ink:            #1c1917        /* Primary text — stone-900 */
---ink-secondary:  #57534e        /* Supporting text — stone-600 */
---ink-tertiary:   #a8a29e        /* Metadata, timestamps — stone-400 */
---ink-muted:      #d6d3d1        /* Disabled, placeholder — stone-300 */
---parchment:      #fafaf9        /* Base background — stone-50 */
---surface:        #ffffff        /* Card / elevated surface */
---accent:         #c2410c        /* Brand accent — orange-700 */
---accent-soft:    #fff7ed        /* Accent tint background — orange-50 */
---accent-hover:   #9a3412        /* Accent hover — orange-800 */
---border:         rgba(28, 25, 23, 0.06)   /* Subtle separation */
---border-hover:   rgba(28, 25, 23, 0.12)   /* Hover emphasis */
---border-strong:  rgba(28, 25, 23, 0.18)   /* Focus / strong emphasis */
---destructive:    #dc2626        /* Error / delete — red-600 */
---destructive-soft: #fef2f2      /* Error background — red-50 */
-```
-
-### Spacing
-
-Base: 8px
-Scale: 4, 8, 12, 16, 20, 24, 28, 32, 40, 48, 56, 64
-
-Responsive padding scale (xs / sm / md):
-
-- Content padding: 20px / 28px / 48px
-- Section vertical: 24px / 28px / 32px
-
-### Radius
-
-Scale: 2px (accent marker), 8px (controls, buttons), 12px (cards mobile), 16px (cards desktop)
+| Token             | Light     | Dark                   | 용도                         |
+| ----------------- | --------- | ---------------------- | ---------------------------- |
+| `--b-bg`          | `#fbfbfa` | `#0d0d0f`              | 페이지 배경                  |
+| `--b-surface`     | `#ffffff` | `#151518`              | 카드, 드로어, 팔레트         |
+| `--b-subtle`      | `#f4f4f2` | `#1b1b1f`              | hover, 인용문, 표 헤더       |
+| `--b-text`        | `#131316` | `#ededf0`              | 제목, 강조                   |
+| `--b-text-2`      | `#4a4a52` | `#a7a7b1`              | 본문 보조, 요약              |
+| `--b-text-3`      | `#85858f` | `#6e6e79`              | 메타데이터                   |
+| `--b-prose`       | `#2b2b31` | `#d2d2da`              | 글 본문                      |
+| `--b-border`      | `#e8e8e5` | `#24242a`              | 구분선                       |
+| `--b-accent`      | `#ea580c` | `#fb8a4c`              | 포인트(점, 진행률, 인용)     |
+| `--b-accent-text` | `#c2410c` | `#fdae7c`              | 작은 포인트 텍스트/링크      |
+| `--b-accent-soft` | `#fff1e8` | `rgba(251,138,76,.12)` | 카테고리 배지 배경           |
+| `--b-code-bg`     | `#16161a` | `#111114`              | 코드 블록 (양쪽 모두 어두움) |
 
 ### Typography
 
-- Headline: 700 weight, letter-spacing -0.02em, line-height 1.3
-- Body: 400 weight, line-height 1.7
-- Label: 600 weight, 0.75rem, uppercase, letter-spacing 0.05em
-- Button: 600 weight, 0.875rem
+- 본문/제목: Pretendard Variable (CDN), 대체 폰트 Noto Sans KR
+- 코드: JetBrains Mono (`--font-mono`)
+- 제목: 800, letter-spacing -0.035 ~ -0.04em
+- 본문: 1.075rem / line-height 1.85, `word-break: keep-all`
 
-### Animation
+### Radius
 
-Duration: 150ms
-Easing: ease
-Button active: scale(0.98)
+10px (버튼, 입력), 12–14px (썸네일, 코드 블록), 16–22px (큰 카드, 팔레트)
 
----
+### Motion
 
-## Depth Strategy
-
-**Outer card** — Layered shadow on md+:
-
-```
-0 1px 3px rgba(28,25,23,0.04),
-0 4px 16px rgba(28,25,23,0.06)
-```
-
-**Internal sections** — Borders-only:
-
-```
-border: 1px solid rgba(28, 25, 23, 0.06)
-```
-
-**Focus rings** — Accent soft glow:
-
-```
-box-shadow: 0 0 0 3px #fff7ed
-border-color: #c2410c
-```
+- 등장: opacity + translateY(12–18px), 0.5s, `cubic-bezier(0.22, 1, 0.36, 1)`, 한 번만
+- hover: 썸네일 translateY(-4px) + 이미지 scale(1.04), 제목 색 → accent-text
+- 탭/페이지네이션/목차 활성 표시: framer-motion `layoutId` 슬라이드
+- `prefers-reduced-motion` 사용자는 모든 전환을 끔
 
 ---
 
 ## Patterns
 
-### Surface Card (PostContainer / Editor)
-
-- Max-width: 860px (post view), 960px (editor)
-- Background: #ffffff on #fafaf9
-- Border-radius: 0 (xs), 16px (md)
-- Shadow: none (xs), layered (md)
-- Overflow: hidden
-
-### Title Input
-
-- Border: none
-- Font: 1.5rem, 700 weight, -0.02em tracking
-- Bottom accent line: gradient from accent to accent-soft, 2px height
-- Background: transparent
-
-### Category Select (Custom)
-
-- Background: parchment (#fafaf9)
-- Border: 1px solid border token
-- Radius: 8px
-- Padding: 10px 16px
-- Custom chevron SVG arrow
-- Focus: accent border + accent-soft ring
-
-### Button Primary
-
-- Background: accent (#c2410c)
-- Color: white
-- Padding: 10px 24px
-- Radius: 8px
-- Font: 0.875rem, 600 weight
-- Hover: accent-hover + shadow glow
-- Active: scale(0.98)
-
-### Button Ghost (Cancel)
-
-- Background: transparent
-- Color: ink-secondary
-- Border: 1px solid border token
-- Hover: parchment bg + border-hover
-
-### Accent Marker
-
-- Width: 32px, Height: 3px
-- Background: accent
-- Radius: 2px
-- Used above page headings
-
-### Alert Error
-
-- Radius: 8px
-- Border: 1px solid destructive at 12% opacity
-- Background: destructive-soft (#fef2f2)
-- Icon color: destructive (#dc2626)
-
-### Post Footer Buttons
-
-- Text style buttons with icon
-- Color: ink-secondary → ink on hover
-- Background: transparent → parchment on hover
-- Border: 1px solid border → border-hover on hover
-- Radius: 8px, padding: 8px 16px
-
-### Post Card (List)
-
-- Padding: 32px (md), 20px (xs)
-- Border-bottom: 1px solid border
-- Transition: background 200ms
-- Hover: parchment background
-- Title: 1.25rem, 700 weight, -0.01em
-- Title hover: accent color
-- Excerpt: ink-secondary, 0.9375rem, line-height 1.7
-- Meta: ink-tertiary, 0.8125rem, dot separator
+- **Header:** sticky, 단색 배경, 스크롤 시 하단 테두리. 로고 · 검색(⌘K) · GitHub · RSS · 테마 토글 · 글쓰기 · 메뉴
+- **Home:** 소개(사이트명 + `meta-config.json`의 tagline + 통계 칩) → 상단 영역(최신 글 1개 크게 + 최근 글 3개 목록) → sticky 카테고리 탭 → 4열 카드 그리드(1100px 이하 2열, 640px 이하 1열) → 페이지네이션
+- **Card:** 16:10 썸네일(없으면 카테고리 색 커버) · 카테고리/날짜/NEW · 제목 2줄 · 요약 2줄
+- **Post:** 760px 본문 컬럼 중앙 정렬, 1280px 이상에서 오른쪽에 sticky 목차(진행률 포함), 상단 3px 진행률 바, 작성자 카드, 댓글, 하단 액션, 맨 아래 옅은 띠 위에 "다른 글" 4개
+- **Post (1280px 미만):** 읽는 동안 하단 중앙에 `현재 섹션 · 진행률` 버튼, 누르면 아래에서 목차 시트(최대 640px)
+- **본문 이미지:** 링크가 없는 이미지는 눌러서 크게 보기(단색 어두운 배경, Esc/배경 클릭으로 닫기)
+- **다른 글:** 같은 카테고리 글 우선, 4개가 안 되면 최근 글로 채움. 제목은 `{카테고리}의 다른 글` / `더 읽어보기` / `최근 글`
+- **Command palette:** ⌘K / Ctrl+K / `/` 로 열기. 제목·내용 검색, 카테고리 이동
+- **Copy:** 문구는 사이트에 실제로 있는 텍스트(`site_name`, `tagline`)만 사용하고, 임의의 슬로건을 만들지 않음
 
 ---
 
 ## Decisions
 
-| Decision               | Rationale                                              | Date       |
-| ---------------------- | ------------------------------------------------------ | ---------- |
-| Warm stone palette     | 블로그는 글쓰기 공간 — 잉크와 양피지의 따뜻함이 어울림 | 2026-02-13 |
-| Borders-only internal  | 콘텐츠 밀도보다 가독성 중시, 내부는 미세한 선으로 구분 | 2026-02-13 |
-| Layered shadow (outer) | 카드가 배경 위에 부드럽게 떠오르는 느낌                | 2026-02-13 |
-| Custom form controls   | 네이티브 요소 대신 커스텀으로 일관된 토큰 적용         | 2026-02-13 |
-| Accent as orange-700   | stone 팔레트 위에서 따뜻한 강조색, 잉크+불꽃 메타포    | 2026-02-13 |
-| 8px spacing base       | 넉넉한 여백으로 읽기 편한 환경 구성                    | 2026-02-13 |
-| 16px card radius (md)  | 부드럽고 친근한 느낌, 기술적이지 않은 분위기           | 2026-02-13 |
+| Decision                               | Rationale                                                                                  | Date       |
+| -------------------------------------- | ------------------------------------------------------------------------------------------ | ---------- |
+| 블러·글로우·캔버스 효과 제거           | 화면 전체 블러/블렌드 레이어가 심한 렉을 유발, AI 템플릿 느낌                              | 2026-11-01 |
+| 매거진식 상단 + 카드 그리드            | 첫 화면 밀도를 높이면서 블로그 구조(목록 중심) 유지                                        | 2026-11-01 |
+| 라이트/다크 테마 (CSS 변수)            | OS 설정을 따르고 토글로 저장, 첫 페인트 전 인라인 스크립트 적용                            | 2026-11-01 |
+| 오렌지 포인트 유지                     | 이전 디자인(orange-700)과의 연속성                                                         | 2026-11-01 |
+| 코드 블록은 항상 어두운 배경           | 라이트 본문에서도 코드 대비가 높고 테마 전환 시 일관됨                                     | 2026-11-01 |
+| 카드 그리드 4열                        | 백엔드가 페이지당 8개를 반환 — 3열이면 마지막 줄이 1~2개만 남음                            | 2026-11-01 |
+| 카테고리 글 수는 카테고리 트리 값 사용 | `/posts`의 totalCount·maxPage는 카테고리 필터와 무관한 전체 기준                           | 2026-11-01 |
+| 진행률은 직접 계산 (ResizeObserver)    | 뷰어가 늦게 로드되어 `useScroll`이 스켈레톤 높이로 계산된 값을 유지함                      | 2026-11-01 |
+| Disqus 바깥 div에 id 금지              | disqus-react가 언마운트 시 `#disqus_thread` 자식을 모두 지워 테마 전환 시 removeChild 오류 | 2026-11-01 |

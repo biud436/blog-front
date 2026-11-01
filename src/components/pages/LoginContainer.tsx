@@ -2,8 +2,8 @@
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
-import { toast, ToastContainer } from 'react-toastify';
-import { Box, Button, Stack, ThemeProvider, Typography } from '@mui/material';
+import { toast } from 'react-toastify';
+import { CssBaseline, Stack, ThemeProvider } from '@mui/material';
 import { URL_MAP } from '@/common/URL';
 import { Meta } from '@/components/common/utils/Meta';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,27 +16,41 @@ import {
 } from 'react-hook-form-mui';
 
 import GitHubIcon from '@mui/icons-material/GitHub';
-import styled from 'styled-components';
 import { useRouter } from 'next/navigation';
 import z from 'zod';
 import { useLogin } from '@/hooks/server/useLogin';
 import useThemeStore from '@/store/theme';
+import { SiteLogo } from '@/components/blog/BlogHeader';
 
 export interface LoginFormProps {
   username: string;
   password: string;
 }
 
-const RedText = styled.span`
-  color: #9e1111;
-  text-decoration: underline;
-`;
+/** 라이트/다크 테마 변수(--b-*)를 따르는 입력창 스타일 */
+const fieldSx = {
+  '& .MuiInputLabel-root': { color: 'var(--b-text-3)' },
+  '& .MuiInputLabel-root.Mui-focused': { color: 'var(--b-text)' },
+  '& .MuiOutlinedInput-root': {
+    borderRadius: '12px',
+    backgroundColor: 'var(--b-surface)',
+    color: 'var(--b-text)',
+    '& fieldset': { borderColor: 'var(--b-border-strong)' },
+    '&:hover fieldset': { borderColor: 'var(--b-text-3)' },
+    '&.Mui-focused fieldset': {
+      borderColor: 'var(--b-text)',
+      borderWidth: '1px',
+    },
+  },
+  '& .MuiIconButton-root': { color: 'var(--b-text-3)' },
+  '& .MuiFormHelperText-root': { marginLeft: 0 },
+};
 
 /**
  * 로그인 페이지 메인
  */
 export const LoginContainer = () => {
-  const theme = useThemeStore(state => state.getLogin());
+  const theme = useThemeStore(state => state.getBlog());
   const formContext = useForm<LoginFormProps>({
     defaultValues: {
       username: '',
@@ -96,88 +110,51 @@ export const LoginContainer = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <FormContainer formContext={formContext}>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            width: '100%',
-            background: '#a0a0a0',
-            flexDirection: 'column',
+        <Meta
+          {...{
+            title: '로그인',
+            description: '관리자 로그인',
           }}
-        >
-          <Meta
-            {...{
-              title: '로그인',
-              description: '관리자 로그인',
-            }}
-          />
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            minHeight="100vh"
-            flexDirection="column"
-          >
-            <Stack
-              direction={'column'}
-              gap={2}
-              sx={{
-                borderRadius: 4,
-                width: {
-                  xs: '300px',
-                  sm: '400px',
-                  md: '500px',
-                },
-                background: 'white',
-                boxShadow: 1,
-                border: '1px solid #e0e0e0',
-                p: 3,
-              }}
-            >
-              <Typography
-                variant="h3"
-                component="h1"
-                textAlign={'center'}
-                pb={1}
-                fontFamily={"Noto Sans KR', sans-serif"}
-              >
-                로그인
-              </Typography>
+        />
+        <div className="b-root b-login">
+          <div className="b-login__card">
+            <SiteLogo />
+            <h1 className="b-login__title">관리자 로그인</h1>
+            <p className="b-login__desc">
+              글을 쓰고 블로그를 관리하려면 로그인하세요.
+            </p>
+            <Stack direction="column" gap={2} sx={fieldSx}>
               <TextFieldElement name="username" label="아이디" required />
               <PasswordElement name="password" label="비밀번호" required />
-              <Button
-                variant="contained"
+              <button
+                type="button"
+                className="b-btn b-btn--primary"
+                style={{ width: '100%' }}
                 onClick={() => {
                   formContext?.handleSubmit(onSubmit)();
                 }}
               >
                 로그인
-              </Button>
-              <Button
-                startIcon={<GitHubIcon />}
-                variant="contained"
-                color="info"
+              </button>
+              <div className="b-login__divider">또는</div>
+              <button
+                type="button"
+                className="b-btn"
+                style={{ width: '100%' }}
                 onClick={() => {
                   loginByGithubId();
                 }}
               >
-                Github 계정으로 로그인
-              </Button>
+                <GitHubIcon /> GitHub 계정으로 로그인
+              </button>
             </Stack>
-            <Stack mt={1}>
-              <Typography
-                variant="body2"
-                sx={{
-                  color: 'text.primary',
-                }}
-              >
-                <RedText>관리자 계정</RedText>으로만 로그인이 가능합니다.
-              </Typography>
-            </Stack>
-          </Box>
-          <ToastContainer />
-        </Box>
+            <p className="b-login__note">
+              <b>관리자 계정</b>으로만 로그인할 수 있습니다.
+            </p>
+          </div>
+        </div>
       </FormContainer>
     </ThemeProvider>
   );

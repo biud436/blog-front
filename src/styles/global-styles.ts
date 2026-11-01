@@ -9,8 +9,15 @@ export const GlobalStyle = createGlobalStyle`
     scroll-behavior: smooth;
   }
 
-  * {
-    font-family: 'Noto Sans KR', sans-serif;
+  /**
+   * 폰트는 상속되도록 body에만 지정합니다. (next/font가 로드한 Noto Sans KR 사용)
+   */
+  body {
+    font-family: var(--font-sans), 'Noto Sans KR', sans-serif;
+  }
+
+  button, input, select, textarea {
+    font-family: inherit;
   }
 
 

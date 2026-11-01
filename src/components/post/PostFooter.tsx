@@ -1,26 +1,18 @@
 import React from 'react';
-import { Button, Grid2 as Grid } from '@mui/material';
-import { Post } from '@/models/Post';
 import { useRouter } from 'next/navigation';
+import ArrowBackIcon from '@mui/icons-material/ArrowBackRounded';
+import LinkIcon from '@mui/icons-material/LinkRounded';
+import EditIcon from '@mui/icons-material/EditOutlined';
+import DeleteIcon from '@mui/icons-material/DeleteOutlineRounded';
+import { Post } from '@/models/Post';
 import { useAuthorized } from '@/hooks/server/useAuthorized';
 import { useDeletePost } from '@/hooks/api/useDeletePost';
+import { copyCurrentUrl } from './PostToc';
 
 interface PostFooterProps {
   post: Post;
   goBack: () => void;
 }
-
-/* ── Design Tokens ────────────────────────────────────── */
-const tokens = {
-  ink: '#1c1917',
-  inkSecondary: '#57534e',
-  inkTertiary: '#a8a29e',
-  accent: '#c2410c',
-  accentSoft: '#fff7ed',
-  border: 'rgba(28, 25, 23, 0.06)',
-  borderHover: 'rgba(28, 25, 23, 0.12)',
-  surface: '#ffffff',
-};
 
 export function PostFooter({ post, goBack }: PostFooterProps) {
   const router = useRouter();
@@ -32,96 +24,46 @@ export function PostFooter({ post, goBack }: PostFooterProps) {
   };
 
   const handleEditPost = () => {
-    const id = post.id;
-    router.push(`/edit2?mode=edit&id=${id}`);
+    router.push(`/edit2?mode=edit&id=${post.id}`);
   };
 
   return (
-    <Grid
-      container
-      spacing={2}
-      direction="row"
-      alignItems="center"
-      justifyContent={isAuthorized ? 'space-between' : 'flex-start'}
-      sx={{
-        paddingTop: '24px',
-        borderTop: `1px solid ${tokens.border}`,
-      }}
-    >
-      {/* Back button */}
-      <Grid>
-        <Button
+    <div className="b-post-footer">
+      <div className="b-post-footer__group">
+        <button
+          type="button"
+          className="b-btn b-btn--sm"
           onClick={() => goBack()}
-          sx={{
-            color: tokens.ink,
-            fontSize: '0.875rem',
-            fontWeight: 500,
-            textTransform: 'none',
-            padding: '8px 20px',
-            border: `1px solid ${tokens.borderHover}`,
-            borderRadius: '8px',
-            transition: 'all 0.2s ease',
-            '&:hover': {
-              backgroundColor: tokens.ink,
-              borderColor: tokens.ink,
-              color: tokens.surface,
-            },
-          }}
         >
-          ← 이전
-        </Button>
-      </Grid>
+          <ArrowBackIcon /> 이전으로
+        </button>
+        <button
+          type="button"
+          className="b-btn b-btn--sm"
+          onClick={copyCurrentUrl}
+        >
+          <LinkIcon /> 링크 복사
+        </button>
+      </div>
 
-      {/* Admin controls */}
       {isAuthorized && (
-        <Grid
-          sx={{
-            display: 'flex',
-            gap: 1.5,
-          }}
-        >
-          <Button
+        <div className="b-post-footer__group">
+          <button
+            type="button"
+            className="b-btn b-btn--sm"
             onClick={handleEditPost}
-            sx={{
-              color: tokens.inkSecondary,
-              fontSize: '0.875rem',
-              fontWeight: 500,
-              textTransform: 'none',
-              padding: '8px 20px',
-              border: `1px solid ${tokens.borderHover}`,
-              borderRadius: '8px',
-              transition: 'all 0.2s ease',
-              '&:hover': {
-                backgroundColor: tokens.accentSoft,
-                borderColor: tokens.accent,
-                color: tokens.accent,
-              },
-            }}
           >
-            수정
-          </Button>
-          <Button
+            <EditIcon /> 수정
+          </button>
+          <button
+            type="button"
+            className="b-btn b-btn--sm b-btn--danger"
             onClick={handleDeletePost}
-            sx={{
-              color: tokens.inkTertiary,
-              fontSize: '0.875rem',
-              fontWeight: 500,
-              textTransform: 'none',
-              padding: '8px 20px',
-              border: `1px solid ${tokens.borderHover}`,
-              borderRadius: '8px',
-              transition: 'all 0.2s ease',
-              '&:hover': {
-                backgroundColor: '#fef2f2',
-                borderColor: '#ef4444',
-                color: '#ef4444',
-              },
-            }}
           >
-            삭제
-          </Button>
-        </Grid>
+            <DeleteIcon /> 삭제
+          </button>
+        </div>
       )}
-    </Grid>
+    </div>
   );
 }

@@ -11,11 +11,18 @@ export function usePosts() {
   const categoryId = categoryService.getCurrentMenuCategoryId();
   const searchProperty = postsStore.getSearchType();
   const searchQuery = postsStore.getSearchQuery();
+  const isSearchMode = postsStore.isSearchMode();
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ['/posts/posts', pageNumber, categoryId],
+    // 검색 조건을 키에 포함해야 검색/해제 시 항상 올바른 목록을 다시 가져옵니다.
+    queryKey: [
+      '/posts/posts',
+      pageNumber,
+      categoryId,
+      isSearchMode ? { searchProperty, searchQuery } : null,
+    ],
     queryFn: async () =>
-      postsStore.isSearchMode()
+      isSearchMode
         ? postsService.getPostsUsingSearch({
             pageNumber,
             searchProperty,

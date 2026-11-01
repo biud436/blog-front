@@ -6,6 +6,7 @@ export const PostSchema = z.object({
   title: z.string(),
   content: z.string(),
   uploadDate: z.string(),
+  categoryId: z.number().optional(),
   user: z.object({
     username: z.string(),
     profile: z.object({
@@ -13,6 +14,7 @@ export const PostSchema = z.object({
     }),
   }),
   category: z.object({
+    id: z.number().optional(),
     name: z.string(),
   }),
   viewCount: z.object({

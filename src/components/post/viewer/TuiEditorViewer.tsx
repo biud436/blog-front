@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-var */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import '@toast-ui/editor/dist/toastui-editor.css';
 
 import { Viewer, ViewerProps } from '@toast-ui/react-editor';
-// import Prism from 'prismjs';
 import 'prismjs';
 import 'prismjs/components/prism-clojure.js';
 import 'prismjs/components/prism-typescript.js';
@@ -17,195 +15,98 @@ import 'prismjs/themes/prism-okaidia.css';
 import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
 
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
-import '@toast-ui/editor/dist/toastui-editor.css';
 
 import '@toast-ui/editor/dist/i18n/ko-kr';
-import { ForwardedScrollProgressBar } from '../../common/atomic/ScrollProgressBar';
-import { useEffect, useMemo, useRef } from 'react';
-import styled from 'styled-components';
 import * as React from 'react';
-import { useCallback } from 'react';
-import { HeadingElementWrapper } from './HeadingElementWrapper';
+import { useEffect, useMemo, useRef } from 'react';
 
 declare var Prism: any;
 
-const ViewerWrapper = styled.div`
-  .post-heading {
-    margin-top: 0rem;
-    margin-bottom: 0rem;
-
-    cursor: pointer;
-
-    color: #000;
-    font-weight: bold;
-    font-size: 1.5rem;
-
-    text-decoration: none;
-    border-left: 3px solid #c2410c;
-    margin: 14px 0;
-    padding: 0 16px;
+/** 제목 노드의 텍스트. 첫 자식이 텍스트가 아닐 때(예: `## **굵게**`)도 안전하게 처리합니다. */
+function headingText(node: any): string {
+  if (typeof node?.firstChild?.literal === 'string') {
+    return node.firstChild.literal;
   }
-
-  /* https://stackoverflow.com/a/24298427/15266929 */
-  [id]::before {
-    content: '';
-    display: block;
-    height: 75px;
-    margin-top: -75px;
-    visibility: hidden;
-  }
-
-  .in-view {
-    color: red;
-  }
-
-  .toastui-editor-dark .toastui-editor-contents pre {
-    background-color: #232428;
-
-    code {
-      color: #c1798b;
+  let text = '';
+  const walk = (current: any) => {
+    for (let child = current?.firstChild; child; child = child.next) {
+      if (typeof child.literal === 'string') text += child.literal;
+      walk(child);
     }
+  };
+  walk(node);
+  return text;
+}
 
-    position: relative;
-    border-radius: 1rem;
-  }
-
-  .toastui-editor-contents {
-    font: 100 16px 'Noto Sans KR', sans-serif;
-
-    blockquote {
-      border-left: 3px solid #c2410c;
-    }
-
-    h1 {
-      border-bottom: 1px solid rgba(28, 25, 23, 0.06);
-      margin: 52px 0 15px;
-    }
-  }
-
-  .copy-code {
-    position: absolute;
-    display: inline-block;
-    margin: 0 5px;
-    padding: 0 5px;
-    border-radius: 3px;
-    cursor: pointer;
-    color: #fff;
-    right: 5px;
-    top: 5px;
-    background-color: #484849;
-    font-size: 0.8rem;
-  }
-
-  .copy-code:hover {
-    background-color: #c2410c;
-  }
-
-  .copy-code::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    line-height: 2rem;
-  }
-
-  .toastui-editor-contents a {
-    color: #222222;
-
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-      text-decoration-style: wavy;
-      text-decoration-thickness: 1px;
-    }
-
-    &:active {
-      color: #222222;
-    }
-  }
-
-  .toastui-editor-contents p {
-    color: #222222;
-    font-size: 1.2rem;
-  }
-`;
-
-const useCodeCopyInjector = () => {
+/** 코드 블록마다 언어 라벨과 복사 버튼을 붙입니다. */
+const useCodeBlockEnhancer = (
+  containerRef: React.RefObject<HTMLDivElement | null>,
+) => {
   useEffect(() => {
-    const preCode = Array.from<HTMLPreElement>(
-      document.querySelectorAll('pre'),
-    );
+    const container = containerRef.current;
+    if (!container) return;
 
-    preCode.forEach(item => {
-      const copyCode = document.createElement('div');
-      copyCode.classList.add('copy-code');
-      copyCode.innerHTML = '복사';
+    const timers: number[] = [];
 
-      copyCode.addEventListener('click', () => {
-        const textArea = document.createElement('textarea');
-        copyCode.innerHTML = '';
-        textArea.value = item.innerText;
-        document.body.appendChild(textArea);
-        textArea.select();
+    container.querySelectorAll<HTMLPreElement>('pre').forEach(pre => {
+      if (pre.querySelector(':scope > .copy-code')) return;
 
-        navigator.clipboard.writeText(item.innerText);
+      const lang = pre.querySelector('code')?.getAttribute('data-language');
+      pre.setAttribute('data-lang', lang || 'code');
 
-        document.body.removeChild(textArea);
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'copy-code';
+      button.textContent = '복사';
+      button.setAttribute('aria-label', '코드 복사');
 
-        copyCode.innerHTML = '복사됨!';
-
-        setTimeout(() => {
-          copyCode.innerHTML = '복사';
-        }, 800);
+      button.addEventListener('click', async () => {
+        const code = pre.querySelector('code')?.innerText ?? pre.innerText;
+        try {
+          await navigator.clipboard.writeText(code);
+          button.textContent = '복사됨';
+        } catch {
+          button.textContent = '실패';
+        }
+        timers.push(
+          window.setTimeout(() => {
+            button.textContent = '복사';
+          }, 1200),
+        );
       });
 
-      item.appendChild(copyCode);
+      pre.appendChild(button);
     });
-  }, []);
-};
 
-const CodeCopyFactory = () => {
-  useCodeCopyInjector();
-
-  return <></>;
+    return () => timers.forEach(id => window.clearTimeout(id));
+  }, [containerRef]);
 };
 
 const TuiEditorViewer = ({ content }: { content: string }) => {
-  const isLoaded = useRef<boolean>(false);
-  const viewerRef = useRef<Viewer | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const setViewerRef = useCallback(
-    (node: Viewer) => {
-      viewerRef.current = node;
-    },
-    [viewerRef],
-  );
+  useCodeBlockEnhancer(containerRef);
 
   const customRenderer = useMemo<ViewerProps['customHTMLRenderer']>(() => {
     return {
       heading(node: any, { entering }) {
         const tagName = 'h' + node.level;
-        const text = node.firstChild.literal;
 
         // change anchor tag.
         if (entering) {
+          const id = headingText(node).replace(/ /g, '-');
           return [
             {
               type: 'openTag',
               tagName,
-              attributes: {
-                id: `${text.replace(/ /g, '-')}`,
-              },
+              attributes: { id },
             },
             {
               type: 'openTag',
               tagName: 'a',
               classNames: ['post-heading'],
               attributes: {
-                href: `#${text.replace(/ /g, '-')}`,
+                href: `#${id}`,
                 title: '',
               },
             },
@@ -231,8 +132,7 @@ const TuiEditorViewer = ({ content }: { content: string }) => {
   }, []);
 
   return (
-    <ViewerWrapper>
-      <ForwardedScrollProgressBar ref={viewerRef} />
+    <div ref={containerRef}>
       <Viewer
         initialValue={content}
         plugins={[
@@ -243,17 +143,10 @@ const TuiEditorViewer = ({ content }: { content: string }) => {
             },
           ],
         ]}
-        ref={setViewerRef}
         linkAttributes={{ target: '_blank', rel: 'noreferrer' }}
         customHTMLRenderer={customRenderer}
-        onLoad={() => {
-          isLoaded.current = true;
-        }}
-        theme="dark"
       />
-      <HeadingElementWrapper />
-      <CodeCopyFactory />
-    </ViewerWrapper>
+    </div>
   );
 };
 
